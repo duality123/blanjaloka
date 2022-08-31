@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Laravel</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <style>
+            body {
+                font-family: 'Nunito', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+  <nav class="navbar navbar-expand-md navbar-light  bg-light">
+    <div class="container-fluid">
+        <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight"><a class="navbar-brand" href="#">Blanjaloka</a></div>
+            <div class="p-2 bd-highlight"><a href="{{route('authenticated_page')}}">AuthenticatedPage</a></div>
+        </div>
+       <div class="d-flex bd-highlight">
+          @guest
+          <div class="p-2 bd-highlight"><a href="{{url('/login')}}">Login</a></div>
+          <div class="p-2 bd-highlight"><a href="{{url('/register')}}">Register</a></div>
+          @endguest
+          @auth
+          @if(!auth()->user()->is_verified)
+            <div class="p-2 bd-highlight"><a href="{{route('page_konfirmasi',Auth::user()->id)}}">Email anda belum diverifikasi</a></div>
+          @endif
+          <div class="p-2 bd-highlight"><a href="{{url('/logout')}}">Logout</a></div>
+          @endauth
+        </div>
+    </div>
+  </nav>
+</header>
+        <main style="margin-top:20px;">
+        @yield('content')
+        </main>
+
+           
+    </body>
+</html>
