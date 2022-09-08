@@ -18,8 +18,8 @@
     </head>
     <body>
         <header>
-  <nav class="navbar navbar-expand-md navbar-light  bg-light">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-md navbar-light  bg-light" style="padding-left:100px;padding-right:100px;">
+    <div class="container-fluid" >
         <div class="d-flex bd-highlight">
             <div class="p-2 bd-highlight"><a class="navbar-brand" href="#">Blanjaloka</a></div>
             <div class="p-2 bd-highlight"><a href="{{route('authenticated_page')}}">AuthenticatedPage</a></div>
@@ -31,9 +31,11 @@
           @endguest
           @auth
           @if(!auth()->user()->is_verified)
-            <div class="p-2 bd-highlight"><a href="{{route('page_konfirmasi',Auth::user()->id)}}">Email anda belum diverifikasi</a></div>
           @endif
-          <div class="p-2 bd-highlight"><a href="{{url('/logout')}}">Logout</a></div>
+         <form class="form-control" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+		  <button class="btn btn-primary" type="submit">Logout</button>
+          </form>
           @endauth
         </div>
     </div>

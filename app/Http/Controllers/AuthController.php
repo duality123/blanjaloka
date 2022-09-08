@@ -52,6 +52,14 @@ class AuthController extends Controller
         
     }
     
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('/authenticated_page');
+     }
+    }
+    
     public function logout(Request $request)
     {
         Auth::logout();
@@ -100,7 +108,6 @@ class AuthController extends Controller
 	public function tokenInputVerify(Request $request){
         $message = "Token anda salah";
         $target = 'page_konfirmasi';
-       
         $getUser = verify_user::where('token', $request->token)->first();
         if($getUser){
             if(time()-$getUser->dibuat >= 86400){
@@ -118,6 +125,14 @@ class AuthController extends Controller
 
         }
 		return redirect()->route($target,$request->id)->with('message', $message);
+                $user->update(['is_verified' => 1]);
+                $message = "Akun anda telah diverifikasi, sekarang silahkan login :)";
+                $target = 'login';
+            }
+            $getUser->delete();
+
+        }
+		return redirect()->route($target)->with('message', $message);
 	}
     
     public function tokenLinkVerify($token){
@@ -139,7 +154,14 @@ class AuthController extends Controller
        
 
         }
-		return redirect()->route($target,$getUser->user->id)->with('message', $message);
+                $user->update(['is_verified' => 1]);
+                $message = "Akun anda telah diverifikasi, sekarang silahkan login :)";
+                $target = 'login';
+            }
+            $getUser->delete();
+
+        }
+		return redirect()->route($target)->with('message', $message);
         
         
     }

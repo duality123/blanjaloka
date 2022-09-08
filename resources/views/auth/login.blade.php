@@ -3,7 +3,7 @@
 <div class="container" >
 <h3 align="center">Login :D</h3>
 <div class="d-flex justify-content-center">
-<form method="post" action="{{route('authenticate')}}">
+<form method="post" action="{{route('login')}}">
     @csrf
 <div class="mb-3 row">
     <label class="col-sm-10 col-form-label">Email</label>

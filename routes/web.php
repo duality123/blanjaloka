@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,9 +16,9 @@ use App\Http\Controllers\AuthenticatedController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('/home');
 });
-
+/**
 Route::get('/login',[AuthController::class,'login'])->name('login');
 Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
@@ -27,5 +28,22 @@ Route::get('/token_aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])-
 Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
 Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
 Route::get('/reset_password',[AuthController::class,'resetPasswordPage'])->name('reset_password');
+Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
+Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
+Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
+*/
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/authenticated_page',[AuthenticatedController::class,'auth_page'])->middleware(['auth','email_verified'])->name('authenticated_page');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/authenticated_page');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+
+Route::get('/authenticated_page',[AuthenticatedController::class,'auth_page'])->middleware(['auth','verified'])->name('authenticated_page');
