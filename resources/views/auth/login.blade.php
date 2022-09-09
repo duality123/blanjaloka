@@ -19,7 +19,7 @@
   </div>
 <button type="submit" class="btn btn-primary">Login</button>
 </form>
-    <small>lupa password klik link ini :)</small>
+    <small><a href="/forgot-password">lupa password klik link ini :)</a></small>
     </div>
 </div>
 @endsection
