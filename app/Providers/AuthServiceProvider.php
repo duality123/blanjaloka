@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -23,7 +25,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+        return (new MailMessage)
+            ->subject('Verifikasi Email Blanjaloka')
+            ->markdown('email.email_konfirmasi', ['token' => $url]);
+    });
 
         //
     }
