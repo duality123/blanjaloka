@@ -1,25 +1,29 @@
 @extends('layouts.base')
 @section('content')
-<div class="container" >
-<h3 align="center">Login :D</h3>
-<div class="d-flex justify-content-center">
-<form method="post" action="{{route('login')}}">
-    @csrf
-<div class="mb-3 row">
-    <label class="col-sm-10 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" name="email" class="form-control " >
-    </div>
-</div>
-  <div class="mb-3 row">
-    <label class="col-sm-10 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" name="password" class="form-control " >
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center mb-4">Login :D</h3>
+          <form method="post" action="{{route('login')}}">
+            @csrf
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" name="password" class="form-control">
+            </div>
+            <div class="d-flex align-items-end gap-2">
+              <button type="submit" class="btn btn-primary">Login</button>
+              <a href="/forgot-password">lupa password klik link ini :)</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-<button type="submit" class="btn btn-primary">Login</button>
-</form>
-    <small><a href="/forgot-password">lupa password klik link ini :)</a></small>
-    </div>
 </div>
 @endsection
