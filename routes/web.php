@@ -17,6 +17,13 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', function () {
+<<<<<<< HEAD
+    return view('welcome');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/login');
+=======
     return view('/home');
 });
 /**
@@ -52,4 +59,5 @@ Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
     Route::get('/google/redirect', 'oauthGoogleRedirect')->name('google.redirect');
     Route::get('/google/callback', 'oauthGoogleCallback')->name('google.callback');
+>>>>>>> 8fab310b5485797573cffc3009e98b4dae5ae271
 });

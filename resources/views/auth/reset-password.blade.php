@@ -1,6 +1,5 @@
 @extends('auth.layout.master')
 @section('content')
-<<<<<<< HEAD
 <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -72,19 +71,9 @@
             <h4 class="mb-2">Adventure starts here 🚀</h4>
             <p class="mb-4">Make your app management easy and fun!</p>
             
-            <form id="formAuthentication" class="mb-3" action="{{route('register')}}" method="POST">
+            <form id="formAuthentication" class="mb-3" action="{{route('password.update')}}" method="POST">
                 @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your Name"
-                    autofocus
-                    />
-                </div>
+                <input type="hidden" name="token" value="{{request()->route('token')}}">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input
@@ -126,101 +115,15 @@
                     </div>
                 </div>
                 
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
-                        <label class="form-check-label" for="terms-conditions">
-                            I agree to
-                            <a href="javascript:void(0);">privacy policy & terms</a>
-                        </label>
-                    </div>
-                </div>
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                
+                <button class="btn btn-primary d-grid w-100">Reset Password</button>
             </form>
             
-            <p class="text-center">
-                <span>Already have an account?</span>
-                <a href="auth-login-basic.html">
-                    <span>Sign in instead</span>
-                </a>
-            </p>
+            
         </div>
     </div>
     <!-- Register Card -->
 </div>
-=======
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="text-center mb-4">Register :D</h3>
-                    <form method="post" action="{{ route('register') }}">
-                        @csrf
-                        <div class="row">
-
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label class="font-weight-bold text-uppercase">Full Name</label>
-                                    <input type="text" name="name" value="{{ old('name') }}"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Masukkan Nama Lengkap">
-                                    @error('name')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label class="font-weight-bold text-uppercase">Email address</label>
-                                    <input type="email" name="email" value="{{ old('email') }}"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Masukkan Alamat Email">
-                                    @error('email')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label class="font-weight-bold text-uppercase">Password</label>
-                                    <input type="password" name="password"
-                                        class="form-control @error('password') is-invalid @enderror"
-                                        placeholder="Masukkan Password">
-                                    @error('password')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label class="font-weight-bold text-uppercase">Konfirmasi Password</label>
-                                    <input type="password" name="password_confirmation" class="form-control"
-                                        placeholder="Masukkan Konfirmasi Password">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="d-flex align-items-end gap-2">
-                            <button type="submit" class="btn btn-primary">REGISTER</button>
-                            <p class="mb-0">Sudah punya akun ? Login <a href="/login">Disini</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
->>>>>>> 8fab310b5485797573cffc3009e98b4dae5ae271
 </div>
 </div>
 @endsection

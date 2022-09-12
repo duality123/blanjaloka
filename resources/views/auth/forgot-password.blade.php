@@ -1,10 +1,9 @@
 @extends('auth.layout.master')
 @section('content')
-<<<<<<< HEAD
 <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-            <!-- Register -->
+        <div class="authentication-inner py-4">
+            <!-- Forgot Password -->
             <div class="card">
                 <div class="card-body">
                     <!-- Logo -->
@@ -69,119 +68,38 @@
                 </a>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">Welcome to Blanjaloka! 👋</h4>
-            <p class="mb-4">Please sign-in to your account and start the adventure</p>
-            
-            @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600" style="background-color: rgb(101, 223, 101)">
-                {{ session('status') }}
-            </div>
-            @endif
-            <form id="formAuthentication" class="mb-3" action="{{route('login')}}" method="POST">
+            <h4 class="mb-2">Forgot Password? 🔒</h4>
+            <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+            <form id="formAuthentication" class="mb-3" action="{{route('password.email')}}" method="POST">
                 @csrf
+                @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600" style="background-color: rgb(101, 223, 101)>
+                    {{ session('status') }}
+                </div>
+                @endif
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input
-                    type="email"
+                    type="text"
                     class="form-control"
                     id="email"
                     name="email"
-                    placeholder="Enter your email or username"
+                    placeholder="Enter your email"
                     autofocus
                     />
                 </div>
-                <div class="mb-3 form-password-toggle">
-                    <div class="d-flex justify-content-between">
-                        <label class="form-label" for="password">Password</label>
-                        <a href="{{route('password.request')}}">
-                            <small>Forgot Password?</small>
-                        </a>
-                    </div>
-                    <div class="input-group input-group-merge">
-                        <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        name="password"
-                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                        aria-describedby="password"
-                        />
-                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember-me" />
-                        <label class="form-check-label" for="remember-me"> Remember Me </label>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                </div>
+                <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
             </form>
-            
-            <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="{{route('register')}}">
-                    <span>Create an account</span>
+            <div class="text-center">
+                <a href="{{route('login')}}" class="d-flex align-items-center justify-content-center">
+                    <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                    Back to login
                 </a>
-            </p>
+            </div>
         </div>
     </div>
-    <!-- /Register -->
-</div>
-=======
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-lg-5">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="text-center mb-4">Login :D</h3>
-          <form method="post" action="{{route('login')}}">
-            @csrf
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" name="email" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" name="password" class="form-control">
-            </div>
-            <div class="d-flex align-items-end gap-2">
-              <button type="submit" class="btn btn-primary">Login</button>
-              <a href="/forgot-password">lupa password klik link ini :)</a>
-            </div>
-            <h6 class="text-center my-2">Cara Lain</h6>
-            <div class="d-flex justify-content-center">
-              <a href="{{ route('auth.google.redirect') }}" class="btn btn-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-                </svg>
-                With Google
-              </a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
->>>>>>> 8fab310b5485797573cffc3009e98b4dae5ae271
+    <!-- /Forgot Password -->
 </div>
 </div>
-
-<!-- / Content -->
-
-{{-- <div class="buy-now">
-    <a
-    href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
-    target="_blank"
-    class="btn btn-danger btn-buy-now"
-    >Upgrade to Pro</a
-    >
-</div> --}}
+</div>
 @endsection
-
-
-
