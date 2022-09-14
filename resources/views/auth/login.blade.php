@@ -119,9 +119,6 @@
                         </a>
                     </p>
 
-                    <hr>
-                    
-                        <a href="{{route('auth.google.redirect')}}" class="btn btn-danger"><i class='bx bxl-google' style="font-size: 2rem"></i> with Google</a>
                     
                 </div>
             </div>
