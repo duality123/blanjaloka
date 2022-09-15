@@ -20,23 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
-/**
-Route::get('/login',[AuthController::class,'login'])->name('login');
-Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
-Route::get('/logout',[AuthController::class,'logout'])->name('logout');
-Route::get('/register',[AuthController::class,'register']);
-Route::get('/page_konfirmasi/{id}',[AuthController::class,'page_konfirmasi'])->name('page_konfirmasi');
-Route::get('/token_aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
-Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
-Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
-Route::get('/reset_password',[AuthController::class,'resetPasswordPage'])->name('reset_password');
-Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
-Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
-Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
- */
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
@@ -55,10 +38,25 @@ Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])
 
 
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
-    Route::get('/google/redirect', 'oauthGoogleRedirect')->name('google.redirect');
-    Route::get('/google/callback', 'oauthGoogleCallback')->name('google.callback');
+    Route::get('/{provider}/redirect', 'redirectToProvider')->name('provider.redirect');
+    Route::get('/{provider}/callback', 'providerCallback')->name('provider.callback');
 });
 
 //route to facebook
-Route::get('auth/facebook', [AuthController::class,'redirectToFacebook']);
-Route::get('auth/facebook/callback', [AuthController::class, 'handleFacebookCallback']);
+
+// Kode dibawah Akan dihapus dimasa depan
+/**
+Route::get('/login',[AuthController::class,'login'])->name('login');
+Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+Route::get('/register',[AuthController::class,'register']);
+Route::get('/page_konfirmasi/{id}',[AuthController::class,'page_konfirmasi'])->name('page_konfirmasi');
+Route::get('/token_aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
+Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
+Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
+Route::get('/reset_password',[AuthController::class,'resetPasswordPage'])->name('reset_password');
+Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
+Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
+Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
+ */
+R
