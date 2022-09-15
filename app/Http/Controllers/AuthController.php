@@ -14,30 +14,34 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    public function oauthGoogleRedirect()
+    public function providerCallback($provider)
     {
-        return Socialite::driver('google')->redirect();
-    }
-
-    public function oauthGoogleCallback()
-    {
-        $google_user = Socialite::driver('google')->user();
+        $provider_user = Socialite::driver($provider)->user();
 
         $user = User::updateOrCreate([
-            'google_id' => $google_user->id,
+            'google_id' => $provider_user->id,
         ], [
-            'name' => $google_user->name,
-            'email' => $google_user->email,
+            'name' => $provider_user->name,
+            'email' => $provider_user->email,
             'password' => null,
             'email_verified_at' => now(),
-            'google_id' => $google_user->id,
-            'google_token' => $google_user->token
+            'google_id' => $provider_user->id,
+            'google_token' =>$provider_user->token
         ]);
 
         Auth::login($user);
         return redirect()->intended('/');
     }
 
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    //kode dibawah ini mungkin akan dihapus dimasa depan...
+    
+    
+/***
     public function redirectToFacebook()
     {
         return Socialite::driver('facebook')->redirect();
@@ -202,4 +206,5 @@ class AuthController extends Controller
         // $getUser->delete();
         // return redirect()->route($target)->with('message', $message);
     }
+    */
 }
