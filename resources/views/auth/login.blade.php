@@ -4,7 +4,7 @@
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
             <!-- Register -->
-            <div class="card">
+            <div class="card justify-content-center">
                 <div class="card-body">
                     <!-- Logo -->
                     <div class="app-brand justify-content-center">
@@ -94,6 +94,7 @@
                                 <label class="form-check-label" for="remember-me"> Remember Me </label>
                             </div>
                         </div>
+
                         <div class="mb-3">
                             <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                         </div>
@@ -117,6 +118,8 @@
                             <span>Create an account</span>
                         </a>
                     </p>
+
+                    
                 </div>
             </div>
             <!-- /Register -->

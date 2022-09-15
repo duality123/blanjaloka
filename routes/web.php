@@ -20,10 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::prefix('admin')->group(function () {
-//     Route::get('/login');
-//     return view('/home');
-// });
+
+
+
 /**
 Route::get('/login',[AuthController::class,'login'])->name('login');
 Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
@@ -53,6 +52,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 
 Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
+
 
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
     Route::get('/google/redirect', 'oauthGoogleRedirect')->name('google.redirect');
