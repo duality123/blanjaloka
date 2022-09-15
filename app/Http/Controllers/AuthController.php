@@ -206,5 +206,5 @@ class AuthController extends Controller
         // $getUser->delete();
         // return redirect()->route($target)->with('message', $message);
     }
-    */
+    **/
 }
