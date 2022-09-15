@@ -58,3 +58,7 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
     Route::get('/google/redirect', 'oauthGoogleRedirect')->name('google.redirect');
     Route::get('/google/callback', 'oauthGoogleCallback')->name('google.callback');
 });
+
+//route to facebook
+Route::get('auth/facebook', [AuthController::class,'redirectToFacebook']);
+Route::get('auth/facebook/callback', [AuthController::class, 'handleFacebookCallback']);
