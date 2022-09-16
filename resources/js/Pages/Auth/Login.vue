@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                              <div class="mb-3">
-                            <a href="/google/redirect" class="btn btn-danger d-grid w-100">
+                            <a href="auth/google/redirect" class="btn btn-danger d-grid w-100">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-google" viewBox="0 0 16 16">
