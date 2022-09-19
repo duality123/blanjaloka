@@ -124,13 +124,11 @@
 <script>
 //import layout
 
-//import reactive
 import { reactive } from "vue";
 
-//import inertia adapter
+
 import { Inertia } from "@inertiajs/inertia";
 
-//import Heade and useForm from Inertia
 import { Link } from "@inertiajs/inertia-vue3";
 
 import Layout from "../../Layouts/Layout.vue";

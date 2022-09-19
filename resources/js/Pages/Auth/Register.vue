@@ -19,6 +19,23 @@
                     <span class="text-primary">Blanjaloka</span> sekarang juga!
                 </p>
                 <form @submit.prevent="submit">
+                 <div class="mb-4">
+                        <label
+                            class="fw-semibold"
+                            for="exampleFormControlInput1"
+                            >Username</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
+                            id="exampleFormControlInput1"
+                            v-model="form.name"
+                            placeholder="Masukkan Username anda"
+                        />
+                        <div v-if="errors.name" class="alert alert-danger">
+                            {{ errors.name }}
+                        </div>
+                    </div>
                     <div class="mb-4">
                         <label
                             class="fw-semibold"
@@ -132,15 +149,12 @@
 <script>
 //import layout
 
-//import reactive
 import { reactive } from "vue";
 
-//import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
 
 import Layout from "../../Layouts/Layout.vue";
 
-//import Heade and useForm from Inertia
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
