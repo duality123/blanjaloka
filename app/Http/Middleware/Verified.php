@@ -18,8 +18,8 @@ class Verified
     public function handle(Request $request, Closure $next)
     {
 
-        if(!Auth::user()->is_verified){
-            return redirect()->route('page_konfirmasi',Auth::user()->id)->with('message', 'Tolong konfirmasi email anda terlebih dahulu !.');
+        if(!Auth::user()->email_verified_at){
+            return redirect('email/verify')
 
         }
         return $next($request);

@@ -1,76 +1,6 @@
 <template>
-    <div>
-        <!-- Navbar -->
-        <section class="tess">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <a class="navbar-brand ps-5" href="#">Blanjaloka</a>
-                    <button
-                        class="navbar-toggler ms-auto"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div
-                        class="collapse navbar-collapse ps-4"
-                        id="navbarSupportedContent"
-                    >
-                        <div class="justify-content-center mx-auto">
-                            <ul
-                                class="navbar-nav mb-2 mb-lg-0"
-                                style="color: #686868"
-                            >
-                                <li class="nav-item">
-                                    <a
-                                        class="nav-link me-4"
-                                        aria-current="page"
-                                        href="#"
-                                        >Beranda</a
-                                    >
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link me-4" href="#"
-                                        >Tentang Program</a
-                                    >
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link me-4" href="">Panduan</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="nav-button">
-                            <ul class="navbar-nav mb-2 mb-lg-0">
-                                <li class="nav-item me-3">
-                                    <a
-                                        href="#"
-                                        class="btn btn-primary"
-                                        style="
-                                            background-color: white;
-                                            color: #398ab9;
-                                            border: 1px solid #398ab9;
-                                        "
-                                        >Masuk</a
-                                    >
-                                </li>
-                                <li class="nav-item me-3">
-                                    <a
-                                        href="#"
-                                        class="btn btn-primary"
-                                        style="background-color: #398ab9"
-                                        >Daftar</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="me-lg-4"></div>
-                </div>
-            </nav>
+<Layout>
+     <section class="home-background">
             <div class="container mt-5 py-5">
                 <div class="row">
                     <div class="col-sm-12 text-center py-5">
@@ -395,87 +325,10 @@
         </section>
         <!-- FAQ close -->
 
-        <!-- Footer -->
-        <section class="border-top" style="background-color: #f0f0f0">
-            <div class="container-fluid">
-                <div class="row d-flex">
-                    <div
-                        class="border col-sm-5"
-                        style="
-                            background-color: #398ab9;
-                            border-radius: 12px;
-                            margin-left: 350px;
-                            margin-top: -30px;
-                        "
-                    >
-                        <h3 class="justify-content-center">
-                            Belanja nyaman dengan Blanjaloka <br />
-                            Belanja lebih mudah bersama Blanjaloka
-                        </h3>
-                    </div>
-                    <div class="col-sm-7 px-2 ms-5 py-5">
-                        <h2>Blanjaloka</h2>
-                        <p class="py-3">
-                            Sebuah program yang membantu UMKM untuk <br />
-                            elevasi produk-produk digital agar mampu bersaing
-                            <br />
-                            secara nasional maupun internasional.
-                        </p>
-                    </div>
-                    <div class="col-sm-4 ms-5 py-5 d-flex">
-                        <div class="mx-5">
-                            <h2>Menu</h2>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                        </div>
-                        <div class="mx-5">
-                            <h2>Menu</h2>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="col-7 px-2 ms-5">
-                        <div class="d-flex">
-                            <p>Kebijakan Privasi</p>
-                            <p class="mx-5">Syarat dan Ketentuan</p>
-                        </div>
-                        <p>© Copyright 2022. All Rights Reserved</p>
-                    </div>
-                    <div class="col-4 ms-4 d-flex">
-                        <div class="mx-4 pt-5">
-                            <i
-                                class="bi bi-instagram"
-                                style="font-size: 2rem"
-                            ></i>
-                        </div>
-                        <div class="mx-3 pt-5">
-                            <i
-                                class="bi bi-facebook"
-                                style="font-size: 2rem"
-                            ></i>
-                        </div>
-                        <div class="mx-3 pt-5">
-                            <i
-                                class="bi bi-twitter"
-                                style="font-size: 2rem"
-                            ></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer close -->
-    </div>
+</Layout>  
 </template>
 
 <script>
-//import layout
-// import LayoutAuth from "../../Layouts/Auth.vue";
 
 //import reactive
 import { reactive } from "vue";
@@ -483,70 +336,25 @@ import { reactive } from "vue";
 //import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
 
-//import Heade and useForm from Inertia
-import { Head, Link } from "@inertiajs/inertia-vue3";
+
+import Layout from "../Layouts/Layout.vue";
 
 export default {
-    //layout
-    // layout: LayoutAuth,
-
-    //register component
-    components: {
-        Head,
-        Link,
-    },
-
-    props: {
-        errors: Object,
-        session: Object,
-    },
-
-    //define composition API
-    setup() {
-        //define form state
-        const form = reactive({
-            email: "",
-            password: "",
-        });
-
-        //submit method
-        const submit = () => {
-            //send data to server
-            Inertia.post("/login", {
-                //data
-                email: form.email,
-                password: form.password,
-            });
-        };
-
-        //return form state and submit method
-        return {
-            form,
-            submit,
-        };
-    },
-};
+    components:{
+        Layout,
+    }
+}
 </script>
 
-<style>
-body {
-    background-color: white;
-    font-family: "Inter";
-    font-style: normal;
-}
+<style scoped>
 
-.tess {
+
+.home-background {
     background: url("images/mask.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
-
-.navbar {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 140%;
 }
 
 h2 {
@@ -582,9 +390,6 @@ h2 {
     line-height: 150%;
 }
 
-.navbar-brand {
-    color: #398ab9;
-}
 
 .tes {
     border: 1px solid red;

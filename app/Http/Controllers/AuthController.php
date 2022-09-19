@@ -18,14 +18,14 @@ class AuthController extends Controller
         $provider_user = Socialite::driver($provider)->user();
 
         $user = User::updateOrCreate([
-            'google_id' => $provider_user->id,
+            'provider_id' => $provider_user->id,
         ], [
             'name' => $provider_user->name,
             'email' => $provider_user->email,
             'password' => null,
             'email_verified_at' => now(),
-            'google_id' => $provider_user->id,
-            'google_token' =>$provider_user->token
+            'provider_id' => $provider_user->id,
+            'provider_token' =>$provider_user->token
         ]);
 
         Auth::login($user);
