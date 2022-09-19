@@ -16,21 +16,37 @@ class AuthController extends Controller
 {
     public function providerCallback($provider)
     {
-        $provider_user = Socialite::driver($provider)->user();
+        switch ($provider){
+            case 'google':
+                $provider_user = Socialite::driver('google')->user();
+                $user = User::updateOrCreate([
+                    'google_id' => $provider_user->id,
+                ], [
+                    'name' => $provider_user->name,
+                    'email' => $provider_user->email,
+                    'password' => null,
+                    'email_verified_at' => now(),
+                    'google_id' => $provider_user->id,
+                    'google_token' =>$provider_user->token
+                ]);
 
-        $user = User::updateOrCreate([
-            'google_id' => $provider_user->id,
-        ], [
-            'name' => $provider_user->name,
-            'email' => $provider_user->email,
-            'password' => null,
-            'email_verified_at' => now(),
-            'google_id' => $provider_user->id,
-            'google_token' =>$provider_user->token
-        ]);
+                Auth::login($user);
+                redirect()->intended('/');
+                break;
+            case 'facebook':
+                $provider_user = Socialite::driver('facebook')->user();
+                $user = User::updateOrCreate(['email' => $provider_user->email],[
+                    'name' => $provider_user->name,
+                    'facebook_id'=> $provider_user->id
+                ]);
+                Auth::login($user);
 
-        Auth::login($user);
-        return redirect()->intended('/');
+                redirect()->intended('/');
+                break;
+
+        }
+
+
     }
 
     public function redirectToProvider($provider)
@@ -39,8 +55,8 @@ class AuthController extends Controller
     }
 
     //kode dibawah ini mungkin akan dihapus dimasa depan...
-    
-    
+
+
 /***
     public function redirectToFacebook()
     {
