@@ -101,11 +101,17 @@
                             {{ errors.password_confirmation }}
                         </div>
                     </div>
-                    <div class="mt-default mb-3">
+                    <div v-if="biruin">
                         <button
                             type="submit"
-                            class="btn btn-default col-12 btn-primary"
-                        >
+                            class="btn col-12 btn-primary">
+                            Daftar
+                        </button>
+                    </div>
+                    <div v-else>
+                         <button
+                            type="submit"
+                            class="btn btn-default col-12 btn-primary">
                             Daftar
                         </button>
                     </div>
@@ -195,6 +201,12 @@ export default {
             submit,
         };
     },
+    computed:{
+        biruin(){
+            if (this.form.email && this.form.name && this.form.password && this.form.password_confirmation){
+                return true;
+            }
+       },
 };
 </script>
 
