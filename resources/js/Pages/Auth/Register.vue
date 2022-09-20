@@ -1,4 +1,5 @@
 <template>
+<Layout>
     <div class="form-login">
         <div class="d-flex justify-content-evenly">
             <div class="col-lg-6 d-lg-block d-none">
@@ -18,6 +19,23 @@
                     <span class="text-primary">Blanjaloka</span> sekarang juga!
                 </p>
                 <form @submit.prevent="submit">
+                 <div class="mb-4">
+                        <label
+                            class="fw-semibold"
+                            for="exampleFormControlInput1"
+                            >Username</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
+                            id="exampleFormControlInput1"
+                            v-model="form.name"
+                            placeholder="Masukkan Username anda"
+                        />
+                        <div v-if="errors.name" class="alert alert-danger">
+                            {{ errors.name }}
+                        </div>
+                    </div>
                     <div class="mb-4">
                         <label
                             class="fw-semibold"
@@ -45,6 +63,7 @@
                             type="text"
                             class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
                             id="exampleFormControlInput1"
+                            v-model="form.no_telepon"
                             placeholder="Masukkan no. handphone aktif Anda"
                         />
                     </div>
@@ -63,6 +82,23 @@
                         />
                         <div v-if="errors.password" class="alert alert-danger">
                             {{ errors.password }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label
+                            class="fw-semibold"
+                            for="exampleFormControlInput1"
+                            >Ketikkan Ulang Kata Sandi</label
+                        >
+                        <input
+                            type="password"
+                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
+                            id="exampleFormControlInput1"
+                            v-model="form.password_confirmation"
+                            placeholder="Ketikkan ulang kata sandi Anda"
+                        />
+                        <div v-if="errors.password_confirmation" class="alert alert-danger">
+                            {{ errors.password_confirmation }}
                         </div>
                     </div>
                     <div class="mt-default mb-3">
@@ -107,29 +143,24 @@
             </div>
         </div>
     </div>
+    </Layout>
 </template>
 
 <script>
 //import layout
-import LayoutAuth from "../../Layouts/Auth.vue";
 
-//import reactive
 import { reactive } from "vue";
 
-//import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
 
-//import Heade and useForm from Inertia
+import Layout from "../../Layouts/Layout.vue";
+
 import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
-    //layout
-    layout: LayoutAuth,
 
-    //register component
     components: {
-        Head,
-        Link,
+        Layout
     },
 
     props: {
@@ -167,12 +198,7 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-body {
-    font-family: "Inter", sans-serif;
-}
-
+<style scoped>
 .logo-login {
     cursor: pointer;
     width: 120px;

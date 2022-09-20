@@ -14,6 +14,7 @@ use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\LogoutResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
+    
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse
         {
             public function toResponse($request)
@@ -31,7 +33,8 @@ class FortifyServiceProvider extends ServiceProvider
                 return redirect('email/verify');
             }
         });
-
+      
+        
         $this->app->instance(LoginResponse::class, new class implements LoginResponse
         {
             public function toResponse($request)
@@ -40,7 +43,6 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
     }
-
     /**
      * Bootstrap any application services.
      *
@@ -68,7 +70,7 @@ class FortifyServiceProvider extends ServiceProvider
             return Inertia::render('Auth/Login');
         });
         Fortify::verifyEmailView(function () {
-            return view('auth/page_konfirmasi');
+            return Inertia::render('Auth/Confirmation_email');
         });
         
         Fortify::registerView(function () {

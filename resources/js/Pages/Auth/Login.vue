@@ -1,7 +1,5 @@
 <template>
-    <Head>
-        <title>Login Blanjaloka</title>
-    </Head>
+   <Layout>
     <div class="form-login">
         <div class="d-flex justify-content-evenly">
             <div class="col-lg-6 d-lg-block d-none">
@@ -120,30 +118,30 @@
             </div>
         </div>
     </div>
+</Layout>
 </template>
 
 <script>
 //import layout
-import LayoutAuth from "../../Layouts/Auth.vue";
 
-//import reactive
 import { reactive } from "vue";
 
-//import inertia adapter
+
 import { Inertia } from "@inertiajs/inertia";
 
-//import Heade and useForm from Inertia
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
+
+import Layout from "../../Layouts/Layout.vue";
 
 export default {
-    //layout
-    layout: LayoutAuth,
-
+    
     //register component
     components: {
-        Head,
+        Layout,
         Link,
+        
     },
+
 
     props: {
         errors: Object,
@@ -162,7 +160,6 @@ export default {
         const submit = () => {
             //send data to server
             Inertia.post("/login", {
-                //data
                 email: form.email,
                 password: form.password,
             });
@@ -178,11 +175,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-body {
-    font-family: "Inter", sans-serif;
-}
-
 .logo-login {
     cursor: pointer;
     width: 120px;
