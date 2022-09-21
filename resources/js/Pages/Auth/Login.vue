@@ -79,10 +79,11 @@ const handleSubmit = () => {
     form.post('/login');
 }
 const handleDisableButton = () => {
-    if ((form.email != null && form.password != null) && (form.email != '' && form.password != '')) {
+   if ((form.email != null && form.password != null) && (form.email != '' && form.password != '')) {
         isButtonDisable.value = false;
-    }
-    isButtonDisable.value = true;
+   } else {
+        isButtonDisable.value = true;
+   }
 }
 </script>
 
