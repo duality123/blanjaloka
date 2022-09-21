@@ -8,14 +8,14 @@
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" v-model="form.email" class="form-control" id="email"
-                            placeholder="Masukkan email Anda">
+                        <input type="email" v-model="form.email" @keyup="handleDisableButton" class="form-control"
+                            id="email" placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
                     <div class="mb-3 position-relative">
                         <label for="kata_sandi" class="form-label">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
-                            placeholder="Masukkan kata sandi Anda">
+                        <input :type="passwordInputType" v-model="form.password" @keyup="handleDisableButton"
+                            class="form-control" id="kata_sandi" placeholder="Masukkan kata sandi Anda">
                         <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
                             class="position-absolute icon_eye" />
@@ -30,7 +30,8 @@
                         <a href="#" class="text-primary text-decoration-none">Lupa kata sandi?</a>
                     </div>
                     <div class="d-grid mt-4">
-                        <button type="submit" class="btn btn-primary text-white py-2">Masuk</button>
+                        <button type="submit" :disabled="isButtonDisable"
+                            class="btn btn-primary text-white py-2">Masuk</button>
                     </div>
                     <div class="d-flex justify-content-center mt-2 gap-1">
                         <p>Belum punya akun?</p>
@@ -62,6 +63,7 @@ import { ref } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 
 const isPasswordVisible = ref(false);
+const isButtonDisable = ref(true);
 const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
 
@@ -79,7 +81,14 @@ const handleTogglePassword = (e) => {
 
 const handleSubmit = () => {
     form.post('/login');
-    console.log(form);
+}
+
+const handleDisableButton = () => {
+    if ((form.email != null && form.password != null) && (form.email != '' && form.password != '')) {
+        isButtonDisable.value = false;
+    } else {
+        isButtonDisable.value = true;
+    }
 }
 </script>
 
