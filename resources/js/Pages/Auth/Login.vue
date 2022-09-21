@@ -76,20 +76,11 @@
                         </div>
                         <a class="text-sm" href="#">Lupa Kata Sandi?</a>
                     </div>
-                    <div v-if="biruin">
                         <button
                             type="submit"
-                            class="btn col-12 btn-primary">
+                            :class="[biruin ?'btn-default':'','btn col-12 btn-primary']">
                             Daftar
                         </button>
-                    </div>
-                    <div v-else>
-                         <button
-                            type="submit"
-                            class="btn btn-default col-12 btn-primary">
-                            Daftar
-                        </button>
-                    </div>
                     <div
                         class="d-flex mb-3 align-items-center gap-2 justify-content-center"
                     >
@@ -234,8 +225,11 @@ label:focus,
     box-shadow: none !important;
 }
 
-.btn-default {
+.btn{
     padding: 0.6rem 0.5rem !important;
+}
+.btn-default {
+   
     opacity: 0.3;
 }
 
