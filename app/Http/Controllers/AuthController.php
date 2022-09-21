@@ -19,6 +19,7 @@ class AuthController extends Controller
         $find_user = User::where('email',$provider_user->email).first()
         if($find_user){
              $this->loginAndRedirect($provider_user);
+             return
         }
         $user = User::updateOrCreate([
             'provider_id' => $provider_user->id,
@@ -32,6 +33,7 @@ class AuthController extends Controller
         ]);
 
         $this->loginAndRedirect($provider_user);
+        return
     }
     public function loginAndRedirect($user){
         Auth::login($user);
