@@ -32,7 +32,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/authenticated_page');
+    return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
