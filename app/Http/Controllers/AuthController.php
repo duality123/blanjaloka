@@ -16,7 +16,10 @@ class AuthController extends Controller
     public function providerCallback($provider)
     {
         $provider_user = Socialite::driver($provider)->user();
-
+        $find_user = User::where('email',$provider_user->email).first()
+        if($find_user){
+             $this->loginAndRedirect($provider_user);
+        }
         $user = User::updateOrCreate([
             'provider_id' => $provider_user->id,
         ], [
@@ -28,6 +31,9 @@ class AuthController extends Controller
             'provider_token' =>$provider_user->token
         ]);
 
+        $this->loginAndRedirect($provider_user);
+    }
+    public function loginAndRedirect($user){
         Auth::login($user);
         return redirect()->intended('/');
     }
