@@ -81,9 +81,8 @@ const handleSubmit = () => {
 const handleDisableButton = () => {
     if ((form.email != null && form.password != null) && (form.email != '' && form.password != '')) {
         isButtonDisable.value = false;
-    } else {
-        isButtonDisable.value = true;
     }
+    isButtonDisable.value = true;
 }
 </script>
 
