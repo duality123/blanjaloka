@@ -170,7 +170,7 @@ export default {
     },
      computed:{
         biruin(){
-            if (this.form.email && this.form.name && this.form.password && this.form.password_confirmation){
+            if (this.form.email && this.form.password ){
                 return true;
             }
         },
