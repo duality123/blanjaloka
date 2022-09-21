@@ -43,7 +43,7 @@
                         </div>
                         <div class="nav-button">
                             
-                            <template v-if="$page.props.auth.user">
+                            <template v-if="user">
                             <ul  class="navbar-nav mb-2 mb-lg-0">
                                 <li class="nav-item me-3">
                                     <form @submit.prevent="submitLogout()">
@@ -53,7 +53,7 @@
                                 </ul>
                                 </template>
                             
-                                <template v-else>
+                            <template v-else>
                                 <ul  class="navbar-nav mb-2 mb-lg-0">
                                 <li class="nav-item me-3">
                                     <Link
@@ -70,7 +70,7 @@
                                     >
                                 </li>
                                 </ul>
-                                </template>
+                            </template>
                                 
             
                         </div>
@@ -89,6 +89,11 @@
 
 
     export default {
+        data(){
+            return{
+                user:this.$page.props.auth.user;
+            }
+        },
         components:{
             Link
         },

@@ -55,6 +55,7 @@
     </AuthLayout>
 </template>
 
+
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
 import { ref } from 'vue'
