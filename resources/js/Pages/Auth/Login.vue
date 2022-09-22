@@ -8,7 +8,7 @@
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" v-model="form.email"class="form-control"
+                        <input type="email" v-model="form.email" class="form-control"
                             id="email" placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
