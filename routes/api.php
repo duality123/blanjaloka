@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +15,31 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Route::resource('login', LoginController::class);
+
+//API route for register new user
+Route::post('/register', [UserController::class, 'register']);
+
+//API route for login user
+Route::post('/login', [UserController::class, 'login']);
+
+//API route for user-check
+Route::post('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
+
+//Protecting Routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    // API route for logout user
+    Route::post('/logout', [UserController::class, 'logout']);
+});
+
+//oAuth
+Route::get('auth/{provider}/redirect', [AuthController::class,'redirectToProvider']);
+Route::get('auth/{provider}/callback', [AuthController::class,'providerCallback']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

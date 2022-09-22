@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb01745190fef4490ffdba1454bbb289",
+    "content-hash": "dcd49b944937d0ecfc44757241fdca65",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6270,6 +6270,7 @@
             "time": "2022-08-14T21:23:22+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "laravel/breeze",
             "version": "v1.13.1",
             "source": {
@@ -6331,6 +6332,8 @@
             "time": "2022-09-19T14:29:29+00:00"
         },
         {
+=======
+>>>>>>> 6108514d649d0ecac8f430dfc7f6a17694d8a170
             "name": "laravel/pint",
             "version": "v1.2.0",
             "source": {
