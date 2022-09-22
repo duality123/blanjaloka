@@ -8,17 +8,19 @@
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-3">
                         <label for="email" class="form-label text-neutral-gray-5">Email</label>
-                        <input type="email" v-model="form.email" @keyup="handleDisableButton" class="form-control"
-                            id="email" placeholder="Masukkan email Anda">
+                        <input type="email" v-model="form.email" class="form-control" id="email"
+                            placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
-                    <div class="mb-3 position-relative">
+                    <div class="position-relative">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password" @keyup="handleDisableButton"
-                            class="form-control" id="kata_sandi" placeholder="Masukkan kata sandi Anda">
-                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
+                        <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
+                            placeholder="Masukkan kata sandi Anda">
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
                             class="position-absolute text-primary-blue-6 icon_eye" />
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check">
@@ -89,62 +91,5 @@ const isButtonDisable = computed(() => {
 </script>
 
 <style scoped>
-h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-top: 3rem;
-}
 
-p {
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 0;
-}
-
-form {
-    margin-top: 1.5rem;
-}
-
-.form-label {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-.form-control {
-    border: none;
-    border-radius: 0;
-    border-bottom: 2px solid #AEAEAE;
-    padding-left: 0;
-}
-
-.form-control:focus {
-    box-shadow: none;
-}
-
-.icon_eye {
-    bottom: 0.8rem;
-    right: 0;
-    cursor: pointer;
-}
-
-.oauth_choose {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    align-items: center;
-    justify-items: center;
-    column-gap: 0.5rem;
-}
-
-.line {
-    width: 100%;
-    height: 2px;
-    background-color: #AEAEAE;
-}
-
-@media (max-width: 575.98px) {
-    .oauth_choose {
-        grid-template-columns: 1fr 2fr 1fr;
-    }
-}
 </style>

@@ -1,325 +1,103 @@
 <template>
-<Layout>
-    <div class="form-login">
-        <div class="d-flex justify-content-evenly">
-            <div class="col-lg-6 d-lg-block d-none">
-                <img
-                    class="hero-images"
-                    src="/images/hero.png"
-                    alt="hero images"
-                />
-            </div>
-            <div class="col-12 col-lg-4 col-md-8 p-4">
-                <div class="logo-login mb-default">
-                    <img src="/images/logo.png" alt="logo" />
-                </div>
-                <h3 class="text-4xl fw-semibold">Daftar</h3>
-                <p class="text-secondary text-down mb-4 fs-6">
-                    Mulai pendanaan UMKM Anda di
-                    <span class="text-primary">Blanjaloka</span> sekarang juga!
-                </p>
-                <form @submit.prevent="submit">
-                 <div class="mb-4">
-                        <label
-                            class="fw-semibold"
-                            for="exampleFormControlInput1"
-                            >Username</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
-                            id="exampleFormControlInput1"
-                            v-model="form.name"
-                            placeholder="Masukkan Username anda"
-                        />
-                        <div v-if="errors.name" class="alert alert-danger">
-                            {{ errors.name }}
-                        </div>
+    <AuthLayout title="Login">
+        <div class="row justify-content-center ">
+            <div class="col-lg-8">
+                <img src="../../assets/images/blanjaloka_logo.png" alt="blanjaloka logo">
+                <h1 class="mt-3">Daftar</h1>
+                <p class="text-secondary">Ayo lakukan pendanaan UMKM sekarang juga!</p>
+                <form @submit.prevent="handleSubmit">
+                    <div class="mb-3 position-relative">
+                        <label for="name" class="form-label">Username</label>
+                        <input type="name" v-model="form.name" class="form-control"
+                            id="name" placeholder="Masukkan username Anda">
+                        <small class="text-danger" v-if="form.errors.name">{{ form.errors.name }}</small>
                     </div>
-                    <div class="mb-4">
-                        <label
-                            class="fw-semibold"
-                            for="exampleFormControlInput1"
-                            >Email</label
-                        >
-                        <input
-                            type="email"
-                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
-                            v-model="form.email"
-                            id="exampleFormControlInput1"
-                            placeholder="Masukkan email Anda"
-                        />
-                        <div v-if="errors.email" class="alert alert-danger">
-                            {{ errors.email }}
-                        </div>
+                    <div class="mb-3 position-relative">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" v-model="form.email" class="form-control"
+                            id="email" placeholder="Masukkan email Anda">
+                        <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
-                    <div class="mb-4">
-                        <label
-                            class="fw-semibold"
-                            for="exampleFormControlInput1"
-                            >No. Handphone</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
-                            id="exampleFormControlInput1"
-                            v-model="form.no_telepon"
-                            placeholder="Masukkan no. handphone aktif Anda"
-                        />
+                    <div class="position-relative">
+                        <label for="kata_sandi" class="form-label">Kata Sandi</label>
+                        <input :type="passwordInputType" v-model="form.password" 
+                            class="form-control" id="kata_sandi" placeholder="Masukkan kata sandi Anda">
+                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
+                            class="position-absolute icon_eye" />
                     </div>
-                    <div class="mb-3">
-                        <label
-                            class="fw-semibold"
-                            for="exampleFormControlInput1"
-                            >Kata Sandi</label
-                        >
-                        <input
-                            type="password"
-                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
-                            id="exampleFormControlInput1"
-                            v-model="form.password"
-                            placeholder="Masukkan kata sandi Anda"
-                        />
-                        <div v-if="errors.password" class="alert alert-danger">
-                            {{ errors.password }}
-                        </div>
+                    <div class="mb-3 position-relative">
+                    <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                     </div>
-                    <div class="mb-3">
-                        <label
-                            class="fw-semibold"
-                            for="exampleFormControlInput1"
-                            >Ketikkan Ulang Kata Sandi</label
-                        >
-                        <input
-                            type="password"
-                            class="form-control border-bottom border-0 rounded-0 px-0 text-sm"
-                            id="exampleFormControlInput1"
-                            v-model="form.password_confirmation"
-                            placeholder="Ketikkan ulang kata sandi Anda"
-                        />
-                        <div v-if="errors.password_confirmation" class="alert alert-danger">
-                            {{ errors.password_confirmation }}
-                        </div>
+                    <div class="position-relative">
+                        <label for="kata_sandi_ulang" class="form-label">Kata Sandi</label>
+                        <input :type="passwordInputType" v-model="form.password_confirmation" 
+                            class="form-control" id="kata_sandi_ulang" placeholder="Ketikkan ulang kata sandi Anda">
+                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
+                            class="position-absolute icon_eye" />
                     </div>
-                     <button
-                            type="submit"
-                            :class="[biruin ?'':'btn-default','btn col-12 btn-primary']">
-                            Daftar
-                     </button>
-                    <div
-                        class="d-flex mb-3 align-items-center gap-2 justify-content-center"
-                    >
-                        <p class="text-sm mb-0">Sudah punya akun?</p>
-                        <a class="text-sm" href="/login">Masuk</a>
+                    <div class="mb-3 position-relative">
+                    <small class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
                     </div>
-                    <div class="line-center position-relative text-center">
-                        <span
-                            class="line bg-default text-center text-sm text-gray-100 px-3"
-                            >atau masuk dengan</span
-                        >
+                    <div class="d-grid mt-4">
+                        <button type="submit" :disabled="isButtonDisable"
+                            class="btn btn-primary text-white py-2">Masuk</button>
                     </div>
-                    <div
-                        class="social-media mt-4 d-flex gap-3 align-items-center justify-content-center"
-                    >
-                        <a href="">
-                            <img
-                                class="icon-facebook"
-                                src="/images/icon-facebook.png"
-                                alt="facebook"
-                            />
-                        </a>
-                        <a href="auth/google/redirect">
-                            <img
-                                class="icon-google"
-                                src="/images/icon-google.png"
-                                alt=""
-                            />
-                        </a>
+                    <div class="d-flex justify-content-center mt-2 gap-1">
+                        <p>Sudah punya akun?</p>
+                        <a href="#" class="text-primary text-decoration-none">Login sekarang</a>
                     </div>
                 </form>
+                <div class="oauth_choose">
+                    <div class="line"></div>
+                    <p>atau masuk dengan</p>
+                    <div class="line"></div>
+                </div>
+                <div class="d-flex justify-content-center gap-4 mt-4">
+                    <a href="#">
+                        <img src="../../assets/icons/icon_facebook.png" alt="oauth facebook">
+                    </a>
+                    <a href="#">
+                        <img src="../../assets/icons/icon_google.png" alt="oauth google">
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    </Layout>
+    </AuthLayout>
 </template>
 
-<script>
-//import layout
 
-import { reactive } from "vue";
+<script setup>
+import AuthLayout from '../../Layouts/Auth.vue'
+import { ref, computed } from 'vue'
+import { useForm } from '@inertiajs/inertia-vue3'
 
-import { Inertia } from "@inertiajs/inertia";
+const isPasswordVisible = ref(false);
+const passwordInputType = ref('password');
+const passwordEyeType = ref('fa-solid fa-eye-slash');
 
-import Layout from "../../Layouts/Layout.vue";
+const form = useForm({
+    name:'',
+    email: '',
+    password: '',
+    password_confirmation:'',
+});
 
-import { Head, Link } from "@inertiajs/inertia-vue3";
-
-export default {
-
-    components: {
-        Layout
-    },
-
-    props: {
-        errors: Object,
-        session: Object,
-    },
-
-    //define composition API
-    setup() {
-        //define form state
-        const form = reactive({
-            name: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
-        });
-
-        //submit method
-        const submit = () => {
-            //send data to server
-            Inertia.post("/register", {
-                name: form.name,
-                email: form.email,
-                password: form.password,
-                password_confirmation: form.password_confirmation,
-            });
-        };
-
-        //return form state and submit method
-        return {
-            form,
-            submit,
-        };
-    },
-    computed:{
-        biruin(){
-            if (this.form.email && this.form.name && this.form.password && this.form.password_confirmation){
-                return true;
-            }
-       },
-
-    }
+const handleTogglePassword = (e) => {
+    isPasswordVisible.value = !isPasswordVisible.value;
+    passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
+    passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
 }
 
+const handleSubmit = () => {
+    form.post('/register');
+}
+
+const isButtonDisable = computed(() => {
+    if (form.email != '' && form.password != '' && form.name != '' && fotm.password_confirmation != '') return false;
+    return true;
+});
 </script>
 
 <style scoped>
-.logo-login {
-    cursor: pointer;
-    width: 120px;
-}
 
-img {
-    width: 100%;
-}
-
-.icon-facebook,
-.icon-google {
-    width: 45px;
-}
-
-.text-sm {
-    font-size: 0.9rem !important;
-}
-
-.text-base {
-    font-size: 1rem;
-}
-
-.text-4xl {
-    font-size: 1.4rem;
-}
-
-.scale-1 {
-    transform: scale(0.8);
-}
-
-textarea:hover,
-input:hover,
-textarea:active,
-input:active,
-textarea:focus,
-input:focus,
-button:focus,
-button:active,
-button:hover,
-label:focus,
-.btn:active,
-.btn.active {
-    outline: 0px !important;
-    box-shadow: none !important;
-}
-
-.btn-default {
-    padding: 0.6rem 0.5rem !important;
-    opacity: 0.3;
-}
-
-.btn-default:hover {
-    opacity: 0.9;
-}
-
-.text-gray-100 {
-    color: #aeaeae !important;
-}
-
-::placeholder {
-    color: #aeaeae !important;
-}
-
-.bg-default {
-    background-color: #fff !important;
-}
-
-.line-center::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(50%);
-    width: 100%;
-    height: 0.3px;
-    background-color: hsla(0, 0%, 68%, 1);
-    z-index: -999;
-}
-
-.mb-default {
-    margin-bottom: 5rem !important;
-}
-
-a {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.mt-default {
-    margin-top: 2.5rem !important;
-}
-
-.hero-images {
-    width: 100%;
-    height: 100%;
-    object-fit: cover !important;
-}
-
-/* custom scrolbar */
-::-webkit-scrollbar {
-    width: 14px;
-}
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 3px rgba(0 0 0 / 0.15);
-}
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(125deg, #333, #293462);
-    border-radius: 10px;
-}
-
-.text-down {
-    width: 350px;
-    /* border: 1px solid red; */
-}
 </style>

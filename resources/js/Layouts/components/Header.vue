@@ -59,10 +59,6 @@
 import { Link } from '@inertiajs/inertia-vue3';
 //import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
-
-
-
-
 export default {
     data() {
         return {
@@ -74,7 +70,9 @@ export default {
     },
     methods: {
         submitLogout() {
-            Inertia.post("/logout");
+            Inertia.post("/logout", {
+                _token: this.$page.props.csrf_token,
+            });
         }
     }
 }
