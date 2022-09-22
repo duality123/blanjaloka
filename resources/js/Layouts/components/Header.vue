@@ -62,6 +62,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 
 
+
 export default {
     data() {
         return {
@@ -73,9 +74,7 @@ export default {
     },
     methods: {
         submitLogout() {
-            Inertia.post("/logout", {
-                _token: this.$page.props.csrf_token,
-            });
+            Inertia.post("/logout");
         }
     }
 }
