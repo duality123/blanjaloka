@@ -103,7 +103,7 @@
                     </div>
                      <button
                             type="submit"
-                            :class="[biruin ?'btn-default':'','btn col-12 btn-primary']">
+                            :class="[biruin ?'':'btn-default','btn col-12 btn-primary']">
                             Daftar
                      </button>
                     <div
