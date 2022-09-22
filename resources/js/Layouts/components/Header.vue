@@ -59,23 +59,6 @@
 import { Link } from '@inertiajs/inertia-vue3';
 //import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
-
-
-
-
-export default {
-    data() {
-        return {
-            user: this.$page.props.auth.user
-        }
-    },
-    components: {
-        Link
-    },
-    methods: {
-        submitLogout() {
-            Inertia.post("/logout", {
-
     export default {
         data(){
             return{
