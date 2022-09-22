@@ -6,21 +6,19 @@
                 <h1 class="text-neutral-black">Masuk</h1>
                 <p class="text-neutral-gray-4">Ayo lakukan pendanaan UMKM sekarang juga!</p>
                 <form @submit.prevent="handleSubmit">
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="email" class="form-label text-neutral-gray-5">Email</label>
                         <input type="email" v-model="form.email" class="form-control" id="email"
                             placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
-                    <div class="position-relative">
+                    <div class="mb-4 position-relative">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
                         <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
                             placeholder="Masukkan kata sandi Anda">
+                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
                             class="position-absolute text-primary-blue-6 icon_eye" />
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check">
@@ -89,7 +87,3 @@ const isButtonDisable = computed(() => {
     return true;
 });
 </script>
-
-<style scoped>
-
-</style>

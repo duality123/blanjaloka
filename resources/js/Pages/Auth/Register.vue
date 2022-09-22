@@ -1,55 +1,48 @@
 <template>
-    <AuthLayout title="Login">
-        <div class="row justify-content-center ">
+    <AuthLayout title="Register">
+        <div class="row justify-content-center my-5">
             <div class="col-lg-8">
                 <img src="../../assets/images/blanjaloka_logo.png" alt="blanjaloka logo">
-                <h1 class="mt-3">Daftar</h1>
-                <p class="text-secondary">Ayo lakukan pendanaan UMKM sekarang juga!</p>
+                <h1 class="text-neutral-black">Daftar</h1>
+                <p class="text-neutral-gray-4">
+                    Mulai pendanaan UMKM Anda di
+                    <a href="#" class="text-primary-blue-6 text-decoration-none">Blanjaloka</a> <br>
+                    sekarang juga!
+                </p>
                 <form @submit.prevent="handleSubmit">
-                    <div class="mb-3 position-relative">
-                        <label for="name" class="form-label">Username</label>
-                        <input type="name" v-model="form.name" class="form-control"
-                            id="name" placeholder="Masukkan username Anda">
-                        <small class="text-danger" v-if="form.errors.name">{{ form.errors.name }}</small>
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" v-model="form.email" class="form-control"
-                            id="email" placeholder="Masukkan email Anda">
+                    <div class="mb-4">
+                        <label for="email" class="form-label text-neutral-gray-5">Email</label>
+                        <input type="email" v-model="form.email" class="form-control" id="email"
+                            placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
-                    <div class="position-relative">
-                        <label for="kata_sandi" class="form-label">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password" 
-                            class="form-control" id="kata_sandi" placeholder="Masukkan kata sandi Anda">
+                    <div class="mb-4">
+                        <label for="no_handphone" class="form-label text-neutral-gray-5">No. Handphone</label>
+                        <input type="number" v-model="form.no_handphone" class="form-control" id="no_handphone"
+                            placeholder="Masukkan no. handphone aktif Anda">
+                        <small class="text-danger" v-if="form.errors.no_handphone">{{ form.errors.no_handphone
+                        }}</small>
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
+                        <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
+                            placeholder="Masukkan kata sandi Anda">
+                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
-                            class="position-absolute icon_eye" />
-                    </div>
-                    <div class="mb-3 position-relative">
-                    <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
-                    </div>
-                    <div class="position-relative">
-                        <label for="kata_sandi_ulang" class="form-label">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password_confirmation" 
-                            class="form-control" id="kata_sandi_ulang" placeholder="Ketikkan ulang kata sandi Anda">
-                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
-                            class="position-absolute icon_eye" />
-                    </div>
-                    <div class="mb-3 position-relative">
-                    <small class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
+                            class="position-absolute text-primary-blue-6 icon_eye" />
                     </div>
                     <div class="d-grid mt-4">
                         <button type="submit" :disabled="isButtonDisable"
-                            class="btn btn-primary text-white py-2">Masuk</button>
+                            class="btn btn-primary-blue-5 text-neutral-white py-2">Daftar</button>
                     </div>
                     <div class="d-flex justify-content-center mt-2 gap-1">
-                        <p>Sudah punya akun?</p>
-                        <a href="#" class="text-primary text-decoration-none">Login sekarang</a>
+                        <p class="text-neutral-gray-4">Sudah punya akun?</p>
+                        <a href="#" class="text-primary-blue-6 text-decoration-none">Masuk</a>
                     </div>
                 </form>
-                <div class="oauth_choose">
+                <div class="oauth_choose mt-4">
                     <div class="line"></div>
-                    <p>atau masuk dengan</p>
+                    <p class="text-neutral-gray-3">atau masuk dengan</p>
                     <div class="line"></div>
                 </div>
                 <div class="d-flex justify-content-center gap-4 mt-4">
@@ -76,10 +69,9 @@ const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
 
 const form = useForm({
-    name:'',
     email: '',
+    no_handphone: '',
     password: '',
-    password_confirmation:'',
 });
 
 const handleTogglePassword = (e) => {
@@ -93,11 +85,7 @@ const handleSubmit = () => {
 }
 
 const isButtonDisable = computed(() => {
-    if (form.email != '' && form.password != '' && form.name != '' && fotm.password_confirmation != '') return false;
+    if (form.email != '' && form.no_handphone != '' && form.password != '') return false;
     return true;
 });
 </script>
-
-<style scoped>
-
-</style>
