@@ -37,10 +37,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
 
 
-Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
-    Route::get('/{provider}/redirect', 'redirectToProvider')->name('provider.redirect');
-    Route::get('/{provider}/callback', 'providerCallback')->name('provider.callback');
-});
+//Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
+//    Route::get('/{provider}/redirect', 'redirectToProvider')->name('provider.redirect');
+//    Route::get('/{provider}/callback', 'providerCallback')->name('provider.callback');
+//});
 
 //route to facebook
 
