@@ -1,401 +1,454 @@
 <template>
-<Layout>
-     <section class="home-background">
-            <div class="container mt-5 py-5">
-                <div class="row">
-                    <div class="col-sm-12 text-center py-5">
-                        <p class="content-title" style="padding-top: 50px">
-                            Kembangkan <strong>UMKM</strong> dan <br />
-                            Dapatkan <strong>Dana Investasi</strong>
-                        </p>
-                        <p class="content-body">
-                            Dapatkan bimbingan dari para mentor serta pendanaan
-                            UMKM
-                            <br />
-                            Anda di Blanjaloka Akselerator sekarang juga!
-                        </p>
-                        <div class="py-3">
-                            <a
-                                href=""
-                                class="button-regis btn btn-primary me-5 fw-bold"
-                                style="
-                                    border: 1px solid #398ab9;
-                                    background-color: #398ab9;
-                                    color: white;
-                                    padding: 6px 20px;
-                                "
-                                >Daftar UMKM Sekarang</a
-                            >
-                            <!-- <button class="btn btn-primary me-5 fw-bold button-register">
-                Daftarkan UMKM Sekarang
-              </button> -->
-                            <a
-                                href=""
-                                class="button-tobe btn btn-primary mx-5 ms-5 fw-bold"
-                                style="
-                                    background-color: #ffffff;
-                                    padding: 6px 60px;
-                                    border: 1px solid #398ab9;
-                                    color: #398ab9;
-                                "
-                                >Jadi Investor</a
-                            >
-                            <!-- <button class="button-tobe btn btn mx-5 ms-5 fw-bold">
-                Jadi Investor
-              </button> -->
-                        </div>
-                    </div>
-                    <div class="col-sm-12 text-center pb-5">
-                        <img
-                            src="images/unsplash_hCb3lIB8L8E.png"
-                            class="w-75"
-                            alt=""
-                        />
-                    </div>
+
+    <Head>
+        <title>Blanjaloka - Kembangkan UMKM dan Dapatkan Dana Investasi</title>
+        <meta name="description" content="Your page description">
+    </Head>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#blanjaloka_navbar"
+                aria-controls="blanjaloka_navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="blanjaloka_navbar">
+                <div class="navbar-nav ms-auto">
+                    <a href="#" class="nav-link text-neutral-gray-4">Beranda</a>
+                    <a href="#" class="nav-link text-neutral-gray-4">Tentang Program</a>
+                    <a href="#" class="nav-link text-neutral-gray-4">Panduan</a>
+                </div>
+                <div class="navbar-nav gap-3 ms-auto">
+                    <Link href="/login"
+                        class="btn btn-outline-primary-blue-6 text-primary-blue-6 px-4 py-2 border-5 btn_custom_outline">
+                    Masuk</Link>
+                    <Link href="/register" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
                 </div>
             </div>
-        </section>
-        <!-- navbar -->
-
-        <!-- content -->
-        <section></section>
-        <!-- content close -->
-
-        <!-- intro -->
-        <section class="py-5">
-            <div class="container py-5 d-flex">
-                <div class="col-sm-6 py-5 mt-5">
-                    <h2>Apa itu Blanjaloka Akselerator?</h2>
-                    <p class="py-5">
-                        <strong>Blanjaloka Akselerator</strong> adalah sebuah
-                        program yang membantu <br />
-                        UMKM untuk elevasi produk-produk digital agar mampu
-                        bersaing <br />
-                        secara nasional maupun internasional.
+        </div>
+    </nav>
+    <section class="hero_section min-vh-100">
+        <div class="container">
+            <h1 class="text-neutral-black text-center tagline">
+                Kembangkan <b>UMKM</b> dan <br> Dapatkan <b>Dana Investasi</b>
+            </h1>
+            <p class="text-neutral-black text-center mt-4">
+                Dapatkan bimbingan dari para mentor serta pendanaan UMKM <br>
+                Anda di Blanjaloka Akselerator sekarang juga!
+            </p>
+            <div class="d-flex flex-column flex-lg-row justify-content-center gap-3 gap-lg-4 mt-5">
+                <a href="#" class="btn btn-primary-blue-6 text-primary-blue-6 text-white py-2 border-5">Daftarkan
+                    UMKM Sekarang</a>
+                <a href="#" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">Jadi
+                    Investor</a>
+            </div>
+            <div class="d-flex justify-content-center mb-5 mb-lg-0">
+                <img src="../assets/images/hero_conversation_img.png" alt="conversation img" class="img-fluid">
+            </div>
+            <div class="row align-items-center position-relative info">
+                <img src="../assets/images/decore_img.png" alt="decorate img" class="position-absolute decorate_img">
+                <div class="col-lg">
+                    <h1 class="text-neutral-black">Apa itu Blanjaloka Akselerator?</h1>
+                    <p class="text-neutral-black mt-4">
+                        <b>Blanjaloka Akselerator</b> adalah sebuah program yang membantu UMKM untuk elevasi
+                        produk-produk
+                        digital
+                        agar mampu bersaing secara nasional maupun internasional.
                     </p>
                 </div>
-                <div class="">
-                    <img src="images/Group 27.png" alt="" class="w-75" />
+                <div class="col-lg d-flex justify-content-end">
+                    <img src="../assets/images/hero_info_img.png" alt="info img" class="img-fluid">
                 </div>
             </div>
-        </section>
-        <!-- intro close -->
-
-        <!-- writing -->
-        <section style="background-color: #f2f7fa">
-            <div class="container-fluid py-5">
-                <div class="row">
-                    <div class="col-sm-4 px-5">
-                        <img
-                            src="images/Frame 30.png"
-                            alt=""
-                            class="img-fluid pb-3"
-                            style="width: 70px"
-                        />
-                        <h3 class="pb-3">Perkembangan UMKM Lebih Cepat</h3>
-                        <p>
-                            Blanjaloka membawa UMKM untuk level-up <br />
-                            dengan pelatihan dan menginkubasi UMKM <br />
-                            agar bisa berkembang lebih baik lagi.
-                        </p>
+        </div>
+    </section>
+    <section class="profit_section bg-primary-blue-1 py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg">
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <img src="../assets/icons/icon_profit_1.png" alt="Perkembangan UMKM Lebih Cepat">
                     </div>
-                    <div class="col-sm-4 px-5">
-                        <img
-                            src="images/Frame 30.png"
-                            alt=""
-                            class="img-fluid pb-3"
-                            style="width: 70px"
-                        />
-                        <h3 class="pb-3">Kesempatan Pendanaan UMKM</h3>
-                        <p>
-                            Dapatkan kesempatan pendanaan untuk UMKM Anda dari
-                            para investor.
-                        </p>
+                    <h1 class="text-neutral-black mt-4">Perkembangan UMKM Lebih Cepat</h1>
+                    <p>
+                        Blanjaloka membawa UMKM untuk level-up dengan pelatihan dan menginkubasi UMKM agar bisa
+                        berkembang lebih baik lagi.
+                    </p>
+                </div>
+                <div class="col-lg">
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <img src="../assets/icons/icon_profit_2.png" alt="Kesempatan Pendanaan UMKM">
                     </div>
-                    <div class="col-sm-4 px-5">
-                        <img
-                            src="images/Frame 30.png"
-                            alt=""
-                            class="img-fluid pb-3"
-                            style="width: 70px"
-                        />
-                        <h3 class="pb-3">
-                            Peningkatan Penjualan Hingga ke <br />
-                            Skala Internasional
-                        </h3>
-                        <p>
-                            UMKM milik Anda akan dibantu untuk elevasi
-                            produk-produk digital agar mampu bersaing secara
-                            nasional maupun internasional.
-                        </p>
+                    <h1 class="text-neutral-black mt-4">Kesempatan Pendanaan UMKM</h1>
+                    <p>
+                        Dapatkan kesempatan pendanaan untuk UMKM Anda dari para investor.
+                    </p>
+                </div>
+                <div class="col-lg">
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <img src="../assets/icons/icon_profit_3.png"
+                            alt="Peningkatan Penjualan Hingga ke Skala Internasional">
                     </div>
+                    <h1 class="text-neutral-black mt-4">Peningkatan Penjualan Hingga ke Skala Internasional</h1>
+                    <p>
+                        UMKM milik Anda akan dibantu untuk elevasi produk-produk digital agar mampu bersaing secara
+                        nasional maupun internasional.
+                    </p>
                 </div>
             </div>
-        </section>
-        <!-- writing close -->
-
-        <!-- Benefit -->
-        <section>
-            <div class="container-fluid py-5 mt-5">
-                <div class="row">
-                    <div class="col-sm-6 px-5">
-                        <img src="images/Rectangle 8.png" class="w-75" alt="" />
-                        <p
-                            style="
-                                font-weight: 400;
-                                font-size: 18px;
-                                line-height: 150%;
-                            "
-                        >
-                            Tahap inkubasi terdiri lorem ipsum dolor sit
-                            amet,<br />
-                            consectetur adipiscing elit. Mi, odio mon, luctus in
-                            ut <br />
-                            cursus est at dictum.
-                        </p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h2>What You'll Learn</h2>
-                    </div>
+        </div>
+    </section>
+    <section class="learn_section position-relative overflow-hidden">
+        <img src="../assets/images/decore_img.png" alt="decorate img" class="position-absolute decorate_img">
+        <div class="container">
+            <div class="row d-flex gap-5">
+                <div class="col-lg order-2 order-lg-1">
+                    <img src="../assets/images/learn_img.png" alt="learn img" class="img-fluid">
+                    <p class="text-neutral-black mt-4">
+                        {{ learnItems[activeLearn].desc }}
+                    </p>
                 </div>
-            </div>
-        </section>
-        <!-- Benefit close -->
-
-        <!-- FAQ -->
-        <section>
-            <div class="container py-5 mt-5 mb-5">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <h1>Pertanyaan Sering Ditanyakan</h1>
-                    </div>
-                    <div class="col-sm-12">
-                        <div
-                            class="accordion"
-                            id="accordionPanelsStayOpenExample"
-                        >
-                            <div
-                                class="accordion-item"
-                                style="background-color: #e4f0f6; color: black"
-                            >
-                                <h2
-                                    class="accordion-header"
-                                    id="panelsStayOpen-headingTwo"
-                                >
-                                    <button
-                                        class="accordion-button collapsed"
-                                        style="
-                                            background-color: #e4f0f6;
-                                            color: black;
-                                        "
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseTwo"
-                                        aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseTwo"
-                                    >
-                                        Accordion Item #2
-                                    </button>
-                                </h2>
-                                <div
-                                    id="panelsStayOpen-collapseTwo"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="panelsStayOpen-headingTwo"
-                                >
-                                    <div class="accordion-body">
-                                        <strong
-                                            >This is the second item's accordion
-                                            body.</strong
-                                        >
-                                        It is hidden by default, until the
-                                        collapse plugin adds the appropriate
-                                        classes that we use to style each
-                                        element. These classes control the
-                                        overall appearance, as well as the
-                                        showing and hiding via CSS transitions.
-                                        You can modify any of this with custom
-                                        CSS or overriding our default variables.
-                                        It's also worth noting that just about
-                                        any HTML can go within the
-                                        <code>.accordion-body</code>, though the
-                                        transition does limit overflow.
-                                    </div>
-                                </div>
+                <div class="col-lg order-1 order-lg-2">
+                    <h1 class="text-neutral-black">What You’ll Learn</h1>
+                    <div class="mt-4">
+                        <div v-for="(item, index) in learnItems"
+                            class="d-flex align-items-center gap-4 p-3 mb-4 rounded-pill learn_item"
+                            :class="{'bg-primary-blue-2': item.isActive}"
+                            @click="handleChangeCurrentLearnItem(item.title)">
+                            <div class="d-flex justify-content-center align-items-center text-neutral-white number"
+                                :class="{'bg-primary-blue-6': item.isActive, 'bg-primary-blue-2': !item.isActive, 'text-neutral-white': item.isActive, 'text-neutral-gray-3': !item.isActive}">
+                                {{ index + 1 }}
                             </div>
-                            <div
-                                class="accordion-item mt-3 border-top"
-                                style="background-color: #e4f0f6; color: black"
-                            >
-                                <h2
-                                    class="accordion-header"
-                                    id="panelsStayOpen-headingThree"
-                                >
-                                    <button
-                                        class="accordion-button collapsed"
-                                        style="
-                                            background-color: #e4f0f6;
-                                            color: black;
-                                        "
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseThree"
-                                        aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseThree"
-                                    >
-                                        Accordion Item #3
-                                    </button>
-                                </h2>
-                                <div
-                                    id="panelsStayOpen-collapseThree"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="panelsStayOpen-headingThree"
-                                >
-                                    <div class="accordion-body">
-                                        <strong
-                                            >This is the third item's accordion
-                                            body.</strong
-                                        >
-                                        It is hidden by default, until the
-                                        collapse plugin adds the appropriate
-                                        classes that we use to style each
-                                        element. These classes control the
-                                        overall appearance, as well as the
-                                        showing and hiding via CSS transitions.
-                                        You can modify any of this with custom
-                                        CSS or overriding our default variables.
-                                        It's also worth noting that just about
-                                        any HTML can go within the
-                                        <code>.accordion-body</code>, though the
-                                        transition does limit overflow.
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="accordion-item mt-3 border-top"
-                                style="background-color: #e4f0f6; color: black"
-                            >
-                                <h2
-                                    class="accordion-header"
-                                    id="panelsStayOpen-headingFour"
-                                >
-                                    <button
-                                        class="accordion-button collapsed"
-                                        style="
-                                            background-color: #e4f0f6;
-                                            color: black;
-                                        "
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseFour"
-                                        aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseFour"
-                                    >
-                                        Accordion Item #4
-                                    </button>
-                                </h2>
-                                <div
-                                    id="panelsStayOpen-collapseFour"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="panelsStayOpen-headingFour"
-                                >
-                                    <div class="accordion-body">
-                                        <strong
-                                            >This is the third item's accordion
-                                            body.</strong
-                                        >
-                                        It is hidden by default, until the
-                                        collapse plugin adds the appropriate
-                                        classes that we use to style each
-                                        element. These classes control the
-                                        overall appearance, as well as the
-                                        showing and hiding via CSS transitions.
-                                        You can modify any of this with custom
-                                        CSS or overriding our default variables.
-                                        It's also worth noting that just about
-                                        any HTML can go within the
-                                        <code>.accordion-body</code>, though the
-                                        transition does limit overflow.
-                                    </div>
-                                </div>
-                            </div>
+                            <h2 class="mb-0" :class="{'text-neutral-gray-3': !item.isActive}">{{ item.title }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- FAQ close -->
-
-</Layout>  
+        </div>
+    </section>
+    <section class="faq_section position-relative overflow-hidden">
+        <img src="../assets/images/decore_img.png" alt="decorate img" class="position-absolute decorate_img">
+        <div class="container">
+            <h1 class="text-neutral-black text-center">Pertanyaan Sering Ditanyakan</h1>
+            <div class="accordion mt-5" id="accordionExample">
+                <div class="accordion-item rounded border mb-4">
+                    <h2 class="accordion-header" id="faq_one">
+                        <button class="accordion-button bg-primary-blue-2 text-neutral-gray-5" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapse_faq_one" aria-expanded="true"
+                            aria-controls="collapse_faq_one">
+                            Apa itu Blanjaloka Akselerator?
+                        </button>
+                    </h2>
+                    <div id="collapse_faq_one" class="accordion-collapse collapse show" aria-labelledby="faq_one"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-primary-blue-2">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut
+                            cursus est at dictum. Blandit lacinia posuere faucibus pharetra at habitant sagittis. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut cursus est
+                            at dictum. Blandit lacinia posuere faucibus pharetra at habitant sagittis. Lorem ipsum dolor
+                            sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut cursus est at dictum.
+                            Blandit lacinia posuere faucibus pharetra at habitant sagittis.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item rounded border mb-4">
+                    <h2 class="accordion-header" id="faq_two">
+                        <button class="accordion-button bg-primary-blue-2 text-neutral-gray-5 collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapse_faq_two" aria-expanded="false"
+                            aria-controls="collapse_faq_two">
+                            Bagaimana cara mengikuti program akselerator di Blanjaloka?
+                        </button>
+                    </h2>
+                    <div id="collapse_faq_two" class="accordion-collapse collapse" aria-labelledby="faq_two"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-primary-blue-2">
+                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until
+                            the collapse plugin adds the appropriate classes that we use to style each element. These
+                            classes control the overall appearance, as well as the showing and hiding via CSS
+                            transitions. You can modify any of this with custom CSS or overriding our default variables.
+                            It's also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cta_section">
+        <div class="container d-flex justify-content-center">
+            <img src="../assets/images/cta_img.png" alt="cta img" class="img-fluid">
+        </div>
+    </section>
+    <footer class="bg-neutral-gray-1">
+        <div class="container">
+            <div class="row align-items-center border-bottom border-neutral-gray-2 pb-5">
+                <div class="col-lg-4 ps-lg-0">
+                    <img src="../assets/images/blanjaloka_logo.png" alt="blankaloka logo" class="img-fluid">
+                    <p class="text-neutral-black">
+                        Sebuah program yang membantu UMKM untuk elevasi produk-produk digital agar mampu bersaing secara
+                        nasional maupun internasional.
+                    </p>
+                </div>
+                <div class="col-lg d-flex justify-content-lg-end">
+                    <a href="#" class="btn btn-primary-blue-6 text-neutral-white py-2 px-4">
+                        Daftarkan UMKM Sekarang
+                    </a>
+                </div>
+            </div>
+            <div class="row align-items-end py-4 gap-4">
+                <div class="col-lg ps-lg-0">
+                    <div class="d-flex gap-4">
+                        <a href="#" class="text-decoration-none text-neutral-gray-4">Kebijakan Privasi</a>
+                        <a href="#" class="text-decoration-none text-neutral-gray-4">Syarat dan Ketentuan</a>
+                    </div>
+                    <p class="text-neutral-gray-4 mt-3 mb-0">&copy; Copyright 2022. All Rights Reserved</p>
+                </div>
+                <div class="col-lg d-flex justify-content-center justify-content-lg-end">
+                    <div class="d-flex gap-4">
+                        <a href="#">
+                            <img src="../assets/icons/icon_instagram_blue.png" alt="icon instagram blue">
+                        </a>
+                        <a href="#">
+                            <img src="../assets/icons/icon_facebook_blue.png" alt="icon facebook blue">
+                        </a>
+                        <a href="#">
+                            <img src="../assets/icons/icon_twitter_blue.png" alt="icon twitter blue">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </template>
 
-<script>
+<script setup>
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import { ref } from 'vue';
 
-//import reactive
-import { reactive } from "vue";
+const learnItems = ref([
+    {
+        title: 'sales',
+        desc: 'Tahap inkubasi terdiri lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut cursus est at dictum.',
+        isActive: true
+    },
+    {
+        title: 'testing 1',
+        desc: 'Testing 1.',
+        isActive: false
+    },
+    {
+        title: 'testing 2',
+        desc: 'Testing 2.',
+        isActive: false
+    },
+]);
+const activeLearn = ref(0);
 
-//import inertia adapter
-import { Inertia } from "@inertiajs/inertia";
+const handleChangeCurrentLearnItem = (title) => {
+    learnItems.value = learnItems.value.map((learn) => {
+        return learn.title == title ? { ...learn, isActive: true } : { ...learn, isActive: false };
+    });
 
-
-import Layout from "../Layouts/Layout.vue";
-
-export default {
-    components:{
-        Layout,
-    }
+    activeLearn.value = learnItems.value.findIndex((learn) => learn.title == title);
 }
 </script>
 
 <style scoped>
-
-
-.home-background {
-    background: url("images/mask.png") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-h2 {
+.nav-link,
+a.btn {
     font-weight: 600;
-    font-size: 34px;
-    line-height: 140%;
 }
 
-.button-regis {
-    border: 1px solid #398ab9;
-    background-color: #398ab9;
-    color: white;
-    padding: 6px 20px;
+.btn_custom_outline {
+    border-width: 2px !important;
 }
 
-.button-tobe {
-    background-color: #ffffff;
-    padding: 6px 60px;
-    border: 1px solid #398ab9;
-    color: #398ab9;
+.btn_custom_outline:hover {
+    color: #FFFFFF !important;
 }
 
-.content-title {
+.hero_section {
+    background-image: url('../assets/images/bg_hero_landing_page.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: -5.1rem;
+    padding: 7.5rem 0;
+}
+
+.hero_section .tagline {
+    font-size: 4rem;
     font-weight: 500;
-    font-size: 64px;
-    line-height: 120%;
-    color: #181a1b;
+    line-height: 4.5rem;
 }
 
-.content-body {
+.hero_section p {
+    font-size: 1.25rem;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 150%;
+    line-height: 1.8rem;
 }
 
-
-.tes {
-    border: 1px solid red;
+.hero_section a.btn {
+    width: 18rem;
 }
 
-button {
-    background-color: #398ab9;
+.hero_section img {
+    margin-top: 7.5rem;
+}
+
+.hero_section .info h1 {
+    font-size: 2.1rem;
+    font-weight: 600;
+}
+
+.hero_section .info .decorate_img {
+    width: 25rem;
+    top: -10rem;
+    left: -10rem;
+    z-index: -1;
+}
+
+.profit_section h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.profit_section p {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.learn_section {
+    padding-top: 12rem;
+}
+
+.learn_section .decorate_img {
+    width: 25rem;
+    top: 2rem;
+    right: -8.5rem;
+    z-index: -1;
+}
+
+.learn_section h1,
+.faq_section h1 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.learn_section .learn_item {
+    cursor: pointer;
+}
+
+.learn_section .number {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.learn_section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.faq_section {
+    padding-top: 10rem;
+}
+
+.faq_section .decorate_img {
+    width: 25rem;
+    top: 50%;
+    left: -8.5rem;
+    z-index: -1;
+}
+
+.faq_section .accordion-button {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.faq_section .accordion-button:not(.collapsed) {
+    box-shadow: inset 0 calc(-1 * 1px) 0 #398AB9;
+}
+
+.faq_section .accordion-body {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.cta_section {
+    padding-top: 10rem;
+    margin-bottom: -5rem;
+}
+
+footer {
+    padding-top: 10rem;
+}
+
+@media (max-width: 575.98px) {
+    nav {
+        background-color: #FFFFFF;
+    }
+
+    .hero_section .tagline {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+
+    .hero_section a.btn {
+        width: 100%;
+    }
+
+    .hero_section img {
+        margin-top: 5rem;
+    }
+
+    .hero_section .info .decorate_img,
+    .learn_section .decorate_img {
+        width: 15rem;
+    }
+
+    .hero_section .info .decorate_img {
+        top: -5rem;
+        left: -5rem;
+    }
+
+    .learn_section .decorate_img {
+        right: 0;
+    }
+
+    .learn_section {
+        padding-top: 6rem;
+    }
+
+    .faq_section {
+        padding-top: 5rem;
+    }
+
+    .faq_section .decorate_img {
+        width: 15rem;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .faq_section .accordion-button {
+        font-size: 1.25rem;
+    }
+
+    .faq_section .accordion-body {
+        font-size: 1rem;
+    }
+
+    .cta_section {
+        padding: 5rem 0;
+        margin-bottom: -6.5rem;
+    }
+
+    footer {
+        padding-top: 5rem;
+    }
 }
 </style>
