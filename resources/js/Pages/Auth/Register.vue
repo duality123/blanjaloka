@@ -101,20 +101,11 @@
                             {{ errors.password_confirmation }}
                         </div>
                     </div>
-                    <div v-if="biruin">
-                        <button
+                     <button
                             type="submit"
-                            class="btn col-12 btn-primary">
+                            :class="[biruin ?'btn-default':'','btn col-12 btn-primary']">
                             Daftar
-                        </button>
-                    </div>
-                    <div v-else>
-                         <button
-                            type="submit"
-                            class="btn btn-default col-12 btn-primary">
-                            Daftar
-                        </button>
-                    </div>
+                     </button>
                     <div
                         class="d-flex mb-3 align-items-center gap-2 justify-content-center"
                     >

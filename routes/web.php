@@ -17,10 +17,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-// Route::get('/', function () {
-//     return view('/home');
-// });
-
 Route::get('/', [HomeController::class, 'index']);
 
 Route::post('/email/verification-notification', function (Request $request) {

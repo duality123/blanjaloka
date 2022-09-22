@@ -9,9 +9,7 @@
 </head>
 
 <body>
-    
   @inertia
-
   @vite('resources/js/app.js')
 </body>
 
