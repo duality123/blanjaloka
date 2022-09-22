@@ -59,31 +59,33 @@
 
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
+
 const isPasswordVisible = ref(false);
-const isButtonDisable = ref(true);
 const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
+
 const form = useForm({
-    email: null,
-    password: null,
+    email: '',
+    password: '',
     remember: false,
 });
+
 const handleTogglePassword = (e) => {
     isPasswordVisible.value = !isPasswordVisible.value;
     passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
     passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
 }
+
 const handleSubmit = () => {
     form.post('/login');
 }
-const handleDisableButton = () => {
-    if ((form.email != null && form.password != null) && (form.email != '' && form.password != '')) {
-        isButtonDisable.value = false;
-    } else {
-        isButtonDisable.value = true;
-    }
+
+const isButtonDisable = computed(() => {
+    if (form.email != '' && form.password != '') return false;
+    return true;
+});
 </script>
 
 <style scoped>
