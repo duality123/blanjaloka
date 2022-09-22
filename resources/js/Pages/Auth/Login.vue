@@ -8,13 +8,13 @@
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" v-model="form.email" @keyup="handleDisableButton" class="form-control"
+                        <input type="email" v-model="form.email"class="form-control"
                             id="email" placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
                     <div class="mb-3 position-relative">
                         <label for="kata_sandi" class="form-label">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password" @keyup="handleDisableButton"
+                        <input :type="passwordInputType" v-model="form.password" 
                             class="form-control" id="kata_sandi" placeholder="Masukkan kata sandi Anda">
                         <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
