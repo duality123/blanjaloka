@@ -91,7 +91,7 @@
     export default {
         data(){
             return{
-                user:this.$page.props.auth.user;
+                user:this.$page.props.auth.user
             }
         },
         components:{
