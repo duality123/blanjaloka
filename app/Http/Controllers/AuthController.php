@@ -38,6 +38,8 @@ class AuthController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
+    
+
     //kode dibawah ini mungkin akan dihapus dimasa depan...
     
     
