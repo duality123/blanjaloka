@@ -16,3 +16,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
+Route::get('/',function(){
+	return redirect('/api/documentation');
+});

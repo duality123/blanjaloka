@@ -24,16 +24,14 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse
-        {
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return redirect('email/verify');
+                return response(['access_token' => 'hhv', 'token_type' => 'Bearer'], 201);
             }
         });
 
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse
-        {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
                 return redirect('/');
@@ -54,7 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $email = (string) $request->email;
+            $email = (string)$request->email;
 
             return Limit::perMinute(5)->by($email . $request->ip());
         });
@@ -62,29 +60,6 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
-
-        //login
-        Fortify::loginView(function () {
-            return Inertia::render('Auth/Login');
-        });
-        Fortify::verifyEmailView(function () {
-            return view('auth/page_konfirmasi');
-        });
-        
-        Fortify::registerView(function () {
-            return Inertia::render('Auth/Register');
-        });
-
-        //forgot
-        Fortify::requestPasswordResetLinkView(function () {
-            return Inertia::render('Auth/ForgotPassword');
-        });
-
-        //reset
-        Fortify::resetPasswordView(function ($request) {
-            return Inertia::render('Auth/ResetPassword', [
-                'request' => $request,
-            ]);
-        });
     }
+
 }

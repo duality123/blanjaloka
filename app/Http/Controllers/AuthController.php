@@ -14,6 +14,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    /**
+     * @param $provider
+     * @return void
+     */
     public function providerCallback($provider)
     {
         switch ($provider){
@@ -54,7 +58,7 @@ class AuthController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    
+
 
     //kode dibawah ini mungkin akan dihapus dimasa depan...
 

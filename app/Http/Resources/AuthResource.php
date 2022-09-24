@@ -16,13 +16,14 @@ class AuthResource extends JsonResource
     protected $messageForUser;
 
     public function __construct($data,$message){
+        $this->dataUser = $data;
+        $this->messageForUser = $message;
         parent::__construct($data);
     }
     public function toArray($request)
     {   
         $data['data'] = $this->dataUser;
         $data['meta']['message'] = $this->messageForUser;
-
         return $data;
     }
 

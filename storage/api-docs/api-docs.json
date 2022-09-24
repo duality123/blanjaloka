@@ -1,0 +1,24 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Demo Dokumentasi API Blanjaloka",
+        "description": "Dokumentasi dengan UI Swagger",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/google/redirect": {
+            "get": {
+                "tags": [
+                    "Loghin dengan google"
+                ],
+                "summary": "Redirect ke page login Google",
+                "operationId": "register/login",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    }
+}

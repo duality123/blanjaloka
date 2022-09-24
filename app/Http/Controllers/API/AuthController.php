@@ -11,6 +11,21 @@ use App\Http\Resources\AuthResource;
 
 class AuthController extends Controller
 {
+    /**
+     * @OA\GET(
+     *   path="/api/auth/google/redirect",
+     *   tags={"Login dengan google"},
+     *   summary="Redirect ke page login Google",
+     *   operationId="register/login",
+     *
+     *   @OA\Response(
+     *      response=200,
+     *      description="Success",
+     *
+     *   ),
+     *
+     * )
+     * */
     public function providerCallback($provider)
     {
         $provider_user = Socialite::driver($provider)->stateless()->user();
