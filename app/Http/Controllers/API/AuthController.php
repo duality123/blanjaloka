@@ -32,7 +32,7 @@ class AuthController extends Controller
         $find_user = User::where('email',$provider_user->email)->first();
         if($find_user){
             $find_user->createToken('myapptoken')->plainTextToken;
-            return response(new AuthResource($find_user,'Selamat datang kembali.'));
+            return response(new AuthResource($find_user,'success login'));
         }
             $user = User::updateOrCreate([
                 'provider_id' => $provider_user->id,
@@ -45,7 +45,7 @@ class AuthController extends Controller
                 'provider_token' =>$provider_user->token
             ]);
             $user->createToken('myapptoken')->plainTextToken;
-            return response(new AuthResource($user, 'Selamat bergabung'));
+            return response(new AuthResource($user, 'success register user'));
     }
 
 
