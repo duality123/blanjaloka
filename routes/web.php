@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -48,6 +49,7 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 });
 
 //route to facebook
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
 // Kode dibawah Akan dihapus dimasa depan
 /**
@@ -64,4 +66,3 @@ Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name(
 Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
 Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
  */
-
