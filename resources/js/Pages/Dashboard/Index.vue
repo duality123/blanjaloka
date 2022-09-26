@@ -9,7 +9,7 @@
         <div class="card">
           <div class="card-body">
             <h3 class="text-neutral-gray-4">Total Investasi Batch 1</h3>
-            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="chartHeight" class="mt-4" />
+            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="250" class="mt-4" />
           </div>
         </div>
       </div>
@@ -17,7 +17,7 @@
         <div class="card">
           <div class="card-body">
             <h3 class="text-neutral-gray-4">Jumlah Investor Tiap Batch</h3>
-            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="chartHeight" class="mt-4" />
+            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="250" class="mt-4" />
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <div class="card">
           <div class="card-body">
             <h3 class="text-neutral-gray-4">Jenis UMKM</h3>
-            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="chartHeight" class="mt-4" />
+            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="250" class="mt-4" />
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="card">
           <div class="card-body">
             <h3 class="text-neutral-gray-4">Latar Belakang Founder</h3>
-            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="chartHeight" class="mt-4" />
+            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="250" class="mt-4" />
           </div>
         </div>
       </div>
@@ -67,10 +67,6 @@ const chartOptions = ref({
       align: 'start'
     }
   }
-});
-const chartHeight = ref({
-  type: Number,
-  default: 250
 });
 </script>
 

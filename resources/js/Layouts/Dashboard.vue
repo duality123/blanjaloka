@@ -41,10 +41,17 @@
                   <font-awesome-icon :icon="iconMenuPenggunaType" class="text-primary-blue-6" />
                 </div>
                 <ul v-if="isMenuPenggunaActive" class="sub_menu">
-                  <li class="rounded p-3"><a href="#" class="text-decoration-none text-neutral-black">Peserta UMKM</a>
+                  <li class="rounded p-3"
+                    :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/peserta-umkm'}">
+                    <Link href="/dashboard/pengguna/peserta-umkm" class="text-decoration-none text-neutral-black">
+                    Peserta UMKM</Link>
                   </li>
-                  <li class="rounded p-3"><a href="#" class="text-decoration-none text-neutral-black">Investor</a></li>
-                  <li class="rounded p-3"><a href="#" class="text-decoration-none text-neutral-black">Admin</a></li>
+                  <li class="rounded p-3">
+                    <a href="#" class="text-decoration-none text-neutral-black">Investor</a>
+                  </li>
+                  <li class="rounded p-3">
+                    <a href="#" class="text-decoration-none text-neutral-black">Admin</a>
+                  </li>
                 </ul>
               </a>
             </li>
@@ -83,8 +90,8 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
+import { ref, onMounted } from 'vue';
 
 const isMenuPenggunaActive = ref(false);
 const iconMenuPenggunaType = ref('fa-solid fa-chevron-right');
@@ -100,6 +107,12 @@ const toggleMenuPengguna = () => {
   isMenuPenggunaActive.value = !isMenuPenggunaActive.value;
   iconMenuPenggunaType.value = isMenuPenggunaActive.value ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-right';
 }
+
+onMounted(() => {
+  const { url } = usePage();
+
+  if (url.value == '/dashboard/pengguna/peserta-umkm') isMenuPenggunaActive.value = true;
+});
 </script>
 
 <style scoped>
