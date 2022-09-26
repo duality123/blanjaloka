@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\Dashboard\KegiatanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
@@ -49,7 +50,10 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 });
 
 //route to facebook
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/kegiatan', [KegiatanController::class, 'index']);
+});
 
 // Kode dibawah Akan dihapus dimasa depan
 /**

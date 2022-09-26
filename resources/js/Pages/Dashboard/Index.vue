@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout title="Overview">
-    <div class="d-flex justify-content-between align-items-center">
-      <h1 class="text-neutral-gray-5">Overview</h1>
+    <div class="d-flex justify-content-between align-items-end">
+      <h1 class="text-neutral-gray-5 mb-0">Overview</h1>
       <h2 class="text-neutral-gray-5">Senin, 19 September 2022 12.39 PM</h2>
     </div>
     <div class="row mt-5">

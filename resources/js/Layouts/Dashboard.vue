@@ -14,14 +14,15 @@
           <h2 class="text-neutral-gray-4">Menu</h2>
           <ul class="mt-4">
             <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard'}">
-              <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
-                <img src="../assets/icons/icon_overview_dashboard.png" alt="icon overview" class="img-fluid">Overview
-              </a>
+              <Link href="/dashboard" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
+              <img src="../assets/icons/icon_overview_dashboard.png" alt="icon overview" class="img-fluid">Overview
+              </Link>
             </li>
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/kegiatan'}">
-              <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
-                <img src="../assets/icons/icon_kegiatan_dashboard.png" alt="icon kegiatan" class="img-fluid">Kegiatan
-              </a>
+            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard/kegiatan'}">
+              <Link href="/dashboard/kegiatan"
+                class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
+              <img src="../assets/icons/icon_kegiatan_dashboard.png" alt="icon kegiatan" class="img-fluid">Kegiatan
+              </Link>
             </li>
             <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/funding'}">
               <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
@@ -82,7 +83,7 @@
 </template>
 
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
 const isMenuPenggunaActive = ref(false);
