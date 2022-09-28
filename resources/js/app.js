@@ -11,6 +11,8 @@ import {
     faChevronRight,
     faChevronUp,
     faPlus,
+    faEllipsis,
+    faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap";
 
@@ -20,7 +22,9 @@ library.add(
     faArrowRightFromBracket,
     faChevronRight,
     faChevronUp,
-    faPlus
+    faPlus,
+    faEllipsis,
+    faEllipsisVertical
 );
 
 createInertiaApp({

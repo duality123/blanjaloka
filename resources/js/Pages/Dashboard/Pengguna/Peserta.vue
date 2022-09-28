@@ -1,6 +1,6 @@
 <template>
   <DashboardLayout title="Peserta">
-    <div class="d-flex justify-content-between align-items-end">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Pengguna</h1>
       <a href="#" class="btn btn-primary-blue-6 text-neutral-white py-2">
         <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Admin
@@ -69,5 +69,12 @@ ul li.active {
 ul li a {
   text-decoration: none;
   font-weight: 600;
+}
+
+@media (max-width: 575.98px) {
+  ul {
+    gap: 1rem;
+    flex-direction: column;
+  }
 }
 </style>

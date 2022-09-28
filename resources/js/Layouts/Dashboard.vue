@@ -4,9 +4,9 @@
     <title>Blanjaloka - Dashboard {{ title }}</title>
     <meta name="description" content="Your page description">
   </Head>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-3 left_content">
+  <div class="container-fluid position-relative">
+    <div class="row position-relative">
+      <div class="col-lg-3 left_content bg-neutral-white" :class="{'active': isHamburgerMenuActive}">
         <div class="d-flex justify-content-center">
           <img src="../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
         </div>
@@ -82,9 +82,12 @@
           </div>
         </div>
       </div>
-      <div class="col right_content bg-neutral-white-2">
+      <div class="col right_content bg-neutral-white-2 min-vh-100">
         <slot />
       </div>
+    </div>
+    <div class="bg-neutral-white shadow menu_toggle" @click="toggleHamburgerMenu">
+      <font-awesome-icon :icon="iconHamburgerMenuType" />
     </div>
   </div>
 </template>
@@ -95,6 +98,8 @@ import { ref, onMounted } from 'vue';
 
 const isMenuPenggunaActive = ref(false);
 const iconMenuPenggunaType = ref('fa-solid fa-chevron-right');
+const isHamburgerMenuActive = ref(false);
+const iconHamburgerMenuType = ref('fa-solid fa-ellipsis');
 
 const props = defineProps({
   title: {
@@ -107,6 +112,10 @@ const toggleMenuPengguna = () => {
   isMenuPenggunaActive.value = !isMenuPenggunaActive.value;
   iconMenuPenggunaType.value = isMenuPenggunaActive.value ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-right';
 }
+const toggleHamburgerMenu = () => {
+  isHamburgerMenuActive.value = !isHamburgerMenuActive.value;
+  iconHamburgerMenuType.value = isHamburgerMenuActive.value ? 'fa-solid fa-ellipsis-vertical' : 'fa-solid fa-ellipsis';
+}
 
 onMounted(() => {
   const { url } = usePage();
@@ -116,6 +125,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.menu_toggle {
+  display: none;
+}
+
 .left_content {
   padding: 1.5rem;
 }
@@ -170,5 +183,37 @@ onMounted(() => {
 
 .right_content {
   padding: 2rem
+}
+
+@media (max-width: 575.98px) {
+  .menu_toggle {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    border-radius: 50%;
+    z-index: 99;
+  }
+
+  .menu_toggle svg {
+    font-size: 1.5rem;
+  }
+
+  .left_content {
+    display: none;
+  }
+
+  .left_content.active {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
 }
 </style>
