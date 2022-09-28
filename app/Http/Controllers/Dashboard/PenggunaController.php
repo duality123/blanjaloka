@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
 {
-    public function pesertaUMKM()
+    public function admin()
     {
-        return inertia('Dashboard/Pengguna/Peserta');
+        return inertia('Dashboard/Pengguna/Admin');
     }
 }

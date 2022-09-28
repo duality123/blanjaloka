@@ -41,16 +41,16 @@
                   <font-awesome-icon :icon="iconMenuPenggunaType" class="text-primary-blue-6" />
                 </div>
                 <ul v-if="isMenuPenggunaActive" class="sub_menu">
-                  <li class="rounded p-3"
-                    :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/peserta-umkm'}">
-                    <Link href="/dashboard/pengguna/peserta-umkm" class="text-decoration-none text-neutral-black">
-                    Peserta UMKM</Link>
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/admin'}">
+                    <Link href="/dashboard/pengguna/admin" class="text-decoration-none text-neutral-black">
+                    Admin</Link>
                   </li>
                   <li class="rounded p-3">
                     <a href="#" class="text-decoration-none text-neutral-black">Investor</a>
                   </li>
-                  <li class="rounded p-3">
-                    <a href="#" class="text-decoration-none text-neutral-black">Admin</a>
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/umkm'}">
+                    <Link href="/dashboard/pengguna/umkm" class="text-decoration-none text-neutral-black">
+                    UMKM</Link>
                   </li>
                 </ul>
               </a>
@@ -120,7 +120,9 @@ const toggleHamburgerMenu = () => {
 onMounted(() => {
   const { url } = usePage();
 
-  if (url.value == '/dashboard/pengguna/peserta-umkm') isMenuPenggunaActive.value = true;
+  if (url.value == '/dashboard/pengguna/umkm' || url.value == '/dashboard/pengguna/admin') {
+    isMenuPenggunaActive.value = true;
+  };
 });
 </script>
 

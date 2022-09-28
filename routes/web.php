@@ -56,7 +56,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/kegiatan', [KegiatanController::class, 'index']);
 
     Route::prefix('pengguna')->group(function () {
-        Route::get('/peserta-umkm', [PenggunaController::class, 'pesertaUMKM']);
+        Route::get('/admin', [PenggunaController::class, 'admin']);
     });
 });
 
