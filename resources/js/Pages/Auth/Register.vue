@@ -25,11 +25,13 @@
                     </div>
                     <div class="mb-4 position-relative">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
-                            placeholder="Masukkan kata sandi Anda">
+                        <div class="position-relative">
+                            <input :type="passwordInputType" v-model="form.password" class="form-control"
+                                id="kata_sandi" placeholder="Masukkan kata sandi Anda">
+                            <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
+                                class="position-absolute text-primary-blue-6 icon_eye" />
+                        </div>
                         <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
-                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
-                            class="position-absolute text-primary-blue-6 icon_eye" />
                     </div>
                     <div class="d-grid mt-4">
                         <button type="submit" :disabled="isButtonDisable"
@@ -37,7 +39,7 @@
                     </div>
                     <div class="d-flex justify-content-center mt-2 gap-1">
                         <p class="text-neutral-gray-4">Sudah punya akun?</p>
-                        <a href="#" class="text-primary-blue-6 text-decoration-none">Masuk</a>
+                        <Link href="/login" class="text-primary-blue-6 text-decoration-none">Masuk</Link>
                     </div>
                 </form>
                 <div class="oauth_choose mt-4">
@@ -62,7 +64,7 @@
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
 import { ref, computed } from 'vue'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { Link, useForm } from '@inertiajs/inertia-vue3'
 
 const isPasswordVisible = ref(false);
 const passwordInputType = ref('password');

@@ -40,6 +40,7 @@ $blanjaloka-color-schema: (
 @import "../../node_modules/bootstrap/scss/variables";
 
 $theme-colors: map-merge($blanjaloka-color-schema, $theme-colors);
+$table-variants: map-merge($blanjaloka-color-schema, $table-variants);
 
 // import bootstrap sass
 @import "../../node_modules/bootstrap/scss/bootstrap";

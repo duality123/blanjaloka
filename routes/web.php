@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\Dashboard\KegiatanController;
+use App\Http\Controllers\Dashboard\PenggunaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -48,6 +51,14 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 });
 
 //route to facebook
+Route::prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/kegiatan', [KegiatanController::class, 'index']);
+
+    Route::prefix('pengguna')->group(function () {
+        Route::get('/admin', [PenggunaController::class, 'admin']);
+    });
+});
 
 // Kode dibawah Akan dihapus dimasa depan
 /**
@@ -64,4 +75,3 @@ Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name(
 Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
 Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
  */
-

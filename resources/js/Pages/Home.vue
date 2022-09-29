@@ -369,6 +369,10 @@ a.btn {
     font-weight: 600;
 }
 
+.faq_section .accordion-button:focus {
+    box-shadow: none;
+}
+
 .faq_section .accordion-button:not(.collapsed) {
     box-shadow: inset 0 calc(-1 * 1px) 0 #398AB9;
 }

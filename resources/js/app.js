@@ -4,10 +4,28 @@ import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+    faEye,
+    faEyeSlash,
+    faArrowRightFromBracket,
+    faChevronRight,
+    faChevronUp,
+    faPlus,
+    faEllipsis,
+    faEllipsisVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import "bootstrap";
 
-library.add(faEye, faEyeSlash);
+library.add(
+    faEye,
+    faEyeSlash,
+    faArrowRightFromBracket,
+    faChevronRight,
+    faChevronUp,
+    faPlus,
+    faEllipsis,
+    faEllipsisVertical
+);
 
 createInertiaApp({
     resolve: (name) =>
