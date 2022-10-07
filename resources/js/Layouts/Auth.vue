@@ -48,28 +48,6 @@ form {
   margin-top: 1.5rem;
 }
 
-.form-label {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 0;
-}
-
-.form-control {
-  border: none;
-  border-radius: 0;
-  border-bottom: 2px solid #AEAEAE;
-  padding-left: 0;
-}
-
-.form-control::-webkit-outer-spin-button,
-.form-control::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.form-control:focus {
-  box-shadow: none;
-}
-
 .icon_eye {
   bottom: 0.8rem;
   right: 0;

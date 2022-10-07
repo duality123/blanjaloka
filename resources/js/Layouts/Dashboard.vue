@@ -15,7 +15,7 @@
           <ul class="mt-4">
             <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard'}">
               <Link href="/dashboard" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
-              <img src="../assets/icons/icon_overview_dashboard.png" alt="icon overview" class="img-fluid">Overview
+              <img src="../assets/icons/icon_dashboard_dashboard.png" alt="icon dashboard" class="img-fluid">Dashboard
               </Link>
             </li>
             <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard/kegiatan'}">

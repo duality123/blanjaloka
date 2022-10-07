@@ -7,6 +7,8 @@ use App\Http\Controllers\Dashboard\KegiatanController;
 use App\Http\Controllers\Dashboard\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\Umkm\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
@@ -26,7 +28,11 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //     return view('/home');
 // });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [PagesController::class, 'home']);
+Route::get('/kebijakan-privasi', [PagesController::class, 'kebijakanPrivasi']);
+Route::get('/syarat-dan-ketentuan', [PagesController::class, 'syaratDanKetentuan']);
+
+Route::get('/profile', [ProfileController::class, 'index']);
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();

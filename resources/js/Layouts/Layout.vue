@@ -1,31 +1,148 @@
 <template>
-<Header/>
-    <main>
-          <slot/>
-    </main>
-<Footer/>
+
+    <Head>
+        <title>Blanjaloka - {{ title }}</title>
+        <meta name="description" content="Your page description">
+    </Head>
+    <header>
+        <div
+            class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
+            <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
+            <a href="#"
+                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
+                Profil</a>
+        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#blanjaloka_navbar" aria-controls="blanjaloka_navbar" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="blanjaloka_navbar">
+                    <div class="navbar-nav ms-auto">
+                        <a href="#" class="nav-link text-neutral-gray-4">Beranda</a>
+                        <a href="#" class="nav-link text-neutral-gray-4">Tentang Program</a>
+                        <a href="#" class="nav-link text-neutral-gray-4">Panduan</a>
+                    </div>
+                    <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
+                        <Link href="/login"
+                            class="btn btn-outline-primary-blue-6 text-primary-blue-6 px-4 py-2 border-5 btn_custom_outline">
+                        Masuk</Link>
+                        <Link href="/register" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
+                        <div
+                            class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 user_profile_menu">
+                            <img src="../assets/images/user_profile_public_img.png" alt="user profile public">
+                            <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <slot />
+    <section class="cta_section">
+        <div class="container d-flex justify-content-center">
+            <img src="../assets/images/cta_img.png" alt="cta img" class="img-fluid">
+        </div>
+    </section>
+    <footer class="bg-neutral-gray-1">
+        <div class="container">
+            <div class="row align-items-center border-bottom border-neutral-gray-2 pb-5">
+                <div class="col-lg-4 ps-lg-0">
+                    <img src="../assets/images/blanjaloka_logo.png" alt="blankaloka logo" class="img-fluid">
+                    <p class="text-neutral-black">
+                        Sebuah program yang membantu UMKM untuk elevasi produk-produk digital agar mampu bersaing secara
+                        nasional maupun internasional.
+                    </p>
+                </div>
+                <div class="col-lg d-flex justify-content-lg-end">
+                    <a href="#" class="btn btn-primary-blue-6 text-neutral-white py-2 px-4">
+                        Daftarkan UMKM Sekarang
+                    </a>
+                </div>
+            </div>
+            <div class="row align-items-end py-4 gap-4">
+                <div class="col-lg ps-lg-0">
+                    <div class="d-flex gap-4">
+                        <Link href="/kebijakan-privasi" class="text-decoration-none text-neutral-gray-4">Kebijakan
+                        Privasi</Link>
+                        <Link href="/syarat-dan-ketentuan" class="text-decoration-none text-neutral-gray-4">Syarat dan
+                        Ketentuan</Link>
+                    </div>
+                    <p class="text-neutral-gray-4 mt-3 mb-0">&copy; Copyright 2022. All Rights Reserved</p>
+                </div>
+                <div class="col-lg d-flex justify-content-center justify-content-lg-end">
+                    <div class="d-flex gap-4">
+                        <a href="#">
+                            <img src="../assets/icons/icon_instagram_blue.png" alt="icon instagram blue">
+                        </a>
+                        <a href="#">
+                            <img src="../assets/icons/icon_facebook_blue.png" alt="icon facebook blue">
+                        </a>
+                        <a href="#">
+                            <img src="../assets/icons/icon_twitter_blue.png" alt="icon twitter blue">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </template>
 
-<script>
-    import { Link } from '@inertiajs/inertia-vue3';
-    import Header from './components/Header.vue';
-    import Footer from './components/Footer.vue';
-    export default {
-        components:{
-            Header,
-            Link,
-            Footer,
-        }
+<script setup>
+import { Head, Link } from '@inertiajs/inertia-vue3';
+
+const props = defineProps({
+    title: {
+        type: String,
+        default: 'Berikan judul disini'
     }
+});
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-body {
-    font-family: "Inter", sans-serif;
-    background-color: white;
+<style scoped>
+.nav-link,
+a.btn {
+    font-weight: 600;
 }
-main{
-    margin-top:70px;
+
+.user_profile_menu {
+    cursor: pointer;
+}
+
+.btn_custom_outline {
+    border-width: 2px !important;
+}
+
+.btn_custom_outline:hover {
+    color: #FFFFFF !important;
+}
+
+.cta_section {
+    padding-top: 10rem;
+    margin-bottom: -5rem;
+}
+
+footer {
+    padding-top: 10rem;
+}
+
+@media (max-width: 575.98px) {
+    nav {
+        background-color: #FFFFFF;
+    }
+
+    .cta_section {
+        padding: 5rem 0;
+        margin-bottom: -6.5rem;
+    }
+
+    footer {
+        padding-top: 5rem;
+    }
 }
 </style>
