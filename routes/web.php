@@ -60,6 +60,7 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/kegiatan', [KegiatanController::class, 'index']);
+    Route::get('/kegiatan/create', [KegiatanController::class, 'create']);
 
     Route::prefix('pengguna')->group(function () {
         Route::get('/admin', [PenggunaController::class, 'admin']);

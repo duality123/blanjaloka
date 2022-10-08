@@ -4,7 +4,7 @@
         <title>Blanjaloka - {{ title }}</title>
         <meta name="description" content="Your page description">
     </Head>
-    <header>
+    <header class="fixed-top">
         <div
             class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
@@ -12,11 +12,14 @@
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</a>
         </div>
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg" :class="{'bg-primary-blue-6': scrollPosition > 100}">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
-                </a>
+                <Link class="navbar-brand" href="/">
+                <img v-if="scrollPosition < 100" src="../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo"
+                    class="img-fluid">
+                <img v-if="scrollPosition > 100" src="../assets/images/blanjaloka_logo_white.png" alt="blanjaloka logo"
+                    class="img-fluid">
+                </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#blanjaloka_navbar" aria-controls="blanjaloka_navbar" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -24,20 +27,27 @@
                 </button>
                 <div class="collapse navbar-collapse" id="blanjaloka_navbar">
                     <div class="navbar-nav ms-auto">
-                        <a href="#" class="nav-link text-neutral-gray-4">Beranda</a>
-                        <a href="#" class="nav-link text-neutral-gray-4">Tentang Program</a>
-                        <a href="#" class="nav-link text-neutral-gray-4">Panduan</a>
+                        <Link href="/" class="nav-link"
+                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">
+                        Beranda</Link>
+                        <a href="#" class="nav-link"
+                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">Tentang
+                            Program</a>
+                        <a href="#" class="nav-link"
+                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">Panduan</a>
                     </div>
                     <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
-                        <Link href="/login"
-                            class="btn btn-outline-primary-blue-6 text-primary-blue-6 px-4 py-2 border-5 btn_custom_outline">
+                        <Link href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
+                            :class="{'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100}">
                         Masuk</Link>
-                        <Link href="/register" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
-                        <div
+                        <Link href="/register" class="btn px-4 py-2"
+                            :class="{'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100}">
+                        Daftar</Link>
+                        <Link href="/profile"
                             class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 user_profile_menu">
-                            <img src="../assets/images/user_profile_public_img.png" alt="user profile public">
-                            <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
-                        </div>
+                        <img src="../assets/images/user_profile_public_img.png" alt="user profile public">
+                        <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -53,7 +63,7 @@
         <div class="container">
             <div class="row align-items-center border-bottom border-neutral-gray-2 pb-5">
                 <div class="col-lg-4 ps-lg-0">
-                    <img src="../assets/images/blanjaloka_logo.png" alt="blankaloka logo" class="img-fluid">
+                    <img src="../assets/images/blanjaloka_logo_blue.png" alt="blankaloka logo" class="img-fluid">
                     <p class="text-neutral-black">
                         Sebuah program yang membantu UMKM untuk elevasi produk-produk digital agar mampu bersaing secara
                         nasional maupun internasional.
@@ -94,17 +104,25 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3'
+import { ref, onMounted } from 'vue'
 
+const scrollPosition = ref(0);
 const props = defineProps({
     title: {
         type: String,
         default: 'Berikan judul disini'
     }
 });
+
+onMounted(() => {
+    window.addEventListener('scroll', () => {
+        scrollPosition.value = window.scrollY;
+    });
+});
 </script>
 
-<style scoped>
+<style>
 .nav-link,
 a.btn {
     font-weight: 600;

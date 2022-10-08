@@ -195,8 +195,7 @@ const handleChangeCurrentLearnItem = (title) => {
     background-image: url('../assets/images/bg_hero_landing_page.png');
     background-size: contain;
     background-repeat: no-repeat;
-    margin-top: -5.1rem;
-    padding: 7.5rem 0;
+    padding: 10rem 0;
 }
 
 .hero_section .tagline {
@@ -311,6 +310,10 @@ const handleChangeCurrentLearnItem = (title) => {
 }
 
 @media (max-width: 575.98px) {
+    .hero_section {
+        padding: 10rem 0;
+    }
+
     .hero_section .tagline {
         font-size: 2rem;
         line-height: 2rem;

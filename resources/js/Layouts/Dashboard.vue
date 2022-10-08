@@ -8,7 +8,9 @@
     <div class="row position-relative">
       <div class="col-lg-3 left_content bg-neutral-white" :class="{'active': isHamburgerMenuActive}">
         <div class="d-flex justify-content-center">
-          <img src="../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
+          <Link href="/dashboard">
+          <img src="../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" class="img-fluid">
+          </Link>
         </div>
         <div class="section_one mt-4">
           <h2 class="text-neutral-gray-4">Menu</h2>

@@ -36,6 +36,10 @@ const isCheckSyaratDanKetentuan = ref(false);
 </script>
 
 <style scoped>
+section {
+  margin-top: 10rem !important;
+}
+
 h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -70,6 +74,10 @@ form button {
 }
 
 @media (max-width: 575.98px) {
+  section {
+    margin-top: 15rem !important;
+  }
+
   form button {
     width: 100%;
     padding: 0.5rem 0;

@@ -2,7 +2,7 @@
     <AuthLayout title="Register">
         <div class="row justify-content-center my-5">
             <div class="col-lg-8">
-                <img src="../../assets/images/blanjaloka_logo.png" alt="blanjaloka logo">
+                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo">
                 <h1 class="text-neutral-black">Daftar</h1>
                 <p class="text-neutral-gray-4">
                     Mulai pendanaan UMKM Anda di

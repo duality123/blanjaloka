@@ -157,6 +157,10 @@ const currentStep = ref(1);
 </script>
 
 <style scoped>
+section {
+  margin-top: 10rem !important;
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -205,5 +209,11 @@ const currentStep = ref(1);
   font-size: 1.25rem;
   font-weight: 600;
   color: #3E4041;
+}
+
+@media (max-width: 575.98px) {
+  section {
+    margin-top: 15rem !important;
+  }
 }
 </style>
