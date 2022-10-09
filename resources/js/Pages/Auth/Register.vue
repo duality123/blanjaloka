@@ -11,29 +11,43 @@
                 </p>
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-4">
+                        <label for="name" class="form-label text-neutral-gray-5">Nama</label>
+                        <input type="name" v-model="form.name" class="form-control" id="name"
+                        placeholder="Masukkan Nama Anda">
+                        <small class="text-danger" v-if="form.errors.name">{{ form.errors.name }}</small>
+                    </div>
+                    <div class="mb-4">
                         <label for="email" class="form-label text-neutral-gray-5">Email</label>
                         <input type="email" v-model="form.email" class="form-control" id="email"
-                            placeholder="Masukkan email Anda">
+                        placeholder="Masukkan email Anda">
                         <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
                     </div>
                     <div class="mb-4">
-                        <label for="no_handphone" class="form-label text-neutral-gray-5">No. Handphone</label>
-                        <input type="number" v-model="form.no_handphone" class="form-control" id="no_handphone"
-                            placeholder="Masukkan no. handphone aktif Anda">
-                        <small class="text-danger" v-if="form.errors.no_handphone">{{ form.errors.no_handphone
+                        <label for="no_telepon" class="form-label text-neutral-gray-5">No. Handphone</label>
+                        <input type="number" v-model="form.no_telepon" class="form-control" id="no_telepon"
+                        placeholder="Masukkan no. handphone aktif Anda">
+                        <small class="text-danger" v-if="form.errors.no_telepon">{{ form.errors.no_telepon
                         }}</small>
                     </div>
                     <div class="mb-4 position-relative">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
                         <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
-                            placeholder="Masukkan kata sandi Anda">
+                        placeholder="Masukkan kata sandi Anda">
                         <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
-                            class="position-absolute text-primary-blue-6 icon_eye" />
+                        class="position-absolute text-primary-blue-6 icon_eye" />
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <label for="konfirmasi_kata_sandi" class="form-label text-neutral-gray-5">Konfirmasi Kata Sandi</label>
+                        <input :type="passwordInputType" v-model="form.password_confirmation" class="form-control" id="konfirmasi_kata_sandi"
+                        placeholder="Konfirmasi kata sandi Anda">
+                        <small class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
+                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
+                        class="position-absolute text-primary-blue-6 icon_eye" />
                     </div>
                     <div class="d-grid mt-4">
                         <button type="submit" :disabled="isButtonDisable"
-                            class="btn btn-primary-blue-5 text-neutral-white py-2">Daftar</button>
+                        class="btn btn-primary-blue-5 text-neutral-white py-2">Daftar</button>
                     </div>
                     <div class="d-flex justify-content-center mt-2 gap-1">
                         <p class="text-neutral-gray-4">Sudah punya akun?</p>
@@ -59,33 +73,47 @@
 </template>
 
 
-<script setup>
+<script>
 import AuthLayout from '../../Layouts/Auth.vue'
 import { ref, computed } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 
-const isPasswordVisible = ref(false);
-const passwordInputType = ref('password');
-const passwordEyeType = ref('fa-solid fa-eye-slash');
+export default{
+    components:{
+        AuthLayout
+    },
+    
+    setup(){
+        const isPasswordVisible = ref(false);
+        const passwordInputType = ref('password');
+        const passwordEyeType = ref('fa-solid fa-eye-slash');
+        
+        const form = useForm({
+            name:'',
+            email: '',
+            no_telepon: '',
+            password: '',
+            password_confirmation: '',
+        });
+        
+        const handleTogglePassword = (e) => {
+            isPasswordVisible.value = !isPasswordVisible.value;
+            passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
+            passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        }
+        
+        const handleSubmit = () => {
+            form.post('/register');
+        }
+        
+        const isButtonDisable = computed(() => {
+            if (form.email != '' && form.no_telepon != '' && form.password != '' && form.password_confirmation != '') return false;
+            return true;
+        });
 
-const form = useForm({
-    email: '',
-    no_handphone: '',
-    password: '',
-});
-
-const handleTogglePassword = (e) => {
-    isPasswordVisible.value = !isPasswordVisible.value;
-    passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
-    passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        return {isPasswordVisible, passwordInputType, passwordEyeType, handleTogglePassword, handleSubmit, isButtonDisable, form}
+    }
+    
 }
 
-const handleSubmit = () => {
-    form.post('/register');
-}
-
-const isButtonDisable = computed(() => {
-    if (form.email != '' && form.no_handphone != '' && form.password != '') return false;
-    return true;
-});
 </script>
