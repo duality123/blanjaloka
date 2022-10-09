@@ -1,58 +1,28 @@
 <template>
-    <header>
-        <nav class="navbar navbar-white bg-white fixed-top navbar-expand-lg">
-            <div class="container-fluid">
-                <Link class="navbar-brand ps-5" href="/">Blanjaloka</Link>
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse ps-4" id="navbarSupportedContent">
-                    <div class="justify-content-center mx-auto">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <Link class="nav-link me-4" aria-current="page" href="/">Beranda</Link>
-                            </li>
-
-                            <li class="nav-item">
-                                <Link class="nav-link me-4" href="#">Tentang Program</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link me-4" href="">Panduan</Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="nav-button">
-
-                        <template v-if="user">
-                            <ul class="navbar-nav mb-2 mb-lg-0">
-                                <li class="nav-item me-3">
-                                    <form @submit.prevent="submitLogout()">
-                                        <input type="submit" class="btn btn-primary login" value="Keluar" />
-                                    </form>
-                                </li>
-                            </ul>
-                        </template>
-
-                        <template v-else>
-                            <ul class="navbar-nav mb-2 mb-lg-0">
-                                <li class="nav-item me-3">
-                                    <Link href="/login" class="btn btn-primary login">Masuk</Link>
-                                </li>
-                                <li class="nav-item me-3">
-                                    <Link href="/register" class="btn btn-primary register">Daftar</Link>
-                                </li>
-                            </ul>
-                        </template>
-
-
-                    </div>
+     <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#blanjaloka_navbar"
+                aria-controls="blanjaloka_navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="blanjaloka_navbar">
+                <div class="navbar-nav ms-auto">
+                    <a href="#" class="nav-link text-neutral-gray-4">Beranda</a>
+                    <a href="#" class="nav-link text-neutral-gray-4">Tentang Program</a>
+                    <a href="#" class="nav-link text-neutral-gray-4">Panduan</a>
                 </div>
-                <div class="me-lg-4"></div>
+                <div class="navbar-nav gap-3 ms-auto">
+                    <Link href="/login"
+                        class="btn btn-outline-primary-blue-6 text-primary-blue-6 px-4 py-2 border-5 btn_custom_outline">
+                    Masuk</Link>
+                    <Link href="/kebijakan" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -79,27 +49,22 @@ export default {
 </script>
 
 <style scoped>
-.register {
-    background-color: #398ab9
-}
-
-.login {
-    background-color: white;
-    color: #398ab9;
-    border: 1px solid #398ab9;
-}
-
-.navbar {
+.nav-link,
+a.btn {
     font-weight: 600;
-    font-size: 16px;
-    line-height: 140%;
 }
 
-.navbar-nav {
-    color: #686868;
+.btn_custom_outline {
+    border-width: 2px !important;
 }
 
-.navbar-brand {
-    color: #398ab9;
+.btn_custom_outline:hover {
+    color: #FFFFFF !important;
+}
+
+@media (max-width: 575.98px) {
+    nav {
+        background-color: #FFFFFF;
+    }
 }
 </style>

@@ -23,7 +23,7 @@
                     <Link href="/login"
                         class="btn btn-outline-primary-blue-6 text-primary-blue-6 px-4 py-2 border-5 btn_custom_outline">
                     Masuk</Link>
-                    <Link href="/register" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
+                    <Link href="/kebijakan" class="btn btn-primary-blue-6 text-white px-4 py-2">Daftar</Link>
                 </div>
             </div>
         </div>
@@ -378,14 +378,6 @@ a.btn {
     font-weight: 400;
 }
 
-.cta_section {
-    padding-top: 10rem;
-    margin-bottom: -5rem;
-}
-
-footer {
-    padding-top: 10rem;
-}
 
 @media (max-width: 575.98px) {
     nav {
@@ -440,15 +432,6 @@ footer {
 
     .faq_section .accordion-body {
         font-size: 1rem;
-    }
-
-    .cta_section {
-        padding: 5rem 0;
-        margin-bottom: -6.5rem;
-    }
-
-    footer {
-        padding-top: 5rem;
     }
 }
 </style>

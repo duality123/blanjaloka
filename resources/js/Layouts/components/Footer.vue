@@ -1,69 +1,50 @@
 <template>
 <!-- Footer -->
-        <section class="border-top footer" >
-            <div class="container-fluid">
-                <div class="row d-flex">
-                    <div class="border col-sm-5">
-                        <h3 class="justify-content-center">
-                            Belanja nyaman dengan Blanjaloka <br />
-                            Belanja lebih mudah bersama Blanjaloka
-                        </h3>
+<section class="cta_section">
+        <div class="container d-flex justify-content-center">
+            <img src="../../assets/images/cta_img.png" alt="cta img" class="img-fluid">
+        </div>
+    </section>
+    <footer class="bg-neutral-gray-1">
+        <div class="container">
+            <div class="row align-items-center border-bottom border-neutral-gray-2 pb-5">
+                <div class="col-lg-4 ps-lg-0">
+                    <img src="../../assets/images/blanjaloka_logo.png" alt="blankaloka logo" class="img-fluid">
+                    <p class="text-neutral-black">
+                        Sebuah program yang membantu UMKM untuk elevasi produk-produk digital agar mampu bersaing secara
+                        nasional maupun internasional.
+                    </p>
+                </div>
+                <div class="col-lg d-flex justify-content-lg-end">
+                    <a href="#" class="btn btn-primary-blue-6 text-neutral-white py-2 px-4">
+                        Daftarkan UMKM Sekarang
+                    </a>
+                </div>
+            </div>
+            <div class="row align-items-end py-4 gap-4">
+                <div class="col-lg ps-lg-0">
+                    <div class="d-flex gap-4">
+                        <a href="#" class="text-decoration-none text-neutral-gray-4">Kebijakan Privasi</a>
+                        <a href="#" class="text-decoration-none text-neutral-gray-4">Syarat dan Ketentuan</a>
                     </div>
-                    <div class="col-sm-7 px-2 ms-5 py-5">
-                        <h2>Blanjaloka</h2>
-                        <p class="py-3">
-                            Sebuah program yang membantu UMKM untuk <br />
-                            elevasi produk-produk digital agar mampu bersaing
-                            <br />
-                            secara nasional maupun internasional.
-                        </p>
-                    </div>
-                    <div class="col-sm-4 ms-5 py-5 d-flex">
-                        <div class="mx-5">
-                            <h2>Menu</h2>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                        </div>
-                        <div class="mx-5">
-                            <h2>Menu</h2>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                            <p>Sub menu</p>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="col-7 px-2 ms-5">
-                        <div class="d-flex">
-                            <p>Kebijakan Privasi</p>
-                            <p class="mx-5">Syarat dan Ketentuan</p>
-                        </div>
-                        <p>© Copyright 2022. All Rights Reserved</p>
-                    </div>
-                    <div class="col-4 ms-4 d-flex">
-                        <div class="mx-4 pt-5">
-                            <i
-                                class="bi bi-instagram"
-                            ></i>
-                        </div>
-                        <div class="mx-3 pt-5">
-                            <i
-                                class="bi bi-facebook"
-                                style="font-size: 2rem"
-                            ></i>
-                        </div>
-                        <div class="mx-3 pt-5">
-                            <i
-                                class="bi bi-twitter"
-                            ></i>
-                        </div>
+                    <p class="text-neutral-gray-4 mt-3 mb-0">&copy; Copyright 2022. All Rights Reserved</p>
+                </div>
+                <div class="col-lg d-flex justify-content-center justify-content-lg-end">
+                    <div class="d-flex gap-4">
+                        <a href="#">
+                            <img src="../../assets/icons/icon_instagram_blue.png" alt="icon instagram blue">
+                        </a>
+                        <a href="#">
+                            <img src="../../assets/icons/icon_facebook_blue.png" alt="icon facebook blue">
+                        </a>
+                        <a href="#">
+                            <img src="../../assets/icons/icon_twitter_blue.png" alt="icon twitter blue">
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Footer close -->
+        </div>
+    </footer>
 </template>
 <script>
     import { Link } from '@inertiajs/inertia-vue3';
@@ -74,17 +55,25 @@
     }
 </script>
 <style scoped>
-.footer{
-    background-color: #f0f0f0;
-    margin-top:100px;
+
+.cta_section {
+    padding-top: 10rem;
+    margin-bottom: -5rem;
 }
-.bi{
-    font-size: 2rem;
+
+footer {
+    padding-top: 10rem;
 }
-.border{
-     background-color: #398ab9;
-     border-radius: 12px;
-     margin-left: 350px;
-     margin-top: -30px;
+
+@media (max-width: 575.98px) {
+
+    .cta_section {
+        padding: 5rem 0;
+        margin-bottom: -6.5rem;
+    }
+
+    footer {
+        padding-top: 5rem;
+    }
 }
 </style>
