@@ -1,11 +1,15 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\Dashboard\Kegiatan\KegiatanController;
+use App\Http\Controllers\Dashboard\Pengguna\AdminController as PenggunaAdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Inertia\Inertia;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +28,23 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/kebijakan', function () {
+    return Inertia::render('Kebijakan/Index');
+});
+
+Route::get('admin/login', function () {
+    return Inertia::render('Auth/Login');
+});
+
+Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], function () {
+    // kegiatan
+    Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('kegiatan/tambah', [KegiatanController::class, 'create'])->name('kegiatan.create');
+
+    // Pengguna (Admin)
+    Route::get('pengguna/admin', [PenggunaAdminController::class, 'index'])->name('pengguna.admin.index');
+    Route::post('pengguna/admin', [PenggunaAdminController::class, 'store'])->name('pengguna.admin.store');
+});
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
@@ -39,7 +60,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 
 
-Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
+// Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
 
 
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
@@ -64,4 +85,3 @@ Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name(
 Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
 Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
  */
-
