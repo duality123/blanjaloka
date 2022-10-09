@@ -13,7 +13,6 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
-<<<<<<< HEAD
         "@fortawesome/fontawesome-svg-core": "^6.2.0",
         "@fortawesome/free-brands-svg-icons": "^6.2.0",
         "@fortawesome/free-regular-svg-icons": "^6.2.0",
@@ -23,10 +22,10 @@
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.7",
         "@popperjs/core": "^2.11.6",
+        "@voerro/vue-tagsinput": "^2.7.1",
         "bootstrap": "^5.2.1",
         "sass": "^1.54.9",
-        "vue": "^3.2.29"
-=======
->>>>>>> 6108514d649d0ecac8f430dfc7f6a17694d8a170
+        "vue": "^3.2.29",
+        "vue-sweetalert2": "^5.0.2"
     }
 }
