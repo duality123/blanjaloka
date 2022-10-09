@@ -25,16 +25,15 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    
-        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse
-        {
-            public function toResponse($request)
-            {
-                return redirect('email/verify');
-            }
-        });
-      
-        
+        // $this->app->instance(RegisterResponse::class, new class implements RegisterResponse
+        // {
+        //     public function toResponse($request)
+        //     {
+        //         return redirect('email/verify');
+        //     }
+        // });
+
+
         $this->app->instance(LoginResponse::class, new class implements LoginResponse
         {
             public function toResponse($request)
@@ -69,10 +68,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return Inertia::render('Auth/Login');
         });
+
         Fortify::verifyEmailView(function () {
             return Inertia::render('Auth/Confirmation_email');
         });
-        
+
         Fortify::registerView(function () {
             return Inertia::render('Auth/Register');
         });
@@ -88,5 +88,11 @@ class FortifyServiceProvider extends ServiceProvider
                 'request' => $request,
             ]);
         });
+
+        // register new LoginResponse
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\LoginResponse::class
+        );
     }
 }
