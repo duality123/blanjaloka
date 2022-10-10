@@ -29,8 +29,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // });
 
 Route::get('/', [PagesController::class, 'home']);
-Route::get('/kebijakan-privasi', [PagesController::class, 'kebijakanPrivasi']);
-Route::get('/syarat-dan-ketentuan', [PagesController::class, 'syaratDanKetentuan']);
 
 Route::get('/profile', [ProfileController::class, 'index']);
 

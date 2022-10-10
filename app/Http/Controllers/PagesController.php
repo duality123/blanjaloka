@@ -11,14 +11,4 @@ class PagesController extends Controller
     {
         return Inertia::render('Home');
     }
-
-    public function kebijakanPrivasi()
-    {
-        return Inertia::render('KebijakanPrivasi');
-    }
-
-    public function syaratDanKetentuan()
-    {
-        return Inertia::render('SyaratDanKetentuan');
-    }
 }

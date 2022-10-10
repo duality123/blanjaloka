@@ -18,10 +18,9 @@ class Verified
     public function handle(Request $request, Closure $next)
     {
 
-        if(!Auth::user()->email_verified_at){
-            return redirect('email/verify')
-
-        }
+        if (!Auth::user()->email_verified_at) {
+            return redirect('email/verify');
+        };
         return $next($request);
     }
 }
