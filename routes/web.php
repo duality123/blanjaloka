@@ -29,6 +29,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // });
 
 Route::get('/', [PagesController::class, 'home']);
+Route::get('/email-verifikasi', [PagesController::class, 'verify']);
+Route::get('/success-verifikasi', [PagesController::class, 'success']);
 
 Route::get('/profile', [ProfileController::class, 'index']);
 

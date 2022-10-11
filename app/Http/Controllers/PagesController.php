@@ -11,4 +11,14 @@ class PagesController extends Controller
     {
         return Inertia::render('Home');
     }
+
+    public function verify()
+    {
+        return Inertia::render('EmailVerifikasi');
+    }
+
+    public function success()
+    {
+        return Inertia::render('VerifikasiSukses');
+    }
 }
