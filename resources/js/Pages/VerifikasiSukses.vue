@@ -29,7 +29,7 @@ import BaseLayout from "../Layouts/Layout.vue";
 
 <style>
 section {
-    margin-top: 10rem !important;
+    margin-top: 15rem !important;
 }
 
 section p {

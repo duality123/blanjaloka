@@ -9,6 +9,7 @@
                         style="width: 290px"
                     />
                 </div>
+                <h2>Verifikasi Email Anda berhasil</h2>
                 <p>Email telah dikirim ke akun <b>angilham2@gmail.com</b></p>
                 <p>
                     Silahkan cek kota masuk Anda untuk melakukan verifikasi.

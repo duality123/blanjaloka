@@ -21,4 +21,9 @@ class PagesController extends Controller
     {
         return Inertia::render('VerifikasiSukses');
     }
+
+    public function otp()
+    {
+        return Inertia::render('VerifikasiOTP');
+    }
 }
