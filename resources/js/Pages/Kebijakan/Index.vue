@@ -45,7 +45,7 @@ import LayoutVue from '../../Layouts/Layout.vue';
             }
 
             const handleButtonLanjut = () => {
-                window.location.href = '/register'
+                window.location.href = '/syarat'
             }
             return {toggleButtonLanjut, handleToggleButtonLanjut, handleButtonLanjut}
         }
