@@ -31,6 +31,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/kebijakan', function () {
     return Inertia::render('Kebijakan/Index');
 });
+Route::get('/syarat', function () {
+    return Inertia::render('Syarat/Index');
+});
 
 Route::get('admin/login', function () {
     return Inertia::render('Auth/Login');
@@ -44,6 +47,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], 
     // Pengguna (Admin)
     Route::get('pengguna/admin', [PenggunaAdminController::class, 'index'])->name('pengguna.admin.index');
     Route::post('pengguna/admin', [PenggunaAdminController::class, 'store'])->name('pengguna.admin.store');
+    Route::delete('pengguna/admin/{id}', [PenggunaAdminController::class, 'destroy'])->name('pengguna.admin.delete');
+    Route::put('pengguna/admin/{id}', [PenggunaAdminController::class, 'update'])->name('pengguna.admin.update');
+    Route::get('pengguna/admin/{id}/edit', [PenggunaAdminController::class, 'edit'])->name('pengguna.admin.edit');
 });
 
 Route::post('/email/verification-notification', function (Request $request) {
