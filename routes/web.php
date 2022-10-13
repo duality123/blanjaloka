@@ -39,6 +39,32 @@ Route::get('admin/login', function () {
     return Inertia::render('Auth/Login');
 });
 
+
+// Email verification
+Route::prefix('email')->group(function () {
+    Route::get('/verify', function () {
+        return Inertia::render('Auth/Confirmation_email');
+    })->middleware('auth')->name('verification.notice');
+
+    Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return redirect('/email/verify/success');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+
+    Route::get('/verify/success', function () {
+        return Inertia::render('Auth/EmailSuccess');
+    })->middleware('verified');
+
+    Route::post('/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+});
+
+
+
 Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], function () {
     // kegiatan
     Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
@@ -52,17 +78,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], 
     Route::get('pengguna/admin/{id}/edit', [PenggunaAdminController::class, 'edit'])->name('pengguna.admin.edit');
 });
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
 
 
 
@@ -78,16 +93,16 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 
 // Kode dibawah Akan dihapus dimasa depan
 /**
-Route::get('/login',[AuthController::class,'login'])->name('login');
-Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
-Route::get('/logout',[AuthController::class,'logout'])->name('logout');
-Route::get('/register',[AuthController::class,'register']);
-Route::get('/page_konfirmasi/{id}',[AuthController::class,'page_konfirmasi'])->name('page_konfirmasi');
-Route::get('/token_aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
-Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
-Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
-Route::get('/reset_password',[AuthController::class,'resetPasswordPage'])->name('reset_password');
-Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
-Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
-Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
+    Route::get('/login',[AuthController::class,'login'])->name('login');
+    Route::post('/authenticate',[AuthController::class,'authenticate'])->name('authenticate');
+    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+    Route::get('/register',[AuthController::class,'register']);
+    Route::get('/page_konfirmasi/{id}',[AuthController::class,'page_konfirmasi'])->name('page_konfirmasi');
+    Route::get('/token_aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
+    Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
+    Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
+    Route::get('/reset_password',[AuthController::class,'resetPasswordPage'])->name('reset_password');
+    Route::get('/aktivasi/{token}',[AuthController::class,'tokenLinkVerify'])->name('tokenLinkVerify');
+    Route::post('/aktivasi',[AuthController::class,'tokenInputVerify'])->name('tokenInputVerify');
+    Route::post('/proses_konfirmasi',[AuthController::class,'proses_konfirmasi'])->name('konfirmasi');
  */

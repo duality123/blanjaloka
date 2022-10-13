@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -46,7 +47,7 @@ class HandleInertiaRequests extends Middleware
             ],
             //user authenticated
             'auth' => [
-                'user'          =>Auth::check() //$request->user() ?   $request->user() : null,
+                'user'          => $request->user() ?   $request->user() : null, //Auth::check()
                 // 'permissions'   => $request->user() ? $request->user()->getPermissionArray() : []
             ],
             //route
@@ -58,10 +59,4 @@ class HandleInertiaRequests extends Middleware
             },
         ]);
     }
-    
-   
 }
-
-
-
-
