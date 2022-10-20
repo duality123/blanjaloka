@@ -42,27 +42,18 @@ Route::get('admin/login', function () {
 
 // Email verification
 Route::prefix('email')->group(function () {
-    Route::get('/verify', function () {
-        return Inertia::render('Auth/Confirmation_email');
-    })->middleware('auth')->name('verification.notice');
+    Route::get('/verify', [AuthController::class, 'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
 
-    Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
+    Route::get('/verify/{id}/{hash}', [AuthController::class, 'emailVerificationVerify'])->middleware(['auth', 'signed'])->name('verification.verify');
 
-        return redirect('/email/verify/success');
-    })->middleware(['auth', 'signed'])->name('verification.verify');
+    Route::post('/verification-notification', [AuthController::class, 'emailVerificationSend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-    Route::get('/verify/success', function () {
-        return Inertia::render('Auth/EmailSuccess');
-    })->middleware('verified');
-
-    Route::post('/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('message', 'Verification link sent!');
-    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    Route::get('/verify/success', [AuthController::class, 'emailVerificationSuccess'])->middleware('verified');
 });
 
+Route::get('/verify/phone', function () {
+    return Inertia::render('Auth/OTPValidation');
+});
 
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], function () {
