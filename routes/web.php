@@ -40,20 +40,26 @@ Route::get('admin/login', function () {
 });
 
 
-// Email verification
+// Email & OTP verification
+
+
 Route::prefix('email')->group(function () {
     Route::get('/verify', [AuthController::class, 'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
-
     Route::get('/verify/{id}/{hash}', [AuthController::class, 'emailVerificationVerify'])->middleware(['auth', 'signed'])->name('verification.verify');
-
     Route::post('/verification-notification', [AuthController::class, 'emailVerificationSend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
     Route::get('/verify/success', [AuthController::class, 'emailVerificationSuccess'])->middleware('verified');
 });
 
-Route::get('/verify/phone', function () {
-    return Inertia::render('Auth/OTPValidation');
+Route::prefix('otp')->group(function () {
+    Route::get('/generate', [AuthController::class, 'createOTP'])->name('otp.create');
+    Route::get('/verify', function () {
+        return Inertia::render('Auth/OTPValidation');
+    })->name('otp.verify');
+    Route::post('/verify', [AuthController::class, 'otpVerify'])->name('otp.validation');
 });
+
+
+
 
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], function () {

@@ -43,7 +43,7 @@ export default {
     
     setup(){
         const handleButtonLanjut = () => {
-            Inertia.get('/');
+            Inertia.get('/otp/generate');
       }
 
       return {handleButtonLanjut}

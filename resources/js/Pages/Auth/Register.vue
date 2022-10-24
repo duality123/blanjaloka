@@ -11,12 +11,6 @@
                 </p>
                 <form @submit.prevent="handleSubmit">
                     <div class="mb-4">
-                        <label for="name" class="form-label text-neutral-gray-5">Nama</label>
-                        <input type="name" v-model="form.name" class="form-control" id="name"
-                        placeholder="Masukkan Nama Anda">
-                        <small class="text-danger" v-if="form.errors.name">{{ form.errors.name }}</small>
-                    </div>
-                    <div class="mb-4">
                         <label for="email" class="form-label text-neutral-gray-5">Email</label>
                         <input type="email" v-model="form.email" class="form-control" id="email"
                         placeholder="Masukkan email Anda">
@@ -34,14 +28,6 @@
                         <input :type="passwordInputType" v-model="form.password" class="form-control" id="kata_sandi"
                         placeholder="Masukkan kata sandi Anda">
                         <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
-                        <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
-                        class="position-absolute text-primary-blue-6 icon_eye" />
-                    </div>
-                    <div class="mb-4 position-relative">
-                        <label for="konfirmasi_kata_sandi" class="form-label text-neutral-gray-5">Konfirmasi Kata Sandi</label>
-                        <input :type="passwordInputType" v-model="form.password_confirmation" class="form-control" id="konfirmasi_kata_sandi"
-                        placeholder="Konfirmasi kata sandi Anda">
-                        <small class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
                         <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
                         class="position-absolute text-primary-blue-6 icon_eye" />
                     </div>
@@ -89,11 +75,9 @@ export default{
         const passwordEyeType = ref('fa-solid fa-eye-slash');
         
         const form = useForm({
-            name:'',
             email: '',
             no_telepon: '',
             password: '',
-            password_confirmation: '',
         });
         
         const handleTogglePassword = (e) => {
@@ -107,7 +91,7 @@ export default{
         }
         
         const isButtonDisable = computed(() => {
-            if (form.email != '' && form.no_telepon != '' && form.password != '' && form.password_confirmation != '') return false;
+            if (form.email != '' && form.no_telepon != '' && form.password != '' ) return false;
             return true;
         });
 
