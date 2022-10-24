@@ -19,18 +19,14 @@
                     <thead class="table-primary-blue-4">
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Nama</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Password</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(admin, index) in admins">
-                            <th scope="row">{{ 1 }}</th>
-                            <td>{{ admin.name }}</td>
+                            <th scope="row">{{ ++index }}</th>
                             <td>{{admin.email}}</td>
-                            <td>{{admin.password}}</td>
                             <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
                                 <a href="#" class="btn btn-semantic-success-4 text-neutral-white" @click="showModal('edit', admin.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <img src="../../../assets/icons/icon_update.png" alt="update icon">
@@ -237,7 +233,6 @@ export default{
         }
         
         const deleteAdmin = (id) => {
-           
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

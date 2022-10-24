@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Pengguna;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -12,12 +13,14 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = User::role('admin')->get();
+        $admins = DB::table('users')->select('id', 'email')->limit(10)->get();
         return Inertia::render('Dashboard/Pengguna/Admin', ['admins' => $admins]);
     }
 
     public function store(Request $request)
     {
+
+        dd($request->all());
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
