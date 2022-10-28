@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\Kegiatan\KegiatanController;
 use App\Http\Controllers\Dashboard\Pengguna\AdminController as PenggunaAdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Inertia\Inertia;
@@ -37,7 +38,7 @@ Route::get('/syarat', function () {
 
 Route::get('admin/login', function () {
     return Inertia::render('Auth/Login');
-});
+})->middleware('guest');
 
 
 // Email & OTP verification
@@ -50,7 +51,7 @@ Route::prefix('email')->group(function () {
     Route::get('/verify/success', [AuthController::class, 'emailVerificationSuccess'])->middleware('verified');
 });
 
-Route::prefix('otp')->group(function () {
+Route::group(['prefix' => 'otp', 'middleware' => ['verified']], function () {
     Route::get('/generate', [AuthController::class, 'createOTP'])->name('otp.create');
     Route::get('/verify', function () {
         return Inertia::render('Auth/OTPValidation');
@@ -59,10 +60,13 @@ Route::prefix('otp')->group(function () {
 });
 
 
+Route::prefix('profile-saya')->group(function () {
+    Route::get('/', [ProfileController::class, 'index']);
+    Route::get('/ubah-password', [ProfileController::class, 'changePassword']);
+    Route::get('/ubah-email', [ProfileController::class, 'changeEmail']);
+});
 
-
-
-Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin'], 'auth'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin', 'auth']], function () {
     // kegiatan
     Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('kegiatan/tambah', [KegiatanController::class, 'create'])->name('kegiatan.create');
