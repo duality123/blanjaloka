@@ -47,7 +47,8 @@ class HandleInertiaRequests extends Middleware
             ],
             //user authenticated
             'auth' => [
-                'user'          => $request->user() ?   $request->user() : null, //Auth::check()
+                'user'          => $request->user() ?   $request->user() : null,
+                'is_authenticated' => Auth::check()
                 // 'permissions'   => $request->user() ? $request->user()->getPermissionArray() : []
             ],
             //route
