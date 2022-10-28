@@ -74,7 +74,6 @@ export default {
         const handleButtonLanjut = () => {
             Inertia.get('/');
         }
-        console.log(props)
         const otp = ref('')
         
         const countdown = ref(30);
@@ -110,7 +109,6 @@ export default {
                         }else{
                             console.log(otp.value[i])
                             otp.value = otp.value.replace(otp.value[i],'.');
-                            console.log(otp.value);
                         } 
                         inputs[i].value='';
                         
@@ -122,13 +120,11 @@ export default {
                             if(i === inputs.length - 1){
                                 
                                 if(otp.value[i] != '.' ){
-                                    console.log('woi');
                                     inputs[i].value=event.key;
                                     otp.value+=event.key;
                                     console.log(otp.value);
                                 }else{
                                     otp.value = otp.value.replace(otp.value[i],event.key);
-                                    console.log(otp.value);
                                 } 
                                 
                             }else{
@@ -139,7 +135,6 @@ export default {
                                     inputs[i].value=event.key;
                                     otp.value+=(event.key);
                                 }
-                                console.log(otp.value);
                                 
                                 if (i !==inputs.length - 1 && inputs[i+1].value == '') inputs[i + 1].focus(); 
                                 event.preventDefault()
@@ -170,7 +165,6 @@ export default {
         }
         
         const toggleButtonLanjut = () => {
-            console.log('oke')
             Inertia.post('/otp/verify', {otp: otp.value, no_telepon: props.no_telepon})
         }
         
