@@ -3,6 +3,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import vSelect from "vue-select";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faEye,
@@ -14,7 +15,9 @@ import {
     faEllipsis,
     faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
+
 import "bootstrap";
+import "vue-select/dist/vue-select.css";
 
 library.add(
     faEye,
@@ -36,6 +39,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .component("font-awesome-icon", FontAwesomeIcon)
+            .component("v-select", vSelect)
             .use(plugin)
             .mount(el);
     },

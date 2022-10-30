@@ -21,7 +21,6 @@
               <th scope="col">No</th>
               <th scope="col">Nama</th>
               <th scope="col">Email</th>
-              <th scope="col">Password</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -30,8 +29,11 @@
               <th scope="row">{{ index }}</th>
               <td>Admin {{ index }}</td>
               <td>adminblanjaloka@gmail.com</td>
-              <td>admin123</td>
               <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                <a href="#" class="btn btn-primary-blue-6 text-neutral-white">
+                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
+                  Ubah Password
+                </a>
                 <a href="#" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
