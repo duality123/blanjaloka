@@ -5,8 +5,8 @@
                 <div class="col"></div>
                 <div class="col-7">
                     <img src="../../assets/images/verifikasi_email/email_success.png" alt="">
-                    <h2>Verifikasi Email Anda Berhasil</h2>
-                    <p>Silakan lanjutkan pengisian data Anda.</p>
+                    <h2 class="my-3">Verifikasi Email Anda Berhasil</h2>
+                    <p class="my-3">Silakan lanjutkan pengisian data Anda.</p>
                     <div class="d-flex justify-content-center my-2">
                         <button class="btn btn-send-email btn-primary-blue-6 text-white px-4 py-2" @click="handleButtonLanjut">Lanjutkan</button>
                     </div>
