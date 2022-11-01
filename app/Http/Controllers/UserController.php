@@ -18,24 +18,23 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-      $user = User::create([
+        $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-       ]);
+        ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-              'access_token' => $token,
-                   'token_type' => 'Bearer',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
         ]);
     }
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password')))
-        {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
@@ -45,12 +44,12 @@ class UserController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['message' => 'Hi '.$user->name.', welcome to home','access_token' => $token, 'token_type' => 'Bearer', ]);
+            ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer',]);
     }
 
     public function user(Request $request)
     {
-        return $request->user();
+        return response()->json($request->user());
     }
 
     public function logout()
@@ -61,6 +60,4 @@ class UserController extends Controller
             'message' => 'You have successfully logged out.'
         ];
     }
-
-
 }

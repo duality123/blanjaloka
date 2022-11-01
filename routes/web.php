@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\Kegiatan\KegiatanController;
 use App\Http\Controllers\Dashboard\Pengguna\AdminController as PenggunaAdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/user', [UserController::class, 'user'])->name('user.get');
 Route::get('/kebijakan', function () {
     return Inertia::render('Kebijakan/Index');
 });
@@ -61,7 +63,8 @@ Route::group(['prefix' => 'otp', 'middleware' => ['verified']], function () {
 
 
 Route::prefix('profile-saya')->group(function () {
-    Route::get('/', [ProfileController::class, 'index']);
+    Route::get('/{user}', [ProfileController::class, 'index']);
+    Route::post('/', [ProfileController::class, 'simpanDataDiri']);
     Route::get('/ubah-password', [ProfileController::class, 'changePassword']);
     Route::get('/ubah-email', [ProfileController::class, 'changeEmail']);
 });
