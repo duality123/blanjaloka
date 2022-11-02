@@ -63,7 +63,7 @@ Route::group(['prefix' => 'otp', 'middleware' => ['verified']], function () {
 
 
 Route::prefix('profile-saya')->group(function () {
-    Route::get('/{user}', [ProfileController::class, 'index']);
+    Route::get('/', [ProfileController::class, 'index']);
     Route::post('/', [ProfileController::class, 'simpanDataDiri']);
     Route::get('/ubah-password', [ProfileController::class, 'changePassword']);
     Route::get('/ubah-email', [ProfileController::class, 'changeEmail']);

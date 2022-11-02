@@ -85,7 +85,6 @@ export default {
                     (res.data.kelurahan != null && res.data.kelurahan)  &&
                     (res.data.kabupaten != null && res.data.kabupaten)  &&
                     (res.data.provinsi != null && res.data.provinsi )) {
-                        console.log('halo')
                         kelengkapan.value = false;
                         navbarFixedTop.value = true;
                     }else{
@@ -98,7 +97,7 @@ export default {
                 
             })
             
-            console.log(kelengkapan.value)
+            
             
             
             
@@ -113,7 +112,7 @@ export default {
         }
         
         const btnLengkapiprofile = ()=>{
-            Inertia.get(`/profile-saya/${user_id.value}`);
+            Inertia.get(`/profile-saya`);
         }
         return {kelengkapan, logout, btnLengkapiprofile, navbarFixedTop}
         

@@ -150,42 +150,7 @@
                                                 <p class="text-muted text-center mt-3">Format file .jpg/.jpeg/.png, ukuran file maksimal 5 MB</p>
                                             </div>
                                         </div>
-                                        <div v-if="errors.fotoProfile" class="alert alert-danger">
-                                            {{ errors.fotoProfile }}
-                                        </div>
-                                        <div v-if="errors.nama" class="alert alert-danger">
-                                            {{ errors.nama }}
-                                        </div>
-                                        <div v-if="errors.fotoKTP" class="alert alert-danger">
-                                            {{ errors.fotoKTP }}
-                                        </div>
-                                        <div v-if="errors.fotoProfile" class="alert alert-danger">
-                                            {{ errors.fotoProfile }}
-                                        </div>
-                                        <div v-if="errors.tanggal_lahir" class="alert alert-danger">
-                                            {{ errors.tanggal_lahir }}
-                                        </div>
-                                        <div v-if="errors.nama" class="alert alert-danger">
-                                            {{ errors.nama }}
-                                        </div>
-                                        <div v-if="errors.tempat_lahir" class="alert alert-danger">
-                                            {{ errors.tempat_lahir }}
-                                        </div>
-                                        <div v-if="errors.alamat" class="alert alert-danger">
-                                            {{ errors.alamat }}
-                                        </div>
-                                        <div v-if="errors.kelurahan" class="alert alert-danger">
-                                            {{ errors.kelurahan }}
-                                        </div>
-                                        <div v-if="errors.kecamatan" class="alert alert-danger">
-                                            {{ errors.kecamatan }}
-                                        </div>
-                                        <div v-if="errors.kabupaten" class="alert alert-danger">
-                                            {{ errors.kabupaten }}
-                                        </div>
-                                        <div v-if="errors.provinsi" class="alert alert-danger">
-                                            {{ errors.provinsi }}
-                                        </div>
+                                        
                                     </div>
                                     
                                     <div v-if="currentTab != 3" class="btn btn-lanjut float-end text-white" @click="nextStep(1)">Selanjutnya</div>
@@ -243,7 +208,8 @@ export default{
             fotoSelfie: ''
         })
         
-        console.log(props.errors)
+        
+        
         
         
         
