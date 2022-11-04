@@ -33,6 +33,7 @@ Route::get('/kebijakan-privasi', [PagesController::class, 'kebijakanPrivasi']);
 Route::get('/syarat-dan-ketentuan', [PagesController::class, 'syaratDanKetentuan']);
 
 Route::get('/profile', [ProfileController::class, 'index']);
+Route::get('/profile/notifikasi', [ProfileController::class, 'notifikasi']);
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();

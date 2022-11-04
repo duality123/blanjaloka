@@ -12,4 +12,9 @@ class ProfileController extends Controller
     {
         return Inertia::render('Umkm/Profile');
     }
+
+    public function notifikasi()
+    {
+        return Inertia::render('Umkm/Notifikasi');
+    }
 }
