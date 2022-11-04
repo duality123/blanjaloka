@@ -7,7 +7,7 @@
           <div class="col-lg-8">
             <div class="card mb-3" v-if="currentStep === 1">
               <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
                   <h1>Notifikasi</h1>
                   <a href="#" class="text-primary-blue-6 mb-0">Tandai sudah dibaca</a>
                 </div>
@@ -86,6 +86,10 @@ section {
 @media (max-width: 575.98px) {
   section {
     margin-top: 15rem !important;
+  }
+
+  .card-notif h1 {
+    font-size: 1rem;
   }
 }
 </style>
