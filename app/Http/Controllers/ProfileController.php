@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class ProfileController extends Controller
@@ -66,11 +67,39 @@ class ProfileController extends Controller
 
     public function changePassword()
     {
+        return Inertia::render('Profile/ChangePassword',);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        User::find($request->id)->update(['password' => Hash::make($request->password)]);
         return Inertia::render('Profile/ChangePassword');
+    }
+
+    public function checkPassword(Request $request)
+    {
+
+        $userPassword = Auth::user()->getAuthPassword();
+        if (Hash::check($request->password, $userPassword)) {
+            return ['result' => true];
+        }
+        return ['result' => false];
     }
 
     public function changeEmail()
     {
         return Inertia::render('Profile/ChangeEmail');
+    }
+
+    public function checkEmail(Request $request)
+    {
+
+        $finded = User::where('email', $request->email)->first();
+
+        if ($finded) {
+            return response()->json(['invalid' => true]);
+        } else {
+            return response()->json(['invalid' => false]);
+        }
     }
 }

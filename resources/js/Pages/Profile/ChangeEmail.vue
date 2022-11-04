@@ -19,17 +19,20 @@
                                     
                                     <div class="mb-3">
                                         <label for="email_lama" class="form-label">Email Lama</label>
-                                        <input type="email" class="form-control" id="email_lama" placeholder="Masukkan email lengkap Anda">
+                                        <input type="email" v-model="form.email" class="form-control" id="email_lama" disabled=true placeholder="Masukkan email lengkap Anda">
                                     </div>
-
+                                    
                                     <div class="mb-3">
                                         <label for="email_baru" class="form-label">Email Baru</label>
-                                        <input type="email" class="form-control" id="email_baru" placeholder="Masukkan email lengkap Anda">
+                                        <input type="email" v-model="form.email_baru.value" class="form-control" id="email_baru" placeholder="Masukkan email lengkap Anda" @focusout="checkEmail">
+                                        <div v-if="form.email_baru.error.value">
+                                            <small class="text-danger" >{{ form.email_baru.error.message }}</small>
+                                        </div>
                                     </div>
                                     
                                     
                                     
-                                    <div class="btn btn-lanjut float-end text-white" >Ubah Email</div>
+                                    <button type="submit" class="btn btn-primary-blue-5 btn-lanjut float-end text-white"  :disabled="isButtonDisable" @click="">{{isButtonDisable}}Ubah Email</button>
                                     
                                 </form>
                                 
@@ -50,6 +53,8 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import { computed ,ref} from '@vue/reactivity';
 import Layout from '../../Layouts/Layout.vue';
 import Sidebar from '../../Layouts/components/profile/Sidebar.vue';
+import axios from 'axios';
+import { onMounted } from 'vue';
 
 export default{
     components:{
@@ -57,32 +62,45 @@ export default{
         Sidebar
     },
     setup(){
-        const isPasswordVisible = ref(false);
-        const passwordInputType = ref('password');
-        const passwordEyeType = ref('fa-solid fa-eye-slash');
+        
+       
         
         const form = useForm({
             email: '',
-            password: '',
-            remember: false,
+            email_baru: {
+                value:'',
+                error:{
+                    value:null,
+                    message:'Email telah terdaftar silahkan masukan email lain'
+                }
+            }
         });
+
+        console.log(form)
         
-        const handleTogglePassword = (e) => {
-            isPasswordVisible.value = !isPasswordVisible.value;
-            passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
-            passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        const checkEmail = () =>{
+            
+            axios.post('/profile-saya/check-email', {email:form.email_baru.value})
+            .then((res)=>{
+                form.email_baru.error.value = res.data.invalid;
+                
+            });
+            
         }
         
-        const handleSubmit = () => {
-            form.post('/login');
-        }
-        
+        onMounted(()=>{
+            axios.get('/user')
+            .then((res)=>{
+                form.email = res.data.email;
+            })
+        })
         const isButtonDisable = computed(() => {
-            if (form.email != '' && form.password != '') return false;
+            console.log('oke')
+            if (!form.email_baru.error.value == null || form.email_baru.error.value == false) return false;
             return true;
         });
         
-        return {form, passwordInputType, passwordEyeType, isPasswordVisible, handleSubmit, handleTogglePassword, isButtonDisable}
+        return {form, isButtonDisable, checkEmail}
     }
 }
 </script>

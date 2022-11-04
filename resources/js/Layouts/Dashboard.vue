@@ -29,6 +29,11 @@
               <img src="../assets/icons/icon_funding_dashboard.png" alt="icon funding" class="img-fluid">Funding
             </a>
           </li>
+          <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/eventual'}">
+            <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
+              <img src="../assets/icons/icon_calendar_month.png" alt="icon funding" class="img-fluid">Funding
+            </a>
+          </li>
           <li>
             <a class="text-decoration-none">
               <div @click="toggleMenuPengguna"

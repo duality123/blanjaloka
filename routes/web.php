@@ -66,7 +66,10 @@ Route::prefix('profile-saya')->group(function () {
     Route::get('/', [ProfileController::class, 'index']);
     Route::post('/', [ProfileController::class, 'simpanDataDiri']);
     Route::get('/ubah-password', [ProfileController::class, 'changePassword']);
+    Route::post('/ubah-password', [ProfileController::class, 'resetPassword']);
+    Route::post('/check-password', [ProfileController::class, 'checkPassword']);
     Route::get('/ubah-email', [ProfileController::class, 'changeEmail']);
+    Route::post('/check-email', [ProfileController::class, 'checkEmail']);
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin', 'auth']], function () {
