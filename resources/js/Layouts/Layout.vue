@@ -12,7 +12,7 @@
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</a>
         </div>
-        <nav class="navbar navbar-expand-lg" :class="{'bg-primary-blue-6': scrollPosition > 100}">
+        <nav class="navbar navbar-expand-lg" :class="{ 'bg-primary-blue-6': scrollPosition > 100 }">
             <div class="container">
                 <Link class="navbar-brand" href="/">
                 <img v-if="scrollPosition < 100" src="../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo"
@@ -28,26 +28,49 @@
                 <div class="collapse navbar-collapse" id="blanjaloka_navbar">
                     <div class="navbar-nav ms-auto">
                         <Link href="/" class="nav-link"
-                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">
+                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">
                         Beranda</Link>
                         <a href="#" class="nav-link"
-                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">Tentang
+                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Tentang
                             Program</a>
                         <a href="#" class="nav-link"
-                            :class="{'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100}">Panduan</a>
+                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Panduan</a>
                     </div>
                     <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
                         <Link href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
-                            :class="{'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100}">
+                            :class="{ 'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
                         Masuk</Link>
                         <Link href="/register" class="btn px-4 py-2"
-                            :class="{'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100}">
+                            :class="{ 'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100 }">
                         Daftar</Link>
-                        <Link href="/profile"
-                            class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 user_profile_menu">
-                        <img src="../assets/images/user_profile_public_img.png" alt="user profile public">
-                        <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
-                        </Link>
+                        <li class="nav-item dropdown">
+                            <a href="#"
+                                class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 dropdown-toggle user_profile_menu"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="../assets/images/user_profile_public_img.png" alt="user profile public">
+                                <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                                        <span>Notifikasi</span>
+                                        <div class="bg-primary-blue-6 text-white notif_badge">2</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Akun Saya</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">UMKM Saya</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-semantic-error-4" href="#">Keluar</a></li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
             </div>
@@ -132,6 +155,26 @@ a.btn {
     cursor: pointer;
 }
 
+.notif_badge {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    width: 15rem;
+    left: -9rem;
+    margin-top: 2rem;
+    border-radius: 0.75rem;
+}
+
 .btn_custom_outline {
     border-width: 2px !important;
 }
@@ -152,6 +195,10 @@ footer {
 @media (max-width: 575.98px) {
     nav {
         background-color: #FFFFFF;
+    }
+
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+        width: 100%;
     }
 
     .cta_section {
