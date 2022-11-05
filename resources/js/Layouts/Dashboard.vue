@@ -6,7 +6,7 @@
   </Head>
   <div class="container-fluid position-relative">
     <div class="row position-relative">
-      <div class="col-lg-3 left_content bg-neutral-white" :class="{'active': isHamburgerMenuActive}">
+      <div class="col-lg-3 left_content bg-neutral-white" :class="{ 'active': isHamburgerMenuActive }">
         <div class="d-flex justify-content-center">
           <Link href="/dashboard">
           <img src="../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" class="img-fluid">
@@ -15,18 +15,19 @@
         <div class="section_one mt-4">
           <h2 class="text-neutral-gray-4">Menu</h2>
           <ul class="mt-4">
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard'}">
-              <Link href="/dashboard" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
+            <li class="rounded p-4" :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard' }">
+              <Link href="/admin/dashboard"
+                class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
               <img src="../assets/icons/icon_dashboard_dashboard.png" alt="icon dashboard" class="img-fluid">Dashboard
               </Link>
             </li>
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard/kegiatan'}">
-              <Link href="/dashboard/kegiatan"
+            <li class="rounded p-4" :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/kegiatan' }">
+              <Link href="/admin/dashboard/kegiatan"
                 class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
               <img src="../assets/icons/icon_kegiatan_dashboard.png" alt="icon kegiatan" class="img-fluid">Kegiatan
               </Link>
             </li>
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/funding'}">
+            <li class="rounded p-4" :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/funding' }">
               <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
                 <img src="../assets/icons/icon_funding_dashboard.png" alt="icon funding" class="img-fluid">Funding
               </a>
@@ -35,7 +36,7 @@
               <a class="text-decoration-none">
                 <div @click="toggleMenuPengguna"
                   class="d-flex justify-content-between align-items-center text-neutral-black rounded p-4"
-                  :class="{'bg-primary-blue-2': $page.url === '/pengguna'}">
+                  :class="{ 'bg-primary-blue-2': $page.url === '/admin/pengguna' }">
                   <div class="d-flex align-items-center gap-2">
                     <img src="../assets/icons/icon_pengguna_dashboard.png" alt="icon pengguna"
                       class="img-fluid">Pengguna
@@ -43,21 +44,23 @@
                   <font-awesome-icon :icon="iconMenuPenggunaType" class="text-primary-blue-6" />
                 </div>
                 <ul v-if="isMenuPenggunaActive" class="sub_menu">
-                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/admin'}">
-                    <Link href="/dashboard/pengguna/admin" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3"
+                    :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/admin' }">
+                    <Link href="/admin/dashboard/pengguna/admin" class="text-decoration-none text-neutral-black">
                     Admin</Link>
                   </li>
                   <li class="rounded p-3">
                     <a href="#" class="text-decoration-none text-neutral-black">Investor</a>
                   </li>
-                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/dashboard/pengguna/umkm'}">
-                    <Link href="/dashboard/pengguna/umkm" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3"
+                    :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/umkm' }">
+                    <Link href="/admin/dashboard/pengguna/umkm" class="text-decoration-none text-neutral-black">
                     UMKM</Link>
                   </li>
                 </ul>
               </a>
             </li>
-            <li class="rounded py-3 px-4" :class="{'bg-primary-blue-2': $page.url === '/pesan'}">
+            <li class="rounded py-3 px-4" :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/pesan' }">
               <a href="#" class="d-flex justify-content-between text-decoration-none text-neutral-black">
                 <div class="d-flex align-items-center gap-2">
                   <img src="../assets/icons/icon_pesan_dashboard.png" alt="icon pesan" class="img-fluid">Pesan
@@ -122,7 +125,7 @@ const toggleHamburgerMenu = () => {
 onMounted(() => {
   const { url } = usePage();
 
-  if (url.value == '/dashboard/pengguna/umkm' || url.value == '/dashboard/pengguna/admin') {
+  if (url.value == '/admin/dashboard/pengguna/umkm' || url.value == '/admin/dashboard/pengguna/admin') {
     isMenuPenggunaActive.value = true;
   };
 });
