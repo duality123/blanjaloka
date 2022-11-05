@@ -3,13 +3,25 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 // use App\Http\Controllers\AuthenticatedController;
-use App\Http\Controllers\Dashboard\KegiatanController;
-use App\Http\Controllers\Dashboard\PenggunaController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\Umkm\AccountController;
-use App\Http\Controllers\Umkm\DashboardController as UmkmDashboardController;
+
+// base controller
+use App\Http\Controllers\{
+    PagesController,
+    DashboardController
+};
+
+// admin controller
+use App\Http\Controllers\Dashboard\{
+    KegiatanController,
+    PenggunaController
+};
+
+// umkm controller
+use App\Http\Controllers\Umkm\{
+    AccountController,
+    DashboardController as UmkmDashboardController
+};
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
