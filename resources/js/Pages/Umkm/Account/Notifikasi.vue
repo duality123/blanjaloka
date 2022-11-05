@@ -2,10 +2,9 @@
   <BaseLayout title="UMKM Notifikasi">
     <section class="mt-4">
       <div class="container">
-        <div class="row gap-4">
-          <UmkmSidebar />
-          <div class="col-lg-8">
-            <div class="card mb-3" v-if="currentStep === 1">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="card">
               <div class="card-body">
                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">
                   <h1>Notifikasi</h1>
@@ -51,11 +50,7 @@
 </template>
 
 <script setup>
-import BaseLayout from '../../Layouts/Layout.vue'
-import UmkmSidebar from '../../Components/UmkmSidebar.vue'
-import { ref } from 'vue'
-
-const currentStep = ref(1);
+import BaseLayout from '../../../Layouts/Layout.vue'
 </script>
 
 <style scoped>

@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AuthenticatedController;
+// use App\Http\Controllers\AuthenticatedController;
 use App\Http\Controllers\Dashboard\KegiatanController;
 use App\Http\Controllers\Dashboard\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
-use App\Http\Controllers\Umkm\ProfileController;
+use App\Http\Controllers\Umkm\AccountController;
+use App\Http\Controllers\Umkm\DashboardController as UmkmDashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
@@ -32,8 +33,20 @@ Route::get('/', [PagesController::class, 'home']);
 Route::get('/kebijakan-privasi', [PagesController::class, 'kebijakanPrivasi']);
 Route::get('/syarat-dan-ketentuan', [PagesController::class, 'syaratDanKetentuan']);
 
-Route::get('/profile', [ProfileController::class, 'index']);
-Route::get('/profile/notifikasi', [ProfileController::class, 'notifikasi']);
+// umkm route
+Route::prefix('umkm')->group(function () {
+    // umkm account route
+    Route::prefix('account')->controller(AccountController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/notifikasi', 'notifikasi');
+    });
+
+    // umkm dashboard route
+    Route::prefix('dashboard')->controller(UmkmDashboardController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/kegiatanku', 'kegiatanku');
+    });
+});
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
@@ -49,7 +62,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 
 
-Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
+// Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
 
 
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {

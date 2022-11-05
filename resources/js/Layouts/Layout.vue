@@ -52,19 +52,24 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-                                        <span>Notifikasi</span>
-                                        <div class="bg-primary-blue-6 text-white notif_badge">2</div>
-                                    </a>
+                                    <Link class="dropdown-item d-flex align-items-center justify-content-between"
+                                        href="/umkm/account/notifikasi">
+                                    <span>Notifikasi</span>
+                                    <div class="bg-primary-blue-6 text-white notif_badge">2</div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Akun Saya</a></li>
+                                <li>
+                                    <Link class="dropdown-item" href="/umkm/account">Akun Saya</Link>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">UMKM Saya</a></li>
+                                <li>
+                                    <Link class="dropdown-item" href="/umkm/dashboard">UMKM Saya</Link>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

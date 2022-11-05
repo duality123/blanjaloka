@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ProfileController extends Controller
+class AccountController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Umkm/Profile');
+        return Inertia::render('Umkm/Account/Index');
     }
 
     public function notifikasi()
     {
-        return Inertia::render('Umkm/Notifikasi');
+        return Inertia::render('Umkm/Account/Notifikasi');
     }
 }

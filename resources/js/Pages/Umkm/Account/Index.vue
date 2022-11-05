@@ -3,7 +3,7 @@
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
-          <UmkmSidebar />
+          <UmkmAccountSidebar />
           <div class="col-lg-5">
             <div class="card mb-3" v-if="currentStep === 1">
               <div class="card-body">
@@ -107,8 +107,8 @@
 </template>
 
 <script setup>
-import BaseLayout from '../../Layouts/Layout.vue'
-import UmkmSidebar from '../../Components/UmkmSidebar.vue'
+import BaseLayout from '../../../Layouts/Layout.vue'
+import UmkmAccountSidebar from '../../../Components/UmkmAccountSidebar.vue'
 import { ref } from 'vue'
 
 const currentStep = ref(1);

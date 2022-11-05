@@ -1,17 +1,7 @@
 <template>
   <div class="col-lg-2 sidebar">
     <ul>
-      <li :class="{ 'active': $page.url == '/profile/notifikasi' }">
-        <Link href="/profile/notifikasi" class="text-neutral-black">
-        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M1 16.875C0.783333 16.875 0.604333 16.8 0.463 16.65C0.321 16.5 0.25 16.325 0.25 16.125C0.25 15.9084 0.321 15.729 0.463 15.587C0.604333 15.4457 0.783333 15.375 1 15.375H2.25V8.12505C2.25 6.79172 2.66667 5.59572 3.5 4.53705C4.33333 3.47905 5.41667 2.80005 6.75 2.50005V1.80005C6.75 1.45005 6.871 1.15405 7.113 0.912049C7.35433 0.670715 7.65 0.550049 8 0.550049C8.35 0.550049 8.64567 0.670715 8.887 0.912049C9.129 1.15405 9.25 1.45005 9.25 1.80005V2.50005C10.5833 2.80005 11.6667 3.47905 12.5 4.53705C13.3333 5.59572 13.75 6.79172 13.75 8.12505V15.375H15C15.2167 15.375 15.396 15.4457 15.538 15.587C15.6793 15.729 15.75 15.9084 15.75 16.125C15.75 16.325 15.6793 16.5 15.538 16.65C15.396 16.8 15.2167 16.875 15 16.875H1ZM8 19.8C7.5 19.8 7.075 19.625 6.725 19.275C6.375 18.925 6.2 18.5 6.2 18H9.8C9.8 18.5 9.625 18.925 9.275 19.275C8.925 19.625 8.5 19.8 8 19.8ZM3.75 15.375H12.25V8.12505C12.25 6.94172 11.8333 5.93738 11 5.11205C10.1667 4.28738 9.16667 3.87505 8 3.87505C6.83333 3.87505 5.83333 4.28738 5 5.11205C4.16667 5.93738 3.75 6.94172 3.75 8.12505V15.375Z"
-            fill="#686868" />
-        </svg>
-        <span>Notifikasi</span>
-        </Link>
-      </li>
-      <li :class="{ 'active': $page.url == '/profile' }">
+      <li :class="{ 'active': $page.url == '/umkm/account' }">
         <Link href="/profile" class="text-neutral-black">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -20,6 +10,8 @@
         </svg>
         <span>Profil Saya</span>
         </Link>
+        <span class="d-block bg-semantic-error-1 text-semantic-error-4 px-4 py-2 mt-3 rounded status">Belum
+          Terverifikasi</span>
       </li>
       <li>
         <a href="#" class="text-neutral-black">
@@ -62,6 +54,10 @@ import { Link } from '@inertiajs/inertia-vue3';
 .sidebar ul li {
   padding: 1rem;
   cursor: pointer;
+}
+
+.sidebar .status {
+  font-size: 0.75rem;
 }
 
 .sidebar ul li.active {
