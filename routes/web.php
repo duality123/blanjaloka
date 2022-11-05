@@ -48,6 +48,23 @@ Route::prefix('umkm')->group(function () {
     });
 });
 
+// admin route
+Route::prefix('admin/dashboard')->group(function () {
+    // admin dashboard route
+    Route::get('/', [DashboardController::class, 'index']);
+
+    // admin kegiatan route
+    Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/create', 'create');
+    });
+
+    // admin pengguna route
+    Route::prefix('pengguna')->group(function () {
+        Route::get('/admin', [PenggunaController::class, 'admin']);
+    });
+});
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
@@ -68,17 +85,6 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
     Route::get('/{provider}/redirect', 'redirectToProvider')->name('provider.redirect');
     Route::get('/{provider}/callback', 'providerCallback')->name('provider.callback');
-});
-
-//route to facebook
-Route::prefix('dashboard')->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/kegiatan', [KegiatanController::class, 'index']);
-    Route::get('/kegiatan/create', [KegiatanController::class, 'create']);
-
-    Route::prefix('pengguna')->group(function () {
-        Route::get('/admin', [PenggunaController::class, 'admin']);
-    });
 });
 
 // Kode dibawah Akan dihapus dimasa depan

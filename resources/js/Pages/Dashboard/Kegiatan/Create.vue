@@ -4,7 +4,7 @@
       <h1 class="text-neutral-gray-5 mb-0">Tambah Kegiatan</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <Link href="/admin/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
       <p class="text-neutral-gray-4">> Tambah Kegiatan</p>
     </div>
     <div class="row">
@@ -41,12 +41,12 @@
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Nama Juri</label>
               <v-select multiple placeholder="Masukkan nama juri kegiatan" id="nama_juri"
-                :options="['Canada','United States']" v-model="form.nama_juri" />
+                :options="['Canada', 'United States']" v-model="form.nama_juri" />
             </div>
             <div class="mb-4">
               <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
               <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="['Canada','United States']" v-model="form.nama_investor" />
+                :options="['Canada', 'United States']" v-model="form.nama_investor" />
             </div>
           </section>
           <section class="mb-5">
@@ -67,7 +67,7 @@
             </div>
             <div class="mb-4">
               <label for="pic" class="form-label text-neutral-gray-5">PIC</label>
-              <v-select multiple placeholder="Masukkan nama PIC kegiatan" id="pic" :options="['Canada','United States']"
+              <v-select multiple placeholder="Masukkan nama PIC kegiatan" id="pic" :options="['Canada', 'United States']"
                 v-model="form.pic" />
             </div>
             <div class="mb-4">
