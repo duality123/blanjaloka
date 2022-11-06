@@ -21,7 +21,7 @@
               <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
               <div class="position-relative">
                 <textarea class="form-control" id="deskripsi_kegiatan" rows="1"
-                  placeholder="Tuliskan deskripsi kegiatan" maxlength="512" ref="refDeskripsikegiatan"
+                  placeholder="Tuliskan deskripsi kegiatan" maxlength="512" ref="refDeskripsiKegiatan"
                   @input="handleResizeDeskripsiKegiatan" v-model="form.deskripsi_kegiatan"></textarea>
                 <span class="desc_count">{{ form.deskripsi_kegiatan.length }}/512</span>
               </div>
@@ -67,8 +67,8 @@
             </div>
             <div class="mb-4">
               <label for="pic" class="form-label text-neutral-gray-5">PIC</label>
-              <v-select multiple placeholder="Masukkan nama PIC kegiatan" id="pic" :options="['Canada', 'United States']"
-                v-model="form.pic" />
+              <v-select multiple placeholder="Masukkan nama PIC kegiatan" id="pic"
+                :options="['Canada', 'United States']" v-model="form.pic" />
             </div>
             <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Kontak Nomor PIC</label>
@@ -105,12 +105,12 @@ const form = useForm({
   kontak_nomor_pic: null
 });
 
-const refDeskripsikegiatan = ref(null);
+const refDeskripsiKegiatan = ref(null);
 const refJumlahPartisipan = ref(null);
 const refMasaInkubasi = ref(null);
 
 const handleResizeDeskripsiKegiatan = () => {
-  refDeskripsikegiatan.value.style.height = `${refDeskripsikegiatan.value.scrollHeight}px`;
+  refDeskripsiKegiatan.value.style.height = `${refDeskripsiKegiatan.value.scrollHeight}px`;
 }
 const handleResizeJumlahPartisipan = () => {
   refJumlahPartisipan.value.style.width = '1.5rem';

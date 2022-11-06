@@ -12,14 +12,16 @@ use App\Http\Controllers\{
 
 // admin controller
 use App\Http\Controllers\Dashboard\{
-    KegiatanController,
-    PenggunaController
+    KegiatanController as AdminKegiatanController,
+    PenggunaController as AdminPenggunaController
 };
 
 // umkm controller
 use App\Http\Controllers\Umkm\{
-    AccountController,
-    DashboardController as UmkmDashboardController
+    AccountController as UmkmAcountController,
+    DashboardController as UmkmDashboardController,
+    ProfileUsahaController as UmkmProfileUsahaController,
+    KegiatanController as UmkmKegiatanController
 };
 
 use Illuminate\Http\Request;
@@ -48,15 +50,25 @@ Route::get('/syarat-dan-ketentuan', [PagesController::class, 'syaratDanKetentuan
 // umkm route
 Route::prefix('umkm')->group(function () {
     // umkm account route
-    Route::prefix('account')->controller(AccountController::class)->group(function () {
+    Route::prefix('account')->controller(UmkmAcountController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/notifikasi', 'notifikasi');
     });
 
     // umkm dashboard route
-    Route::prefix('dashboard')->controller(UmkmDashboardController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('/kegiatanku', 'kegiatanku');
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [UmkmDashboardController::class, 'index']);
+
+        // umkm dashboard profile usaha
+        Route::prefix('profile-usaha')->controller(UmkmProfileUsahaController::class)->group(function () {
+            Route::get('/', 'index');
+        });
+
+        // umkm dashboard kegiatan route
+        Route::prefix('kegiatan')->controller(UmkmKegiatanController::class)->group(function () {
+            Route::get('/', 'index');
+            Route::get('/{idKegiatan}', 'show');
+        });
     });
 });
 
@@ -66,14 +78,14 @@ Route::prefix('admin/dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
 
     // admin kegiatan route
-    Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
+    Route::prefix('kegiatan')->controller(AdminKegiatanController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/create', 'create');
     });
 
     // admin pengguna route
     Route::prefix('pengguna')->group(function () {
-        Route::get('/admin', [PenggunaController::class, 'admin']);
+        Route::get('/admin', [AdminPenggunaController::class, 'admin']);
     });
 });
 
