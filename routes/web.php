@@ -22,6 +22,7 @@ use App\Http\Controllers\Umkm\{
     DashboardController as UmkmDashboardController,
     ProfileUsahaController as UmkmProfileUsahaController,
     ProfileProductController as UmkmProfileProductController,
+    KajianFinansialController as UmkmKajianFinansialController,
     KegiatanController as UmkmKegiatanController
 };
 
@@ -65,8 +66,13 @@ Route::prefix('umkm')->group(function () {
             Route::get('/', 'index');
         });
 
-        // umkm dashboard product
+        // umkm dashboard profile product
         Route::prefix('profile-product')->controller(UmkmProfileProductController::class)->group(function () {
+            Route::get('/', 'index');
+        });
+
+        // umkm dashboard profile product
+        Route::prefix('kajian-finansial')->controller(UmkmKajianFinansialController::class)->group(function () {
             Route::get('/', 'index');
         });
 
