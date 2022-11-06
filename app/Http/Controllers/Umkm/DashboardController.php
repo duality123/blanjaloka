@@ -27,4 +27,9 @@ class DashboardController extends Controller
     {
         return Inertia::render('Umkm/Dashboard/UmkmJurnal');
     }
+
+    public function eventual()
+    {
+        return Inertia::render('Umkm/Dashboard/Eventual');
+    }
 }
