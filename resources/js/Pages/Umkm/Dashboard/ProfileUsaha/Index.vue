@@ -12,7 +12,7 @@
                   Harap masukkan data terkait perusahaan Anda dengan benar! Data yang telah Anda kirim dapat
                   mempengaruhi proses kedepannya.
                 </p>
-                <form class="mt-5">
+                <form class="mt-4">
                   <div class="mb-4">
                     <label for="nama_perusahaan" class="form-label text-neutral-gray-5">Nama Perusahaan</label>
                     <input type="text" class="form-control" id="nama_perusahaan"
