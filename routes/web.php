@@ -57,6 +57,8 @@ Route::prefix('umkm')->group(function () {
     Route::prefix('dashboard')->controller(UmkmDashboardController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/kegiatanku', 'kegiatanku');
+        Route::get('/janjitemu', 'janjitemu');
+        Route::get('/umkmjurnal', 'umkmjurnal');
     });
 });
 
