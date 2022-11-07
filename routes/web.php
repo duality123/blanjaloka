@@ -53,6 +53,24 @@ Route::prefix('email')->group(function () {
     Route::get('/verify/success', [AuthController::class, 'emailVerificationSuccess'])->middleware('verified');
 });
 
+Route::group(['prefix' => 'umkm-saya', 'middleware' => ['verified', 'auth']], function () {
+    Route::get('/eventual', function () {
+        return Inertia::render('UMKM/Eventual/Index');
+    });
+
+    Route::group(['prefix' => 'kegiatan'], function () {
+        Route::get('/', function () {
+            return Inertia::render('UMKM/Kegiatan/Index');
+        });
+        Route::get('/detail', function () {
+            return Inertia::render('UMKM/Kegiatan/Detail');
+        });
+        Route::get('detail/materi', function () {
+            return Inertia::render('UMKM/Kegiatan/Materi');
+        });
+    });
+});
+
 Route::group(['prefix' => 'otp', 'middleware' => ['verified']], function () {
     Route::get('/generate', [AuthController::class, 'createOTP'])->name('otp.create');
     Route::get('/verify', function () {
