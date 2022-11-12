@@ -12,4 +12,24 @@ class DashboardController extends Controller
     {
         return Inertia::render('Umkm/Dashboard/Index');
     }
+
+    public function kegiatanku()
+    {
+        return Inertia::render('Umkm/Dashboard/Kegiatanku');
+    }
+
+    public function janjitemu()
+    {
+        return Inertia::render('Umkm/Dashboard/JanjiTemu');
+    }
+
+    public function umkmjurnal()
+    {
+        return Inertia::render('Umkm/Dashboard/UmkmJurnal');
+    }
+
+    public function eventual()
+    {
+        return Inertia::render('Umkm/Dashboard/Eventual');
+    }
 }

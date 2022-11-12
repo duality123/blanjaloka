@@ -81,7 +81,12 @@ Route::prefix('umkm')->group(function () {
             Route::get('/', 'index');
             Route::get('/{idKegiatan}', 'show');
         });
-    });
+        Route::get('/', 'index');
+        Route::get('/eventual', 'eventual');
+        Route::get('/kegiatanku', 'kegiatanku');
+        Route::get('/janjitemu', 'janjitemu');
+        Route::get('/umkmjurnal', 'umkmjurnal');
+
 });
 
 // admin route
