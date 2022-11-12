@@ -30,7 +30,8 @@
                     <h1>Pasar Modal</h1>
                   </div>
                 </div>
-                <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
+                <div
+                  class="d-flex flex-column flex-lg-row gap-2 align-items-center align-items-lg-start bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -56,7 +57,8 @@
                     Saat ini kamu berada di minggu <span class="text-neutral-black">ke-12</span> untuk inkubasi UMKM.
                   </p>
                 </div>
-                <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
+                <div
+                  class="d-flex flex-column flex-lg-row gap-2 align-items-center align-items-lg-start bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
