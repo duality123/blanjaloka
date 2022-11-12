@@ -1,0 +1,103 @@
+// color schema
+$blanjaloka-color-schema: (
+    "neutral-white": #ffffff,
+    "neutral-black": #181a1b,
+    "neutral-white-2": #f9f9f9,
+    "neutral-gray-1": #f0f0f0,
+    "neutral-gray-2": #d9d9d9,
+    "neutral-gray-3": #aeaeae,
+    "neutral-gray-4": #686868,
+    "neutral-gray-5": #3e4041,
+    "semantic-error-1": #ffe8e9,
+    "semantic-error-2": #ffd2d3,
+    "semantic-error-3": #ff8e91,
+    "semantic-error-4": #ff4348,
+    "semantic-error-5": #aa1317,
+    "semantic-warning-1": #fff7ee,
+    "semantic-warning-2": #ffe8cc,
+    "semantic-warning-3": #ffc580,
+    "semantic-warning-4": #ff9f2a,
+    "semantic-warning-5": #d47500,
+    "semantic-success-1": #e6f2e6,
+    "semantic-success-2": #d9ecda,
+    "semantic-success-3": #a1cfa3,
+    "semantic-success-4": #43a047,
+    "semantic-success-5": #2d6b2f,
+    "primary-blue-1": #f2f7fa,
+    "primary-blue-2": #e4f0f6,
+    "primary-blue-3": #d7e8f1,
+    "primary-blue-4": #bdd8e8,
+    "primary-blue-5": #7bb1d0,
+    "primary-blue-6": #398ab9,
+    "primary-blue-7": #2f739a,
+    "primary-blue-8": #265c7b,
+    "primary-blue-9": #1c455c,
+);
+
+// import bootstrap sass fucntion and variables
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+$theme-colors: map-merge($blanjaloka-color-schema, $theme-colors);
+$table-variants: map-merge($blanjaloka-color-schema, $table-variants);
+
+// import bootstrap sass
+@import "../../node_modules/bootstrap/scss/bootstrap";
+// import google font
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif !important;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.form-control,
+.form-select,
+.vs__dropdown-toggle {
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid #aeaeae !important;
+    padding-left: 0 !important;
+}
+
+.vs__search {
+    padding-left: 0 !important;
+}
+
+.form-control::-webkit-outer-spin-button,
+.form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: none;
+}
+
+.form-control::placeholder,
+.form-select,
+.vs__search::placeholder {
+    color: #aeaeae !important;
+}
+
+.vs__selected {
+    background-color: #398ab9 !important;
+}
+
+.vs__selected,
+.vs__deselect path {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+.vs__actions {
+    display: none !important;
+}
