@@ -115,7 +115,7 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
 });
  
 // admin route
-Route::prefix('admin/dashboard')->middleware(['auth'])->group(function () {
+Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(function () {
     // admin dashboard route
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/detail/profil/{slug}/hapus', [UserController::class, 'delete']);

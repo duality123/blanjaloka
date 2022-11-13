@@ -19,11 +19,7 @@ class Verified
     {
 
         if(!Auth::user()->email_verified_at){
-<<<<<<< HEAD
             return redirect('/halaman_verifikasi')
-=======
-            return redirect('email/verify')
->>>>>>> 4d26dc5c2536a724370326f1054053f22d834f13
 
         }
         return $next($request);

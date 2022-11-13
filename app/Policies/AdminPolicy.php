@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Policies
-
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\User;
+use Illuminate\Http\Request;
 class AdminPolicy
 {
     use HandlesAuthorization;
@@ -11,7 +11,7 @@ class AdminPolicy
     /**
      * Determine if the given user can create posts.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User  $user
      * @return bool
      */
     public function __construct()
@@ -19,10 +19,9 @@ class AdminPolicy
         //
     }
 
-    public function view(User $user){
-        if($user->role->number === 1){
-            return true;
-        }
+    public function view(?User $user){
+            return $user->Role->number === 2;
+        
     }
 }
 
