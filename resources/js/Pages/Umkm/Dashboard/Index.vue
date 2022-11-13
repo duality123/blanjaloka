@@ -39,7 +39,7 @@
                     </svg>
                   </div>
                   <p  class="fw-semibold text-primary-blue-6 mb-0">
-                    Harap lengkapi profil usaha, profil produk, dan kajian finansial agar data Anda dapat diseleksi
+                    Harap lengkapi profil diri, profil usaha, profil produk, dan kajian finansial agar data Anda dapat diseleksi
                     untuk proses inkubasi!
                   </p>
                 </div>
@@ -135,7 +135,6 @@ components:{
 section {
   margin-top: 10rem !important;
 }
-
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -144,49 +143,41 @@ section {
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .sidebar ul li {
   padding: 1rem;
   cursor: pointer;
 }
-
 .sidebar ul li.active {
   border: 1px solid #AEAEAE;
   border-radius: 0.5rem;
 }
-
 .sidebar ul li.active a span,
 .sidebar ul li.active a path {
   color: #398AB9;
   fill: #398AB9;
 }
-
 .sidebar ul li a {
   width: max-content;
   text-decoration: none;
   font-weight: 600;
   position: relative;
 }
-
 .sidebar ul li a span {
   width: max-content;
   position: absolute;
   left: 2rem;
 }
-
 .card h1 {
   font-size: 2rem;
   font-weight: 600;
   color: #181A1B;
 }
-
 .step {
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 1rem;
 }
-
 .step .number {
   width: 2.5rem;
   height: 2.5rem;
@@ -199,26 +190,21 @@ section {
   background-color: #D9D9D9;
   color: #FFFFFF;
 }
-
 .step h1 {
   font-size: 1.125rem;
   font-weight: 600;
   color: #AEAEAE;
 }
-
 .step.clear .number {
   background-color: #398AB9;
 }
-
 .step.clear h1 {
   color: #3E4041;
 }
-
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
 }
-
 table thead tr td,
 table thead tr th {
   font-weight: 600;
@@ -226,7 +212,6 @@ table thead tr th {
   border: none;
   text-align: center;
 }
-
 table tbody tr td,
 table tbody tr th {
   font-weight: 400;
@@ -235,7 +220,6 @@ table tbody tr th {
   text-align: center;
   background-color: #F0F0F0;
 }
-
 table tbody tr:nth-child(2n) td,
 table tbody tr:nth-child(2n) th {
   background-color: #F2F7FA;

@@ -39,7 +39,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
 
-              $request->session()->flash('welcomeMessage','Selamat datang');
+              $request->session()->flash('success','Selamat datang');
               if ($request->user()->Role->number == 2 ) {
                 return redirect('/umkm/dashboard/beranda/1');
             }
