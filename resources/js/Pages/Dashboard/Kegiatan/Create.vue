@@ -1,95 +1,48 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+
+  <DashboardLayout title="Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Tambah Kegiatan</h1>
+      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
+      <Link href="/admin/dashboard/kegiatan/create" class="btn btn-primary-blue-6 text-neutral-white py-2">
+      <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Kegiatan
+      </Link>
     </div>
-    <div class="d-flex mt-4">
-      <Link href="/admin/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4">> Tambah Kegiatan</p>
-    </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <form @submit.prevent="handleSubmit">
-          <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 1</h2>
-            <div class="mb-4">
-              <label for="tema_kegiatan" class="form-label text-neutral-gray-5">Tema Kegiatan</label>
-              <input type="text" class="form-control" id="tema_kegiatan" placeholder="Masukkan tema kegiatan"
-                v-model="form.tema_kegiatan">
-            </div>
-            <div class="mb-4">
-              <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
-              <div class="position-relative">
-                <textarea class="form-control" id="deskripsi_kegiatan" rows="1"
-                  placeholder="Tuliskan deskripsi kegiatan" maxlength="512" ref="refDeskripsiKegiatan"
-                  @input="handleResizeDeskripsiKegiatan" v-model="form.deskripsi_kegiatan"></textarea>
-                <span class="desc_count">{{ form.deskripsi_kegiatan.length }}/512</span>
-              </div>
-            </div>
-          </section>
-          <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 2</h2>
-            <div class="mb-4">
-              <label for="jumlah_partisipan" class="form-label text-neutral-gray-5">Jumlah Partisipan</label>
-              <div class="position-relative count_input" ref="refJumlahPartisipan">
-                <input type="number" class="form-control px-0" id="jumlah_partisipan"
-                  placeholder="Masukkan jumlah partisipan" @input="handleResizeJumlahPartisipan"
-                  v-model="form.jumlah_partisipan">
-                <span class="count_input_leading">Orang</span>
-              </div>
-            </div>
-            <div class="mb-4">
-              <label for="nama_juri" class="form-label text-neutral-gray-5">Nama Juri</label>
-              <v-select multiple placeholder="Masukkan nama juri kegiatan" id="nama_juri"
-                :options="['Canada', 'United States']" v-model="form.nama_juri" />
-            </div>
-            <div class="mb-4">
-              <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="['Canada', 'United States']" v-model="form.nama_investor" />
-            </div>
-          </section>
-          <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 3</h2>
-            <div class="mb-4">
-              <label for="masa_inkubasi" class="form-label text-neutral-gray-5">Masa Inkubasi</label>
-              <div class="position-relative count_input" ref="refMasaInkubasi">
-                <input type="number" class="form-control px-0" id="masa_inkubasi"
-                  placeholder="Masukkan lama masa inkubasi" @input="handleResizeMasaInkubasi"
-                  v-model="form.masa_inkubasi">
-                <span class="count_input_leading">Bulan</span>
-              </div>
-            </div>
-            <div class="mb-4">
-              <label for="kurikulum" class="form-label text-neutral-gray-5">Kurikulum</label>
-              <input type="text" class="form-control" id="kurikulum" placeholder="Masukkan link file kurikulum kegiatan"
-                v-model="form.kurikulum">
-            </div>
-            <div class="mb-4">
-              <label for="pic" class="form-label text-neutral-gray-5">PIC</label>
-              <v-select multiple placeholder="Masukkan nama PIC kegiatan" id="pic"
-                :options="['Canada', 'United States']" v-model="form.pic" />
-            </div>
-            <div class="mb-4">
-              <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Kontak Nomor PIC</label>
-              <div class="position-relative telp_input">
-                <span class="telp_leading">+62</span>
-                <input type="number" class="form-control" id="kontak_nomor_pic"
-                  placeholder="Masukkan nomor hanphone Anda" v-model="form.kontak_nomor_pic">
-              </div>
-            </div>
-          </section>
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary-blue-3 text-neutral-white">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <ul class="mt-4">
+      <li v-for="item in tabItems" :class="{ 'active': item.isActive }" @click="handleChangeCurrentTabItem(item.title)">
+        <a :class="{ 'text-neutral-black': item.isActive, 'text-neutral-gray-4': !item.isActive }">{{ item.title }}</a>
+      </li>
+    </ul>
+
   </DashboardLayout>
 </template>
 
 <script setup>
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+import { ref } from 'vue';
+const tabItems = ref([
+  {
+    title: 'E-Learning',
+    isActive: true
+  },
+  {
+    title: 'Eventual',
+    isActive: false
+  },
+  {
+    title: 'Logbook',
+    isActive: false
+  },
+  {
+    title: 'Penilaian',
+    isActive: false
+  },
+]);
+const handleChangeCurrentTabItem = (title) => {
+  tabItems.value = tabItems.value.map((tab) => {
+    return tab.title == title ? { ...tab, isActive: true } : { ...tab, isActive: false };
+  });
+=======
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 
@@ -129,6 +82,32 @@ h1 {
   font-size: 2.1rem;
   font-weight: 600;
 }
+
+ul {
+  display: flex;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+ul li {
+  cursor: pointer;
+}
+ul li {
+  padding-bottom: 0.5rem;
+}
+ul li.active {
+  border-bottom: 2px solid #398AB9;
+}
+ul li a {
+  text-decoration: none;
+  font-weight: 600;
+}
+@media (max-width: 575.98px) {
+  ul {
+    gap: 1rem;
+    flex-direction: column;
+  }
 
 form section h2 {
   font-size: 1.25rem;
@@ -174,5 +153,6 @@ textarea::-webkit-scrollbar {
 
 form button {
   padding: 0.75rem 1.5rem;
+
 }
 </style>

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use App\Models\User;
+use App\Policies\AdminPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -15,6 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+
+         User::class => AdminPolicy::class,
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
@@ -31,6 +35,5 @@ class AuthServiceProvider extends ServiceProvider
             ->markdown('email.email_konfirmasi', ['token' => $url]);
     });
 
-        //
     }
 }

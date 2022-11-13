@@ -5,12 +5,93 @@
         <div class="row gap-4">
           <UmkmDashboardSidebar />
           <div class="col-lg-8">
+           <div id="myModal"  class="modal"  v-if="this.popup">
+
+    <div  id="myModal" class="modal" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "popupExit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="col-lg-12">
+      <div class=" d-flex justify-content-center">
+      <h2>Daftar Konsultasi</h2>
+    </div>
+    <div class="mt-2">
+      <form @submit.prevent="submit()">
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Hal apa yang ingin didiskusikan ?</label>
+         <input type="text" class="form-control" v-model="form.perihal" id="provinsi" placeholder="Masukkan hal yang ingin anda diskusikan" >
+           <small class="text-danger" v-if="form.errors.perihal">{{ form.errors.perihal }}</small>
+      </div>
+       <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Anda ingin dihubungi melalui apa ?</label>
+         <input type="text" class="form-control" id="nama_investor" placeholder="(contoh : whatsapp , no telepon : 08xxxxxxx.)" v-model="form.kontak" >
+          <small class="text-danger" v-if="form.errors.kontak">{{ form.errors.kontak }}</small>
+      </div>
+
+       <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Mentor  ?</label>
+          <input type="text" class="form-control" v-model="form.mentor" id="provinsi" placeholder="Masukkan mentor yang ingin anda ajak diskusi" >
+            <small class="text-danger" v-if="form.errors.mentor">{{ form.errors.mentor }}</small>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+</div>
+    </div>
+  </div>
+      <div id="myModal"  class="modal"  v-if="this.popupDet" >
+
+    <div  id="myModal" class="modal" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "popupDetail()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="col-lg-12">
+      <div class=" d-flex justify-content-center">
+      <h2>Detail Konsultasi</h2>
+    </div>
+    <div class="mt-2">
+     <div class="card-body">
+  <p><strong>Status : </strong>{{this.eventualDetail['status']}}</p>
+  <p><strong>Nama Lengkap : </strong>{{this.eventualDetail['nama_lengkap']}}</p>
+  <p><strong>No HP : </strong>{{this.eventualDetail['no_hp']}}</p>
+  <p><strong>Tanggal meeting : </strong>{{this.eventualDetail['tanggal']}}</p>
+  <p><strong>Nama Mentor : </strong>{{this.eventualDetail['nama_mentor']}}</p>
+  <p><strong>Link meeting : </strong>{{this.eventualDetail['link_meeting']}}</p>
+  <p><strong>Kontak : </strong>{{this.eventualDetail['kontak']}}</p>
+  <p><strong>Perihal : </strong>{{this.eventualDetail['perihal']}}</p>
+  </div>
+
+      </div>
+    </div>
+</div>
+    </div>
+  </div>
             <div class="card">
               <div class="card-body">
-                <h1>UMKM Incubation Nusantara 2022 #Batch2</h1>
+                <h1>{{kegiatan.tema}}</h1>
+
                  <ul class="mt-4">
-                    <li v-for="item in tabItems" :class="{ 'active': item.isActive }" @click="handleChangeCurrentTabItem(item.title)">
-                        <a :class="{ 'text-neutral-black': item.isActive, 'text-neutral-gray-4': !item.isActive }">{{ item.title }}</a>
+                    <li >
+                    <Link :href="`/umkm/dashboard/kegiatanku/detail/${kegiatan.id}`">Deskripsi</Link>                 </li>
+                    <li >
+                       <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.id}/elearning/1`">Elearning</Link>
+                    </li>
+                    <li class="active"  >
+                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${kegiatan.id}`" class="active">Eventual</Link>
+                    </li>
+                    <li >
+                         <Link :href="`/umkm/dashboard/kegiatanku/logbook/${kegiatan.id}`">Logbook</Link>
                     </li>
                 </ul>
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
@@ -27,59 +108,37 @@
                 </div>
                 <div class="my-4 d-flex align-items-center borderc gap-3">
                     <h2 class="text-neutral-gray-5 m-0 me-auto">Riwayat Eventual Anda</h2>
-                    <a href="#" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+                    <submit @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
                         + Daftar Konsultasi
-                    </a>
+                    </submit>
                 </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">
                       <tr>
-                        <th scope="col">Minggu</th>
+                        <th scope="col">No</th>
                         <th scope="col">Perihal</th>
                         <th scope="col">Nama Mentor</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>11</td>
-                        <td>Diskusi terkait enhance produk</td>
+                      <tr v-for="(event,number) in eventual">
+                        <td>{{++number}}</td>
+                        <td>{{event.perihal}}</td>
                         <td>
-                            -
+                            {{event.nama_mentor}}
                         </td>
                         <td>
-                        <a href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">
+                        <button @click="this.popupDetail(event.status,event.nama_lengkap,event.no_hp,event.jadwal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 0" href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">
                           Menunggu
-                        </a>
-                          <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.5 14.75C9.71667 14.75 9.896 14.6793 10.038 14.538C10.1793 14.396 10.25 14.2167 10.25 14V9.725C10.25 9.525 10.1793 9.354 10.038 9.212C9.896 9.07067 9.71667 9 9.5 9C9.28333 9 9.10433 9.07067 8.963 9.212C8.821 9.354 8.75 9.53333 8.75 9.75V14.025C8.75 14.225 8.821 14.396 8.963 14.538C9.10433 14.6793 9.28333 14.75 9.5 14.75ZM9.5 7.3C9.73333 7.3 9.925 7.22067 10.075 7.062C10.225 6.904 10.3 6.70833 10.3 6.475C10.3 6.25833 10.225 6.07067 10.075 5.912C9.925 5.754 9.73333 5.675 9.5 5.675C9.26667 5.675 9.075 5.754 8.925 5.912C8.775 6.07067 8.7 6.25833 8.7 6.475C8.7 6.70833 8.775 6.904 8.925 7.062C9.075 7.22067 9.26667 7.3 9.5 7.3ZM9.5 19.5C8.18333 19.5 6.946 19.25 5.788 18.75C4.62933 18.25 3.625 17.575 2.775 16.725C1.925 15.875 1.25 14.8707 0.75 13.712C0.25 12.554 0 11.3167 0 10C0 8.68333 0.25 7.44567 0.75 6.287C1.25 5.129 1.925 4.125 2.775 3.275C3.625 2.425 4.62933 1.75 5.788 1.25C6.946 0.75 8.18333 0.5 9.5 0.5C10.8167 0.5 12.0543 0.75 13.213 1.25C14.371 1.75 15.375 2.425 16.225 3.275C17.075 4.125 17.75 5.129 18.25 6.287C18.75 7.44567 19 8.68333 19 10C19 11.3167 18.75 12.554 18.25 13.712C17.75 14.8707 17.075 15.875 16.225 16.725C15.375 17.575 14.371 18.25 13.213 18.75C12.0543 19.25 10.8167 19.5 9.5 19.5ZM9.5 18C11.7167 18 13.6043 17.221 15.163 15.663C16.721 14.1043 17.5 12.2167 17.5 10C17.5 7.78333 16.721 5.89567 15.163 4.337C13.6043 2.779 11.7167 2 9.5 2C7.28333 2 5.396 2.779 3.838 4.337C2.27933 5.89567 1.5 7.78333 1.5 10C1.5 12.2167 2.27933 14.1043 3.838 15.663C5.396 17.221 7.28333 18 9.5 18Z" fill="#686868"/>
-                          </svg>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td>Diskusi terkait enhance produk</td>
-                        <td>Bu Malika</td>
-                        <td>
-                          <a href="#" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">
-                            Menunggu
-                          </a>
-                          <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.5 14.75C9.71667 14.75 9.896 14.6793 10.038 14.538C10.1793 14.396 10.25 14.2167 10.25 14V9.725C10.25 9.525 10.1793 9.354 10.038 9.212C9.896 9.07067 9.71667 9 9.5 9C9.28333 9 9.10433 9.07067 8.963 9.212C8.821 9.354 8.75 9.53333 8.75 9.75V14.025C8.75 14.225 8.821 14.396 8.963 14.538C9.10433 14.6793 9.28333 14.75 9.5 14.75ZM9.5 7.3C9.73333 7.3 9.925 7.22067 10.075 7.062C10.225 6.904 10.3 6.70833 10.3 6.475C10.3 6.25833 10.225 6.07067 10.075 5.912C9.925 5.754 9.73333 5.675 9.5 5.675C9.26667 5.675 9.075 5.754 8.925 5.912C8.775 6.07067 8.7 6.25833 8.7 6.475C8.7 6.70833 8.775 6.904 8.925 7.062C9.075 7.22067 9.26667 7.3 9.5 7.3ZM9.5 19.5C8.18333 19.5 6.946 19.25 5.788 18.75C4.62933 18.25 3.625 17.575 2.775 16.725C1.925 15.875 1.25 14.8707 0.75 13.712C0.25 12.554 0 11.3167 0 10C0 8.68333 0.25 7.44567 0.75 6.287C1.25 5.129 1.925 4.125 2.775 3.275C3.625 2.425 4.62933 1.75 5.788 1.25C6.946 0.75 8.18333 0.5 9.5 0.5C10.8167 0.5 12.0543 0.75 13.213 1.25C14.371 1.75 15.375 2.425 16.225 3.275C17.075 4.125 17.75 5.129 18.25 6.287C18.75 7.44567 19 8.68333 19 10C19 11.3167 18.75 12.554 18.25 13.712C17.75 14.8707 17.075 15.875 16.225 16.725C15.375 17.575 14.371 18.25 13.213 18.75C12.0543 19.25 10.8167 19.5 9.5 19.5ZM9.5 18C11.7167 18 13.6043 17.221 15.163 15.663C16.721 14.1043 17.5 12.2167 17.5 10C17.5 7.78333 16.721 5.89567 15.163 4.337C13.6043 2.779 11.7167 2 9.5 2C7.28333 2 5.396 2.779 3.838 4.337C2.27933 5.89567 1.5 7.78333 1.5 10C1.5 12.2167 2.27933 14.1043 3.838 15.663C5.396 17.221 7.28333 18 9.5 18Z" fill="#686868"/>
-                          </svg>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>9</td>
-                        <td>Diskusi terkait enhance produk</td>
-                        <td>
-                            Pak Sulaiman
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer">
+                        </button>
+                        <button @click="popupDetail(event.status,event.nama_lengkap,event.no_hp,event.tanggal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 1" href="#" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">
                             Disetujui
-                          </a>
+                          </button>
+                         <button @click="popupDetail(event.status,event.nama_lengkap,event.no_hp,event.tanggal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 2" href="#" class="btn btn-semantic-success-4 me-2 px-3 text-neutral-white cursor-pointer">
+                            Selesai
+                          </button>
                           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.5 14.75C9.71667 14.75 9.896 14.6793 10.038 14.538C10.1793 14.396 10.25 14.2167 10.25 14V9.725C10.25 9.525 10.1793 9.354 10.038 9.212C9.896 9.07067 9.71667 9 9.5 9C9.28333 9 9.10433 9.07067 8.963 9.212C8.821 9.354 8.75 9.53333 8.75 9.75V14.025C8.75 14.225 8.821 14.396 8.963 14.538C9.10433 14.6793 9.28333 14.75 9.5 14.75ZM9.5 7.3C9.73333 7.3 9.925 7.22067 10.075 7.062C10.225 6.904 10.3 6.70833 10.3 6.475C10.3 6.25833 10.225 6.07067 10.075 5.912C9.925 5.754 9.73333 5.675 9.5 5.675C9.26667 5.675 9.075 5.754 8.925 5.912C8.775 6.07067 8.7 6.25833 8.7 6.475C8.7 6.70833 8.775 6.904 8.925 7.062C9.075 7.22067 9.26667 7.3 9.5 7.3ZM9.5 19.5C8.18333 19.5 6.946 19.25 5.788 18.75C4.62933 18.25 3.625 17.575 2.775 16.725C1.925 15.875 1.25 14.8707 0.75 13.712C0.25 12.554 0 11.3167 0 10C0 8.68333 0.25 7.44567 0.75 6.287C1.25 5.129 1.925 4.125 2.775 3.275C3.625 2.425 4.62933 1.75 5.788 1.25C6.946 0.75 8.18333 0.5 9.5 0.5C10.8167 0.5 12.0543 0.75 13.213 1.25C14.371 1.75 15.375 2.425 16.225 3.275C17.075 4.125 17.75 5.129 18.25 6.287C18.75 7.44567 19 8.68333 19 10C19 11.3167 18.75 12.554 18.25 13.712C17.75 14.8707 17.075 15.875 16.225 16.725C15.375 17.575 14.371 18.25 13.213 18.75C12.0543 19.25 10.8167 19.5 9.5 19.5ZM9.5 18C11.7167 18 13.6043 17.221 15.163 15.663C16.721 14.1043 17.5 12.2167 17.5 10C17.5 7.78333 16.721 5.89567 15.163 4.337C13.6043 2.779 11.7167 2 9.5 2C7.28333 2 5.396 2.779 3.838 4.337C2.27933 5.89567 1.5 7.78333 1.5 10C1.5 12.2167 2.27933 14.1043 3.838 15.663C5.396 17.221 7.28333 18 9.5 18Z" fill="#686868"/>
                           </svg>
@@ -97,35 +156,89 @@
   </BaseLayout>
 </template>
 
-<script setup>
+<script>
 import BaseLayout from '../../../Layouts/Layout.vue'
 import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
-import { ref } from 'vue';
+import { useForm, Link } from '@inertiajs/inertia-vue3'
+export default{
+  data(){
+    return{
+      popup:false,
+      popupDet : false,
+      eventualDetail :{
+        status:null,
+        nama_lengkap:null,
+        no_hp:null,
+        nama_mentor:null,
+        link_meeting:null,
+        tanggal:null,
+        kontak:null,
+        perihal:null
+      },
+  
+    }
+  },
+  setup(){
+    const form = useForm({
+     perihal:null,
+     kontak:null,
+     mentor:null,
+     kegiatan_id: document.location.pathname.split('/')[5]
+    })
 
-const tabItems = ref([
-  {
-    title: 'Deskripsi',
-    isActive: false
+    return {form}
   },
-  {
-    title: 'E-Learning',
-    isActive: false
+  components:{
+    UmkmDashboardSidebar,
+    BaseLayout,
+    Link
   },
-  {
-    title: 'Eventual',
-    isActive: true
+  mounted(){
+    if (this.form.errors.perihal ||  this.form.errors.kontak || this.form.errors.mentor) {
+      this.popup =true
+    }
   },
-  {
-    title: 'Logbook',
-    isActive: false
-  },
-]);
+  methods:{
+    submit(){
+      this.popup=false;
+      this.form.post('/umkm/dashboard/kegiatanku/tambah_eventual')
 
-const handleChangeCurrentTabItem = (title) => {
-  tabItems.value = tabItems.value.map((tab) => {
-    return tab.title == title ? { ...tab, isActive: true } : { ...tab, isActive: false };
-  });
+    },
+    popupDetail(status,nama_lengkap,no_hp,tanggal,nama_mentor,link_meeting,kontak,perihal){
+      this.popupDet = !this.popupDet
+      if (this.popupDet) {
+        this.eventualDetail['status'] = status
+        if(this.eventualDetail['status'] == 0){
+            this.eventualDetail['status'] = 'Menunggu'
+        }
+        else if(this.eventualDetail['status'] == 1){
+           this.eventualDetail['status'] = 'Disetujui'
+        }
+        else{
+           this.eventualDetail['status'] = 'Selesai'
+        }
+        this.eventualDetail['nama_lengkap'] = nama_lengkap
+        this.eventualDetail['no_hp'] = no_hp
+        this.eventualDetail['tanggal'] = tanggal
+        this.eventualDetail['nama_mentor'] = nama_mentor
+        this.eventualDetail['link_meeting'] =link_meeting
+        this.eventualDetail['kontak'] =kontak
+        this.eventualDetail['perihal'] =perihal
+        
+      }
+    },
+    popupExit(){
+      this.popup = !this.popup
+    }
+  },
+  props:{
+    eventual:Object,
+    kegiatan:Object
+  }
+
+
 }
+
 </script>
 
 
@@ -133,7 +246,9 @@ const handleChangeCurrentTabItem = (title) => {
 section {
   margin-top: 10rem !important;
 }
-
+.modal-content{
+  text-align: start;
+}
 .fs-btn {
     font-size: .875rem;
 }
@@ -154,13 +269,15 @@ ul li {
   padding-bottom: 0.5rem;
 }
 
-ul li.active {
+ul li a.active {
   border-bottom: 2px solid #398AB9;
+  color:  #398ab9;
 }
 
 ul li a {
   text-decoration: none;
   font-weight: 600;
+  color: black;
 }
 
 .sidebar ul {
@@ -277,6 +394,11 @@ table tbody tr:nth-child(2n) th {
   ul {
     gap: 1rem;
     flex-direction: column;
+  }
+  .modal-content{
+    margin-left: 3rem;
+    margin-top: 5rem;
+    width: 450px;
   }
 }
 </style>

@@ -11,9 +11,12 @@ import {
     faArrowRightFromBracket,
     faChevronRight,
     faChevronUp,
+    faChevronLeft,
     faPlus,
     faEllipsis,
+    faTimes,
     faEllipsisVertical,
+    faBars
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap";
@@ -24,10 +27,13 @@ library.add(
     faEyeSlash,
     faArrowRightFromBracket,
     faChevronRight,
+    faChevronLeft,
     faChevronUp,
     faPlus,
+    faTimes,
     faEllipsis,
-    faEllipsisVertical
+    faEllipsisVertical,
+    faBars
 );
 
 createInertiaApp({

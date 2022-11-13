@@ -10,28 +10,26 @@
                     Anda di Blanjaloka Akselerator sekarang juga!
                 </p>
                 <div class="d-flex flex-column flex-lg-row justify-content-center gap-3 gap-lg-4 mt-5">
-                    <a href="#" class="btn btn-primary-blue-6 text-primary-blue-6 text-white py-2 border-5">Daftarkan
-                        UMKM Sekarang</a>
+                    <Link href="/register" class="btn btn-primary-blue-6 text-primary-blue-6 text-white py-2 border-5">Daftarkan
+                        UMKM Sekarang</Link>
                     <a href="#" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">Jadi
                         Investor</a>
                 </div>
-                <div class="d-flex justify-content-center mb-5 mb-lg-0">
-                    <img src="../assets/images/hero_conversation_img.png" alt="conversation img" class="img-fluid">
+                <div id="animation2">
                 </div>
                 <div class="row align-items-center position-relative info">
                     <img src="../assets/images/decore_img.png" alt="decorate img"
                         class="position-absolute decorate_img">
                     <div class="col-lg">
                         <h1 class="text-neutral-black">Apa itu Blanjaloka Akselerator?</h1>
-                        <p class="text-neutral-black mt-4">
+                        <p class="text-neutral-black m-4">
                             <b>Blanjaloka Akselerator</b> adalah sebuah program yang membantu UMKM untuk elevasi
                             produk-produk
                             digital
                             agar mampu bersaing secara nasional maupun internasional.
                         </p>
                     </div>
-                    <div class="col-lg d-flex justify-content-end">
-                        <img src="../assets/images/hero_info_img.png" alt="info img" class="img-fluid">
+                    <div id="animation1" style="width:40%">
                     </div>
                 </div>
             </div>
@@ -77,7 +75,8 @@
             <div class="container">
                 <div class="row d-flex gap-5">
                     <div class="col-lg order-2 order-lg-1">
-                        <img src="../assets/images/learn_img.png" alt="learn img" class="img-fluid">
+                        <div id="animation3"></div>
+
                         <p class="text-neutral-black mt-4">
                             {{ learnItems[activeLearn].desc }}
                         </p>
@@ -159,8 +158,40 @@
 </template>
 
 <script setup>
+import { Link } from '@inertiajs/inertia-vue3';
+import { ref,onMounted } from 'vue';
+import lottie from 'lottie-web'
+//http://127.0.0.1:5173/resources/js/assets/animations/landing1.json
 import BaseLayout from '../Layouts/Layout.vue'
-import { ref } from 'vue';
+
+
+
+onMounted(()=>{
+      lottie.loadAnimation({
+      container: document.getElementById('animation1'),
+      path: 'http://127.0.0.1:5173/resources/js/assets/animations/landing1.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      name: "Demo Animation",
+});
+ lottie.loadAnimation({
+      container: document.getElementById('animation2'),
+      path: 'http://127.0.0.1:5173/resources/js/assets/animations/landing2.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      name: "Demo Animation",
+});
+  lottie.loadAnimation({
+      container: document.getElementById('animation3'),
+      path: 'http://127.0.0.1:5173/resources/js/assets/animations/learn.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      name: "Demo Animation",
+});
+})
 
 const learnItems = ref([
     {
@@ -212,6 +243,10 @@ const handleChangeCurrentLearnItem = (title) => {
 
 .hero_section a.btn {
     width: 18rem;
+}
+
+#animation1{
+    width: 70%;
 }
 
 .hero_section img {

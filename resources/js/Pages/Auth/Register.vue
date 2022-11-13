@@ -2,7 +2,7 @@
     <AuthLayout title="Register">
         <div class="row justify-content-center my-5">
             <div class="col-lg-8">
-                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo">
+                 <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" id='logo'>
                 <h1 class="text-neutral-black">Daftar</h1>
                 <p class="text-neutral-gray-4">
                     Mulai pendanaan UMKM Anda di
@@ -18,9 +18,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="no_handphone" class="form-label text-neutral-gray-5">No. Handphone</label>
-                        <input type="number" v-model="form.no_handphone" class="form-control" id="no_handphone"
-                            placeholder="Masukkan no. handphone aktif Anda">
-                        <small class="text-danger" v-if="form.errors.no_handphone">{{ form.errors.no_handphone
+                        <div class="input-group">
+                          <span :class="[ hover ? 'numberHover':'numberCasual','input-group-text bg-white']">+62</span>
+                          <input  v-model="form.no_telepon" @focusout="changeHoverState()" @focusin="changeHoverState()" type="number" class="form-control " placeholder=" Masukkan no handphone anda"  id="no_telepon">
+                        </div>
+                        <small class="text-danger" v-if="form.errors.no_telepon">{{ form.errors.no_telepon
                         }}</small>
                     </div>
                     <div class="mb-4 position-relative">
@@ -47,11 +49,11 @@
                     <p class="text-neutral-gray-3">atau masuk dengan</p>
                     <div class="line"></div>
                 </div>
-                <div class="d-flex justify-content-center gap-4 mt-4">
+               <div class="d-flex justify-content-center gap-4 mt-4">
                     <a href="#">
                         <img src="../../assets/icons/icon_facebook.png" alt="oauth facebook">
                     </a>
-                    <a href="#">
+                    <a href="/auth/google/redirect">
                         <img src="../../assets/icons/icon_google.png" alt="oauth google">
                     </a>
                 </div>
@@ -63,24 +65,63 @@
 
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import { ref, computed } from 'vue'
+import { ref, computed,onMounted } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 
 const isPasswordVisible = ref(false);
+const hover = ref(false);
 const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
-
 const form = useForm({
     email: '',
-    no_handphone: '',
     password: '',
+    no_telepon: ''
 });
+const changeHoverState = () => {
+  hover.value = !hover.value;
+}
 
 const handleTogglePassword = (e) => {
     isPasswordVisible.value = !isPasswordVisible.value;
     passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';
     passwordEyeType.value = isPasswordVisible.value ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
 }
+var i = 0;
+var multiple = 10;
+
+var delay = false;
+const props = defineProps({errors: Object});
+
+const makeAnimations = (e) =>{
+    /*
+      if(delay){
+                let start = Date.now();
+                let current = 0;
+                while(current - start != 500){
+                        current = Date.now();
+                    }
+                delay = false;
+                }
+             document.getElementById('logo').style.transform = 'rotate(0deg)';
+        */
+            if(i >= 300 ){
+                document.getElementById('logo').style.transform = 'rotate(20deg)'; 
+                multiple *= -1;
+                delay = true
+            }
+            else if(i <= 0 ){
+                document.getElementById('logo').style.transform = 'rotate(0deg)';
+                multiple += 10;
+            }
+            i+= multiple;
+            document.getElementById('logo').style.marginLeft = i+'px';
+}
+
+onMounted(()=>{
+    setInterval(()=>{
+        makeAnimations(); 
+  }, 100);
+})
 
 const handleSubmit = () => {
     form.post('/register');
@@ -91,3 +132,20 @@ const isButtonDisable = computed(() => {
     return true;
 });
 </script>
+
+<style scoped>
+.numberCasual {
+  border:0px;
+  border-radius:0px;
+  border-bottom: 2px solid #AEAEAE;
+
+}
+.numberHover
+{
+  border:0px;
+  border-radius:0px;
+  border-bottom: 2px solid #7BB1D0;
+
+
+}
+</style>

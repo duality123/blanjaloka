@@ -25,17 +25,32 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    
+
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse
         {
             public function toResponse($request)
             {
-                return redirect('email/verify');
+                return redirect('/halaman_verifikasi');
             }
         });
-      
-        
+
         $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
+            public function toResponse($request)
+            {
+
+              $request->session()->flash('welcomeMessage','Selamat datang');
+              if ($request->user()->Role->number == 2 ) {
+                return redirect('/umkm/dashboard/beranda/1');
+            }
+            
+                else{
+                     return redirect('/admin/dashboard/');
+                }
+            }
+        });
+
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
         {
             public function toResponse($request)
             {
@@ -69,24 +84,24 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return Inertia::render('Auth/Login');
         });
-        Fortify::verifyEmailView(function () {
-            return Inertia::render('Auth/Confirmation_email');
+
+        Fortify::verifyEmailView(function (Request $request) {
+            return Inertia::render('Auth/Confirmation_email',['request'=>$request->email]);
         });
-        
+
+
         Fortify::registerView(function () {
             return Inertia::render('Auth/Register');
         });
 
         //forgot
-        Fortify::requestPasswordResetLinkView(function () {
-            return Inertia::render('Auth/ForgotPassword');
+        Fortify::requestPasswordResetLinkView(function (Request $request) {
+            return Inertia::render('Auth/Reset_password');
         });
 
         //reset
-        Fortify::resetPasswordView(function ($request) {
-            return Inertia::render('Auth/ResetPassword', [
-                'request' => $request,
-            ]);
+        Fortify::resetPasswordView(function (Request $request) {
+            return Inertia::render('Auth/Verification_success');
         });
     }
 }

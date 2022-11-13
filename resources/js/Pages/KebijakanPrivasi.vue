@@ -42,7 +42,7 @@
           tempore! Eligendi delectus culpa expedita! Nemo quidem perspiciatis ex amet labore eligendi, ea aliquid?
           Dignissimos, reprehenderit.
         </p>
-        <form @submit.prevent="this.$inertia.visit('/syarat-dan-ketentuan')">
+        <form @submit.prevent="this.$inertia.visit('/syarat_dan_ketentuan')">
           <div class="form-check">
             <input v-model="isCheckKebijakanPrivasi" class="form-check-input" type="checkbox" id="kebijakan_privasi">
             <label class="form-check-label" for="kebijakan_privasi">
@@ -61,7 +61,6 @@
 <script setup>
 import BaseLayout from '../Layouts/Layout.vue'
 import { ref } from 'vue'
-
 const isCheckKebijakanPrivasi = ref(false);
 </script>
 
@@ -92,10 +91,10 @@ form {
   font-weight: 600;
   color: #3E4041;
 }
-
 form button {
   padding: 0.5rem 10rem;
 }
+
 
 @media (max-width: 575.98px) {
   section {

@@ -1,8 +1,8 @@
 <template>
     <AuthLayout title="Login">
-        <div class="row justify-content-center my-5">
+        <div class="row justify-content-center my-5 mt-2">
             <div class="col-lg-8">
-                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo">
+                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" id='logo'>
                 <h1 class="text-neutral-black">Masuk</h1>
                 <p class="text-neutral-gray-4">Ayo lakukan pendanaan UMKM sekarang juga!</p>
                 <form @submit.prevent="handleSubmit">
@@ -10,7 +10,8 @@
                         <label for="email" class="form-label text-neutral-gray-5">Email</label>
                         <input type="email" v-model="form.email" class="form-control" id="email"
                             placeholder="Masukkan email Anda">
-                        <small class="text-danger" v-if="form.errors.email">{{ form.errors.email }}</small>
+                        <small class="text-danger" v-if="errors.email">Pastikan email atau password yang anda ketikkan itu benar !</small>
+
                     </div>
                     <div class="mb-4">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
@@ -20,7 +21,8 @@
                             <font-awesome-icon @click="handleTogglePassword" :icon="passwordEyeType"
                                 class="position-absolute text-primary-blue-6 icon_eye" />
                         </div>
-                        <small class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</small>
+                        <small class="text-danger" v-if="errors.password">Harap diisi password anda !</small>
+
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="form-check">
@@ -49,7 +51,8 @@
                     <a href="#">
                         <img src="../../assets/icons/icon_facebook.png" alt="oauth facebook">
                     </a>
-                    <a href="#">
+                    <a href="/auth/google/redirect">
+
                         <img src="../../assets/icons/icon_google.png" alt="oauth google">
                     </a>
                 </div>
@@ -61,18 +64,60 @@
 
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import { ref, computed } from 'vue'
+import { ref, computed,onMounted } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
+import { reactive } from 'vue'
+import { Inertia } from "@inertiajs/inertia";
 
 const isPasswordVisible = ref(false);
 const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
 
-const form = useForm({
+
+const form = reactive({
+
     email: '',
     password: '',
     remember: false,
 });
+
+var i = 0;
+var multiple = 10;
+
+var delay = false;
+const props = defineProps({errors: Object});
+
+const makeAnimations = (e) =>{
+    /*
+      if(delay){
+                let start = Date.now();
+                let current = 0;
+                while(current - start != 500){
+                        current = Date.now();
+                    }
+                delay = false;
+                }
+             document.getElementById('logo').style.transform = 'rotate(0deg)';
+        */
+            if(i >= 300 ){
+                document.getElementById('logo').style.transform = 'rotate(20deg)'; 
+                multiple *= -1;
+                delay = true
+            }
+            else if(i <= 0 ){
+                document.getElementById('logo').style.transform = 'rotate(0deg)';
+                multiple += 10;
+            }
+            i+= multiple;
+            document.getElementById('logo').style.marginLeft = i+'px';
+}
+
+onMounted(()=>{
+    setInterval(()=>{
+        makeAnimations(); 
+  }, 100);
+})
+
 
 const handleTogglePassword = (e) => {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -81,8 +126,19 @@ const handleTogglePassword = (e) => {
 }
 
 const handleSubmit = () => {
-    form.post('/login');
+
+  Inertia.post('/login',{
+                  email : form.email,
+                  password : form.password,
+                  remember : form.remember,
+  });
+
+  return {
+    form,
+    handleSubmit
+  }
 }
+
 
 const isButtonDisable = computed(() => {
     if (form.email != '' && form.password != '') return false;

@@ -6,7 +6,7 @@
   </Head>
   <div class="container-fluid">
     <div class="row min-vh-100">
-      <div class="col-lg left_content"></div>
+      <div class="col-lg " id ="animationsidebar"></div>
       <div class="col-lg right_content">
         <slot />
       </div>
@@ -16,6 +16,8 @@
 
 <script setup>
 import { Head } from '@inertiajs/inertia-vue3'
+import {onMounted} from 'vue';
+import lottie from 'lottie-web';
 
 const props = defineProps({
   title: {
@@ -23,6 +25,18 @@ const props = defineProps({
     default: 'Berikan judul disini'
   }
 });
+onMounted(()=>{
+      lottie.loadAnimation({
+      container: document.getElementById('animationsidebar'),
+      path: 'http://127.0.0.1:5173/resources/js/assets/animations/loginsidebar.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      name: "Demo Animation",
+})
+});
+
+
 </script>
 
 <style>

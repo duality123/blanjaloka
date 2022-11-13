@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Inertia\Inertia;
 
+use Illuminate\Support\Facades\DB;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -46,9 +47,21 @@ class HandleInertiaRequests extends Middleware
             ],
             //user authenticated
             'auth' => [
-                'user'          =>Auth::check() //$request->user() ?   $request->user() : null,
+                'user'          => $request->user(),
                 // 'permissions'   => $request->user() ? $request->user()->getPermissionArray() : []
+                'profileComplete' => $request->user() ? $request->user()->profil->isProfileComplete():null,
+                'usahaComplete' => $request->user() ? $request->user()->usaha->isUsahaComplete():null,
+                'produkComplete' => $request->user() ? $request->user()->produk->isProdukComplete():null,
+                'finansialComplete' => $request->user() ? $request->user()->finansial->isFinansialComplete():null,
+                'profil' =>$request->user() ? $request->user()->profil->profilList():null,
+                'usaha' => $request->user() ? $request->user()->usaha->usahaList():null,
+                'produk' => $request->user() ? $request->user()->produk->produkList():null,
+                'inkubasi' => $request->user() ? $request->user()->inkubasi():null,
+                'finansial' => $request->user() ? $request->user()->finansial->finansialList():null,
+                
             ],
+            'asset_url' => 'http://127.0.0.1:5173/storage/app/public', 
+            'isEmailSend'=> $request->session()->get('redirect')? true:false,
             //route
             'route' => function () use ($request) {
                 return [
@@ -58,10 +71,6 @@ class HandleInertiaRequests extends Middleware
             },
         ]);
     }
-    
-   
+
+
 }
-
-
-
-
