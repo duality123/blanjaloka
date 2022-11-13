@@ -33,7 +33,7 @@ export default{
   setup(){
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-  }
+  },
   components:{
     BaseLayout,
     UmkmDashboardSidebar
