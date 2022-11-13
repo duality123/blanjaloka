@@ -18,7 +18,7 @@ import {
     faEllipsisVertical,
     faBars
 } from "@fortawesome/free-solid-svg-icons";
-import '../css/app.scss'; 
+
 import "bootstrap";
 import "vue-select/dist/vue-select.css";
 
