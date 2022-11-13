@@ -56,7 +56,7 @@
         <div class="container">
             <div class="row align-items-center border-bottom border-neutral-gray-2 pb-5">
                 <div class="col-lg-4 ps-lg-0">
-                    <img src="../../assets/images/blanjaloka_logo.png" alt="blankaloka logo" class="img-fluid">
+                    <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blankaloka logo" class="img-fluid">
                     <p class="text-neutral-black">
                         Sebuah program yang membantu UMKM untuk elevasi produk-produk digital agar mampu bersaing secara
                         nasional maupun internasional.
