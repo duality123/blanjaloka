@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import Paginate from 'vuejs-paginate-next';
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 export default{
