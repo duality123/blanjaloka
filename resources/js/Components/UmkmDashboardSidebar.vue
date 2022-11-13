@@ -70,7 +70,7 @@
           <span>UMKM Jurnal</span>
         </Link>
       </li>-->
-      <li :class="{ 'active': this.url == '/umkm/dashboard/janjitemu' }">
+      <li :class="{ 'active': this.url == '/umkm/dashboard/janjitemu','lowerOpacity':this.$page.props.auth.user.accepted }">
         <Link href="/umkm/dashboard/janjitemu" class="text-neutral-black">
           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
