@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../../assets/images/blanjaloka_logo.png" alt="blanjaloka logo" class="img-fluid">
+                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" class="img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#blanjaloka_navbar"
                 aria-controls="blanjaloka_navbar" aria-expanded="false" aria-label="Toggle navigation">
