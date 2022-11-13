@@ -15,11 +15,6 @@
         </Link>
       </div>
       <div class="table-responsive">
-        <div v-if="this.$page.props.message_delete" class="alert alert-success  mt-4" id="remove">
-          <div class="row" >
-                <div class="col-lg-10 ">{{this.$page.props.message_delete}} !</div> <div class="col-sm-2 "><div class="d-flex flex-row-reverse pt-1"> <font-awesome-icon icon="fa-times" @click="deleteSuccess" /></div></div>
-               </div>
-          </div>
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>

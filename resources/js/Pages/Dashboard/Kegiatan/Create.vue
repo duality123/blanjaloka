@@ -4,76 +4,37 @@
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
       <Link href="/admin/dashboard/kegiatan/create" class="btn btn-primary-blue-6 text-neutral-white py-2">
-      <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Kegiatan
       </Link>
     </div>
-    <ul class="mt-4">
-      <li v-for="item in tabItems" :class="{ 'active': item.isActive }" @click="handleChangeCurrentTabItem(item.title)">
-        <a :class="{ 'text-neutral-black': item.isActive, 'text-neutral-gray-4': !item.isActive }">{{ item.title }}</a>
-      </li>
-    </ul>
+      <ul class="mt-4">
+                    <li class="active">
+                      <Link class="active" :href="`/admin/dashboard/kegiatan/5/detail/deskripsi/${kegiatan.id}`">Deskripsi</Link>
+                    </li>
+                   <li class="active">
+                      <Link class="active" :href="``">Elearning</Link>
+                    </li>
+                    <li >
+                        <Link :href="``" >Eventual</Link>
+                    </li>
+                    <li >
+                        <Link :href="``">Logbook</Link>
+                    </li>
+      </ul>
 
   </DashboardLayout>
 </template>
 
-<script setup>
+<script>
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
-const tabItems = ref([
-  {
-    title: 'E-Learning',
-    isActive: true
+export default{
+  props:{
+    kegiatan:Object
   },
-  {
-    title: 'Eventual',
-    isActive: false
-  },
-  {
-    title: 'Logbook',
-    isActive: false
-  },
-  {
-    title: 'Penilaian',
-    isActive: false
-  },
-]);
-const handleChangeCurrentTabItem = (title) => {
-  tabItems.value = tabItems.value.map((tab) => {
-    return tab.title == title ? { ...tab, isActive: true } : { ...tab, isActive: false };
-  });
-=======
-import { useForm, Link } from '@inertiajs/inertia-vue3'
-import { ref } from 'vue';
-
-const form = useForm({
-  tema_kegiatan: '',
-  deskripsi_kegiatan: '',
-  jumlah_partisipan: null,
-  nama_juri: null,
-  nama_investor: null,
-  masa_inkubasi: null,
-  kurikulum: '',
-  pic: null,
-  kontak_nomor_pic: null
-});
-
-const refDeskripsiKegiatan = ref(null);
-const refJumlahPartisipan = ref(null);
-const refMasaInkubasi = ref(null);
-
-const handleResizeDeskripsiKegiatan = () => {
-  refDeskripsiKegiatan.value.style.height = `${refDeskripsiKegiatan.value.scrollHeight}px`;
-}
-const handleResizeJumlahPartisipan = () => {
-  refJumlahPartisipan.value.style.width = '1.5rem';
-}
-const handleResizeMasaInkubasi = () => {
-  refMasaInkubasi.value.style.width = '1.5rem';
-}
-
-const handleSubmit = () => {
-  console.log(form);
+  components:{
+    DashboardLayout
+  }
 }
 </script>
 
@@ -108,6 +69,8 @@ ul li a {
     gap: 1rem;
     flex-direction: column;
   }
+
+}
 
 form section h2 {
   font-size: 1.25rem;

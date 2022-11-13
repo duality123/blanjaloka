@@ -12,6 +12,11 @@ use App\Models\User;
 use Illuminate\Support\Str;
 class KegiatanController extends Controller
 {
+
+    public function detail_kegiatan($page){
+        $kegiatan = Kegiatan::select('deskripsi')->where('id','=',$page);
+        return Inertia::render('Dashboard/Kegiatan/Create',['kegiatan'=>$kegiatan]);
+    }
     public function index($page){
         $data = Kegiatan::fetchAndPaginate($limit=10,$offset=$page);
         //dd($data['items']);

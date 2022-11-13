@@ -122,6 +122,7 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
     // admin kegiatan route
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
         Route::get('/{page}', 'index');
+        Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/tambah_kegiatan/baru/','tambah');
         Route::post('/tambah_kegiatan','add');
     });

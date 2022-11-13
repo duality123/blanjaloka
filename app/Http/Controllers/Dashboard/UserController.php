@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function delete(Request $request,$id){
         $target = User::where('id','=',$id)->delete();
-        $request->session()->flash('success','item berhasil dihapus');
+        $request->session()->flash('success','User berhasil dihapus');
         return redirect('admin/dashboard');
     }
 
