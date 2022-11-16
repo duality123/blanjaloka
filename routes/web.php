@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
 use App\Http\Controllers\Dashboard\KegiatanController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\UMKM\ProfilController;
 use App\Http\Controllers\UMKM\UsahaController;
 use App\Http\Controllers\UMKM\ProdukController;
 use App\Http\Controllers\UMKM\FinansialController;
@@ -21,7 +20,7 @@ use App\Http\Controllers\{
 };
 
 
-
+use App\Http\Controllers\UMKM\ProfilController;
 // umkm controller
 use App\Http\Controllers\Umkm\{
     AccountController,
