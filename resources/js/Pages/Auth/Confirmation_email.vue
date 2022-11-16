@@ -10,7 +10,7 @@
                     />
                 </div>
                 <h2>Verifikasi Email Anda</h2>
-                <p>Kami telah mengirimkan verifikasi akun ke <b>{{this.$page.props.auth.user.email}}</b>
+                <p>Kami telah mengirimkan verifikasi akun ke <b>{{$page.props.auth.user.email}}</b>
                     <br>Silahkan cek kota masuk Anda untuk melakukan verifikasi.
                     {{getTime}}
                 </p>

@@ -8,11 +8,11 @@
               <div class="card-body">
                 <h1>Dashboard</h1>
                 <div class="d-flex flex-column flex-lg-row gap-4 justify-content-between mt-5">
-                  <div :class="['step',this.$page.props.auth.profileComplete != null?'clear':'']">
+                  <div :class="['step',$page.props.auth.profileComplete != null?'clear':'']">
                     <div class="number">1</div>
                     <h1>Profil Pribadi</h1>
                   </div>
-                  <div :class="['step',this.$page.props.auth.produkComplete != null && this.$page.props.auth.usahaComplete != null && this.$page.props.auth.finansialComplete!= null ?'clear':'']">
+                  <div :class="['step',$page.props.auth.produkComplete != null && $page.props.auth.usahaComplete != null && $page.props.auth.finansialComplete!= null ?'clear':'']">
                     <div class="number">2</div>
                     <h1>Profil UMKM</h1>
                   </div>

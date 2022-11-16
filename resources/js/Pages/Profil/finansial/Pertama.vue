@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row gap-4">
 
-    <div id="myModal" class="modal" v-if="this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted" >
+    <div id="myModal" class="modal" v-if="$page.props.auth.finansialComplete && !$page.props.auth.user.accepted" >
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">

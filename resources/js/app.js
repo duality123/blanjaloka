@@ -20,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap";
+import '../css/app.scss'
 import "vue-select/dist/vue-select.css";
 
 library.add(
@@ -35,6 +36,7 @@ library.add(
     faEllipsisVertical,
     faBars
 );
+
 
 createInertiaApp({
     resolve: (name) =>

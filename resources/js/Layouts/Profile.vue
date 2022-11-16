@@ -13,7 +13,7 @@
                       fill="#686868" />
                   </svg>
                   <span>Notifikasi</span>
-                  <div v-if="this.$page.props.auth.user.notif" class="bg-primary-blue-6 text-white badge">{{this.$page.props.auth.user.notif}}</div>
+                  <div v-if="$page.props.auth.user.notif" class="bg-primary-blue-6 text-white badge">{{$page.props.auth.user.notif}}</div>
                 </Link>
               </li>
               <li :class="[page=='profil'?'active':'']">

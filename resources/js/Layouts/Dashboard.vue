@@ -4,7 +4,7 @@
     <title>Blanjaloka - Dashboard {{ title }}</title>
     <meta name="description" content="Your page description">
   </Head>
-   <div id="myModal" class="modal" v-if="this.$page.props.session.success">
+   <div id="myModal" class="modal" v-if="$page.props.session.success">
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
@@ -15,7 +15,7 @@
       <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
         </div>
        <div class="d-flex justify-content-between text-center" style="margin-left: 2rem;">
-       <h2>{{this.$page.props.session.success}} Admin</h2>
+       <h2>{{$page.props.session.success}} Admin</h2>
         </div>
       </div>
     </div>
@@ -93,8 +93,8 @@
           <div class="d-flex flex-row align-items-center gap-3 mt-4">
             <img src="../assets/images/user_profile_img.png" alt="user profile img" class="img-fluid">
             <div>
-              <h2 class="text-neutral-black">{{this.$page.props.auth.user.name}}</h2>
-              <p class="text-neutral-gray-3 mb-0">{{this.$page.props.auth.user.email}}</p>
+              <h2 class="text-neutral-black">{{$page.props.auth.user.name}}</h2>
+              <p class="text-neutral-gray-3 mb-0">{{$page.props.auth.user.email}}</p>
             </div>
           </div>
           <div class="d-grid mt-5">

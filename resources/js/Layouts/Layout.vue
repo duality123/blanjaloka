@@ -5,7 +5,7 @@
         <meta name="description" content="Your page description">
     </Head>
     <header class="fixed-top">
-             <div id="myModal" class="modal" v-if="this.$page.props.session.success">
+             <div id="myModal" class="modal" v-if="$page.props.session.success">
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
@@ -16,30 +16,30 @@
        <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
         </div>
        <div class="d-flex justify-content-center text-center" style="margin-left: 2rem;">
-       <h2>{{this.$page.props.session.success}}</h2>
+       <h2>{{$page.props.session.success}}</h2>
         </div>
       </div>
     </div>
-        <div v-if="this.$page.props.auth.user">
-        <div v-if = '!this.$page.props.auth.profileComplete || !this.$page.props.auth.usahaComplete || !this.$page.props.auth.produkComplete ||!this.$page.props.auth.finansialComplete' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
+        <div v-if="$page.props.auth.user">
+        <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.usahaComplete || !$page.props.auth.produkComplete ||!$page.props.auth.finansialComplete' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
-            <Link v-if="!this.$page.props.auth.profileComplete" href="/profil/1"
+            <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</Link>
-             <Link v-else-if="!this.$page.props.auth.usahaComplete" href="/umkm/dashboard/profil_usaha/1"
+             <Link v-else-if="!$page.props.auth.usahaComplete" href="/umkm/dashboard/profil_usaha/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi Profil Usaha</Link>
 
-             <Link v-else-if="!this.$page.props.auth.produkComplete" href="/umkm/dashboard/profil_produk/1"
+             <Link v-else-if="!$page.props.auth.produkComplete" href="/umkm/dashboard/profil_produk/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil Produk</Link>
-             <Link v-else-if="!this.$page.props.auth.finansialComplete" href="/umkm/dashboard/kajian_finansial/1"
+             <Link v-else-if="!$page.props.auth.finansialComplete" href="/umkm/dashboard/kajian_finansial/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Kajian Finansial</Link>
 
     </div>
-    <div v-else-if="!this.$page.props.auth.user.accepted"
+    <div v-else-if="!$page.props.auth.user.accepted"
             class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
-              <p v-if="!this.$page.props.auth.user.accepted" class="text-neutral-white mb-0">Data anda sedang diproses silahkan cek email secara berkala !</p>
+              <p v-if="!$page.props.auth.user.accepted" class="text-neutral-white mb-0">Data anda sedang diproses silahkan cek email secara berkala !</p>
         </div>
         </div>
          
@@ -69,18 +69,18 @@
                             :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Panduan</a>
                     </div>
                     <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
-                        <Link v-if="!this.$page.props.auth.user" href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
+                        <Link v-if="!$page.props.auth.user" href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
                             :class="{ 'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
                         Masuk</Link>
-                        <Link v-if="!this.$page.props.auth.user" href="/register" class="btn px-4 py-2"
+                        <Link v-if="!$page.props.auth.user" href="/register" class="btn px-4 py-2"
                             :class="{ 'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100 }">
                         Daftar</Link>
-                        <li v-if="this.$page.props.auth.user" class="nav-item dropdown">
+                        <li v-if="$page.props.auth.user" class="nav-item dropdown">
                             <a href="#"
                                 class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 dropdown-toggle user_profile_menu"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                         <img v-if ="!this.$page.props.auth.profil['foto_profil']" src="../assets/images/user_profile_public_img.png" alt="user profile public">
-                          <img v-else :src="`${this.$page.props.asset_url}/${this.$page.props.auth.profil['foto_profil']}`"  class="foto_profil"  alt="user profile public">
+                         <img v-if ="!$page.props.auth.profil['foto_profil']" src="../assets/images/user_profile_public_img.png" alt="user profile public">
+                          <img v-else :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_profil']}`"  class="foto_profil"  alt="user profile public">
                                 <img src="../assets/icons/icon_burger_menu_blue.png" alt="burger menu icon">
                             </a>
                             <ul class="dropdown-menu">
@@ -88,7 +88,7 @@
                                     <Link class="dropdown-item d-flex align-items-center justify-content-between"
                                         href="/notifikasi/UMKM/1">
                                     <span>Notifikasi</span>
-                                    <div v-if="this.$page.props.auth.user.notifikasi" class="bg-primary-blue-6 text-white notif_badge">{{this.$page.props.auth.user.notifikasi}}</div>
+                                    <div v-if="$page.props.auth.user.notifikasi" class="bg-primary-blue-6 text-white notif_badge">{{$page.props.auth.user.notifikasi}}</div>
                                     </Link>
                                 </li>
                                 <li>

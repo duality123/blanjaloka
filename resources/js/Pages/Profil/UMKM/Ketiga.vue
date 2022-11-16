@@ -11,8 +11,8 @@
                 <p class="text-neutral-gray-5">Foto yang baik mungkin akan membantu Anda dalam proses inkubasi
                   kedepannya.</p>
                 <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                <div v-if="this.$page.props.auth.profil['foto_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${this.$page.props.asset_url}/${this.$page.props.auth.profil['foto_ktp']}`" alt="update icon" style="overflow: hidden;" id="foto1" >
+                <div v-if="$page.props.auth.profil['foto_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_ktp']}`" alt="update icon" style="overflow: hidden;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -36,8 +36,8 @@
                 <p class="text-neutral-gray-5">Foto yang baik mungkin akan membantu Anda dalam proses inkubasi
                   kedepannya.</p>
                 <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                 <div v-if="this.$page.props.auth.profil['foto_dengan_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${this.$page.props.asset_url}/${this.$page.props.auth.profil['foto_dengan_ktp']}`" alt="update icon" style="overflow: hidden;" id="foto2" >
+                 <div v-if="$page.props.auth.profil['foto_dengan_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_dengan_ktp']}`" alt="update icon" style="overflow: hidden;" id="foto2" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto2" >

@@ -42,7 +42,7 @@
           tempore! Eligendi delectus culpa expedita! Nemo quidem perspiciatis ex amet labore eligendi, ea aliquid?
           Dignissimos, reprehenderit.
         </p>
-        <form @submit.prevent="this.$inertia.visit('/syarat_dan_ketentuan')">
+        <form @submit.prevent="$inertia.visit('/syarat_dan_ketentuan')">
           <div class="form-check">
             <input v-model="isCheckKebijakanPrivasi" class="form-check-input" type="checkbox" id="kebijakan_privasi">
             <label class="form-check-label" for="kebijakan_privasi">

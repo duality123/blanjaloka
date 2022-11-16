@@ -68,7 +68,7 @@
                         </svg>
                       </div>
                        <div class="position-relative">
-                           <h1 v-if="this.$page.props.auth.produk['keterangan_halal'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${this.$page.props.auth.produk['keterangan_halal']}`">{{form.keterangan_halal.split('/')[2]}}</a></h1>
+                           <h1 v-if="$page.props.auth.produk['keterangan_halal'] != null" class="text-neutral-gray-5"><a :href="`${$page.props.asset_url}/$$page.props.auth.produk['keterangan_halal']}`">{{form.keterangan_halal.split('/')[2]}}</a></h1>
                         <h1 v-else class="text-neutral-gray-5">{{form.keterangan_halal.name}}</h1>
                       </div>
                       <div class="position-relative">
