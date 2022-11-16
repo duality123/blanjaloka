@@ -111,7 +111,6 @@ export default{
     },
     components: {
       DashboardLayout,
-      Paginate,
       Link
     },
 
