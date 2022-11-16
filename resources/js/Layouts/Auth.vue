@@ -28,7 +28,7 @@ const props = defineProps({
 onMounted(()=>{
       lottie.loadAnimation({
       container: document.getElementById('animationsidebar'),
-      path: 'http://127.0.0.1:5173/resources/js/assets/animations/loginsidebar.json',
+      path: 'http://127.0.0.1:8000/js/assets/animations/loginsidebar.json',
       renderer: 'svg',
       loop: true,
       autoplay: true,
