@@ -167,7 +167,7 @@ Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(f
 });
 
 
-Route::any('/ubah_password',[ProfilController::class,'ubah_password']);
+
 
 
 Route::get('ubah_email',function(){
@@ -193,10 +193,12 @@ Route::get('reset_password/success',function(){
 
 
 
-Route::get('/detail/profil/{slug}', [ProfilController::class, 'detail']);
-Route::post('/detail/profil/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
+
 Route::get('/detail/profil/{slug}/accept', [UserController::class, 'terima_user']);
 Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
+    Route::get('/detail/profil/{slug}', [ProfilController::class, 'detail']);
+    Route::post('/detail/profil/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
+    Route::any('/ubah_password',[ProfilController::class,'ubah_password']);
     Route::get('1', [ProfilController::class, 'pertama']);
     Route::get('2', [ProfilController::class, 'kedua']);
     Route::get('3', [ProfilController::class, 'ketiga']);
