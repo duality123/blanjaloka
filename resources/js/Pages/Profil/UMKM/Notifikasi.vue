@@ -1,5 +1,5 @@
 <template>
-  <DashboardLayout page='Notifikasi' >
+  <DashboardLayout page = "notifikasi" >
            <section class="mt-4">
       <div class="container">
           <div class="col-lg-10">
