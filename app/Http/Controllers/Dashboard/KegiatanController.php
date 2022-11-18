@@ -12,9 +12,13 @@ use App\Models\User;
 use Illuminate\Support\Str;
 class KegiatanController extends Controller
 {
+    public function edit_deskripsi(Request $request){
+         $profil =  Kegiatan::where('id','=',$request->post('id'))->update(['deskripsi' => $request->post('deskripsi')]);
+         return back();
+    }
 
     public function detail_kegiatan($page){
-        $kegiatan = Kegiatan::select('deskripsi')->where('id','=',$page);
+        $kegiatan = DB::table('kegiatan')->select('deskripsi','id')->where('id','=',$page)->first();
         return Inertia::render('Dashboard/Kegiatan/Create',['kegiatan'=>$kegiatan]);
     }
     public function index($page){
@@ -39,11 +43,6 @@ class KegiatanController extends Controller
             $investor[] = $target->nama_lengkap . '/' . $target->no_hp ;
         }
         return Inertia::render('Dashboard/Kegiatan/tambah_kegiatan',['investor'=>$investor]);
-    }
-
-    public function all(Request $request){
-        $data = Kegiatan::select('tema','deskripsi')->orderBy('tema','asc')->get();
-    return response(['data'=>$data]);
     }
 
     public function add(Request $request)
@@ -111,11 +110,6 @@ class KegiatanController extends Controller
       $kegiatan->investor()->sync($daftarInvestor);
 
       return response(['message'=>'item edited', 'meta'=>$kegiatan]);
-    }
-
-    public function delete(Request $request,$id){
-      Kegiatan::deleteKegiatan($id);
-      return response(['message'=>'item deleted']);
     }
 
 

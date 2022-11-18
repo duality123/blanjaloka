@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Umkm;
+namespace App\Http\Controllers\UMKM;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

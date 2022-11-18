@@ -68,9 +68,9 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
         
         Route::prefix('kegiatanku')->group(function () {
             Route::get('/{page}', 'kegiatanku');
-              Route::get('/logbook/{slug}', 'umkmjurnal');
-             Route::post('/tambah_eventual', 'tambah_eventual');
-             Route::post('/tambah_logbook','tambah_logbook');
+            Route::get('/logbook/{slug}', 'umkmjurnal');
+            Route::post('/tambah_eventual', 'tambah_eventual');
+            Route::post('/tambah_logbook','tambah_logbook');
             Route::get('/detail/{slug}', 'deskripsi');
             Route::get('/{slug}/elearning/{page2}/', 'elearning');
             Route::get('/elearning/materi/overview/{slug}', 'materi');
@@ -120,6 +120,7 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
     Route::get('/detail/profil/{slug}/hapus', [UserController::class, 'delete']);
     // admin kegiatan route
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
+        Route::post('/edit_deskripsi', 'edit_deskripsi');
         Route::get('/{page}', 'index');
         Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/tambah_kegiatan/baru/','tambah');
