@@ -15,6 +15,7 @@ class ProfilController extends Controller
 {
     public function pertama(Request $request)
     {
+       
         return Inertia::render('Profil/UMKM/Pertama');
     }
 

@@ -69,7 +69,7 @@ export default{
   },
   setup(){
     const form = useForm({
-     id :window.location.pathname[4] ,
+     id :window.location.pathname.split('/')[4],
      deskripsi:null,
     })
 

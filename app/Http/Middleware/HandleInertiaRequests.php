@@ -60,7 +60,7 @@ class HandleInertiaRequests extends Middleware
                 'finansial' => $request->user() ? $request->user()->finansial->finansialList():null,
                 
             ],
-            'asset_url' => '../../storage/app/public/', 
+            'asset_url' => '/storage', 
             'isEmailSend'=> $request->session()->get('redirect')? true:false,
             //route
             'route' => function () use ($request) {

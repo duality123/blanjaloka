@@ -14,7 +14,7 @@ class KegiatanController extends Controller
 {
     public function edit_deskripsi(Request $request){
          $profil =  Kegiatan::where('id','=',$request->post('id'))->update(['deskripsi' => $request->post('deskripsi')]);
-         dd('test');
+         $request->session()->flash('success','Deskripsi kegiatan berhasil diubah');
          return back();
     }
 
