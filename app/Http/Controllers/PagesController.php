@@ -26,4 +26,18 @@ class PagesController extends Controller
     {
         return Inertia::render('VerifikasiOTP');
     }
+    public function changeNo()
+    {
+        return inertia('ChangePhoneNumber');
+    }
+
+    public function kebijakan()
+    {
+        return inertia('KebijakanPrivasi');
+    }
+
+    public function syarat()
+    {
+        return inertia('SyaratDanKetentuan');
+    }
 }

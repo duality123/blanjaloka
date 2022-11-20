@@ -32,6 +32,8 @@ Route::get('/', [PagesController::class, 'home']);
 Route::get('/email-verifikasi', [PagesController::class, 'verify']);
 Route::get('/success-verifikasi', [PagesController::class, 'success']);
 Route::get('/otp-verifikasi', [PagesController::class, 'otp']);
+Route::get('/ganti', [PagesController::class, 'changeNo']);
+
 
 Route::get('/profile', [ProfileController::class, 'index']);
 
