@@ -22,7 +22,7 @@ use App\Http\Controllers\{
 };
 
 // umkm controller
-use App\Http\Controllers\Umkm\{
+use App\Http\Controllers\UMKM\{
     AccountController,
     DashboardController as UmkmDashboardController
 };
@@ -68,6 +68,7 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
         
         Route::prefix('kegiatanku')->group(function () {
             Route::get('/{page}', 'kegiatanku');
+             Route::get('/{page}/hapus', 'hapus_kegiatan');
             Route::get('/logbook/{slug}', 'umkmjurnal');
             Route::post('/tambah_eventual', 'tambah_eventual');
             Route::post('/tambah_logbook','tambah_logbook');
@@ -122,15 +123,22 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
         Route::post('/edit_deskripsi', 'edit_deskripsi');
         Route::get('/{page}', 'index');
+        Route::get('/{slug}/elearning/{slug2}', 'list_elearning');
         Route::get('/{slug}/detail', 'detail_kegiatan');
+        Route::get('/{slug}/edit', 'edit_kegiatan');
+        Route::get('/{slug}/logbook/{slug2}', 'list_logbook');
+        Route::post('/logbook/ubah_status', 'ubah_status_logbook');
+        Route::get('/{slug}/detail_logbook/{id}/halaman/{slug2}', 'list_user_logbook');
+        Route::post('/edit_post', 'edit_kegiatan_post');
+        Route::get('/{slug}/detail/elearning/{slug2}', 'list_elearning');
         Route::get('/tambah_kegiatan/baru/','tambah');
         Route::post('/tambah_kegiatan','add');
     });
 
     // admin pengguna route
-    Route::prefix('pengguna')->group(function () {
-        Route::get('/admin', [PenggunaController::class, 'admin']);
-    });
+  //  Route::prefix('pengguna')->group(function () {
+   //     Route::get('/admin', [PenggunaController::class, 'admin']);
+    //});
 });
 
 Route::post('/email/verification-notification', function (Request $request) {

@@ -16,20 +16,16 @@ class Elearning extends Model
 
 
    public function kegiatan(){
-         return $this->belongsToMany(Kegiatan::class,'id','kegiatan_id');
-    }
-
-   static function deleteNotif($id){
-      DB::table('notifikasi')->where('id', '=', $id)->delete();
+         return $this->belongsTo(Kegiatan::class,'id','kegiatan_id');
     }
 
 
-     static function fetchAndPaginate($limit = 0,$page=0,$kegiatan_id=""){
+   static function fetchAndPaginate($limit = 0,$page=0,$kegiatan_id=null){
        $offset = ($limit * $page) - $limit;
        $maxData = DB::select("select count(*) as total from elearning where kegiatan_id = $kegiatan_id ");
        $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
        //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select elearning.judul,elearning.deskripsi,elearning.foto,elearning.id from elearning where kegiatan_id = $kegiatan_id order by hari_tanggal_waktu limit $offset,$limit");
+       $data['items'] = DB::select("select elearning.judul,elearning.deskripsi,elearning.foto,elearning.id,elearning.hari_tanggal_waktu from elearning where kegiatan_id = $kegiatan_id order by hari_tanggal_waktu limit $offset,$limit");
        $data['paginate']['nums'] = [];
        $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
        $loopIndex = $index;

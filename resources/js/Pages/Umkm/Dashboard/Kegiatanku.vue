@@ -14,7 +14,7 @@
                       <div class="card-body">
                       
                         <div class="position-relative overflow-hidden rounded">
-                          <img :src="`${this.$page.props.asset_url}/${item.gambar}`" alt="kegiatanku image"
+                          <img :src="`${$page.props.asset_url}/${item.gambar}`" alt="kegiatanku image"
                             class="img-fluid w-100" />
                           <div v-if="new Date(item.berakhir.split(' ')[0]) > this.now" class="bg-semantic-success-1 text-semantic-success-4 status">Sedang Berlangsung</div>
                            <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Selesai</div>

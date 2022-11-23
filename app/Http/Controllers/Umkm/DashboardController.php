@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Umkm;
+namespace App\Http\Controllers\UMKM;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\Kegiatan;
+use App\Models\Logbook;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Elearning;
@@ -72,11 +73,8 @@ class DashboardController extends Controller
              $gambar= $request->file('gambar')->store('umkm/logbook','public') ;
              $data['bukti_kegiatan']= $gambar;
         };
-        $data['waktu'] = now();
-        $data['user_id'] = $request->user()->id;
-        $data['kegiatan_id'] = $request->post('kegiatan_id');
         $data['status'] = 0;
-        $data = DB::table('logbook')->insert($data);
+        $data = Logbook::where('id','=',$request->post('id'))->update($data);
         $request->session()->flash('success','Log Anda berhasil tersimpan!');
         return redirect('/umkm/dashboard/kegiatanku/logbook/'.$request->post('kegiatan_id'));
 
@@ -194,7 +192,7 @@ class DashboardController extends Controller
                 ->where('kegiatan.id','=',$slug)
                 ->first(); 
         $logbook= DB::table('logbook')
-                ->select('deskripsi','bukti_kegiatan','status')
+                ->select('deskripsi','bukti_kegiatan','status','waktu','id')
                 ->where('kegiatan_id','=',$slug)->orderBy('waktu','asc')
                 ->get();
         return Inertia::render('Umkm/Dashboard/UmkmJurnal',['kegiatan'=>$kegiatan,'logbook'=>$logbook]);
@@ -209,11 +207,19 @@ class DashboardController extends Controller
     }
 
      public function join_kegiatan(Request $request,$slug){
-        $kegiatan = Kegiatan::where('id','=',$slug)->first();
+        $kegiatan = Kegiatan::select('id','dimulai','berakhir','jumlah_orang_diundang')->where('id','=',$slug)->first();
         $banyak_peserta = DB::table('kegiatan_umkm')->select('kegiatan_id')->where('kegiatan_id','=',$slug)->get();
         if (intval($kegiatan->jumlah_orang_diundang) <= intval(count($banyak_peserta))) {
             $request->session()->flash('success','Kegiatan ini sudah penuh!');
             return redirect('umkm/dashboard/beranda');
+        }
+        $begin = explode(' ',$kegiatan->dimulai)[0];
+        $end = explode(' ',$kegiatan->berakhir)[0];
+        $current_date = $begin;
+        while(strtotime($current_date) < strtotime($end))
+        {
+          Logbook::create(['waktu'=>date("Y-m-d H:i:s",strtotime($current_date)),'user_id'=>$request->user()->id,'kegiatan_id'=>$slug]);
+          $current_date= date("Y-m-d",strtotime("+1 day",strtotime($current_date)));
         }
         $kegiatan->umkm()->attach([$request->user()->id]);
         $request->session()->flash('success','Anda berhasil join kegiatan!');

@@ -21,12 +21,12 @@
               <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal mulai</label>
               <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
-                v-model="form.dimulai" />
+                v-model="form.dimulai.split(' ')[0]" />
             </div>
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal berakhir</label>
               <input type="date" class="form-control px-0" id="nama_juri"
-                v-model="form.berakhir" />
+                v-model="form.berakhir.split(' ')[0]" />
             </div>
             <div class="mb-4">
               <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
@@ -85,8 +85,11 @@
             <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                <div class="d-flex justify-content-center pt-3 mb-4" >
-                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
+                  <div v-if="form.gambar != null" class="d-flex justify-content-center pt-3 mb-4">
+                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
+                </div>
+                <div v-else class="d-flex justify-content-center pt-3 mb-4">
+                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
                 </div>
     
                 <div class="row" style="margin-left:2px;" >
@@ -114,7 +117,7 @@
             </div>
           </section>
           <div class="form-check">
-  <input class="form-check-input" type="checkbox" v-model="form.draft" id="flexCheckDefault">
+  <input class="form-check-input" type="checkbox" v-model="form.draft" id="flexCheckDefault" checked="checked">
   <label class="form-check-label" for="flexCheckDefault">
     Aktif
   </label>
@@ -133,20 +136,21 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 const form = useForm({
-  tema: null,
-  deskripsi: null,
-  jumlah_orang_diundang: null,
-  masa_inkubasi: null,
-  kurikulum: null,
-  pic: null,
-  kontak: null,
-  draft:null,
-  dimulai: null,
-  dibuat:null,
-  berakhir:null,
-  nama_juri:null,
-  nama_investor:null,
-  gambar:null
+  id: window.location.pathname.split('/')[4],
+  tema: props.kegiatan.tema,
+  deskripsi: props.kegiatan.deskripsi,
+  jumlah_orang_diundang: props.kegiatan.jumlah_orang_diundang,
+  masa_inkubasi: props.kegiatan.masa_inkubasi,
+  kurikulum:  props.kegiatan.kurikulum,
+  pic:  props.kegiatan.pic,
+  kontak:  props.kegiatan.kontak,
+  draft: props.kegiatan.draft,
+  dimulai: props.kegiatan.dimulai,
+  dibuat:props.kegiatan.dibuat,
+  berakhir:props.kegiatan.berakhir,
+  nama_juri:props.kegiatan.nama_juri,
+  nama_investor:props.oldInvestor,
+  gambar:props.kegiatan.gambar
 });
 
 
@@ -181,14 +185,16 @@ const ubahGambar = (event) => {
     }
 
 const props = defineProps({
-  investor:Array
+  investor:Array,
+  kegiatan:Object,
+  oldInvestor:Array
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
   console.log(form.draft)
-  form.post('/admin/dashboard/kegiatan/tambah_kegiatan')
+  form.post('/admin/dashboard/kegiatan/edit_post')
 }
 </script>
 

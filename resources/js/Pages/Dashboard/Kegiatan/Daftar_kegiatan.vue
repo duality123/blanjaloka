@@ -93,12 +93,22 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 export default{
     data(){
         return{
-          currentTabItem: window.location.pathname.split('/')[4],
-          currentPage : window.location.pathname.split('/')[4],
-          tabItems :['Admin','Investor','UMKM'],
+          popup:false,
 
       }
     },
+  setup(props){
+        const form = useForm({
+         id:null,
+         tema:null,
+         mulai:null,
+         berakhir:null,
+         jumlah_peserta:null,
+         status:null,
+    })
+
+    return {form}
+  },
     props:{
       items : Array,
       paginationNums : Array,
@@ -112,7 +122,7 @@ export default{
     components: {
       DashboardLayout,
       Link
-    },
+    }
 
 }
 </script>
@@ -123,6 +133,36 @@ h1 {
   font-weight: 600;
 }
 
+.close{
+  border-width: 0px;
+  background-color: white;
+}
+.modal-content{
+  text-align: start;
+}
+.modal {
+  position: fixed; /* Stay in place */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
 .tabs {
   display: flex;
   column-gap: 2rem;
@@ -185,6 +225,9 @@ table tbody tr:nth-child(2n) th {
 }
 
 
+.modal-content{
+  text-align: start;
+}
 
 
 .form-control {

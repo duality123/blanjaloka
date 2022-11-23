@@ -11,57 +11,7 @@
       <div class="col-lg-6">
         <form @submit.prevent="handleSubmit">
           <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 1</h2>
-            <div class="mb-4">
-              <label for="tema_kegiatan" class="form-label text-neutral-gray-5">Tema Kegiatan</label>
-              <input type="text" class="form-control" id="tema_kegiatan" placeholder="Masukkan tema kegiatan"
-                v-model="form.tema">
-            </div>
-
-              <div class="mb-4">
-              <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal mulai</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
-                v-model="form.dimulai" />
-            </div>
-            <div class="mb-4">
-              <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal berakhir</label>
-              <input type="date" class="form-control px-0" id="nama_juri"
-                v-model="form.berakhir" />
-            </div>
-            <div class="mb-4">
-              <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
-              <div class="position-relative">
-                <textarea class="form-control" id="deskripsi_kegiatan" rows="1"
-                  placeholder="Tuliskan deskripsi kegiatan" maxlength="512" ref="refDeskripsikegiatan"
-                  @input="handleResizeDeskripsiKegiatan" v-model="form.deskripsi"></textarea>
-                <span class="desc_count">{{ form.deskripsi.length }}/512</span>
-              </div>
-            </div>
-          </section>
-          <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 2</h2>
-            <div class="mb-4">
-              <label for="jumlah_partisipan" class="form-label text-neutral-gray-5">Jumlah Partisipan</label>
-              <div class="position-relative count_input" ref="refJumlahPartisipan">
-                <input type="number" class="form-control px-0" id="jumlah_partisipan"
-                  placeholder="Masukkan jumlah partisipan" @input="handleResizeJumlahPartisipan"
-                  v-model="form.jumlah_orang_diundang">
-                <span class="count_input_leading">Orang</span>
-              </div>
-            </div>
-            <div class="mb-4">
-              <label for="nama_juri" class="form-label text-neutral-gray-5">Nama Juri ( gunakan koma jika lebih dari satu orang)</label>
-              <input type="text" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
-                v-model="form.nama_juri" />
-            </div>
-            <div class="mb-4">
-              <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="investor" v-model="form.nama_investor" />
-            </div>
-          </section>
-          <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Bagian 3</h2>
+            <h2 class="text-neutral-gray-5 mb-4"></h2>
             <div class="mb-4">
               <label for="masa_inkubasi" class="form-label text-neutral-gray-5">Masa Inkubasi</label>
               <div class="position-relative count_input" ref="refMasaInkubasi">

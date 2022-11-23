@@ -224,7 +224,6 @@ export default{
         this.eventualDetail['link_meeting'] =link_meeting
         this.eventualDetail['kontak'] =kontak
         this.eventualDetail['perihal'] =perihal
-        
       }
     },
     popupExit(){
