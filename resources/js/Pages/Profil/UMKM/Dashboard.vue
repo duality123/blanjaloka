@@ -1,4 +1,4 @@
-<template>
+ <template>
   <BaseLayout>
     <section class="mt-4">
       <div class="container">
@@ -122,7 +122,6 @@ export default{
     BaseLayout
   },
   mounted(){
-    console.log(this.$page.props.auth.produkComplete)
   }
 }
 </script>

@@ -1,9 +1,4 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section class="mt-4">
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
           <div class="col-lg-8">
 
               <div id="myModal" class="modal" v-if="leavePopup" >
@@ -26,22 +21,8 @@
                 </div>
       </div>
     </div>
-            <div class="card">
-              <div class="card-body">
-                <h1>{{item.tema}}</h1>
-                 <ul class="mt-4">
-                    <li class="active" >
-                    <Link class="active" :href="`/umkm/dashboard/kegiatanku/detail/${item.id}`">Deskripsi</Link>                 </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/${item.id}/elearning/1`">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${item.id}/`">Eventual</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/logbook/${item.id}`">Logbook</Link>
-                    </li>
-                </ul>
+  </div>
+                 <Layout state="deskripsi" :tema="item.tema" :link="item.id">
                 <div class="d-flex justify-content-start mt-5">
                 <button class="btn btn-semantic-error-1 text-semantic-error-4 py-3" @click="popupControl">
                   <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />Keluar kegiatan</button>
@@ -60,18 +41,12 @@
   <p><strong>Kontak PIC : </strong>{{item.kontak}}</p>
   </div>
 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </BaseLayout>
+       
+  </Layout>
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
@@ -85,8 +60,7 @@ export default{
     }
   },
   components:{
-    BaseLayout,
-    UmkmDashboardSidebar,
+    Layout,
     Link
   },
   mounted(){
@@ -142,170 +116,5 @@ export default{
   width: 40%;
   text-align: center;
 }
-section {
-  margin-top: 10rem !important;
-}
-.card-body{
-  width: 400px;
-}
-.fs-btn {
-    font-size: .875rem;
-}
 
-.lh-90 {
-    line-height: 90px;
-}
-
-.border-primary-blue-6 {
-  border : 2px solid #398ab9;
-}
-
-ul {
-  display: flex;
-  column-gap: 2rem;
-  list-style: none;
-  padding: 0;
-  border-bottom: 1px solid #F0F0F0;
-}
-
-ul li {
-  cursor: pointer;
-}
-
-ul li {
-  padding-bottom: 0.5rem;
-}
-
-ul li a.active {
-  border-bottom: 2px solid #398AB9;
-  color:  #398ab9;
-}
-
-ul li a {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.sidebar ul li {
-  padding: 1rem;
-  cursor: pointer;
-}
-
-.sidebar ul li.active {
-  border: 1px solid #AEAEAE;
-  border-radius: 0.5rem;
-}
-
-.sidebar ul li.active a span,
-.sidebar ul li.active a path {
-  color: #398AB9;
-  fill: #398AB9;
-}
-
-.sidebar ul li a {
-  width: max-content;
-  text-decoration: none;
-  font-weight: 600;
-  position: relative;
-}
-
-.sidebar ul li a span {
-  width: max-content;
-  position: absolute;
-  left: 2rem;
-}
-
-.card h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #181A1B;
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 1rem;
-}
-
-.step .number {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-  border-radius: 50%;
-  background-color: #D9D9D9;
-  color: #FFFFFF;
-}
-
-.step h1 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #AEAEAE;
-}
-
-.step.clear .number {
-  background-color: #398AB9;
-}
-
-.step.clear h1 {
-  color: #3E4041;
-}
-
-h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-table thead tr td,
-table thead tr th {
-  font-weight: 600;
-  color: #3E4041;
-  border: none;
-  text-align: center;
-}
-
-table tbody tr td,
-table tbody tr th {
-  font-weight: 400;
-  color: #3E4041;
-  border-bottom: none;
-  text-align: center;
-  background-color: #F0F0F0;
-}
-
-table tbody tr:nth-child(2n) td,
-table tbody tr:nth-child(2n) th {
-  background-color: #F2F7FA;
-}
-
-@media (max-width: 575.98px) {
-  section {
-    margin-top: 15rem !important;
-  }
-}
-@media (max-width: 575.98px) {
-  ul {
-    gap: 1rem;
-    flex-direction: column;
-  }
-  .modal-content{
-    margin-left: 3rem;
-    margin-top: 5rem;
-    width: 450px;
-  }
-}
 </style>

@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'no_role' =>  \App\Http\Middleware\RoleSelection::class,
         'allow_verify' => \App\Http\Middleware\AllowedVerify::class,
         'shouldAdmin' => \App\Http\Middleware\shouldAdmin::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

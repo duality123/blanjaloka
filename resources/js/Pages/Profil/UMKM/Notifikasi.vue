@@ -2,7 +2,7 @@
   <DashboardLayout page = "notifikasi" >
            <section class="mt-4">
       <div class="container">
-          <div class="col-lg-10">
+          <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center">

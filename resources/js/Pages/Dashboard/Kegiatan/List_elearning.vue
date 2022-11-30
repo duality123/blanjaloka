@@ -1,27 +1,9 @@
 <template>
 
-  <DashboardLayout title="Kegiatan">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-    </div>
-      <ul class="mt-4">
-                    <li >
-                      <Link  >Deskripsi</Link>
-                    </li>
-                   <li class="active">
-                      <Link class="active" :href="``">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="``" >Eventual</Link>
-                    </li>
-                    <li >
-                        <Link :href="``">Logbook</Link>
-                    </li>
-      </ul>
-          <section>
+  <Layout section="elearning" :title="kegiatan.tema" :link="kegiatan.id">
                   <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
-      <button @click = "toggleEdit()" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Elearning
-      </button>
+      <Link :href="`/admin/dashboard/kegiatan/${currentPage}/tambah_elearning`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Elearning
+      </Link>
     </div>
       <div class="table-responsive">
         <table class="table mt-3">
@@ -32,20 +14,31 @@
               <th scope="col">Judul</th>
               <th scope="col">Foto</th>
               <th scope="col">Deskripsi</th>
+              <th scope="col">Opsi</th>
             </tr>
           </thead>
           <tbody>
              <tr v-for="(index,no) in items">
               <th scope="row">{{++no}}</th>
                <td> {{index.hari_tanggal_waktu}}</td>
-                <td> <Link :href="`/detail/profil/${index.id}`">{{index.judul}}</Link></td>
+                <td> <Link :href="`/admin/dashboard/kegiatan/elearning/${index.id}/detail/1`">{{index.judul}}</Link></td>
                  <td v-if="index.bukti_kegiatan == '-'">
                   -
               </td>
               <td v-else>
                   <img :src="`${$page.props.asset_url}/${index.foto}`" alt="" style="width:5rem">
               </td>
-              <td><p>{{index.deskripsi}}ssssssssssssssssssssssssssssssssssssssssssssssss</p></td>
+              <td><p>{{index.deskripsi}}</p></td>
+                 <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                <Link :href="`/admin/dashboard/kegiatan/elearning/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
+                  Edit
+                </Link>
+                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_elearning`" class="btn btn-semantic-error-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
+                  Hapus
+                </Link>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -81,12 +74,11 @@
           </li>
         </ul>
       </div>
-    </section>
-  </DashboardLayout>
+  </Layout>
 </template>
 
 <script>
-import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import Layout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -103,10 +95,11 @@ export default{
       prev:Number,
       next:Number,
       first:Number,
-      last:Number
+      last:Number,
+      kegiatan:Object
     },
     components: {
-      DashboardLayout,
+      Layout,
       Link
     },
 }

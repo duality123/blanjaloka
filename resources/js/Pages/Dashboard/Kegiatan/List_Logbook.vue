@@ -1,24 +1,6 @@
 <template>
 
-  <DashboardLayout title="Kegiatan">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-    </div>
-      <ul class="mt-4">
-                    <li >
-                      <Link  >Deskripsi</Link>
-                    </li>
-                   <li >
-                      <Link :href="``">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="``" >Eventual</Link>
-                    </li>
-                    <li class="active">
-                        <Link class="active" :href="``">Logbook</Link>
-                    </li>
-      </ul>
-          <section>
+    <Layout section="eventual" :title="kegiatan.tema" :link="kegiatan.id">
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
@@ -77,12 +59,11 @@
           </li>
         </ul>
       </div>
-    </section>
-  </DashboardLayout>
+  </Layout>
 </template>
 
 <script>
-import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import DashboardLayout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -99,7 +80,8 @@ export default{
       prev:Number,
       next:Number,
       first:Number,
-      last:Number
+      last:Number,
+      Kegiatan
     },
     components: {
       DashboardLayout,

@@ -211,6 +211,10 @@ a.btn {
 .user_profile_menu {
     cursor: pointer;
 }
+.modal-content{
+  height: 450px;
+  overflow-y: scroll;
+ }
 .notif_badge {
     width: 2rem;
     height: 2rem;

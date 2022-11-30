@@ -112,7 +112,7 @@ class ProfilController extends Controller
         if ($request->post('password')) {
           if(Hash::check($request->post('old_password'),$request->user()->password)){
             User::where('id','=',$request->user()->id)->update(['password' =>Hash::make($request->post('password'))]);
-                $popup = true;
+                $request->session()->flash('success','password berhasil diubah');
             }
           else{
             return Inertia::render('Profil/Change_password',['wrongOldPassword'=>'Kata sandi lama anda salah!']);

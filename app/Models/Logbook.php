@@ -35,7 +35,7 @@ class Logbook extends Model
        }
        //dd($data['paginate']['nums']);
        $data['paginate']['nextBlok'] = $loopIndex < $data['paginate']['totalPaginasi'] ?  $index + 5 : 0;
-       $data['paginate']['prevBlok'] = $page > 5 ?  $page -phpstorm://open?file=C%3A%5CUsers%5Cassas%5CVideos%5CCaptures%5Cblanjaloka%5Cvendor%5Claravel%5Cframework%5Csrc%5CIlluminate%5CDatabase%5CEloquent%5CModel.php&line=453 5 : 0;
+       $data['paginate']['prevBlok'] = $page > 5 ?  $page - 5 : 0;
        //dd($data['paginate']['totalPaginasi']);
        $data['paginate']['prev'] = ($page - 1 > 0) ? $page - 1 : 0;
        $data['paginate']['first'] = ($page > 5) ? 1 : 0;

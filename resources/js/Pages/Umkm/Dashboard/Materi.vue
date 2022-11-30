@@ -1,27 +1,5 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section>
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h1>{{elearning.judul}}</h1>
-                 <ul class="mt-4">
-                    <li>
-                      <Link :href="`/umkm/dashboard/kegiatanku/detail/${elearning.kegiatan_id}`">Deskripsi</Link>
-                    </li>
-                   <li class="active">
-                      <Link :href="`/umkm/dashboard/kegiatanku/${elearning.kegiatan_id}/elearning/1`" class="active">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${elearning.kegiatan_id}`" >Eventual</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/logbook/${elearning.kegiatan_id}`">Logbook</Link>
-                    </li>
-                </ul>
+        <Layout state="elearning" :title = "elearning.judul" :link="elearning.kegiatan_id">
                     <h1>{{elearning.judul}}</h1>
                                 
                                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
@@ -46,19 +24,11 @@
                                     </a>
 
                                 </div>
-                    </div>
-</div>
-</div>
-                     
-          </div>
-        </div>
-    </section>
-  </BaseLayout>
+  </Layout>
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{
@@ -70,8 +40,7 @@ export default{
     }
   },
   components:{
-    BaseLayout,
-    UmkmDashboardSidebar,
+    Layout,
     Link
   },
   mounted(){
@@ -122,7 +91,10 @@ ul li a.active {
   border-bottom: 2px solid #398AB9;
   color:  #398ab9;
 }
-
+ .modal-content{
+  height: 450px;
+  overflow-y: scroll;
+ }
 ul li a {
   text-decoration: none;
   font-weight: 600;

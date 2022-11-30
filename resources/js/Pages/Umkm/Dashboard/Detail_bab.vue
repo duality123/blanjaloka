@@ -1,30 +1,6 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section>
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
-           <div class="col col-lg-9 ">
-                        <div class="card">
-                            
-                            <div class="card-body">
-                                <h3>{{elearning.bab_judul}}</h3>
-                                
-                                <ul class="mt-4">
-                    <li>
-                      <Link  :href="`/umkm/dashboard/kegiatanku/detail/${elearning.kegiatan_id}`">Deskripsi</Link>
-                    </li>
-                   <li class="active">
-                       <Link :href="`/umkm/dashboard/kegiatanku/${elearning.kegiatan_id}/elearning/1`" class="active">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${elearning.kegiatan_id}`">Eventual</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/logbook/${elearning.kegiatan_id}`" >Logbook</Link>
-                    </li>
-                </ul>
-                                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
+  <Layout state="elearning" :title="elearning.bab_judul" :link="elearning.kegiatan_id">
+           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#">E-learning</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">{{elearning.judul}}</li>
@@ -45,19 +21,11 @@
                                     <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/detail/${elearning.id}/${next.bab}`" class="btn btn-outline-primary">Bab Selanjutnya</Link>
                                 </div>
                                 
-                            </div>
-                        </div>
-</div>
-                     
-          </div>
-        </div>
-    </section>
-  </BaseLayout>
+  </Layout>
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{
@@ -69,8 +37,7 @@ export default{
     }
   },
   components:{
-    BaseLayout,
-    UmkmDashboardSidebar,
+    Layout,
     Link
   },
   mounted(){
@@ -93,9 +60,7 @@ export default{
 </script>
 
 <style scoped>
-section{
-  margin-top: 10rem;
-}
+
 header{
     border: 1px solid #dbcfcf;
     border-radius: 8px;

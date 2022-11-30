@@ -60,4 +60,18 @@ class UserController extends Controller
         $request->session()->flash('success','User ini diterima!');
         return redirect('admin/dashboard');
     }
+
+
+    public function role_selection(Request $request){
+        if($request->post('umkm')){
+            $request->user()->Role->number = 2;
+        }
+        else if($request->post('investor')){
+            $request->user()->Role->number = 3;
+        }
+        else{
+            return redirect('/role')
+        }
+        return redirect('/kebijakan_dan_privasi')
+    }
 }

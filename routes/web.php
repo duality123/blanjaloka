@@ -12,7 +12,7 @@ use App\Http\Controllers\Users\NotifikasiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UMKM\DashboardUMKMController;
 use App\Http\Controllers\HomeController;
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\UMKM\ProfilController;
 // use App\Http\Controllers\AuthenticatedController;
 
@@ -68,7 +68,6 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
         
         Route::prefix('kegiatanku')->group(function () {
             Route::get('/{page}', 'kegiatanku');
-             Route::get('/{page}/hapus', 'hapus_kegiatan');
             Route::get('/logbook/{slug}', 'umkmjurnal');
             Route::post('/tambah_eventual', 'tambah_eventual');
             Route::post('/tambah_logbook','tambah_logbook');
@@ -78,7 +77,7 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
             Route::get('/eventual/{$page}', 'eventual');
             Route::get('/elearning/materi/detail/{slug}/{page2}', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
-             Route::get('/eventual/{slug}', 'eventual');
+            Route::get('/eventual/{slug}', 'eventual');
      });
     
        //  Route::get('/kegiatanku/{page}/logbook', 'logbook');
@@ -122,10 +121,24 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
     // admin kegiatan route
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
         Route::post('/edit_deskripsi', 'edit_deskripsi');
+        Route::get('/{id}/tambah_elearning', 'tambah_elearning');
+        Route::get('/{slug1}/eventual/{slug2}', 'list_eventual');
+        Route::get('/{page}/hapus_kegiatan', 'hapus_kegiatan');
+        Route::get('/{page}/hapus_elearning', 'hapus_elearning');
+        Route::get('/{page}/hapus_bab', 'hapus_bab');
+        Route::get('/{page}/hapus_eventual', 'hapus_eventual');
+        Route::post('/tambah_elearning/baru', 'add_elearning');
         Route::get('/{page}', 'index');
-        Route::get('/{slug}/elearning/{slug2}', 'list_elearning');
+        Route::get('/{slug}/elearning/{slug2}','list_elearning');
         Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/{slug}/edit', 'edit_kegiatan');
+        Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
+        Route::post('/elearning/edit', 'edit_elearning_post');
+        Route::get('/elearning/{slug1}/detail/{slug2}', 'list_bab');
+        Route::get('/elearning/bab/{slug}/edit', 'edit_bab');
+        Route::post('/elearning/bab/edit', 'edit_bab_post');
+        Route::get('/elearning/{slug1}/tambah_bab', 'tambah_bab');
+        Route::post('/tambah_bab/baru', 'tambah_bab_post');
         Route::get('/{slug}/logbook/{slug2}', 'list_logbook');
         Route::post('/logbook/ubah_status', 'ubah_status_logbook');
         Route::get('/{slug}/detail_logbook/{id}/halaman/{slug2}', 'list_user_logbook');
@@ -133,6 +146,7 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
         Route::get('/{slug}/detail/elearning/{slug2}', 'list_elearning');
         Route::get('/tambah_kegiatan/baru/','tambah');
         Route::post('/tambah_kegiatan','add');
+        Route::post('/ubah_eventual_status', 'ubah_eventual_status');
     });
 
     // admin pengguna route
@@ -150,7 +164,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return Inertia::render('Auth/Verification_success',['redirect'=>'/kebijakan_dan_privasi']);
+    return Inertia::render('Auth/Verification_success',['redirect'=>'/role']);
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/halaman_verifikasi',function(Request $request){
@@ -165,6 +179,12 @@ Route::get('/syarat_dan_ketentuan',function(){
 Route::get('/kebijakan_dan_privasi',function(){
     return Inertia::render('KebijakanPrivasi');
 })->middleware('auth');
+
+
+Route::get('/role',function(){
+    return Inertia::render('Auth/Pilih_role');
+})->middleware('auth','no_role');
+
 
 
 // Route::get('/authenticated_page', [AuthenticatedController::class, 'auth_page'])->middleware(['auth', 'verified'])->name('authenticated_page');
@@ -220,6 +240,8 @@ Route::prefix('/notifikasi/')->middleware(['auth','verified'])->group(function (
     Route::get('{slug}', [NotifikasiController::class, 'show']);
     Route::get('hapus/{id}', [ProfilController::class, 'delete']);
  });
+
+
 
 
 

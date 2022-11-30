@@ -169,7 +169,7 @@ import BaseLayout from '../Layouts/Layout.vue'
 onMounted(()=>{
       lottie.loadAnimation({
       container: document.getElementById('animation1'),
-      path: 'http://127.0.0.1:5173/resources/js/assets/animations/landing1.json',
+      path: '../storage/landing1.json',
       renderer: 'svg',
       loop: true,
       autoplay: true,
@@ -177,7 +177,7 @@ onMounted(()=>{
 });
  lottie.loadAnimation({
       container: document.getElementById('animation2'),
-      path: 'http://127.0.0.1:5173/resources/js/assets/animations/landing2.json',
+      path: '../storage/landing2.json',
       renderer: 'svg',
       loop: true,
       autoplay: true,
@@ -185,7 +185,7 @@ onMounted(()=>{
 });
   lottie.loadAnimation({
       container: document.getElementById('animation3'),
-      path: 'http://127.0.0.1:5173/resources/js/assets/animations/learn.json',
+      path: '../storage/learn.json',
       renderer: 'svg',
       loop: true,
       autoplay: true,

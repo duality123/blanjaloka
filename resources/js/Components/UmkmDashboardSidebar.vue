@@ -11,7 +11,7 @@
         <span>Dashboard</span>
         </Link>
       </li>
-       <li :class="[this.$page.props.auth.profileComplete?'':'lowerOpacity',this.url =='/umkm/dashboard/profil_usaha/1'?'active':'']">
+       <li :class="[$page.props.auth.profileComplete?'':'lowerOpacity',this.url =='/umkm/dashboard/profil_usaha/1'?'active':'']">
         <Link href="/umkm/dashboard/profil_usaha/1" class="text-neutral-black">
           <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -31,7 +31,7 @@
           <span>Profil Produk</span>
         </Link>
       </li>
-      <li :class="[this.$page.props.auth.produkComplete?'':'lowerOpacity',this.url =='/umkm/dashboard/kajian_finansial/'?'active':'']">
+      <li :class="[$page.props.auth.produkComplete?'':'lowerOpacity',this.url =='/umkm/dashboard/kajian_finansial/'?'active':'']">
         <Link href="/umkm/dashboard/kajian_finansial/1" class="text-neutral-black">
           <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -50,7 +50,7 @@
         <span>Eventual</span>
         </Link>
       </li> -->
-   <li  :class="[this.$page.props.auth.user.accepted?'':'lowerOpacity',this.url.split('/')[3] == 'kegiatanku'?'active':'']">        
+   <li  :class="[$page.props.auth.user.accepted?'':'lowerOpacity',this.url.split('/')[3] == 'kegiatanku'?'active':'']">        
      <Link href="/umkm/dashboard/kegiatanku/1" class="text-neutral-black">
         <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -70,7 +70,7 @@
           <span>UMKM Jurnal</span>
         </Link>
       </li>-->
-      <li :class="{ 'active': this.url == '/umkm/dashboard/janjitemu','lowerOpacity':this.$page.props.auth.user.accepted }">
+      <li :class="{ 'active': this.url == '/umkm/dashboard/janjitemu','lowerOpacity':!this.$page.props.auth.user.accepted }">
         <Link href="/umkm/dashboard/janjitemu" class="text-neutral-black">
           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

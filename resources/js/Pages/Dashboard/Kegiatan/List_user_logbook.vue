@@ -1,24 +1,6 @@
 <template>
 
-  <DashboardLayout title="Kegiatan">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-    </div>
-      <ul class="mt-4">
-                    <li >
-                      <Link  >Deskripsi</Link>
-                    </li>
-                   <li >
-                      <Link :href="``">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="``" >Eventual</Link>
-                    </li>
-                    <li class="active">
-                        <Link class="active" :href="``">Logbook</Link>
-                    </li>
-      </ul>
-          <section>
+   <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
@@ -55,11 +37,11 @@
                           </a>
               </td>
                <td>
-                          <button @click="changeStatus(2,index.id)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" >
+                          <button @click="changeStatus(2,index.id,index.waktu)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" >
                             Tolak
                           </button>
                           
-                          <button @click="changeStatus(1,index.id)" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer" >
+                          <button @click="changeStatus(1,index.id,index.waktu)" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer" >
                             Setujui
                           </button>
                         </td>
@@ -97,13 +79,12 @@
             </Link>
           </li>
         </ul>
-      </div>
-    </section>
-  </DashboardLayout>
+</div>
+</Layout>
 </template>
 
 <script>
-import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import Layout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -111,7 +92,9 @@ export default{
       const form = useForm({
         status:null,
         id:null,
-        user_id:window.location.pathname.split('/')[6]
+        user_id:window.location.pathname.split('/')[6],
+        kegiatan_id:window.location.pathname.split('/')[4],
+        waktu:null
       })
       return { form }
     },
@@ -128,16 +111,18 @@ export default{
       prev:Number,
       next:Number,
       first:Number,
-      last:Number
+      last:Number,
+      kegiatan:Object
     },
     components: {
-      DashboardLayout,
+      Layout,
       Link
     },
     methods:{
-      changeStatus(num,id){
+      changeStatus(num,id,waktu){
         this.form.status = num
         this.form.id = id
+        this.form.waktu = waktu
         this.form.post('/admin/dashboard/kegiatan/logbook/ubah_status')
       }
     }

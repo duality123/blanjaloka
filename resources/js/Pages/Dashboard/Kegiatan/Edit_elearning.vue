@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout title="Tambah Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">{{kegiatan.tema}}</h1>
+      <h1 class="text-neutral-gray-5 mb-0">{{elearning.judul}}</h1>
     </div>
     <div class="d-flex mt-4">
       <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
@@ -27,10 +27,13 @@
             <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Foto</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                <div class="d-flex justify-content-center pt-3 mb-4" >
-                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
+                 <div v-if="form.gambar != null" class="d-flex justify-content-center pt-3 mb-4">
+                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
                 </div>
-    
+                <div v-else class="d-flex justify-content-center pt-3 mb-4">
+                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
+                </div>
+
                 <div class="row" style="margin-left:2px;" >
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 9rem;">
@@ -67,12 +70,12 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 const form = useForm({
-  tema: null,
-  deskripsi: null,
-  waktu:null,
-  judul:null,
-  gambar:null,
-  kegiatan_id:window.location.pathname.split('/')[4]
+  tema:props.elearning.tema,
+  deskripsi: props.elearning.deskripsi,
+  waktu:props.elearning.hari_tanggal_waktu.split(' ')[0],
+  judul:props.elearning.judul,
+  gambar:props.elearning.foto,
+  id:window.location.pathname.split('/')[5]
 });
 
 
@@ -107,13 +110,13 @@ const ubahGambar = (event) => {
     }
 
 const props = defineProps({
-  kegiatan:Object
+  elearning:Object
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/tambah_elearning/baru')
+  form.post('/admin/dashboard/kegiatan/elearning/edit')
 }
 </script>
 

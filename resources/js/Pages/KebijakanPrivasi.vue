@@ -58,10 +58,23 @@
   </BaseLayout>
 </template>
 
-<script setup>
+<script>
 import BaseLayout from '../Layouts/Layout.vue'
 import { ref } from 'vue'
-const isCheckKebijakanPrivasi = ref(false);
+export default{
+  data(){
+    return{
+      isCheckKebijakanPrivasi : null
+    }
+  },
+  beforeCreate(){
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  },
+  components:{
+    BaseLayout
+  }
+}
 </script>
 
 <style scoped>

@@ -1,27 +1,5 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section>
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h1>{{kegiatan.tema}}</h1>
-                 <ul class="mt-4">
-                    <li>
-                      <Link :href="`/umkm/dashboard/kegiatanku/detail/${kegiatan.kegiatan_id}`">Deskripsi</Link>
-                    </li>
-                   <li class="active">
-                      <Link class="active" :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/1`">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${kegiatan.kegiatan_id}`" >Eventual</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/logbook/${kegiatan.kegiatan_id}`">Logbook</Link>
-                    </li>
-                </ul>
+    <Layout state="elearning" :link="kegiatan.kegiatan_id" :title="kegiatan.tema">
              <p>
                                     E-Learning atau pembelajaran online atau daring (dalam jaringan) pada layanan Blanjaloka adalah pembelajaran yang dikembangkan oleh Tim Blanjaloka dalam bentuk online (dalam jaringan) melalui media website. Materi pembelajaran daring layanan blanjaloka mencakup materi tentang entrepreneurship, bisnis, dan usaha. Selain itu, terdapat pula materi-materi yang lebih teknis dan spesifik terkait cara mengembangkan usaha hingga ke skala internasional.
                                 </p>
@@ -30,10 +8,10 @@
                                     Setelah menyelesaikan pembelajaran daring ini, pelaku UMKM diharapkan lebih paham bagaimana mengembangkan usaha bisnis mereka.
                                 </p>
                                 
-                    <div class="row row-cols-1 row-cols-md-3 g-4" v-for="item in items">
-                      <div class="col">
-                        <div class="card h-100">
-                          <img :src="`${this.$page.props.asset_url}/${item.foto}`" class="card-img-top" alt="...">
+                    <div class="row row-cols-1 row-cols-md-3 g-4" >
+                      <div class="col" v-for="item in items">
+                        <div class="card">
+                          <img :src="`${this.$page.props.asset_url}/${item.foto}`" style="width:250px; height:250px" class="card-img-top" alt="...">
                           <div class="card-body">
                             <h5 class="card-title">{{item.judul}}</h5>
                             <p class="card-text">{{item.deskripsi}}</p>
@@ -73,20 +51,12 @@
           </li>
         </ul>
       </div>
-</div>
-</div>
-                     
-          </div>
-        </div>
 
-      </div>
-    </section>
-  </BaseLayout>
+  </Layout>
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{
@@ -98,8 +68,7 @@ export default{
     }
   },
   components:{
-    BaseLayout,
-    UmkmDashboardSidebar,
+    Layout,
     Link
   },
   mounted(){
@@ -158,6 +127,50 @@ ul li a.active {
   color:  #398ab9;
 }
 
+.pagination li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.pagination li:hover {
+  background-color: #398AB9;
+}
+
+.pagination li:hover a,
+.pagination li:hover a svg {
+  color: #FFFFFF !important;
+}
+
+.pagination li a {
+  text-decoration: none;
+  color: #3E4041;
+  font-weight: 600;
+}
+
+.pagination li.active {
+  background-color: #398AB9;
+}
+
+.pagination li.active a {
+  color: #FFFFFF;
+}
+
+@media (max-width: 575.98px) {
+  ul {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .pagination li:nth-child(3),
+  .pagination li:nth-child(4) {
+    display: none;
+  }
+}
 ul li a {
   text-decoration: none;
   font-weight: 600;

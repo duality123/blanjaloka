@@ -1,56 +1,46 @@
 <template>
   <DashboardLayout title="Tambah Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">{{kegiatan.tema}}</h1>
+      <h1 class="text-neutral-gray-5 mb-0">Edit Bab</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Elearning</p>
+      <Link href="admin/dashboard/kegiatan/1" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <p class="text-neutral-gray-4">Edit Bab</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
         <form @submit.prevent="handleSubmit">
           <section class="mb-5">
             <div class="mb-4">
-              <label for="nama_juri" class="form-label text-neutral-gray-5">Waktu</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
-                v-model="form.waktu" />
-                <small class="text-danger text-center" v-if="form.errors.waktu">{{form.errors.waktu}}</small>
+              <label for="nama_juri" class="form-label text-neutral-gray-5">Judul</label>
+              <input type="text" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+                v-model="form.judul">
+                <small class="text-danger text-center" v-if="form.errors.judul">{{form.errors.judul}}</small>
             </div>
             <h2 class="text-neutral-gray-5 mb-4"></h2>
             <div class="mb-4">
-              <label for="kurikulum" class="form-label text-neutral-gray-5">Judul</label>
-              <input type="text" class="form-control" id="kurikulum" placeholder="Masukkan link file kurikulum kegiatan"
-                v-model="form.judul">
-               <small class="text-danger text-center" v-if="form.errors.judul">{{form.errors.judul}}</small> 
-            </div>
-            <div class="mb-4">
-              <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Foto</label>
-          <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                <div class="d-flex justify-content-center pt-3 mb-4" >
-                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
-                </div>
-    
-                <div class="row" style="margin-left:2px;" >
-                <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 9rem;">
-                </div >
-                <div class="col d-flex justify-content-between">
-                <p class="text-primary"  style="padding-left:28px;">atau</p>
-                </div>
-                  <div class="col d-flex justify-content-end" >
-                <input type="file" class="custom-file-input2" style="width: 9rem;">
-                </div>
-                </div>
-                 <small class="text-danger text-center" v-if="form.errors.gambar">{{form.errors.gambar}}</small>
-                <div class="text-neutral-gray-3 text-center"><p class="fs-9">Format file .jpg/.jpeg/.png, ukuran file maksimal 5 MB</p></div>
-            </div>
-          </div>
-             <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Deskripsi</label>
               <input type="text" class="form-control" id="kurikulum" placeholder="Masukkan deskripsi"
                 v-model="form.deskripsi">
                <small class="text-danger text-center" v-if="form.errors.deskripsi">{{form.errors.deskripsi}}</small> 
+            </div>
+
+            
+             <div class="mb-4">
+              <label for="kurikulum" class="form-label text-neutral-gray-5">Link Video</label>
+              <input type="text" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+                v-model="form.link_video">
+                 <iframe  v-if  = "form.link_video" width="300" height="300"
+                                    :src="`${form.link_video}`">
+                                </iframe>
+               <small class="text-danger text-center" v-if="form.errors.link_video">{{form.errors.link_video}}</small> 
+            </div>
+
+             <div class="mb-4">
+              <label for="kurikulum" class="form-label text-neutral-gray-5">Nomor Bab</label>
+              <input type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan nomor bab"
+                v-model="form.bab">
+               <small class="text-danger text-center" v-if="form.errors.bab">{{form.errors.bab}}</small> 
             </div>
           </section>
           <div class="d-flex justify-content-end">
@@ -67,12 +57,11 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 const form = useForm({
-  tema: null,
-  deskripsi: null,
-  waktu:null,
-  judul:null,
-  gambar:null,
-  kegiatan_id:window.location.pathname.split('/')[4]
+  judul:props.bab.judul,
+  deskripsi:props.bab.deskripsi,
+  link_video:props.bab.link_video,
+  bab:props.bab.bab,
+  id : window.location.pathname.split('/')[6]
 });
 
 
@@ -85,36 +74,18 @@ const handleResizeDeskripsiKegiatan = () => {
 const handleResizeJumlahPartisipan = () => {
   refJumlahPartisipan.value.style.width = '1.5rem';
 }
-const ubahGambar = (event) => {
-     if(event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png'){
-        
-            if(event.target.files[0].size >= 5000000){
-              form.errors.gambar = "Size foto anda lebih dari 5MB !" 
-              return
-            }
-        var image = document.getElementById('img');
-        image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '10rem';
-        image.style.overflow = 'hidden';
-        form.gambar = event.target.files[0];
-        //console.log(this.process)
-      }
-      else{
-        form.errors.gambar = "File yang anda upload bukanlah gambar !" 
-         //console.log(event.target.files[0].type)
-         return
-      }
-    }
 
-const props = defineProps({
-  kegiatan:Object
-})
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/tambah_elearning/baru')
+  form.post('/admin/dashboard/kegiatan/elearning/bab/edit')
 }
+
+const props = defineProps({
+  elearning:Object,
+  bab:Object
+})
 </script>
 
 <style scoped>

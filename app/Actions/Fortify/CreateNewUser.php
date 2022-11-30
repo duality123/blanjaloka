@@ -20,21 +20,24 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        $input['no_telepon'] = '+62'.$input['no_telepon'];
         $rules =  [
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique(User::class),
+                'unique:Users',
             ],
             'password' => ['required','min:8',],
-            'no_telepon' => ['required','min:9','max:20',Rule::unique(User::class),],
+            'no_telepon' => ['required','min:9','max:20','unique:Users',]
         ];
         $message = [
               'email.required' => 'Email wajib diisi, silahkan isi sesuai data anda !',
               'password.required' => 'Password wajib diisi, silahkan isi sesuai data anda !',
-              'no_telepon.required' => 'No telepon wajib diisi, silahkan isi sesuai data anda !'
+              'no_telepon.required' => 'No telepon wajib diisi, silahkan isi sesuai data anda !',
+              'no_telepon.unique' => 'No telepon tersebut sudah ada yang menggunakan !',
+              'email.unique' => 'Email tersebut sudah ada yang menggunakan !'
 
         ];
         $validator = Validator::make($input,$rules,$message)->validate();
@@ -43,7 +46,7 @@ class CreateNewUser implements CreatesNewUsers
         return User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'no_telepon' => '+62'.$input['no_telepon'],
+            'no_telepon' => $input['no_telepon'],
             'role' => 3
         ]);
     }

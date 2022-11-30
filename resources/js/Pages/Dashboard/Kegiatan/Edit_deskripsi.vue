@@ -1,6 +1,6 @@
 <template>
 
-  <DashboardLayout title="Kegiatan">
+  <Layout section="deskripsi" :title="kegiatan.tema" :link="kegiatan.id">
      <div class="col-lg-8">
 
               <div id="myModal" class="modal" v-if="popup" >
@@ -55,24 +55,6 @@
   </div>
       </div>
     </div>
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">{{kegiatan.tema}}</h1>
-    </div>
-      <ul class="mt-4">
-                    <li class="active">
-                      <Link class="active" :href="`/admin/dashboard/kegiatan/${kegiatan.id}/detail`">Deskripsi</Link>
-                    </li>
-                   <li >
-                      <Link :href="`/admin/dashboard/kegiatan/${kegiatan.id}/elearning/1`">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="``" >Eventual</Link>
-                    </li>
-                    <li >
-                        <Link  :href="`/admin/dashboard/kegiatan/${kegiatan.id}/logbook/1`">Logbook</Link>
-                    </li>
-      </ul>
-          <section>
       <div class="container">
         <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
       <button @click = "toggleEdit()" class="btn btn-primary-blue-6 text-neutral-white py-2">Edit Deskripsi
@@ -83,12 +65,11 @@
         </div>
         <p>{{kegiatan.deskripsi}}</p>
       </div>
-    </section>
-  </DashboardLayout>
+  </Layout>
 </template>
 
 <script>
-import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import Layout from '../../../Layouts/kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -110,7 +91,7 @@ export default{
     kegiatan:Object
   },
   components:{
-    DashboardLayout,
+    Layout,
     Link
   },
   mounted(){

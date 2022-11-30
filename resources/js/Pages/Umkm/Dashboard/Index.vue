@@ -9,15 +9,15 @@
               <div class="card-body">
                 <h1>Dashboard</h1>
                 <div class="d-flex flex-column flex-lg-row gap-4 justify-content-between mt-5">
-                  <div :class="[this.$page.props.auth.profileComplete?'clear':'','step']">
+                  <div :class="[$page.props.auth.profileComplete?'clear':'','step']">
                     <div class="number">1</div>
                     <h1>Profil Pribadi</h1>
                   </div>
-                 <div :class="[this.$page.props.auth.usahaComplete && this.$page.props.auth.produkComplete && this.$page.props.auth.finansialComplete?'clear':'','step']">
+                 <div :class="[$page.props.auth.usahaComplete && $page.props.auth.produkComplete && $page.props.auth.finansialComplete?'clear':'','step']">
                     <div class="number">2</div>
                     <h1>Profil UMKM</h1>
                   </div>
-                  <div :class="[this.$page.props.auth.inkubasi?'clear':'','step']">
+                  <div :class="[$page.props.auth.inkubasi?'clear':'','step']">
                     <div class="number">3</div>
                     <h1>Inkubasi</h1>
                   </div>
@@ -30,7 +30,7 @@
                     <h1>Pasar Modal</h1>
                   </div>
                 </div>
-                <div v-if="!this.$page.props.auth.usahaComplete || !this.$page.props.auth.produkComplete || !this.$page.props.auth.finansialComplete || !this.$page.props.auth.profileComplete" class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
+                <div v-if="!$page.props.auth.usahaComplete || $page.props.auth.produkComplete || $page.props.auth.finansialComplete || !$page.props.auth.profileComplete" class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path

@@ -16,17 +16,20 @@
               <label for="tema_kegiatan" class="form-label text-neutral-gray-5">Tema Kegiatan</label>
               <input type="text" class="form-control" id="tema_kegiatan" placeholder="Masukkan tema kegiatan"
                 v-model="form.tema">
+                 <small class="text-danger text-center" v-if="form.errors.tema">{{form.errors.tema}}</small>
             </div>
 
               <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal mulai</label>
               <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.dimulai" />
+               <small class="text-danger text-center" v-if="form.errors.dimulai">{{form.errors.dimulai}}</small>
             </div>
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal berakhir</label>
               <input type="date" class="form-control px-0" id="nama_juri"
                 v-model="form.berakhir" />
+                <small class="text-danger text-center" v-if="form.errors.berakhir">{{form.errors.berakhir}}</small> 
             </div>
             <div class="mb-4">
               <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
@@ -35,6 +38,7 @@
                   placeholder="Tuliskan deskripsi kegiatan" maxlength="512" ref="refDeskripsikegiatan"
                   @input="handleResizeDeskripsiKegiatan" v-model="form.deskripsi"></textarea>
                 <span class="desc_count">{{ form.deskripsi.length }}/512</span>
+                    <small class="text-danger text-center" v-if="form.errors.deskripsi">{{form.errors.deskripsi}}</small>
               </div>
             </div>
           </section>
@@ -46,6 +50,7 @@
                 <input type="number" class="form-control px-0" id="jumlah_partisipan"
                   placeholder="Masukkan jumlah partisipan" @input="handleResizeJumlahPartisipan"
                   v-model="form.jumlah_orang_diundang">
+                   <small class="text-danger text-center" v-if="form.errors.jumlah_orang_diundang">{{form.errors.jumlah_orang_diundang}}</small>
                 <span class="count_input_leading">Orang</span>
               </div>
             </div>
@@ -58,6 +63,7 @@
               <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
               <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
                 :options="investor" v-model="form.nama_investor" />
+               <small class="text-danger text-center" v-if="form.errors.nama_investor">{{form.errors.nama_investor}}</small>
             </div>
           </section>
           <section class="mb-5">
@@ -75,6 +81,7 @@
               <label for="kurikulum" class="form-label text-neutral-gray-5">Kurikulum</label>
               <input type="text" class="form-control" id="kurikulum" placeholder="Masukkan link file kurikulum kegiatan"
                 v-model="form.kurikulum">
+                 <small class="text-danger text-center" v-if="form.errors.kurikulum">{{form.errors.kurikulum}}</small>
             </div>
 
             <div class="mb-4">
@@ -110,6 +117,7 @@
                 <span class="telp_leading">+62</span>
                 <input type="number" class="form-control" id="kontak_nomor_pic"
                   placeholder="Masukkan nomor hanphone Anda" v-model="form.kontak">
+              <small class="text-danger text-center" v-if="form.errors.kontak">{{form.errors.kontak}}</small>
               </div>
             </div>
           </section>
@@ -133,8 +141,8 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 const form = useForm({
-  tema: null,
-  deskripsi: null,
+  tema: '',
+  deskripsi: '',
   jumlah_orang_diundang: null,
   masa_inkubasi: null,
   kurikulum: null,

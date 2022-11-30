@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\Kegiatan;
-class Elearning extends Model
+use App\Models\Elearning;
+class BabElearning extends Model
 {
     public $timestamps = false;
-    protected $table='elearning';
-    protected $fillable =['kegiatan_id','hari_tanggal_waktu','judul','deskripsi','foto'];
+    protected $table='bab';
+    protected $fillable =['elearning_id','link_video','judul','deskripsi','bab'];
     use HasFactory;
 
 
 
    public function kegiatan(){
-         return $this->belongsTo(Kegiatan::class,'id','kegiatan_id');
+         return $this->belongsTo(Elearning::class,'id','elearning_id');
     }
 
 
-   static function fetchAndPaginate($limit = 0,$page=0,$kegiatan_id=null){
+   static function fetchAndPaginate($limit = 0,$page=0,$elearning_id=null){
        $offset = ($limit * $page) - $limit;
-       $maxData = DB::select("select count(*) as total from elearning where kegiatan_id = $kegiatan_id ");
+       $maxData = DB::select("select count(*) as total from bab where elearning_id = $elearning_id ");
        $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
        //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select elearning.id,elearning.judul,elearning.deskripsi,elearning.foto,elearning.id,elearning.hari_tanggal_waktu from elearning where kegiatan_id = $kegiatan_id order by hari_tanggal_waktu limit $offset,$limit");
+       $data['items'] = DB::select("select bab.id,bab.judul,bab.deskripsi,bab.bab,bab.link_video from bab where bab.elearning_id = $elearning_id order by bab.bab asc limit $offset,$limit");
        $data['paginate']['nums'] = [];
        $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
        $loopIndex = $index;

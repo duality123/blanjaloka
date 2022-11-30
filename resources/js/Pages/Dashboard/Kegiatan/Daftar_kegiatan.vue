@@ -43,7 +43,7 @@
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </Link>
-                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus`" class="btn btn-semantic-error-4 text-neutral-white">
+                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_kegiatan`" class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
                 </Link>

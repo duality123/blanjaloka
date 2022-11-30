@@ -1,25 +1,45 @@
 <template>
 
-  <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
+  <Layout section='elearning' :title="elearning.judul" :link="elearning.kegiatan_id">
+       <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
+      <Link :href="`/admin/dashboard/kegiatan/elearning/${currentPage}/tambah_bab`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Bab
+      </Link>
+    </div>
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>
               <th scope="col">No</th>
-              <th scope="col">Nama Peserta</th>
-              <th scope="col">Profil</th>
+              <th scope="col">Judul</th>
+              <th scope="col">Deskripsi</th>
+              <th scope="col">Link Video</th>
+              <th scope="col">Bab</th>
+              <th scope="col">Opsi</th>
             </tr>
           </thead>
           <tbody>
              <tr v-for="(index,no) in items">
               <th scope="row">{{++no}}</th>
-               <td>  <Link :href="`/admin/dashboard/kegiatan/${currentPage}/detail_logbook/${index.id}/halaman/1`">{{index.nama_lengkap}}</Link></td>
-                <td>  <Link :href="`/detail/profil/${index.id}`">Lihat profil</Link></td>
+                <td>{{index.judul}}</td>
+                 <td><p>{{index.deskripsi}}</p></td>
+                <td><p>{{index.link_video}}</p></td>
+                <td><p>{{index.bab}}</p></td>
+                 <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                <Link :href="`/admin/dashboard/kegiatan/elearning/bab/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
+                  Edit
+                </Link>
+                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_bab`" class="btn btn-semantic-error-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
+                  Hapus
+                </Link>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="d-flex justify-content-center mt-4">
+  </Layout>
+        <div class="d-flex justify-content-center mt-4">
         <ul class="pagination">
           <li v-if="prev">
             <Link :href="`/admin/dashboard/users/umkm/${prev}`">
@@ -50,7 +70,6 @@
           </li>
         </ul>
       </div>
-  </Layout>
 </template>
 
 <script>
@@ -60,7 +79,7 @@ import { ref } from 'vue';
 export default{
    data(){
       return{
-        currentPage: document.location.pathname.split('/')[4]
+        currentPage: document.location.pathname.split('/')[5]
       }
     },
     props:{
@@ -72,11 +91,11 @@ export default{
       next:Number,
       first:Number,
       last:Number,
-      kegiatan:Object
+      elearning:Object
     },
     components: {
-      Layout,
-      Link
+      Link,
+      Layout
     },
 }
 </script>
@@ -179,7 +198,12 @@ ul li {
 .custom-file-input2:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
-
+p{
+    white-space: nowrap; 
+  width: 200px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 ul li {
   padding-bottom: 0.5rem;
 }

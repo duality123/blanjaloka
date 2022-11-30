@@ -1,87 +1,47 @@
 <template>
 
-  <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
-      <div class="table-responsive">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Nama Peserta</th>
-              <th scope="col">Profil</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-for="(index,no) in items">
-              <th scope="row">{{++no}}</th>
-               <td>  <Link :href="`/admin/dashboard/kegiatan/${currentPage}/detail_logbook/${index.id}/halaman/1`">{{index.nama_lengkap}}</Link></td>
-                <td>  <Link :href="`/detail/profil/${index.id}`">Lihat profil</Link></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
-      </div>
-  </Layout>
+  <DashboardLayout title="Kegiatan">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
+      <h1 class="text-neutral-gray-5 mb-0">{{title}}</h1>
+    </div>
+      <ul class="mt-4">
+                    <li :class="[section=='deskripsi'?'active':'']">
+                      <Link :href="`/admin/dashboard/kegiatan/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Deskripsi</Link>
+                    </li>
+                   <li :class="[section=='elearning'?'active':'']">
+                      <Link :class="[section=='elearning'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/elearning/1`">Elearning</Link>
+                    </li>
+                    <li :class="[section=='eventual'?'active':'']">
+                        <Link :class="[section=='eventual'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/eventual/1`" >Eventual</Link>
+                    </li>
+                    <li :class="[section=='logbook'?'active':'']">
+                        <Link :class="[section=='logbook'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/logbook/1`">Logbook</Link>
+                    </li>
+      </ul>
+          <section>
+            <slot/>
+        </section>
+</DashboardLayout>
 </template>
-
 <script>
-import Layout from '../../../Layouts/Kegiatan.vue';
-import { Link,useForm } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
-export default{
-   data(){
-      return{
-        currentPage: document.location.pathname.split('/')[4]
-      }
-    },
-    props:{
-      items : Array,
-      paginationNums : Array,
-      nextBlok:Number,
-      prevBlok:Number,
-      prev:Number,
-      next:Number,
-      first:Number,
-      last:Number,
-      kegiatan:Object
-    },
-    components: {
-      Layout,
+  import DashboardLayout from './Dashboard.vue'
+  import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
+  export default{
+    components:{
+      DashboardLayout,
       Link
     },
-}
+    props:{
+      link:null,
+      title:null,
+      section:null
+    }
+  }
 </script>
-
 <style scoped>
+table{
+  width: 900px;
+}
 
 .close{
   border-width: 0px;
@@ -179,7 +139,12 @@ ul li {
 .custom-file-input2:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
-
+p{
+    white-space: nowrap; 
+  width: 300px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 ul li {
   padding-bottom: 0.5rem;
 }

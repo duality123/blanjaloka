@@ -1,10 +1,5 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section class="mt-4">
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
-          <div class="col-lg-8">
+  <div class="col-lg-8">
            <div id="myModal"  class="modal"  v-if="this.popup">
 
     <div  id="myModal" class="modal" >
@@ -77,23 +72,8 @@
 </div>
     </div>
   </div>
-            <div class="card">
-              <div class="card-body">
-                <h1>{{kegiatan.tema}}</h1>
-
-                 <ul class="mt-4">
-                    <li >
-                    <Link :href="`/umkm/dashboard/kegiatanku/detail/${kegiatan.id}`">Deskripsi</Link>                 </li>
-                    <li >
-                       <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.id}/elearning/1`">Elearning</Link>
-                    </li>
-                    <li class="active"  >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${kegiatan.id}`" class="active">Eventual</Link>
-                    </li>
-                    <li >
-                         <Link :href="`/umkm/dashboard/kegiatanku/logbook/${kegiatan.id}`">Logbook</Link>
-                    </li>
-                </ul>
+</div>
+<Layout state="eventual" :link="kegiatan.id" :title="kegiatan.tema">
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,18 +127,12 @@
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </BaseLayout>
+  </Layout>
 </template>
 
+
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 export default{
   data(){
@@ -189,8 +163,7 @@ export default{
     return {form}
   },
   components:{
-    UmkmDashboardSidebar,
-    BaseLayout,
+    Layout,
     Link
   },
   mounted(){
@@ -242,6 +215,9 @@ export default{
 
 
 <style scoped>
+.card{
+  width: 900px
+}
 section {
   margin-top: 10rem !important;
 }
@@ -292,7 +268,10 @@ ul li a {
   padding: 1rem;
   cursor: pointer;
 }
-
+ .modal-content{
+  height: 450px;
+  overflow-y: scroll;
+ }
 .sidebar ul li.active {
   border: 1px solid #AEAEAE;
   border-radius: 0.5rem;
@@ -348,7 +327,10 @@ ul li a {
   font-weight: 600;
   color: #AEAEAE;
 }
-
+ .modal-content{
+  height: 450px;
+  overflow-y: scroll;
+ }
 .step.clear .number {
   background-color: #398AB9;
 }

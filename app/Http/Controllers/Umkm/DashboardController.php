@@ -193,7 +193,7 @@ class DashboardController extends Controller
                 ->first(); 
         $logbook= DB::table('logbook')
                 ->select('deskripsi','bukti_kegiatan','status','waktu','id')
-                ->where('kegiatan_id','=',$slug)->orderBy('waktu','asc')
+                ->where('kegiatan_id','=',$slug)->where('user_id','=',$request->user()->id)->orderBy('waktu','asc')
                 ->get();
         return Inertia::render('Umkm/Dashboard/UmkmJurnal',['kegiatan'=>$kegiatan,'logbook'=>$logbook]);
     }

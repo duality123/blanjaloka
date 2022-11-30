@@ -1,10 +1,5 @@
 <template>
-  <BaseLayout title="UMKM Profile">
-    <section class="mt-4">
-      <div class="container">
-        <div class="row gap-4">
-          <UmkmDashboardSidebar />
-           <div id="myModal"  class="modal"  v-if="this.popup ">
+          <div id="myModal"  class="modal"  v-if="this.popup ">
 
     <div  id="myModal" class="modal" >
 
@@ -28,7 +23,10 @@
        <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-                <div class="d-flex justify-content-center pt-3 mb-4" >
+            <div class="d-flex justify-content-center pt-3 mb-4" v-if="form.gambar">
+                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto1" >
+                </div>
+                <div v-else class="d-flex justify-content-center pt-3 mb-4" >
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
                 </div>
     
@@ -56,23 +54,7 @@
     </div>
   </div>
 
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-body">
-                <h1>{{kegiatan.tema}}</h1>
-                 <ul class="mt-4">
-                    <li >
-                    <Link :href="`/umkm/dashboard/kegiatanku/detail/${kegiatan.id}`">Deskripsi</Link>                 </li>
-                    <li >
-                       <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.id}/elearning/1`">Elearning</Link>
-                    </li>
-                    <li >
-                        <Link :href="`/umkm/dashboard/kegiatanku/eventual/${kegiatan.id}`" >Eventual</Link>
-                    </li>
-                    <li class="active">
-                        <Link class="active" :href="`/umkm/dashboard/kegiatanku/logbook/${kegiatan.id}`">Logbook</Link>
-                    </li>
-                </ul>
+                  <Layout :title="kegiatan.tema" state="logbook" :link = "kegiatan.id">
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,13 +64,13 @@
                     </svg>
                   </div>
                   <p class="fw-semibold text-primary-blue-6 mb-0">
-                        Anda diharuskan menulis logbook mingguan setiap mingguanya untuk laporan kegiatan. Saat ini kamu berada di minggu <span class="text-neutral-black">ke-12</span> untuk inkubasi UMKM.</p>
+                        Anda diharuskan menulis logbook mingguan setiap harinya untuk laporan kegiatan. Saat ini kamu berada di hari <span class="text-neutral-black">ke-12</span> untuk inkubasi UMKM. Jika laporan ditolak, harap untuk mengubah laporan tersebut</p>
                 </div>
                 <div class="mt-5 mb-4 d-flex align-items-center borderc gap-3">
                     <h2 class="text-neutral-gray-5 m-0 me-auto">Daftar Laporan Mingguan</h2>
-                 <!--   <a href="#" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
+                  <button href="#" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
                         Unggah Laporan Akhir
-                    </a> -->
+                    </button> 
                 </div>
                 <div class="table-responsive">
                   <table class="table">
@@ -107,14 +89,14 @@
                          <td>{{event.waktu}}</td>
                         <td>{{event.deskripsi}}</td>
                         <td v-if="event.bukti_kegiatan != '-'">
-                            <img :src="`${$page.props.asset_url}/${event.bukti_kegiatan}`" alt="" style="width:5rem">
+                            <img :src="`${$page.props.asset_url}/${event.bukti_kegiatan}`" alt="" style="width:10rem">
                         </td>
                         <td v-else>
                             -
                         </td>
                         <td>
-                          <button href="#" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="event.status ==2">
-                            Ditolak
+                          <button  @click="popupExit(event.id,gambar=event.bukti_kegiatan,deskripsi=event.deskripsi)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="event.status ==2">
+                            Ditolak ( revisi ulang )
                           </button>
                           <button href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer" v-else-if="event.status ==0">
                             Menunggu
@@ -135,18 +117,11 @@
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </BaseLayout>
+  </Layout>
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Layout from '../../../Layouts/Kegiatanku.vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 export default{
   data(){
@@ -165,8 +140,7 @@ export default{
     return {form}
   },
   components:{
-    UmkmDashboardSidebar,
-    BaseLayout,
+    Layout,
     Link
   },
   mounted(){
@@ -184,10 +158,13 @@ export default{
       this.form.post('/umkm/dashboard/kegiatanku/tambah_logbook')
 
     },
-    popupExit(id = null){
+    popupExit(id,gambar=null,deskripsi=null){
+        this.form.gambar = gambar,
+        this.form.deskripsi = deskripsi,
         this.form.id= id 
         this.popup = !this.popup
     },
+
     ubahGambar(event){
       if(event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png'){
         
@@ -197,7 +174,7 @@ export default{
             }
         var image = document.getElementById('img');
         image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '4rem';
+        image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form.gambar = event.target.files[0];
         //console.log(this.process)
@@ -221,204 +198,11 @@ export default{
 
 
 <style scoped>
-
-
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-
-}
-.custom-file-input::before {
-
-  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0\00a0Upload Gambar';
-  display: inline-block;
-  background-color:white;
-  background-image:url('../../../assets/icons/upload.png');
-  background-repeat: no-repeat;
-  background-size: 18px 20px;
-  border-radius: 3px;
-  padding: 8px;
-  background-origin: content-box;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  color:black;
-  font-size: 12px;
-}
-
-.custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-
-.custom-file-input2::-webkit-file-upload-button {
-  visibility: hidden;
-
-}
-
-.custom-file-input2::before {
-  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0  Ambil Gambar';
-  display: inline-block;
-  background-color:white;
-  background-image:url('../../../assets/icons/upload2.png');
-  background-repeat: no-repeat;
-  background-size: 18px 20px;
-  border-radius: 3px;
-  padding: 8px;
-  background-origin: content-box;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  color:black;
-  font-size: 12px;
-}
-
-.custom-file-input2:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-section {
-  margin-top: 10rem !important;
-}
-.modal-content{
-  text-align: start;
-}
-.fs-btn {
-    font-size: .875rem;
-}
-
-ul {
-  display: flex;
-  column-gap: 2rem;
-  list-style: none;
-  padding: 0;
-  border-bottom: 1px solid #F0F0F0;
-}
-
-ul li {
-  cursor: pointer;
-}
-
-ul li {
-  padding-bottom: 0.5rem;
-}
-
-ul li a.active {
-  border-bottom: 2px solid #398AB9;
-  color:  #398ab9;
-}
-
-ul li a {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.sidebar ul li {
-  padding: 1rem;
-  cursor: pointer;
-}
-
-.sidebar ul li.active {
-  border: 1px solid #AEAEAE;
-  border-radius: 0.5rem;
-}
-
-.sidebar ul li.active a span,
-.sidebar ul li.active a path {
-  color: #398AB9;
-  fill: #398AB9;
-}
-
-.sidebar ul li a {
-  width: max-content;
-  text-decoration: none;
-  font-weight: 600;
-  position: relative;
-}
-
-.sidebar ul li a span {
-  width: max-content;
-  position: absolute;
-  left: 2rem;
-}
-
-.card h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #181A1B;
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 1rem;
-}
-
-.step .number {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-  border-radius: 50%;
-  background-color: #D9D9D9;
-  color: #FFFFFF;
-}
-
-.step h1 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #AEAEAE;
-}
-
-.step.clear .number {
-  background-color: #398AB9;
-}
-
-.step.clear h1 {
-  color: #3E4041;
-}
-
-h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-table thead tr td,
-table thead tr th {
-  font-weight: 600;
-  color: #3E4041;
-  border: none;
-  text-align: center;
-}
-
-table tbody tr td,
-table tbody tr th {
-  font-weight: 400;
-  color: #3E4041;
-  border-bottom: none;
-  text-align: center;
-  background-color: #F0F0F0;
-}
-
-table tbody tr:nth-child(2n) td,
-table tbody tr:nth-child(2n) th {
-  background-color: #F2F7FA;
-}
-
-@media (max-width: 575.98px) {
+ .modal-content{
+  height: 450px;
+  overflow-y: scroll;
+ }
+ @media (max-width: 575.98px) {
   section {
     margin-top: 15rem !important;
   }
@@ -434,4 +218,5 @@ table tbody tr:nth-child(2n) th {
     width: 450px;
   }
 }
+
 </style>

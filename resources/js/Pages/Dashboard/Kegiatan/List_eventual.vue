@@ -1,20 +1,89 @@
 <template>
+         <div class="col-lg-8">
 
-  <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
+              <div id="myModal" class="modal" v-if="popup" >
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "closePopup()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="col-lg-12">
+       <div class=" d-flex justify-content-center">
+       <h2>Edit Eventual</h2>
+     </div>
+           <div class="mt-2">
+      <form @submit.prevent="submit()">
+         <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Jadwal</label>
+         <input type="date" class="form-control" v-model="form.jadwal"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Link Meeting</label>
+         <input type="text" class="form-control" v-model="form.link_meeting" id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+        <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5 mb-3 mb-2" >Status: </label>
+              <select v-model="form.status" id="provinsi">
+                <option value="0">Menunggu</option>
+                <option value="1">Disetujui</option>
+                <option value="2">Selesai</option>              
+              </select>
+           <small class="text-danger"></small>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  <Layout section="eventual" :title="kegiatan.tema" :link="kegiatan.id">
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>
               <th scope="col">No</th>
-              <th scope="col">Nama Peserta</th>
-              <th scope="col">Profil</th>
+              <th scope="col">Perihal</th>
+              <th scope="col">UMKM</th>
+              <th scope="col">Nama mentor</th>
+              <th scope="col">UMKM Dikontak Via</th>
+              <th scope="col">Status</th>
+              <th scope="col">Opsi</th>
             </tr>
           </thead>
           <tbody>
              <tr v-for="(index,no) in items">
               <th scope="row">{{++no}}</th>
-               <td>  <Link :href="`/admin/dashboard/kegiatan/${currentPage}/detail_logbook/${index.id}/halaman/1`">{{index.nama_lengkap}}</Link></td>
-                <td>  <Link :href="`/detail/profil/${index.id}`">Lihat profil</Link></td>
+               <td> {{index.perihal}}</td>
+              <td> <Link :href="`/detail/profil/${index.user_id}`">{{index.nama_lengkap}}</Link></td>
+              <td>{{index.nama_mentor}}</td>
+              <td>{{index.kontak}}</td>
+              <td>
+               <button @click="" v-if="index.status == 0" href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">
+                          Menunggu
+                        </button>
+                        <button @click="" v-if="index.status == 1" href="#" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">
+                            Disetujui
+                          </button>
+                         <button @click="" v-if="index.status == 2" href="#" class="btn btn-semantic-success-4 me-2 px-3 text-neutral-white cursor-pointer">
+                            Selesai
+                          </button>
+                </td>
+                 <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                <button @click="toggleEdit(index.jadwal,index.link_meeting,index.status,index.id)" class="btn btn-semantic-success-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
+                  Edit
+                </button>
+                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_eventual`" class="btn btn-semantic-error-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
+                  Hapus
+                </Link>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -58,13 +127,24 @@ import Layout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
+  setup(){
+    const form = useForm({
+      jadwal:null,
+      link_meeting:null,
+      status:null,
+      id:null
+    })
+    return {form}
+  },
    data(){
       return{
-        currentPage: document.location.pathname.split('/')[4]
+        currentPage: document.location.pathname.split('/')[4],
+        popup:false
       }
     },
     props:{
       items : Array,
+      eventual:Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,
@@ -78,10 +158,30 @@ export default{
       Layout,
       Link
     },
+    methods:{
+      toggleEdit(jadwal,link_meeting,status,id){
+        this.popup = !this.popup
+        this.form.jadwal = jadwal
+        this.form.link_meeting = link_meeting
+        this.form.status = status
+        this.form.id = id
+      },
+      closePopup(){
+        this.popup = !this.popup
+      },
+      submit(){
+        this.popup=false;
+        this.form.post('/admin/dashboard/kegiatan/ubah_eventual_status')
+      }
+    }
 }
 </script>
 
 <style scoped>
+
+table{
+  width: 900px;
+}
 
 .close{
   border-width: 0px;
@@ -179,7 +279,12 @@ ul li {
 .custom-file-input2:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
-
+p{
+    white-space: nowrap; 
+  width: 300px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 ul li {
   padding-bottom: 0.5rem;
 }

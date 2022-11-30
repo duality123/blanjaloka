@@ -4,6 +4,36 @@
       <div class="container">
         <div class="row gap-4">
           <UmkmDashboardSidebar />
+             <div id="myModal"  class="modal"  v-if="this.popup ">
+
+    <div  id="myModal" class="modal" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "formToggle()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="col-lg-12">
+      <div class=" d-flex justify-content-center">
+      <h2>Kirim Laporan</h2>
+    </div>
+    <div class="mt-2">
+      <form @submit.prevent="submit()">
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Berikan laporan anda ?</label>
+         <input type="text" class="form-control" id="provinsi" placeholder="Masukkan laporan anda" >
+           <small class="text-danger"></small>
+      </div>
+    
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+</div>
+    </div>
+  </div>
           <div class="col-lg-8">
             <div class="card">
               <div class="card-body">
@@ -19,6 +49,10 @@
                   <p class="fw-semibold text-primary-blue-6 mb-0">
                     Jangan lupakan agenda bertemu! Janji temu merupakan fitur penting agar Anda dapat bertemu dan diskusi bersama investor.
                   </p>
+                </div>
+                    <div class="mt-5 mb-4 d-flex align-items-center borderc gap-3">
+                      <button @click="formToggle()" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
+                        Buat permintaan janji temu </button>
                 </div>
                 <h2 class="text-neutral-gray-5 mt-5 mb-3">Riwayat Janji Temu</h2>
                 <div class="table-responsive">
@@ -74,9 +108,33 @@
   </BaseLayout>
 </template>
 
-<script setup>
+<script>
 import BaseLayout from '../../../Layouts/Layout.vue'
 import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import { useForm, Link } from '@inertiajs/inertia-vue3'
+export default{
+  data(){
+    return{
+      popup:false
+    }
+  },
+  setup(){
+    const form = useForm({
+      tanggal:null,
+      lokasi:null,
+      investor:null
+    })
+  },
+  components:{
+    BaseLayout,
+    UmkmDashboardSidebar
+  },
+  methods:{
+    formToggle(){
+      this.popup = !this.popup
+    }
+  }
+}
 </script>
 
 <style scoped>
