@@ -13,12 +13,18 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UMKM\DashboardUMKMController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\UMKM\ProfilController;
+use App\Http\Controllers\Users\ProfilController;
 // use App\Http\Controllers\AuthenticatedController;
 
 // base controller
 use App\Http\Controllers\{
     PagesController,
+};
+
+use App\Http\Controllers\Investor\{
+    ProfilPerusahaanController,
+    DokumenPerusahaanController,
+    DashboardController as InvestorDashboardController
 };
 
 // umkm controller
@@ -52,7 +58,7 @@ use Inertia\Inertia;
 Route::get('/', [PagesController::class, 'home']);
 
 // umkm route
-Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
+Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(function () {
     // umkm account route
 
     Route::get('/join/{slug}', [UmkmDashboardController::class, 'join_kegiatan']);
@@ -83,23 +89,21 @@ Route::prefix('umkm')->middleware(['auth','verified'])->group(function () {
        //  Route::get('/kegiatanku/{page}/logbook', 'logbook');
         //  Route::get('/kegiatanku/{page}/eventual', 'eventual');
         Route::get('/janjitemu', 'janjitemu');
+        
         Route::prefix('profil_usaha/')->group(function () {
-            Route::get('1', [UsahaController::class, 'pertama']);
-            Route::prefix('proses/')->group(function () {
-                Route::post('pertama', [UsahaController::class, 'process_pertama']);
-         });
+            Route::get('/', [UsahaController::class, 'form_wizard']);
+            Route::post('/', [UsahaController::class, 'process_form_wizard']);
         });
         Route::prefix('profil_produk/')->group(function () {
-                Route::get('1', [ProdukController::class, 'pertama']);
-                Route::prefix('proses/')->group(function () {
-                    Route::post('pertama', [ProdukController::class, 'process_pertama']);
-                }); 
-            });
+                Route::get('/', [ProdukController::class, 'form_wizard']);
+                Route::post('/', [ProdukController::class, 'process_form_wizard']);
+            
+        });
         Route::prefix('kajian_finansial/')->group(function () {
-            Route::get('1', [FinansialController::class, 'pertama']);
-            Route::prefix('proses/')->group(function () {
-                Route::post('pertama', [FinansialController::class, 'process_pertama']);
-            });
+            Route::get('/', [FinansialController::class, 'form_wizard']);
+            
+            Route::post('/', [FinansialController::class, 'process_form_wizard']);
+      
         });
     
 
@@ -123,10 +127,10 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
         Route::post('/edit_deskripsi', 'edit_deskripsi');
         Route::get('/{id}/tambah_elearning', 'tambah_elearning');
         Route::get('/{slug1}/eventual/{slug2}', 'list_eventual');
-        Route::get('/{page}/hapus_kegiatan', 'hapus_kegiatan');
-        Route::get('/{page}/hapus_elearning', 'hapus_elearning');
-        Route::get('/{page}/hapus_bab', 'hapus_bab');
-        Route::get('/{page}/hapus_eventual', 'hapus_eventual');
+        Route::post('/hapus_kegiatan', 'hapus_kegiatan');
+        Route::post('/hapus_elearning', 'hapus_elearning');
+        Route::post('/hapus_bab', 'hapus_bab');
+        Route::post('/hapus_eventual', 'hapus_eventual');
         Route::post('/tambah_elearning/baru', 'add_elearning');
         Route::get('/{page}', 'index');
         Route::get('/{slug}/elearning/{slug2}','list_elearning');
@@ -149,23 +153,37 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
         Route::post('/ubah_eventual_status', 'ubah_eventual_status');
     });
 
-    // admin pengguna route
-  //  Route::prefix('pengguna')->group(function () {
-   //     Route::get('/admin', [PenggunaController::class, 'admin']);
-    //});
+
+    Route::prefix('pengguna')->group(function () {
+        Route::get('/{role}/{page}', [UserController::class, 'all']);
+        Route::post('hapus_user', [UserController::class, 'delete']);
+    });
+});
+
+//Profil Khusus Investor
+Route::prefix('investor/')->middleware(['auth','verified','shouldInvestor'])->group(function () {
+    Route::get('/', [InvestorDashboardController::class, 'index']);
+    Route::prefix('dashboard/')->middleware(['auth','verified'])->group(function () {
+        Route::get('profil_perusahaan', [ProfilPerusahaanController::class, 'form_wizard_profil_perusahaan']);
+        Route::get('dokumen_perusahaan', [DokumenPerusahaanController::class, 'form_wizard_dokumen_perusahaan']);
+
+        Route::post('profil_perusahaan', [ProfilPerusahaanController::class, 'process_wizard']);
+        Route::post('dokumen_perusahaan', [DokumenPerusahaanController::class, 'process_wizard']);
+ });
+
 });
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
-
-    return Inertia::render('Auth/Confirmation_email');
+    $request->session()->flash('success','Email berhasil dikirim ulang, harap cek inbox anda');
+    return back();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-
-    return Inertia::render('Auth/Verification_success',['redirect'=>'/role']);
+    return Inertia::render('Auth/Verification_success',['redirect'=>'/syarat_dan_ketentuan']);
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
 
 Route::get('/halaman_verifikasi',function(Request $request){
     return Inertia::render('Auth/Confirmation_email',['request'=>$request->email]);
@@ -226,13 +244,13 @@ Route::get('/detail/profil/{slug}', [ProfilController::class, 'detail']);
 Route::post('/detail/profil/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
 Route::get('/detail/profil/{slug}/accept', [UserController::class, 'terima_user']);
 Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
-    Route::get('1', [ProfilController::class, 'pertama']);
-    Route::get('2', [ProfilController::class, 'kedua']);
-    Route::get('3', [ProfilController::class, 'ketiga']);
+    Route::get('1', [ProfilController::class, 'form_wizard_profil_pertama']);
+    Route::get('2', [ProfilController::class, 'form_wizard_profil_kedua']);
+    Route::get('3', [ProfilController::class, 'form_wizard_profil_ketiga']);
     Route::prefix('proses/')->group(function () {
-        Route::post('pertama', [ProfilController::class, 'process_pertama']);
-        Route::post('kedua', [ProfilController::class, 'process_kedua']);
-        Route::post('ketiga', [ProfilController::class, 'process_ketiga']);
+        Route::post('wizard_pertama', [ProfilController::class, 'process_wizard_profil_pertama']);
+        Route::post('wizard_kedua', [ProfilController::class, 'process_wizard_profil_kedua']);
+        Route::post('wizard_ketiga', [ProfilController::class, 'process_wizard_profil_ketiga']);
     });
  });
 

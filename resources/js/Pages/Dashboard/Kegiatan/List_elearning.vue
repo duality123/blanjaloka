@@ -1,5 +1,5 @@
 <template>
-
+ <RemoveElearningLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/kegiatan/hapus_elearning" @toggleClose="switchClose()" />
   <Layout section="elearning" :title="kegiatan.tema" :link="kegiatan.id">
                   <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
       <Link :href="`/admin/dashboard/kegiatan/${currentPage}/tambah_elearning`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Elearning
@@ -34,10 +34,10 @@
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </Link>
-                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_elearning`" class="btn btn-semantic-error-4 text-neutral-white">
+                 <button @click="this.switchClose(elearning_id=index.id)"  class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
-                </Link>
+                </button  >
               </td>
             </tr>
           </tbody>
@@ -79,12 +79,21 @@
 
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
+import RemoveElearningLayout from '../../../Components/RemoveItem.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
    data(){
       return{
-        currentPage: document.location.pathname.split('/')[4]
+        currentPage: document.location.pathname.split('/')[4],
+        deletePopup:false,
+        itemDelete:null
+      }
+    },
+    methods:{
+       switchClose(elearning_id=null){
+          this.deletePopup = !this.deletePopup          
+          this.itemDelete = {id:elearning_id}
       }
     },
     props:{
@@ -100,8 +109,9 @@ export default{
     },
     components: {
       Layout,
-      Link
-    },
+      Link,
+      RemoveElearningLayout
+    }
 }
 </script>
 

@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -42,12 +43,26 @@ class CreateNewUser implements CreatesNewUsers
         ];
         $validator = Validator::make($input,$rules,$message)->validate();
 
+        $user = User::create([
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'no_telepon' => $input['no_telepon'],
+                'role' => 3
+                ]);
+        
+        if ($input['investor']) {
+            Role::where('user_id','=',$user->id)->update(['number'=>3]);
+            $user->profilPerusahaan()->create([]);
+            $user->dokumenPerusahaan()->create([]);
+        }
+        elseif($input['umkm']){
+            Role::where('user_id','=',$user->id)->update(['number'=>2]);
+            $user->profil()->create([]);
+            $user->usaha()->create([]);
+            $user->produk()->create([]);
+            $user->finansial()->create([]);
+        }
+        return  $user;
 
-        return User::create([
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'no_telepon' => $input['no_telepon'],
-            'role' => 3
-        ]);
     }
 }

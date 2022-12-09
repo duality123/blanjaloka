@@ -17,6 +17,7 @@ return new class extends Migration
         $table->id();
         $table->Integer('investor_id')->unsigned();
         $table->Integer('kegiatan_id')->unsigned();
+        $table->foreignId('investor_foreign')->references('id')->on('users')->onDelete('cascade');
 
       });
     }

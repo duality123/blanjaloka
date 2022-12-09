@@ -14,14 +14,14 @@
                     <br>Silahkan cek kota masuk Anda untuk melakukan verifikasi.
                     {{getTime}}
                 </p>
-                <small>Tidak merupakan email anda ? <a href="">Ganti Email</a></small>
+                <small class="text-center">Belum menerima email ?</small>
                 <div class="mt-5">
-                    <button
-                        class="btn btn-primary-blue-6 text-neutral-white disabled"
+                    <Link method="post" href="/email/verification-notification"
+                        class="btn btn-primary-blue-6 text-neutral-white "
                         style="padding: 5px 60px"
                     >
                         Kirim Ulang Email
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>
@@ -30,6 +30,7 @@
 
 <script>
 import BaseLayout from "../../Layouts/Layout.vue";
+import { Link,useForm } from '@inertiajs/inertia-vue3';
 export default{
 
 props:{
@@ -44,7 +45,8 @@ computed: {
   }
 },
 components: {
-  BaseLayout
+  BaseLayout,
+  Link
 },
 }
 </script>

@@ -15,6 +15,7 @@ use App\Models\Notifikasi;
 use App\Models\BabElearning;
 use App\Models\Eventual;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class KegiatanController extends Controller
 {
 
@@ -163,7 +164,7 @@ class KegiatanController extends Controller
             'max'=>'Karakter yang anda input melebihi batas :max .'
 
         ];
-          $this->validate($request, $rules, $customMessages);
+        $this->validate($request, $rules, $customMessages);
         $gambar= $request->file('gambar')->store('elearning/gambar','public') ;
         $data = [];
         $data['hari_tanggal_waktu'] = $request->post('waktu');
@@ -206,32 +207,67 @@ class KegiatanController extends Controller
         ];
 
         $this->validate($request, $rules, $customMessages);
+        $elearning = Elearning::where('id','=',$request->post('id'));
+        $old_gambar = DB::table('elearning')->select('gambar')->where('id','=',$request->post('id'))->first();
         $data = [];
         if ($request->file('gambar')) {
+              Storage::delete($old_gambar->gambar);
               $gambar= $request->file('gambar')->store('elearning/gambar','public') ;
               $data['foto'] = $gambar;
         }
         $data['hari_tanggal_waktu'] = $request->post('waktu');
         $data['judul'] = $request->post('judul');
         $data['deskripsi'] = $request->post('deskripsi');
-        Elearning::where('id','=',$request->post('id'))->update($data);
+        $elearning->update($data);
         $request->session()->flash('success','Elearning berhasil diubah');
         return back();
     }
-    public function hapus_kegiatan(Request $request,$id){
-        $request->session()->flash('success','Kegiatan berhasil dihapus !');
-        Kegiatan::where('id','=',$id)->delete();
+    public function hapus_kegiatan(Request $request){
+        $session = '';
+        $message = '';
+        $delete = Kegiatan::where('id','=',$request->post('id'))->delete();
+        if ($delete) {
+            $session = 'success';
+            $message = 'Kegiatan berhasil dihapus !';
+        }
+        else{
+            $session = 'error';
+            $message = 'Ada kesalahan !';
+        }
+        $request->session()->flash($session,$message);
+    
         return back();
     }
 
-     public function hapus_elearning(Request $request,$id){
-        Elearning::where('id','=',$id)->delete();
-        $request->session()->flash('success','elearning berhasil dihapus !');
+     public function hapus_elearning(Request $request){
+        $session = '';
+        $message = '';
+        $delete =  Elearning::where('id','=',$request->post('id'))->delete();
+        if ($delete) {
+            $session = 'success';
+            $message = 'Kegiatan berhasil dihapus !';
+        }
+        else{
+            $session = 'error';
+            $message = 'Ada kesalahan !';
+        }
+        $request->session()->flash($session,$message);
+    
         return back();
     }
     public function hapus_bab(Request $request,$id){
-        BabElearning::where('id','=',$id)->delete();
-        $request->session()->flash('success','bab berhasil dihapus !');
+        $session = '';
+        $message = '';
+        $delete =  BabElearning::where('id','=',$request->post('id'))->delete();
+        if ($delete) {
+            $session = 'success';
+            $message = 'Kegiatan berhasil dihapus !';
+        }
+        else{
+            $session = 'error';
+            $message = 'Ada kesalahan !';
+        }
+        $request->session()->flash($session,$message);
         return back();
     }
     public function eventual(Request $request,$id){
@@ -361,10 +397,12 @@ class KegiatanController extends Controller
                 'dimulai'=>$request->post('dimulai'),
                 'berakhir' =>$request->post('berakhir'),
                 'link'=>Str::random(100),];
+    $kegiatan = Kegiatan::where('id','=',$request->post('id'))->first();
     if ($request->file('gambar')) {
+         Storage::delete($kegiatan->gambar);
          $update['gambar'] = $request->file('gambar')->store('kegiatan/gambar','public');
     }
-      $kegiatan = Kegiatan::where('id','=',$request->post('id'))->first();
+    
       $kegiatan->update($update);
       $listInvestor = [];
       foreach ($daftarInvestor as $investor) {
@@ -404,7 +442,7 @@ class KegiatanController extends Controller
 
         ];
 
-        $this->validate($request, $rules, $customMessages);
+      $this->validate($request, $rules, $customMessages);
       $daftarInvestor =$request->post('nama_investor');
       $gambar = $request->file('gambar')->store('kegiatan/gambar','public');
       //dd($gambar)
@@ -433,26 +471,7 @@ class KegiatanController extends Controller
 
     }
 
-    public function update(Request $request,$id){
-      $validatedData = $request->validate([
-          'tema' => 'required',
-          'deskripsi' => 'required',
-          'jumlah_orang_diundang' => 'required',
-          'juri'=>'required',
-          'investor'=>'required',
-          'masa_inkubasi'=>'required',
-          'kurikulum'=>'required',
-          'pic'=>'required',
-          'kontak'=>'required'
-      ]);
-      $data = Kegiatan::where('id',$id)->firstOrFail();
-      $data->update($request->all());
-      $daftarJuri = explode(',',$request->juri);
-      $daftarInvestor = explode(',',$request->investor);
-      $kegiatan->investor()->sync($daftarInvestor);
 
-      return response(['message'=>'item edited', 'meta'=>$kegiatan]);
-    }
 
 
     

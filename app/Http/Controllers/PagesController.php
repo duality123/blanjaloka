@@ -10,17 +10,20 @@ class PagesController extends Controller
 
 
     public function home(Request $request)
-    {
-        
-        if(Auth::check()){
-            if ($request->user()->Role->number == 2 ) {
-                return redirect('/umkm/dashboard/beranda/1');
-            }
-            
-            else{
-                 return redirect('/admin/dashboard/');
-            }
+       {
+      if(Auth::check()){
+        if ($request->user()->Role->number==1) {
+           return redirect('/admin/dashboard');
         }
+        elseif  ($request->user()->Role->number==2) {
+             return redirect('/umkm/dashboard');
+        }
+        elseif ($request->user()->Role->number==3)
+         {
+             return redirect('/investor/dashboard/profil_perusahaan');
+        }
+      }
+
         return Inertia::render('Home');
     }
 

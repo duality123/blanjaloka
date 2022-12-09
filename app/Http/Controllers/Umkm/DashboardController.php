@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Elearning;
 use App\Models\Notifikasi;
+use Illuminate\Support\Facades\Storage;
 class DashboardController extends Controller
 {
     public function index()
@@ -66,15 +67,18 @@ class DashboardController extends Controller
         ];
 
         $this->validate($request, $rules, $customMessages);
+        $logbook = Logbook::where('id','=',$request->post('id'));
+        $old_image = DB::table('logbook')->select('bukti_kegiatan')->where('id','=',$request->post('id'))->first();
         $data = [];
         $data['deskripsi'] = $request->post('deskripsi');
       
         if ($request->file('gambar')) {
+            Storage::delete($old_image->bukti_kegiatan);
              $gambar= $request->file('gambar')->store('umkm/logbook','public') ;
              $data['bukti_kegiatan']= $gambar;
         };
         $data['status'] = 0;
-        $data = Logbook::where('id','=',$request->post('id'))->update($data);
+        $logbook->update($data);
         $request->session()->flash('success','Log Anda berhasil tersimpan!');
         return redirect('/umkm/dashboard/kegiatanku/logbook/'.$request->post('kegiatan_id'));
 
@@ -154,7 +158,7 @@ class DashboardController extends Controller
     }
     public function kegiatanku(Request $request,$page)
     {
-         if(!$request->user()->accepted){
+        if(!$request->user()->accepted){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
         }
         $data = Kegiatan::fetchAndPaginate4UMKM($limit=10,$offset=$page,$request->user()->id);
@@ -211,7 +215,7 @@ class DashboardController extends Controller
         $banyak_peserta = DB::table('kegiatan_umkm')->select('kegiatan_id')->where('kegiatan_id','=',$slug)->get();
         if (intval($kegiatan->jumlah_orang_diundang) <= intval(count($banyak_peserta))) {
             $request->session()->flash('success','Kegiatan ini sudah penuh!');
-            return redirect('umkm/dashboard/beranda');
+            return back();
         }
         $begin = explode(' ',$kegiatan->dimulai)[0];
         $end = explode(' ',$kegiatan->berakhir)[0];

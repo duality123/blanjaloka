@@ -2,7 +2,7 @@
     <AuthLayout title="Login">
         <div class="row justify-content-center my-5 mt-2">
             <div class="col-lg-8">
-                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" id='logo'>
+                <img src="../../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo" id='logo' >
                 <h1 class="text-neutral-black">Masuk</h1>
                 <p class="text-neutral-gray-4">Ayo lakukan pendanaan UMKM sekarang juga!</p>
                 <form @submit.prevent="handleSubmit">
@@ -31,7 +31,7 @@
                                 Ingat Saya
                             </label>
                         </div>
-                        <a href="#" class="text-primary-blue-6 text-decoration-none">Lupa kata sandi?</a>
+                        <Link href="/forgot-password" class="text-primary-blue-6 text-decoration-none">Lupa kata sandi?</Link>
                     </div>
                     <div class="d-grid mt-4">
                         <button type="submit" :disabled="isButtonDisable"
@@ -64,7 +64,7 @@
 
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import { ref, computed,onMounted } from 'vue'
+import { ref, computed,onMounted,onUnmounted } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { reactive } from 'vue'
 import { Inertia } from "@inertiajs/inertia";
@@ -111,14 +111,14 @@ const makeAnimations = (e) =>{
             i+= multiple;
             document.getElementById('logo').style.marginLeft = i+'px';
 }
-
+let intervalId;
 onMounted(()=>{
-    setInterval(()=>{
+   intervalId = setInterval(()=>{
         makeAnimations(); 
   }, 100);
 })
 
-
+onUnmounted(() => clearInterval(intervalId))
 const handleTogglePassword = (e) => {
     isPasswordVisible.value = !isPasswordVisible.value;
     passwordInputType.value = isPasswordVisible.value ? 'text' : 'password';

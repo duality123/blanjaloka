@@ -7,20 +7,21 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Usaha;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 class UsahaController extends Controller
 {
-    public function pertama(Request $request)
+    public function fowm_wizard(Request $request)
     {
        if(!$request->user()->profil->isProfileComplete()){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Usaha Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu']);
         }
-        return Inertia::render('Profil/usaha/Pertama');
+        return Inertia::render('Profil/UMKM/usaha/form_wizard');
     }
 
-    public function process_pertama(Request $request)
+    public function process_form_wizard(Request $request)
     {   
-           $rules = [
+        $rules = [
             'nama_perusahaan' => 'required|max:200',
             'alamat_perusahaan' => 'required|max:100',
             'status_perusahaan' => 'required|max:50',
@@ -37,14 +38,15 @@ class UsahaController extends Controller
 
         $this->validate($request, $rules, $customMessages);
         $data = [];
-
+        $usaha =  Usaha::where('user_id','=',$request->user()->id);
+        $old_dokumen = DB::table('usaha')->select('legalitas','dokumen_amdal')->where('user_id','=',$request->user()->id)->first();
         if ($request->file('legalitas')) {
-             $legalitas= $request->file('legalitas')->store('umkm/dokumen_legalitas','public') ;
-             $data['legalitas']= $legalitas;
+            Storage::delete($old_dokumen->legalitas);
+            $data['legalitas']=$request->file('legalitas')->store('umkm/dokumen_legalitas','public') ;
         };
         if($request->file('dokumen_amdal')){
-            $dokumen_amdal = $request->file('dokumen_amdal')->store('umkm/dokumen_amdal','public') ;   
-            $data['dokumen_amdal']= $dokumen_amdal;
+            Storage::delete($old_dokumen->dokumen_amdal);   
+            $data['dokumen_amdal']= $request->file('dokumen_amdal')->store('umkm/dokumen_amdal','public') ; 
         }
 
         
@@ -55,8 +57,8 @@ class UsahaController extends Controller
         $data['deskripsi_usaha']= $request->post('deskripsi_usaha');
         $data['email_perusahaan']=$request->post('email_perusahaan');
         $data['alamat_perusahaan'] = $request->post('alamat_perusahaan');
-        $profil =  Usaha::where('user_id','=',$request->user()->id)->update($data);
-        return redirect('umkm/dashboard/profil_produk/1');
+        $usaha->update($data);
+        return redirect('umkm/dashboard/profil_produk/');
 
     }
 }

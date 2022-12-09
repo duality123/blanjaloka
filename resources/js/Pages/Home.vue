@@ -115,16 +115,7 @@
                         <div id="collapse_faq_one" class="accordion-collapse collapse show" aria-labelledby="faq_one"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body bg-primary-blue-2">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut
-                                cursus est at dictum. Blandit lacinia posuere faucibus pharetra at habitant sagittis.
-                                Lorem
-                                ipsum dolor sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut cursus
-                                est
-                                at dictum. Blandit lacinia posuere faucibus pharetra at habitant sagittis. Lorem ipsum
-                                dolor
-                                sit amet, consectetur adipiscing elit. Mi, odio montes, luctus in ut cursus est at
-                                dictum.
-                                Blandit lacinia posuere faucibus pharetra at habitant sagittis.
+                                Blanjaloka Akselerator adalah platform dimana para UMKM dapat mencari investor untuk usahanya atau bahkan sebaliknya.
                             </div>
                         </div>
                     </div>
@@ -135,19 +126,17 @@
                                 aria-expanded="false" aria-controls="collapse_faq_two">
                                 Bagaimana cara mengikuti program akselerator di Blanjaloka?
                             </button>
+                               
                         </h2>
                         <div id="collapse_faq_two" class="accordion-collapse collapse" aria-labelledby="faq_two"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body bg-primary-blue-2">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                until
-                                the collapse plugin adds the appropriate classes that we use to style each element.
-                                These
-                                classes control the overall appearance, as well as the showing and hiding via CSS
-                                transitions. You can modify any of this with custom CSS or overriding our default
-                                variables.
-                                It's also worth noting that just about any HTML can go within the
-                                <code>.accordion-body</code>, though the transition does limit overflow.
+                                <ol class="">
+                                    <li><strong>Daftarkan diri anda di Blanjaloka.id</strong></li>
+                                    <li><strong>Penuhi data diri anda</strong></li>
+                                    <li><strong>Tunggu admin untuk acc</strong></li>
+                                    <li><strong>Selamat anda bisa menggunakan platform blanjaloka untuk mencari investor atau mencari UMKM</strong></li>
+                            </ol>
                             </div>
                         </div>
                     </div>
@@ -162,7 +151,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 import { ref,onMounted } from 'vue';
 import lottie from 'lottie-web'
 //http://127.0.0.1:5173/resources/js/assets/animations/landing1.json
-import BaseLayout from '../Layouts/Layout.vue'
+import BaseLayout from '../Layouts/UnauthenticatedLayout.vue'
 
 
 

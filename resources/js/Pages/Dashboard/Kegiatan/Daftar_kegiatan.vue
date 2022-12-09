@@ -1,5 +1,6 @@
 <template>
-  <DashboardLayout title="Peserta Admin">
+    <RemoveKegiatanLayout pesan="Anda yakin ingin menghapus kegiatan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/kegiatan/hapus_kegiatan" @toggleClose="switchClose()" />
+  <DashboardLayout title="Daftar kegiatan" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
     </div>
@@ -43,10 +44,10 @@
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </Link>
-                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_kegiatan`" class="btn btn-semantic-error-4 text-neutral-white">
+                <button @click="this.switchClose(kegiatan_id=index.id)" class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
-                </Link>
+                </button  >
               </td>
             </tr>
           </tbody>
@@ -90,10 +91,13 @@
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import RemoveKegiatanLayout from '../../../Components/RemoveItem.vue';
 export default{
     data(){
         return{
           popup:false,
+          deletePopup:false,
+          itemDelete:null
 
       }
     },
@@ -121,7 +125,14 @@ export default{
     },
     components: {
       DashboardLayout,
-      Link
+      Link,
+      RemoveKegiatanLayout
+    },
+    methods:{
+       switchClose(kegiatan_id=null){
+        this.deletePopup = !this.deletePopup          
+        this.itemDelete = {id:kegiatan_id}
+      }
     }
 
 }

@@ -23,8 +23,8 @@
        <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-            <div class="d-flex justify-content-center pt-3 mb-4" v-if="form.gambar">
-                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto1" >
+            <div class="d-flex justify-content-center pt-3 mb-4" v-if="previewImage">
+                   <img :src="`${$page.props.asset_url}/${previewImage}`" alt="update icon" style="overflow: hidden; width: 250px;" id="img" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4" >
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
@@ -127,6 +127,7 @@ export default{
   data(){
     return{
       popup:false,
+      previewImage:null
     }
   },
   setup(){
@@ -159,7 +160,7 @@ export default{
 
     },
     popupExit(id,gambar=null,deskripsi=null){
-        this.form.gambar = gambar,
+        this.previewImage = gambar,
         this.form.deskripsi = deskripsi,
         this.form.id= id 
         this.popup = !this.popup
@@ -177,7 +178,7 @@ export default{
         image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form.gambar = event.target.files[0];
-        //console.log(this.process)
+        console.log(this.form.gambar)
       }
       else{
         this.form.errors.gambar = "File yang anda upload bukanlah gambar !" 

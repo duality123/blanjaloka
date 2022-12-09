@@ -1,68 +1,54 @@
 <template>
-  <DashboardLayout title="Peserta Admin">
+  <RemoveUserLayout pesan="Anda yakin ingin menghapus user ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/pengguna/hapus_user" @toggleClose="switchClose()" />
+  <DashboardLayout title="User Management" state="pengguna">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Pengguna</h1>
     </div>
     <ul class="tabs mt-4">
-      <li v-for="item in tabItems" :class="[this.lowerCase(item)== this.currentTabItem ? 'active':'']" >
-        <a :class="[this.lowerCase(item) == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">{{ item }}</a>
+      <li v-for="item in tabItems" :class="[item == this.currentTabItem ? 'active':'']" >
+        <Link href="/admin/dashboard/pengguna/1/1" v-if="item == 1" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Admin</Link>
+        <Link href="/admin/dashboard/pengguna/2/1" v-else-if="item == 2" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">UMKM</Link>
+        <Link href="/admin/dashboard/pengguna/3/1" v-else :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Investor</Link>
       </li>
     </ul>
     <section>
       <div class="d-flex justify-content-end">
         <a href="#" class="btn btn-primary-blue-6 text-neutral-white py-2">
-          <font-awesome-icon icon="fa-solid fa-plus" /> Tambah {{currentTabItem}}
+          <font-awesome-icon icon="fa-solid fa-plus" /> Tambah User
         </a>
       </div>
       <div class="table-responsive">
-        <div v-if="this.$page.props.message_delete" class="alert alert-success  mt-4" id="remove">
-          <div class="row" >
-                <div class="col-lg-10 ">{{$page.props.message_delete}} !</div> <div class="col-sm-2 "><div class="d-flex flex-row-reverse pt-1"> <font-awesome-icon icon="fa-times" @click="deleteSuccess" /></div></div>
-               </div>
-          </div>
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>
               <th scope="col">No</th>
-              <th scope="col">Nama</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
+              <th scope="col">Status</th>
+              <th scope="col">Akun dibuat pada</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item,index) in items">
               <th scope="row">{{ ++index}}</th>
-              <td :id="`show1${index}`">{{ item.name }}</td>
-              <td  :id="`show2${index}`">{{item.email}}</td>
-              <td   :id="`show3${index}`">{{item.password}}</td>
-              <div   :id="`show4${index}`" >
+              <td v-if="item.accepted"><a  class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">Sudah di acc</a></td>
+              <td v-else><a class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">Belum di acc</a></td>
+              <td>{{item.created_at}}</td>
+              <div>
               <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <button @click="this.changeState(index)" class="btn btn-semantic-success-4 text-neutral-white">
+                <Link :href="`/detail/profil/${item.id}`" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  Edit
+                  Lihat Profil
+                </Link>
+                 <button @click="this.changeState(index)" class="btn btn-semantic-success-4 text-neutral-white">
+                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
+                  Ubah Password
                 </button>
-                <Link  :href="`/admin/dashboard/users/umkm/delete/${item.id}`" class="btn btn-semantic-error-4 text-neutral-white">
+                <button @click="this.switchClose(user_id=item.id)"  class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
-                </Link>
+                </button  >
               </td>
             </div>
-              <td  style="display:none"  :id="`input1${index}`"><input type="text" class="form-control " v-model="item.name"></td>
-              <td  style="display:none" :id="`input2${index}`"><input type="text" class="form-control" v-model="item.email"></td>
-              <td  style="display:none" :id="`input3${index}`"><input type="text" class="form-control" v-model="item.password"></td>
-              <div  style="display:none" :id="`input4${index}`">
-              <td  class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <button class="btn btn-primary text-neutral-white">
-                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  Selesai
-                </button>
-                <button  @click="this.changeState2(index)" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  batal
-                </button>
-              </td>
-                  </div>
             </tr>
           </tbody>
         </table>
@@ -105,12 +91,15 @@
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
+import RemoveUserLayout from '../../../Components/RemoveItem.vue';
 export default{
     data(){
         return{
           currentTabItem: window.location.pathname.split('/')[4],
           currentPage : window.location.pathname.split('/')[5],
-          tabItems :['Admin','Investor','UMKM'],
+          deletePopup:false,
+          tabItems :[1,2,3],
+          itemDelete:null
 
       }
     },
@@ -128,28 +117,9 @@ export default{
       lowerCase(name){
         return name.toLowerCase()
       },
-      deleteSuccess(){
-        document.getElementById('remove').remove();
-      },
-      changeState(index){
-        document.getElementById('show1'+index).style.display = "none";
-          document.getElementById('show2'+index).style.display = "none";
-            document.getElementById('show3'+index).style.display = "none";
-              document.getElementById('show4'+index).style.display = "none";
-        document.getElementById('input1'+index).style.display = "table-cell";
-          document.getElementById('input2'+index).style.display = "table-cell";
-            document.getElementById('input3'+index).style.display = "table-cell";
-              document.getElementById('input4'+index).style.display = "table-cell";
-      },
-      changeState2(index){
-        document.getElementById('show1'+index).style.display = "table-cell";
-          document.getElementById('show2'+index).style.display = "table-cell";
-            document.getElementById('show3'+index).style.display = "table-cell";
-              document.getElementById('show4'+index).style.display = "table-cell";
-        document.getElementById('input1'+index).style.display = "none";
-          document.getElementById('input2'+index).style.display = "none";
-            document.getElementById('input3'+index).style.display = "none";
-              document.getElementById('input4'+index).style.display = "none";
+      switchClose(user_id=null){
+        this.deletePopup = !this.deletePopup          
+        this.itemDelete = {id:user_id}
       }
 
 
@@ -158,14 +128,15 @@ export default{
     },
     components: {
       DashboardLayout,
-      Paginate,
-      Link
+      Link,
+      RemoveUserLayout
     },
 
 }
 </script>
 
 <style scoped>
+
 h1 {
   font-size: 2.1rem;
   font-weight: 600;

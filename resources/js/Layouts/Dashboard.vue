@@ -4,7 +4,7 @@
     <title>Blanjaloka - Dashboard {{ title }}</title>
     <meta name="description" content="Your page description">
   </Head>
-   <div id="myModal" class="modal" v-if="$page.props.session.success">
+   <div id="myModal" class="modal"  v-if="$page.props.session.success">
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
@@ -30,7 +30,7 @@
         <div class="section_one mt-4">
           <h2 class="text-neutral-gray-4">Menu</h2>
           <ul class="mt-4">
-             <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url=== '/notifikasi/admin/1'}">
+             <li class="rounded p-4" :class="{'bg-primary-blue-2': state === 'notifikasi'}">
                   <Link href="/notifikasi/admin/1" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black notification">
                   <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -38,22 +38,21 @@
                       fill="#686868" />
                   </svg>
                   <span> Notifikasi</span>
-                  <span v-if="this.$page.props.auth.user.notifikasi" class="badge">{{this.$page.props.auth.user.notifikasi}}</span>
+                  <span v-if="$page.props.auth.user.notifikasi" class="badge">{{$page.props.auth.user.notifikasi}}</span>
                 </Link>
               </li>
-
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/dashboard'}">
-              <Link href="/dashboard" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
-              <img src="../assets/icons/icon_dashboard_dashboard.png" alt="icon overview" class="img-fluid">Overview
+            <li class="rounded p-4" :class="{'bg-primary-blue-2': state === 'overview'}">
+              <Link href="/admin/dashboard" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
+              <img src="../assets/icons/icon_dashboard_dashboard.png" alt="icon dashboard" class="img-fluid">Dashboard
               </Link>
             </li>
-            <li class="rounded p-4" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/kegiatan/1'}">
+            <li class="rounded p-4" :class="{'bg-primary-blue-2': state === 'kegiatan'}">
               <Link href="/admin/dashboard/kegiatan/1"
                 class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
               <img src="../assets/icons/icon_kegiatan_dashboard.png" alt="icon kegiatan" class="img-fluid">Kegiatan
               </Link>
             </li>
-            <li class="rounded p-4" :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/funding' }">
+            <li class="rounded p-4" :class="{'bg-primary-blue-2': state === 'funding'}">
               <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
                 <img src="../assets/icons/icon_funding_dashboard.png" alt="icon funding" class="img-fluid">Funding
               </a>
@@ -62,7 +61,7 @@
               <a class="text-decoration-none">
                 <div @click="toggleMenuPengguna"
                   class="d-flex justify-content-between align-items-center text-neutral-black rounded p-4"
-                  :class="{ 'bg-primary-blue-2': $page.url === '/admin/pengguna' }">
+                  :class="{'bg-primary-blue-2': state === 'pengguna'}">
                   <div class="d-flex align-items-center gap-2">
                     <img src="../assets/icons/icon_pengguna_dashboard.png" alt="icon pengguna"
                       class="img-fluid">Pengguna
@@ -70,20 +69,26 @@
                   <font-awesome-icon :icon="iconMenuPenggunaType" class="text-primary-blue-6" />
                 </div>
                 <ul v-if="isMenuPenggunaActive" class="sub_menu">
-                  <li class="rounded p-3"
-                    :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/admin' }">
-                    <Link href="/admin/dashboard/pengguna/admin" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/1/1'}">
+                    <Link href="/admin/dashboard/pengguna/1/1" class="text-decoration-none text-neutral-black">
                     Admin</Link>
                   </li>
-                  <li class="rounded p-3">
-                    <a href="#" class="text-decoration-none text-neutral-black">Investor</a>
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/3/1'}">
+                    <Link href="/admin/dashboard/pengguna/3/1" class="text-decoration-none text-neutral-black">Investor</Link>
                   </li>
-                  <li class="rounded p-3"
-                    :class="{ 'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/umkm' }">
-                    <Link href="/admin/dashboard/pengguna/umkm" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/2/1'}">
+                    <Link href="/admin/dashboard/pengguna/2/1" class="text-decoration-none text-neutral-black">
                     UMKM</Link>
                   </li>
                 </ul>
+              </a>
+            </li>
+            <li class="rounded py-3 px-4" :class="{'bg-primary-blue-2': $page.url === '/pesan'}">
+              <a href="#" class="d-flex justify-content-between text-decoration-none text-neutral-black">
+                <div class="d-flex align-items-center gap-2">
+                  <img src="../assets/icons/icon_pesan_dashboard.png" alt="icon pesan" class="img-fluid">Pesan
+                </div>
+                <div class="bg-primary-blue-6 text-neutral-white fw-normal py-2 px-3 rounded">10</div>
               </a>
             </li>
           </ul>
@@ -118,7 +123,7 @@
 
 <script setup>
 import { Head, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,onUnmounted } from 'vue';
 import { computed } from 'vue';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { Inertia } from "@inertiajs/inertia";
@@ -136,6 +141,10 @@ const props = defineProps({
   title: {
     type: String,
     default: 'Berikan judul disini'
+  },
+  state:{
+    type:String,
+    default:'berikan judul'
   }
 });
 
@@ -148,14 +157,16 @@ const toggleHamburgerMenu = () => {
   iconHamburgerMenuType.value = isHamburgerMenuActive.value ? 'fa-solid fa-ellipsis-vertical' : 'fa-solid fa-ellipsis';
 }
 
+let intervalId;
 onMounted(() => {
-  const { url } = usePage();
 
+  const { url } = usePage();
+  console.log(usePage().props.value.auth.user);
   if (url.value == '/admin/dashboard/pengguna/umkm' || url.value == '/admin/dashboard/pengguna/admin') {
     isMenuPenggunaActive.value = true;
   };
 
-  setInterval(()=>{
+intervalId =  setInterval(()=>{
     if(currentRotation.value == 0){
       currentRotation.value = 20
     }
@@ -165,6 +176,7 @@ onMounted(() => {
     document.getElementById('logo').style.transform = 'rotate('+currentRotation.value+'deg)';
   }, 1000);
 });
+onUnmounted(() => clearInterval(intervalId))
 const logout = () => {
   Inertia.post('/logout',{
     _token: usePage().props.csrf_token
@@ -176,23 +188,87 @@ const removePopup = () => {
 </script>
 
 <style scoped>
-
-.notification {
-  color: white;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
+.menu_toggle {
+  display: none;
+}
+.left_content {
+  padding: 1.5rem;
+}
+.left_content h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.left_content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.left_content ul li {
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: 300ms;
+}
+.left_content ul li:hover {
+  background-color: #E4F0F6;
+  transform: scale(1.010);
+}
+.left_content ul li:nth-child(5):hover {
+  background-color: transparent;
+}
+.left_content ul li a {
+  font-weight: 600;
+}
+.left_content ul.sub_menu {
+  padding-left: 1rem;
+  margin-left: 2rem;
+  border-left: 1px solid #D7E8F1;
+}
+.left_content .section_two {
+  margin-top: 4rem;
+}
+.left_content .section_two img {
+  transform: scale(1.3);
+}
+.left_content .section_two a {
+  font-weight: 600;
+}
+.right_content {
+  padding: 2rem
+}
+@media (max-width: 575.98px) {
+  .menu_toggle {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    border-radius: 50%;
+    z-index: 99;
+  }
+  .menu_toggle svg {
+    font-size: 1.5rem;
+  }
+  .left_content {
+    display: none;
+  }
+  .left_content.active {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
 }
 
-.notification:hover {
-}
 .close{
   border-width: 0px;
   background-color: white;
 }
-
-.modal {
+  .modal {
   position: fixed; /* Stay in place */
   padding-top: 100px; /* Location of the box */
   left: 0;
@@ -216,115 +292,12 @@ const removePopup = () => {
   text-align: center;
 }
 
-.notification .badge {
-  position: absolute;
-  top: -20px;
-  right: 110px;
-  padding: 10px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
-}
-.menu_toggle {
-  display: none;
-}
-
-.left_content {
-  padding: 1.5rem;
-}
-
-.left_content h2 {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.left_content ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.left_content ul li {
-  cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: 300ms;
-}
-
-.left_content ul li:hover {
-  background-color: #E4F0F6;
-  transform: scale(1.010);
-}
-
-.left_content ul li:nth-child(4):hover {
-  background-color: transparent;
-}
-
-.left_content ul li a {
-  font-weight: 600;
-}
-
-.left_content ul.sub_menu {
-  padding-left: 1rem;
-  margin-left: 2rem;
-  border-left: 1px solid #D7E8F1;
-}
-
-.left_content .section_two {
-  margin-top: 4rem;
-}
-
-.left_content .section_two img {
-  transform: scale(1.3);
-}
-
-.left_content .section_two a {
-  font-weight: 600;
-}
-
-.right_content {
-  padding: 2rem
-}
 
 @media (max-width: 575.98px) {
-  .menu_toggle {
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    border-radius: 50%;
-    z-index: 99;
-  }
-  .notification .badge {
-    right: 290px;
-  }
-
-  .menu_toggle svg {
-    font-size: 1.5rem;
-  }
-
-  .left_content {
-    display: none;
-  }
-
-  .left_content.active {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
-
-  @media (max-width: 575.98px) {
   .modal-content{
     margin-left: 3rem;
     margin-top: 5rem;
     width: 450px;
   }
-}
 }
 </style>

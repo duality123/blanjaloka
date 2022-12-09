@@ -33,6 +33,7 @@ import BaseLayout from '../../Layouts/Layout.vue'
 import { ref } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 export default{
+  
   data(){
     return{
       role : null

@@ -48,11 +48,19 @@ class FortifyServiceProvider extends ServiceProvider
                     return redirect('/profil/1');
                 }
             }
-            
-                else{
-                     return redirect('/admin/dashboard/');
+               elseif ($request->user()->Role->number == 3 ){
+                if ($request->user()->accepted == 1 ) {
+                    return redirect('/investor/dashboard/beranda/1');
                 }
-            }
+                else{
+                    return redirect('/profil/1');
+                }
+                }
+                
+                elseif($request->user()->Role->number == 1){
+                         return redirect('/admin/dashboard/');
+                    }
+                }
         });
 
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
@@ -106,7 +114,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         //reset
         Fortify::resetPasswordView(function (Request $request) {
-            return Inertia::render('Auth/Verification_success');
+            return Inertia::render('Auth/Change_password_via_reset_email',['request'=>$request->route('token')]);
         });
     }
 }

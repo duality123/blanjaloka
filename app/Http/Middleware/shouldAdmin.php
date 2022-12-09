@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Inertia\Inertia;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +19,12 @@ class shouldAdmin
     {
 
         if($request->user()->Role->number != 1){
-            return abort(403, 'Anda dilarang akses halaman ini !.');
+            return redirect('/');
+
 
         }
+      
+
         return $next($request);
     }
 }

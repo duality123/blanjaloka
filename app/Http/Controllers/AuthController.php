@@ -24,8 +24,11 @@ class AuthController extends Controller
             if($find_user->Role->number == 1){
                  return redirect()->intended('admin/dashboard/');
             }
-            else{
+            else if ($find_user->Role->number == 2){
                 return redirect()->intended('umkm/dashboard/');
+            }
+            else if ($find_user->Role->number == 3){
+                return redirect()->intended('investor/dashboard/');
             }
            
         }
@@ -46,9 +49,12 @@ class AuthController extends Controller
         if($user->Role->number == 1){
                  return redirect()->intended('admin/dashboard/');
             }
-        else{
+        elseif ($find_user->Role->number == 2){
                 return redirect()->intended('umkm/dashboard/');
-        }
+            }
+        elseif ($find_user->Role->number == 3){
+                return redirect()->intended('investor/dashboard/');
+            }
         
     }
     public function redirectToProvider($provider)

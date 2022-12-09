@@ -52,7 +52,6 @@
                     />
             </div>
             <h2><b>Reset kata sandi</b></h2>
-            <p>Masukkan email anda yang telah terdaftar di <span class="text-primary-blue-6">Blanjaloka</span> untuk mereset kata sandi.</p>
       </div>
       <div class="form-section">
          <form @submit.prevent="submit">
@@ -60,6 +59,15 @@
           <input type="email" class="form-control" v-model="form.email"
                                 id="email" placeholder="Masukkan email Anda">
           <small class="text-danger" v-if="form.errors.email">Email anda tidak sesuai !</small>
+            <label class="form-label text-neutral-gray-5">Password Baru</label>
+          <input type="password" class="form-control" v-model="form.password"
+                                id="email" placeholder="Masukkan password baru Anda">
+          <small class="text-danger" v-if="form.errors.password">Password anda tidak sesuai !</small>
+            <label class="form-label text-neutral-gray-5">Konfirmasi Password</label>
+          <input type="password" class="form-control" v-model="form.password_confirmation"
+                                id="email" placeholder="Ketikkan ulang password anda">
+          <small class="text-danger" v-if="form.errors.password_confirmation">Email anda tidak sesuai !</small>
+
           <button type="submit"
               class="btn btn-primary-blue-6 text-neutral-white mt-2" >Lanjutkan</button>
       </form>
@@ -116,9 +124,13 @@
 import { Link, useForm, usePage } from '@inertiajs/inertia-vue3'
 import { Inertia } from "@inertiajs/inertia";
 export default{
-setup(){
+setup(props){
  const form = useForm({
   email:null,
+  password:null,
+  password_confirmation:null,
+  token:props.request
+
 });
 
  return { form }
@@ -130,7 +142,7 @@ mounted(){
 
 methods:{
   submit(){
-    this.form.post('/forgot-password')
+    this.form.post('/reset-password')
   },
   removePopup(){
     this.$page.props.session.status = null
@@ -138,6 +150,10 @@ methods:{
 },
 components:{
     Link
+},
+
+props:{
+    request:String
 }
 
 }

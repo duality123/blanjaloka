@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class FinansialController extends Controller
 {
-    public function pertama(Request $request)
+    public function form_wizard(Request $request)
     {
         if(!$request->user()->produk->isProdukComplete()){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Kajian finansial Belum Dapat Diisi','desc'=>'Harap penuhi profil produk terlebih dahulu']);
         }
-        return Inertia::render('Profil/finansial/Pertama',['popup'=>false]);
+        return Inertia::render('Profil/UMKM/finansial/form_wizard');
     }
 
-    public function process_pertama(Request $request)
+    public function process_form_wizard(Request $request)
     { 
         $rules = [
             'capex' => 'required|max:200',
@@ -69,7 +69,7 @@ class FinansialController extends Controller
 
             }
         }
-        return redirect('umkm/dashboard/kajian_finansial/1');
+        return redirect('umkm/dashboard/kajian_finansial');
 
     }
 }

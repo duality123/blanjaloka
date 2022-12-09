@@ -31,11 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::created(function ($user) {
+            $user->role()->create([]);
             $user->profil()->create([]);
-            $user->usaha()->create([]);
-            $user->produk()->create([]);
-            $user->finansial()->create([]);
-            $user->role()->create(['number'=>2]);
         });
     }
 
@@ -44,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
        $maxData = DB::select("select count(*) as total from users where role = '$role'");
        $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
        //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select id,name,email,password from users where role = '$role' limit $offset,$limit");
+       $data['items'] = DB::select("select users.id,users.email,users.created_at,users.accepted,users.no_telepon from users where id in (select user_id from roles where number = $role) limit $offset,$limit");
        $data['paginate']['nums'] = [];
        $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
        $loopIndex = $index;
@@ -102,9 +99,6 @@ class User extends Authenticatable implements MustVerifyEmail
       return $data;
    } 
 
-    static function deleteUser($id){
-      DB::table('users')->where('id', '=', $id)->delete();
-    }
 
     public function profil(){
         return $this->hasOne(Profil::class);
@@ -131,6 +125,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function role(){
         return $this->hasOne(Role::class);
+    }
+    public function dokumenPerusahaan(){
+        return $this->hasOne(DokumenPerusahaan::class);
+    }
+    public function profilPerusahaan(){
+        return $this->hasOne(profilPerusahaan::class);
     }
 
     public function getPermissionArray()

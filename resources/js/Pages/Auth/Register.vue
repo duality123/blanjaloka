@@ -25,6 +25,21 @@
                         <small class="text-danger" v-if="form.errors.no_telepon">{{ form.errors.no_telepon
                         }}</small>
                     </div>
+                    <div class="mb-4">
+                    <label class="form-label text-neutral-gray-5">Anda adalah ?</label>
+                      <div class="form-check">
+                        <input  v-model="form.investor" class="form-check-input" type="checkbox" id="investor" :checked="isInvestor">
+                        <label class="form-check-label" for="investor">
+                          Investor
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input v-model="form.umkm" class="form-check-input" type="checkbox" id="umkm" :checked="isUMKM">
+                        <label  class="form-check-label" for="umkm">
+                          UMKM
+                        </label>
+                      </div>
+                      </div>
                     <div class="mb-4 position-relative">
                         <label for="kata_sandi" class="form-label text-neutral-gray-5">Kata Sandi</label>
                         <div class="position-relative">
@@ -65,7 +80,7 @@
 
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import { ref, computed,onMounted } from 'vue'
+import { ref, computed,watch,onMounted,onUnmounted } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 
 const isPasswordVisible = ref(false);
@@ -75,8 +90,41 @@ const passwordEyeType = ref('fa-solid fa-eye-slash');
 const form = useForm({
     email: '',
     password: '',
-    no_telepon: ''
+    no_telepon: '',
+    umkm:false,
+    investor:false
 });
+const isInvestor = ref(false);
+const isUMKM = ref(false);
+watch(() => form.umkm,
+  (newState,oldState) => {
+    if(newState == true){
+        form.investor = false; 
+        isUMKM.value = true
+        isInvestor.value = false
+    }
+    else{
+        form.investor = true;
+        isUMKM.value = false
+        isInvestor.value = true
+    }
+  }
+)
+
+watch(() => form.investor,
+  (newState,oldState) => {
+    if(newState == true){
+        form.umkm = false;
+        isUMKM.value = false
+        isInvestor.value = true
+    }
+    else{
+        form.umkm = true;
+        isUMKM.value = true
+        isInvestor.value = false
+    }
+  }
+)
 const changeHoverState = () => {
   hover.value = !hover.value;
 }
@@ -116,13 +164,13 @@ const makeAnimations = (e) =>{
             i+= multiple;
             document.getElementById('logo').style.marginLeft = i+'px';
 }
-
+let intervalId
 onMounted(()=>{
-    setInterval(()=>{
+  intervalId=  setInterval(()=>{
         makeAnimations(); 
   }, 100);
 })
-
+onUnmounted(() => clearInterval(intervalId))
 const handleSubmit = () => {
     form.post('/register');
 }

@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import BaseLayout from '../../../Layouts/LayoutInvestor.vue'
+import UmkmDashboardSidebar from '../../../Components/InvestorDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";
 export default{
@@ -29,10 +29,6 @@ export default{
     return{
       currentPage : window.location.pathname.split('/')[1],
     }
-  },
-  setup(){
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
   },
   components:{
     BaseLayout,
@@ -50,7 +46,7 @@ export default{
   width: 300px;
 }
 section{
-  margin-top: 20rem;
+  margin-top: 10rem;
 }
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;

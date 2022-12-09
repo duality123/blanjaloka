@@ -13,7 +13,6 @@ class UserController extends Controller
     {
 
         $data = User::fetchAndPaginate($role,$limit=10,$offset=$page);
-        //dd($data['items']);
         return Inertia::render('Dashboard/Pengguna/Index',['items'=>$data['items'],
                                                            'paginationNums'=>$data['paginate']['nums'],
                                                            'nextBlok'=>$data['paginate']['nextBlok'],
@@ -24,10 +23,10 @@ class UserController extends Controller
                                                            'last'=>$data['paginate']['last']],);
     }
 
-    public function delete(Request $request,$id){
-        $target = User::where('id','=',$id)->delete();
+    public function delete(Request $request){
+        $target = User::where('id','=',$request->post('id'))->delete();
         $request->session()->flash('success','User berhasil dihapus');
-        return redirect('admin/dashboard');
+        return back();
     }
 
 
@@ -61,17 +60,4 @@ class UserController extends Controller
         return redirect('admin/dashboard');
     }
 
-
-    public function role_selection(Request $request){
-        if($request->post('umkm')){
-            $request->user()->Role->number = 2;
-        }
-        else if($request->post('investor')){
-            $request->user()->Role->number = 3;
-        }
-        else{
-            return redirect('/role')
-        }
-        return redirect('/kebijakan_dan_privasi')
-    }
 }

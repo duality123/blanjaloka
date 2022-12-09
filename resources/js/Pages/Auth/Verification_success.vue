@@ -11,7 +11,7 @@
                 </div>
                 <p>Silahkan lanjutkan ke pengisian data anda.</p>
                 <div class="mt-5">
-                    <Link :href="`${redirect}`"
+                    <Link :href="`${redirect}`" v-if="redirect"
                         class="btn btn-primary-blue-6 text-neutral-white "
                         style="padding: 5px 60px"
                     >

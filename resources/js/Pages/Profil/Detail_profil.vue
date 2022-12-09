@@ -41,9 +41,15 @@
               <p><strong>Agama: </strong>{{data['agama']}}</p>
               <p><strong>Kewarganegaraan: </strong>{{data['kewarganegaraan']}}</p>
               <p><strong>Pengalaman kerja: </strong>{{data['pengalaman_kerja']}}</p>
-              <p><strong>Foto profil: </strong></p><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_profil']}`">
-               <p><strong>Foto KTP: </strong></p><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_ktp']}`">
-              <p><strong>Foto KTP: </strong></p><img class="mt-2 mb-2"  :src="`${this.$page.props.asset_url}/${data['foto_dengan_ktp']}`">
+              <p><strong>Foto profil: </strong></p>
+              <img v-if="data['foto_profil']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_profil']}`">
+              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+               <p><strong>Foto KTP: </strong></p>
+              <img v-if="data['foto_ktp']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_ktp']}`">
+              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+               <p><strong>Foto dengan KTP: </strong></p>
+              <img v-if="data['foto_dengan_ktp']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_dengan_ktp']}`">
+              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
           </section>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5 mb-4">Profil Usaha</h2>
@@ -112,7 +118,7 @@
               <p><strong>Manfaat nonfungsional: </strong>{{data['manfaat_nonfungsional']}}</p>
           </section>
              <section class="mb-5">
-            <h2 class="text-neutral-gray-5">Profil Diri</h2>
+            <h2 class="text-neutral-gray-5">Kajian Finansial</h2>
               <p><strong>CAPEX: </strong>{{data['capex']}}</p>
               <p><strong>OPEX: </strong>{{data['opex']}}, {{data['opex']}}</p>
               <p><strong>SWOT Faktor Eksternal: </strong>{{data['swot_faktor_eksternal']}}</p>
@@ -241,7 +247,7 @@ export default{
   padding: 20px;
 }
 img{
-  width: 300px;
+  max-width: 300px;
 }
 h1 {
   font-size: 2.1rem;

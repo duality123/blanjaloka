@@ -29,7 +29,8 @@ class Notifikasi extends Model
        $maxData = DB::select("select count(*) as total from notifikasi where user_id = '$user_id'");
        $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
        //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select id,nama,pesan,tanggal,redirect from notifikasi where user_id = '$user_id' order by tanggal desc limit $offset,$limit ");
+       $data['items'] = DB::select("select id,nama,pesan,tanggal,redirect from notifikasi where user_id = '$user_id' order by tanggal desc");
+       /*
        $data['paginate']['nums'] = [];
        $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
        $loopIndex = $index;
@@ -48,5 +49,9 @@ class Notifikasi extends Model
       // dd($data);
        return $data;
     }
+    */
+     return $data;
+
+}
 
 }

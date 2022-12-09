@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use App\Policies\AdminPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -18,8 +19,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
 
+
+
+
         'App\Models\Model' => 'App\Policies\AdminPolicy',
     ];
+
 
     /**
      * Register any authentication / authorization services.
@@ -28,6 +33,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Gate::define('visit-page', function ($condition) {
+            return $condition;
+        });
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
         return (new MailMessage)
             ->subject('Verifikasi Email Blanjaloka')

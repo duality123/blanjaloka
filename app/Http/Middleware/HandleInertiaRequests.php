@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Inertia\Inertia;
-
 use Illuminate\Support\Facades\DB;
 class HandleInertiaRequests extends Middleware
 {
@@ -45,23 +44,14 @@ class HandleInertiaRequests extends Middleware
                 'success'   => fn () => $request->session()->get('success'),
                 'error'        => fn () => $request->session()->get('error'),
             ],
-            //user authenticated
-            'auth' => [
-                'user'          => $request->user(),
-                // 'permissions'   => $request->user() ? $request->user()->getPermissionArray() : []
-                'profileComplete' => $request->user() ? $request->user()->profil->isProfileComplete():null,
-                'usahaComplete' => $request->user() ? $request->user()->usaha->isUsahaComplete():null,
-                'produkComplete' => $request->user() ? $request->user()->produk->isProdukComplete():null,
-                'finansialComplete' => $request->user() ? $request->user()->finansial->isFinansialComplete():null,
-                'profil' =>$request->user() ? $request->user()->profil->profilList():null,
-                'usaha' => $request->user() ? $request->user()->usaha->usahaList():null,
-                'produk' => $request->user() ? $request->user()->produk->produkList():null,
-                'inkubasi' => $request->user() ? $request->user()->inkubasi():null,
-                'finansial' => $request->user() ? $request->user()->finansial->finansialList():null,
-                
+          
+           'auth' => [
+                'user' => $request->user(),
+                'user_role'=>$request->user()?$request->user()->Role->number:null,        
+                'profil' => $request->user()?($request->user()->Role->number != 1 ?$request->user()->profil->profilList():null):null,
+                'profileComplete'=> $request->user()?($request->user()->Role->number != 1 ?$request->user()->profil->isProfileComplete():null):null,
             ],
             'asset_url' => '/storage', 
-            'isEmailSend'=> $request->session()->get('redirect')? true:false,
             //route
             'route' => function () use ($request) {
                 return [
