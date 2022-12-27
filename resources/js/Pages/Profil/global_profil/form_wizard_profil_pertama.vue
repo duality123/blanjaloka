@@ -80,6 +80,7 @@ export default{
   },
   mounted(){
     this.form.foto_profil = this.$page.props.auth.profil['foto_profil']
+    console.log( this.form.foto_profil);
   },
   methods:{
     changePicture(event){

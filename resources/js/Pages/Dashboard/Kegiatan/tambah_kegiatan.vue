@@ -65,6 +65,12 @@
                 :options="investor" v-model="form.nama_investor" />
                <small class="text-danger text-center" v-if="form.errors.nama_investor">{{form.errors.nama_investor}}</small>
             </div>
+             <div class="mb-4">
+              <label for="nama_umkm" class="form-label text-neutral-gray-5">Nama UMKM</label>
+              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
+                :options="umkm" v-model="form.nama_umkm" />
+               <small class="text-danger text-center" v-if="form.errors.nama_umkm">{{form.errors.nama_umkm}}</small>
+            </div>
           </section>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5 mb-4">Bagian 3</h2>
@@ -154,6 +160,7 @@ const form = useForm({
   berakhir:null,
   nama_juri:null,
   nama_investor:null,
+  nama_umkm:null,
   gambar:null
 });
 
@@ -189,7 +196,8 @@ const ubahGambar = (event) => {
     }
 
 const props = defineProps({
-  investor:Array
+  investor:Array,
+  umkm:Array
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';

@@ -59,12 +59,6 @@ const removePopup = () => {
 </script>
 
 <style>
-.left_content {
-  background-image: url('../assets/images/auth_left_img.png');
-  background-position: center;
-  background-size: cover;
-}
-
 h1 {
   font-size: 24px;
   font-weight: 600;

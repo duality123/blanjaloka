@@ -95,7 +95,7 @@ const ubahGambar = (event) => {
               form.errors.gambar = "Size foto anda lebih dari 5MB !" 
               return
             }
-        var image = document.getElementById('img');
+        var image = document.getElementById('foto1');
         image.src = URL.createObjectURL(event.target.files[0]);
         image.style.width = '10rem';
         image.style.overflow = 'hidden';

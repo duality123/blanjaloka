@@ -32,18 +32,16 @@ class ProfilController extends Controller
     //POST section / insert the data.
 
     public function process_wizard_profil_pertama(Request $request)
-    {
-        $update =[];
-        $profil =  Profil::where('user_id','=',$request->user()->id);
-        $old_profil = DB::table('profil')->select('foto_profil')->where('user_id','=',$request->user()->id)->first();
-        if ($request->file('foto_profil') && $old_profil->foto_profil != null) {
-            Storage::delete($old_profil->foto_profil);
-            $update['foto_profil'] = $request->file('foto_profil')->store('umkm/foto_profil','public') ;  
-        } 
-        elseif($request->file('foto_profil')){
-            $update['foto_profil'] = $request->file('foto_profil')->store('umkm/foto_profil','public') ;  
-        }   
-        $profil->update($update);
+    { 
+
+        $update ='';
+        $profil =  Profil::where('user_id',$request->user()->id);
+        if ($request->file('foto_profil')) {
+
+            $update = $request->file('foto_profil')->store('umkm/foto_profil','public') ; 
+               
+        }  
+        $profil->update(['foto_profil' => $update]);
         return redirect('profil/2');
     }
 
@@ -58,7 +56,7 @@ class ProfilController extends Controller
         $kecamatan =$request->post('kecamatan');
         $kabupaten =$request->post('kabupaten');
         $provinsi = $request->post('provinsi');
-        $no_hp = $request->post('provinsi');
+        $no_hp = $request->post('no_hp');
         $kewarganegaraan = $request->post('kewarganegaraan');
         $status = $request->post('status');
         $agama = $request->post('agama');
@@ -95,27 +93,16 @@ class ProfilController extends Controller
 
     }
     public function process_wizard_profil_ketiga(Request $request)
-    {
+    { 
         $update = [];
-        $profil =  Profil::where('user_id','=',$request->user()->id);
-        $old_profil = DB::table('profil')->select('foto_ktp','foto_dengan_ktp')->where('user_id','=',$request->user()->id)->first();
-        if ($request->file('foto_ktp') && $old_profil->foto_ktp!=null) {
-           Storage::delete($old_profil->foto_ktp);
-           $update['foto_ktp'] = $request->file('foto_ktp')->store('umkm/foto_ktp','public') ; 
+        if ( $request->file('foto_ktp')) {
+             $update['foto_ktp'] = $request->file('foto_ktp')->store('umkm/foto_ktp','public') ; 
+
         }
-        elseif($request->file('foto_ktp') ){
-            $update['foto_ktp'] = $request->file('foto_ktp')->store('umkm/foto_ktp','public') ; 
-        }
-        if ($request->file('foto_selfie_ktp') && $old_profil->foto_dengan_ktp!=null){
-            Storage::delete($old_profil->foto_dengan_ktp);
-            $update['foto_dengan_ktp'] = $request->file('foto_selfie_ktp')->store('umkm/foto_selfie_ktp','public') ; 
-        }
-        elseif($request->file('foto_selfie_ktp') ){
-            $update['foto_dengan_ktp'] = $request->file('foto_selfie_ktp')->store('umkm/foto_selfie_ktp','public') ; 
-        }
-       
-        
-        $profil->update($update);
+        if ($request->file('foto_selfie_ktp')) {
+            $update['foto_dengan_ktp'] = $request->file('foto_selfie_ktp')->store('umkm/foto_selfie_ktp','public') ;
+        };       
+        $profil =  Profil::where('user_id','=',$request->user()->id)->update($update);
         $redirect = '';
         if ($request->user()->Role->number == 2) {
             $redirect = '/umkm/dashboard/profil_usaha/';
@@ -126,8 +113,9 @@ class ProfilController extends Controller
         return redirect($redirect);
 
     }
-    public function detailUMKM(Request $request,$role,$slug)
+    public function detailUMKM(Request $request,$slug)
     {
+        /*
      $data = DB::table('profil')
                 ->join('usaha', 'profil.user_id' , '=', 'usaha.user_id')
                 ->join('produk', 'profil.user_id' , '=', 'produk.user_id')
@@ -136,8 +124,9 @@ class ProfilController extends Controller
                 ->select('profil.nama_lengkap', 'profil.tempat_kelahiran', 'profil.tanggal_lahir','profil.alamat','profil.pendidikan_terakhir','profil.kelurahan','roles.number','profil.kecamatan','profil.kabupaten','profil.provinsi','profil.no_hp','profil.kewarganegaraan','profil.status','profil.agama','profil.pengalaman_kerja','profil.foto_profil','profil.foto_ktp','profil.foto_dengan_ktp','usaha.nama_perusahaan','usaha.status_perusahaan','usaha.legalitas','usaha.dokumen_amdal','usaha.informasi_pajak','usaha.alamat_perusahaan','usaha.npwp','usaha.deskripsi_usaha','usaha.email_perusahaan','produk.jenis_produk','produk.jumlah_produk_yang_dijual','produk.bahan_produk','produk.harga_produk','produk.kategori_produk','produk.keterangan_halal','produk.manfaat_fungsional','produk.manfaat_nonfungsional','kajian_finansial.capex','kajian_finansial.opex','kajian_finansial.swot_faktor_internal','kajian_finansial.swot_faktor_eksternal','kajian_finansial.payback_period','kajian_finansial.key_activity','kajian_finansial.key_partners','kajian_finansial.value_propotions','kajian_finansial.customer_relationship','kajian_finansial.channels','kajian_finansial.cost_structure','kajian_finansial.revenue_streams')
                 ->where('profil.user_id','=',$slug)
                 ->first(); 
+        */
 
-      // $data = User::with('profil')->where('id','=',$slug)->first();
+        $data = User::with('profil','produk','finansial','usaha','roles')->where('id','=',$slug)->first();
        //dd($data);
         DB::table('notifikasi')->where('redirect','=',$slug)->delete();
         return Inertia::render('Profil/Detail_profil',['data'=>$data,'id'=>$slug]);

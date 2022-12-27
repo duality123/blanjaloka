@@ -1,6 +1,6 @@
 <template>
         <Layout state="elearning" :title = "elearning.judul" :link="elearning.kegiatan_id">
-                    <h1>{{elearning.judul}}</h1>
+                    
                                 
                                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
                                     <ol class="breadcrumb">
@@ -12,14 +12,14 @@
                                 
                                 <h6>Deskripsi</h6>
                                 <p class="mb-5">
-                                   {{elearning.deskripsi}}
+                                   {{elearning.deskrips}}
                                 </p>
                                 
                                 <div class="bab-materi">
                                     
-                                    <a href="#" class="d-flex mb-5 card-kegiatan" v-for="bab in babs">
-                                        <span class="number rounded-circle mx-4 p-3">1</span>
-                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/detail/${elearning.id}/${bab.id}`">{{bab.judul}}</Link></span> 
+                                    <a href="#" class="d-flex mb-5 card-kegiatan" v-for="(bab,no) in babs">
+                                        <span class="number rounded-circle mx-4 p-3">{{++no}}</span>
+                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/detail/${elearning.id}/${no}`">{{bab.judul}}</Link></span> 
                                         <span class="ms-auto p-3"> > </span>
                                     </a>
 

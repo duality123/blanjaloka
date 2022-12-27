@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-             <tr v-for="(index,no) in items">
+             <tr v-for="(index,no) in items.data">
               <th scope="row">{{++no}}</th>
               <td><Link :href="`/admin/dashboard/kegiatan/${index.id}/detail`">{{index.tema}}</Link></td>
                <td>{{index.id}}</td>
@@ -54,35 +54,7 @@
         </table>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
+      <Pagination :links="items.links"/>
       </div>
     </section>
   </DashboardLayout>
@@ -92,6 +64,7 @@
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import RemoveKegiatanLayout from '../../../Components/RemoveItem.vue';
+import Pagination from '../../../Components/Pagination.vue';
 export default{
     data(){
         return{
@@ -114,7 +87,7 @@ export default{
     return {form}
   },
     props:{
-      items : Array,
+      items :Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,
@@ -126,7 +99,8 @@ export default{
     components: {
       DashboardLayout,
       Link,
-      RemoveKegiatanLayout
+      RemoveKegiatanLayout,
+      Pagination
     },
     methods:{
        switchClose(kegiatan_id=null){

@@ -79,7 +79,7 @@ const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/elearning/edit')
+  form.post('/admin/dashboard/kegiatan/tambah_bab/baru')
 }
 
 const props = defineProps({

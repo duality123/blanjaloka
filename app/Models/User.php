@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Profil;
 use App\Models\Usaha;
 use App\Models\Produk;
-use App\Models\Finansial;
+use App\Models\Kegiatan;
 use App\Models\Role;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -32,7 +33,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
         static::created(function ($user) {
             $user->role()->create([]);
-            $user->profil()->create([]);
         });
     }
 
@@ -88,17 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
   
-   public function umkm(){
-      $data = DB::table('profil')
-                ->join('usaha', 'profil.user_id' , '=', 'usaha.user_id')
-                ->join('produk', 'profil.user_id' , '=', 'produk.user_id')
-                ->join('kajian_finansial', 'profil.user_id' , '=', 'kajian_finansial.user_id')
-                ->select('profil.nama_lengkap', 'profil.tempat_kelahiran', 'profil.tanggal_lahir','profil.alamat','profil.pendidikan_terakhir','profil.kelurahan','profil.kecamatan','profil.kabupaten','profil.provinsi','profil.no_hp','profil.kewarganegaraan','profil.status','profil.agama','profil.pengalaman_kerja','profil.foto_profil','profil.foto_ktp','profil.foto_dengan_ktp','usaha.nama_perusahaan','usaha.status_perusahaan','usaha.legalitas','usaha.dokumen_amdal','usaha.informasi_pajak','usaha.alamat_perusahaan','usaha.npwp','usaha.deskripsi_usaha','usaha.email_perusahaan','produk.jenis_produk','produk.jumlah_produk_yang_dijual','produk.bahan_produk','produk.harga_produk','produk.keterangan_halal','produk.manfaat_fungsional','produk.manfaat_nonfungsional','kajian_finansial.capex','kajian_finansial.opex','kajian_finansial.swot_faktor_internal','kajian_finansial.swot_faktor_eksternal','kajian_finansial.payback_period','kajian_finansial.key_activity','kajian_finansial.value_propotions','kajian_finansial.customer_relationship','kajian_finansial.channels','kajian_finansial.cost_structure','kajian_finansial.revenue_streams')
-                ->where('profil.user_id','=',$this->id)
-                ->first(); 
-      return $data;
-   } 
-
+  
 
     public function profil(){
         return $this->hasOne(Profil::class);
@@ -114,6 +104,14 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+
+   public function kegiatanumkm(){
+            return $this->belongsToMany(Kegiatan::class,'kegiatan_umkm','umkm_id','kegiatan_id');
+    }
+   public function kegiataninvestor(){
+            return $this->belongsToMany(Kegiatan::class,'kegiatan_investor','investor_id','kegiatan_id');
+   }
+
     public function produk(){
         return $this->hasOne(Produk::class);
     }
@@ -124,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Finansial::class);
     }
     public function role(){
-        return $this->hasOne(Role::class);
+        return $this->hasOne(Role::class,'user_id');
     }
     public function dokumenPerusahaan(){
         return $this->hasOne(DokumenPerusahaan::class);

@@ -32,7 +32,7 @@ export default{
   },
   props:{
     sessionCondition:Boolean
-  }
+  },
 }
 </script>
 <style scoped>

@@ -53,6 +53,58 @@
 </div>
     </div>
   </div>
+  <!---new logbokk -->
+    <div id="myModal"  class="modal"  v-if="this.popupNewLogbook">
+
+    <div  id="myModal" class="modal" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "togglePopNewLogbook()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="col-lg-12">
+      <div class=" d-flex justify-content-center">
+      <h2>Kirim Laporan</h2>
+    </div>
+    <div class="mt-2">
+      <form @submit.prevent="submitNewLogbook()">
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Berikan laporan anda ?</label>
+         <input type="text" class="form-control" v-model="form.deskripsi" id="provinsi" placeholder="Masukkan laporan anda" >
+           <small class="text-danger" v-if="form.errors.deskripsi">{{ form.errors.deskripsi }}</small>
+      </div>
+       <div class="mb-4">
+              <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
+          <div class="card text-white bg-neutral-gray-1 mb-3 " >
+                <div  class="d-flex justify-content-center pt-3 mb-4" >
+                   <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
+                </div>
+    
+                <div class="row" style="margin-left:2px;" >
+                <div class="col d-flex justify-content-start"  >
+                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 9rem;">
+                </div >
+                <div class="col d-flex justify-content-center">
+                <p class="text-primary" style="padding-right: 6px;">atau</p>
+                </div>
+                  <div class="col d-flex justify-content-end" >
+                <input type="file" class="custom-file-input2" style="width: 9rem;">
+                </div>
+                </div>
+                 <small class="text-danger text-center" v-if="form.errors.gambar">{{form.errors.gambar}}</small>
+                <div class="text-neutral-gray-3 text-center"><p class="fs-9">Format file .jpg/.jpeg/.png, ukuran file maksimal 5 MB</p></div>
+            </div>
+          </div>
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+</div>
+    </div>
+  </div>
 
                   <Layout :title="kegiatan.tema" state="logbook" :link = "kegiatan.id">
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
@@ -70,6 +122,9 @@
                     <h2 class="text-neutral-gray-5 m-0 me-auto">Daftar Laporan Mingguan</h2>
                   <button href="#" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
                         Unggah Laporan Akhir
+                    </button> 
+                   <button @click="togglePopNewLogbook()" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
+                        Unggah Logbook
                     </button> 
                 </div>
                 <div class="table-responsive">
@@ -127,14 +182,15 @@ export default{
   data(){
     return{
       popup:false,
-      previewImage:null
+      previewImage:null,
+      popupNewLogbook:false
     }
   },
   setup(){
     const form = useForm({
      id:null,
      gambar:null,
-     deskripsi:null,
+     deskripsi:'',
      kegiatan_id : document.location.pathname.split('/')[5]
     })
 
@@ -156,7 +212,16 @@ export default{
       }
 
       this.popup=false;
-      this.form.post('/umkm/dashboard/kegiatanku/tambah_logbook')
+      this.form.post('/umkm/dashboard/kegiatanku/edit_logbook')
+
+    },
+    submitNewLogbook(){
+      if (this.form.gambar == null) {
+        this.form.errors.gambar = 'Gambar tak boleh kosong' 
+      }
+
+      this.popupNewLogbook=false;
+      this.form.post('/umkm/dashboard/kegiatanku/buat_logbook')
 
     },
     popupExit(id,gambar=null,deskripsi=null){
@@ -164,6 +229,11 @@ export default{
         this.form.deskripsi = deskripsi,
         this.form.id= id 
         this.popup = !this.popup
+    },
+    togglePopNewLogbook(){
+      this.popupNewLogbook = !this.popupNewLogbook
+      this.form.gambar =null
+      this.form.deskripsi =''
     },
 
     ubahGambar(event){

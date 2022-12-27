@@ -13,14 +13,14 @@
                     <li :class="[state=='deskripsi'?'active':'']">
                     <Link :class="[state=='deskripsi'?'active':'']" :href="`/umkm/dashboard/kegiatanku/detail/${link}`">Deskripsi</Link>                 </li>
                     <li :class="[state=='elearning'?'active':'']" >
-                       <Link :class="[state=='elearning'?'active':'']" :href="`/umkm/dashboard/kegiatanku/${link}/elearning/1`">Elearning</Link>
+                       <Link :class="[state=='elearning'?'active':'']" :href="`/umkm/dashboard/kegiatanku/${link}/elearning?page=1`">Elearning</Link>
                     </li>
                     <li :class="[state=='eventual'?'active':'']"  >
                         <Link :class="[state=='eventual'?'active':'']" :href="`/umkm/dashboard/kegiatanku/eventual/${link}`">Eventual</Link>
                     </li>
                     <li :class="[state=='logbook'?'active':'']" >
                          <Link :class="[state=='logbook'?'active':'']" :href="`/umkm/dashboard/kegiatanku/logbook/${link}`">Logbook</Link>
-                    </li>
+                    </li> 
 
 
                 </ul>

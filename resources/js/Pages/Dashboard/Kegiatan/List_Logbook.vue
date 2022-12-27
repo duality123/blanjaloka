@@ -73,7 +73,7 @@ export default{
       }
     },
     props:{
-      items : Array,
+      items : Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,

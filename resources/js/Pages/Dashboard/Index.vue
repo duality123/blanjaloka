@@ -43,7 +43,7 @@
 
 <script setup>
 import DashboardLayout from '../../Layouts/Dashboard.vue';
-import { ref,computed,onMounted } from 'vue';
+import { ref,computed,onMounted,onUnmounted } from 'vue';
 import {usePage} from  '@inertiajs/inertia-vue3';
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
@@ -62,9 +62,9 @@ let tahun= '0';
 let tanggal = '0';
 let detik ='0';
 let menit = '0';
-
+let intervalId;
 onMounted(()=> {
-  setInterval(()=>{
+  intervalId = setInterval(()=>{
     const date = new Date();
     hari = day[date.getDay()];
     bulan = month[date.getMonth()];
@@ -77,7 +77,7 @@ onMounted(()=> {
     document.getElementById('waktuDisplay').innerHTML = hari +', '+ tanggal  + ' ' + bulan + ' ' + tahun + ' ' + jam + ':' + menit + ':'+ detik+' '+status;
   }, 1000);
 })
-
+onUnmounted(() => clearInterval(intervalId))
 const removePopup = () => {
   usePage().props.session.success = false;
 }

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/LayoutInvestor.vue'
+import BaseLayout from '../../../Layouts/Layout.vue'
 import UmkmDashboardSidebar from '../../../Components/InvestorDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";

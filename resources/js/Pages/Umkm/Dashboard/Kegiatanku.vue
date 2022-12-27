@@ -3,19 +3,19 @@
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
-          <UmkmDashboardSidebar />
+          <UmkmDashboardSidebar section="kegiatan" />
           <div class="col-lg-8">
             <div class="card">
               <div class="card-body">
                 <h1>Kegiatanku</h1>
                 <div class="row">
-                  <div class="col-lg-5" v-for="item in items">
+                  <div class="col-lg-5" v-for="item in items.data">
                     <div class="card card_kegiatan">
                       <div class="card-body">
                       
                         <div class="position-relative overflow-hidden rounded">
                           <img :src="`${$page.props.asset_url}/${item.gambar}`" alt="kegiatanku image"
-                            class="img-fluid w-100" />
+                            class="img-fluid w-100 " />
                           <div v-if="new Date(item.berakhir.split(' ')[0]) > this.now" class="bg-semantic-success-1 text-semantic-success-4 status">Sedang Berlangsung</div>
                            <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Selesai</div>
                         </div>
@@ -30,37 +30,9 @@
                   </div>          
               </div>
                 <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/umkm/dashboard/kegiatanku/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/umkm/dashboard/kegiatanku/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/umkm/dashboard/kegiatanku/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/umkm/dashboard/kegiatanku/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/umkm/dashboard/kegiatanku/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/umkm/dashboard/kegiatanku/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/umkm/dashboard/kegiatanku/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
-      </div>
+              <Pagination :links="items.links"/>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -71,6 +43,7 @@
 <script>
 import BaseLayout from '../../../Layouts/Layout.vue'
 import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
+import Pagination from '../../../Components/Pagination.vue'
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 export default{
@@ -81,7 +54,7 @@ export default{
     }
   },
   props:{
-     items : Array,
+     items :Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,
@@ -101,7 +74,8 @@ export default{
   components:{
     BaseLayout,
     Link,
-    UmkmDashboardSidebar
+    UmkmDashboardSidebar,
+    Pagination
   },
   methods:{
      redirect(data){

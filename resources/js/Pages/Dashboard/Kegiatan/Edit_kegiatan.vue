@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout title="Tambah Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Tambah Kegiatan</h1>
+      <h1 class="text-neutral-gray-5 mb-0">Edit Kegiatan</h1>
     </div>
     <div class="d-flex mt-4">
       <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
@@ -58,6 +58,11 @@
               <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
               <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
                 :options="investor" v-model="form.nama_investor" />
+            </div>
+            <div class="mb-4">
+              <label for="nama_investor" class="form-label text-neutral-gray-5">Nama UMKM</label>
+              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
+                :options="umkm" v-model="form.nama_umkm" />
             </div>
           </section>
           <section class="mb-5">
@@ -117,7 +122,7 @@
             </div>
           </section>
           <div class="form-check">
-  <input class="form-check-input" type="checkbox" v-model="form.draft" id="flexCheckDefault" checked="checked">
+  <input class="form-check-input" type="checkbox" v-model="form.draft" id="flexCheckDefault" :checked="checked">
   <label class="form-check-label" for="flexCheckDefault">
     Aktif
   </label>
@@ -134,7 +139,7 @@
 <script setup>
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
-import { ref } from 'vue';
+import { ref, computed,onMounted,onUnmounted } from 'vue'
 const form = useForm({
   id: window.location.pathname.split('/')[4],
   tema: props.kegiatan.tema,
@@ -150,10 +155,17 @@ const form = useForm({
   berakhir:props.kegiatan.berakhir,
   nama_juri:props.kegiatan.nama_juri,
   nama_investor:props.oldInvestor,
+  nama_umkm:props.oldUmkm,
   gambar:props.kegiatan.gambar
 });
 
-
+const checked = ref(false)
+onMounted(()=>{
+ if (form.draft) {
+  checked.value=true
+ }
+})
+ 
 const refDeskripsikegiatan = ref(null);
 const refJumlahPartisipan = ref(null);
 const refMasaInkubasi = ref(null);
@@ -187,7 +199,9 @@ const ubahGambar = (event) => {
 const props = defineProps({
   investor:Array,
   kegiatan:Object,
-  oldInvestor:Array
+  oldInvestor:Array,
+  umkm:Array,
+  oldUmkm:Array
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';

@@ -1,14 +1,58 @@
 <template>
   <RemoveUserLayout pesan="Anda yakin ingin menghapus user ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/pengguna/hapus_user" @toggleClose="switchClose()" />
+
+   <div class="col-lg-8">
+
+              <div id="myModal" class="modal" v-if="ubahPassword" >
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "closePopup()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="col-lg-12">
+       <div class=" d-flex justify-content-center">
+       <h2>Edit Eventual</h2>
+     </div>
+           <div class="mt-2">
+      <form @submit.prevent="submit()">
+         <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Jadwal</label>
+         <input type="date" class="form-control" v-model="form.jadwal"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Link Meeting</label>
+         <input type="text" class="form-control" v-model="form.link_meeting" id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+        <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5 mb-3 mb-2" >Status: </label>
+              <select v-model="form.status" id="provinsi">
+                <option value="0">Menunggu</option>
+                <option value="1">Disetujui</option>
+                <option value="2">Selesai</option>              
+              </select>
+           <small class="text-danger"></small>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
   <DashboardLayout title="User Management" state="pengguna">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Pengguna</h1>
     </div>
     <ul class="tabs mt-4">
-      <li v-for="item in tabItems" :class="[item == this.currentTabItem ? 'active':'']" >
-        <Link href="/admin/dashboard/pengguna/1/1" v-if="item == 1" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Admin</Link>
-        <Link href="/admin/dashboard/pengguna/2/1" v-else-if="item == 2" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">UMKM</Link>
-        <Link href="/admin/dashboard/pengguna/3/1" v-else :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Investor</Link>
+      <li v-for="item in tabItems.data" :class="[item == this.currentTabItem ? 'active':'']" >
+        <Link href="/admin/dashboard/pengguna/1?page=1" v-if="item == 1" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Admin</Link>
+        <Link href="/admin/dashboard/pengguna/2?page=1" v-else-if="item == 2" :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">UMKM</Link>
+        <Link href="/admin/dashboard/pengguna/3?page=1" v-else :class="[item == this.currentTabItem ?'text-neutral-black': 'text-neutral-gray-4']">Investor</Link>
       </li>
     </ul>
     <section>
@@ -28,7 +72,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item,index) in items">
+            <tr v-for="(item,index) in items.data">
               <th scope="row">{{ ++index}}</th>
               <td v-if="item.accepted"><a  class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">Sudah di acc</a></td>
               <td v-else><a class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">Belum di acc</a></td>
@@ -54,35 +98,7 @@
         </table>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
+       <Pagination :links = "items.links"/>
       </div>
     </section>
   </DashboardLayout>
@@ -92,6 +108,7 @@
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import RemoveUserLayout from '../../../Components/RemoveItem.vue';
+import Pagination from '../../../Components/Pagination.vue';
 export default{
     data(){
         return{
@@ -104,7 +121,7 @@ export default{
       }
     },
     props:{
-      items : Array,
+      items : Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,
@@ -129,7 +146,8 @@ export default{
     components: {
       DashboardLayout,
       Link,
-      RemoveUserLayout
+      RemoveUserLayout,
+      Pagination
     },
 
 }

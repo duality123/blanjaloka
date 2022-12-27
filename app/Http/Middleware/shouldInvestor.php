@@ -22,6 +22,7 @@ class shouldInvestor
             return redirect('/');
 
         }
+        /*
         Inertia::share('auth', function(Request $request){
             $data = [];
             $data['user'] = $request->user();
@@ -38,5 +39,6 @@ class shouldInvestor
             return $data;
         });
         return $next($request);
+        */
     }
 }

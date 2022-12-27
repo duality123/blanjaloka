@@ -9,18 +9,15 @@ use App\Models\Notifikasi;
 use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
-    public function all(Request $request,$role,$page)
+    public function all(Request $request,$role)
     {
-
-        $data = User::fetchAndPaginate($role,$limit=10,$offset=$page);
-        return Inertia::render('Dashboard/Pengguna/Index',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last']],);
+        $datas = DB::table('roles')->select('user_id')->where('number','=',$role)->get();
+        $data_user_id = [];
+        foreach ($datas as $dat) {
+            $data_user_id [] = $dat->user_id;
+        }
+        $data = User::whereIn('id',$data_user_id)->paginate(10);
+        return Inertia::render('Dashboard/Pengguna/Index',['items'=>$data]);
     }
 
     public function delete(Request $request){

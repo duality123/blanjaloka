@@ -9,14 +9,15 @@
                       <Link :href="`/admin/dashboard/kegiatan/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Deskripsi</Link>
                     </li>
                    <li :class="[section=='elearning'?'active':'']">
-                      <Link :class="[section=='elearning'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/elearning/1`">Elearning</Link>
+                      <Link :class="[section=='elearning'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/elearning?page=1`">Elearning</Link>
                     </li>
                     <li :class="[section=='eventual'?'active':'']">
-                        <Link :class="[section=='eventual'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/eventual/1`" >Eventual</Link>
+                        <Link :class="[section=='eventual'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/eventual?page=1`" >Eventual</Link>
                     </li>
                     <li :class="[section=='logbook'?'active':'']">
-                        <Link :class="[section=='logbook'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/logbook/1`">Logbook</Link>
-                    </li>
+                        <Link :class="[section=='logbook'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/logbook?page=1`">Logbook</Link>
+                    </li> 
+                  
       </ul>
           <section>
             <slot/>

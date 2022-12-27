@@ -28,35 +28,34 @@
     </div>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5">Profil Diri</h2>
-              <p><strong>Nama Lengkap: </strong>{{data['nama_lengkap']}}</p>
-              <p><strong>Tempat/tanggal lahir: </strong>{{data['tempat_kelahiran']}}, {{data['tanggal_lahir']}}</p>
-              <p><strong>Alamat: </strong>{{data['alamat']}}</p>
-              <p><strong>Kelurahan: </strong>{{data['kelurahan']}}</p>
-              <p><strong>Kecamatan: </strong>{{data['kecamatan']}}</p>
-              <p><strong>Kabupaten: </strong>{{data['kabupaten']}}</p>
-              <p><strong>Provinsi: </strong>{{data['provinsi']}}</p>
-              <p><strong>Pendidikan terakhir: </strong>{{data['pendidikan_terakhir']}}</p>
-              <p><strong>No handphone: </strong>{{data['no_hp']}}</p>
-              <p><strong>Status: </strong>{{data['status']}}</p>
-              <p><strong>Agama: </strong>{{data['agama']}}</p>
-              <p><strong>Kewarganegaraan: </strong>{{data['kewarganegaraan']}}</p>
-              <p><strong>Pengalaman kerja: </strong>{{data['pengalaman_kerja']}}</p>
+              <p><strong>Nama Lengkap: </strong>{{data.profil.nama_lengkap}}</p>
+              <p><strong>Tempat/tanggal lahir: </strong>{{data.profil.tempat_kelahiran}}, {{data.profil.tanggal_lahir}}</p>
+              <p><strong>Alamat: </strong>{{data.profil.alamat}}</p>
+              <p><strong>Kelurahan: </strong>{{data.profil.kelurahan}}</p>
+              <p><strong>Kecamatan: </strong>{{data.profil.kecamatan}}</p>
+              <p><strong>Kabupaten: </strong>{{data.profil.kabupaten}}</p>
+              <p><strong>Provinsi: </strong>{{data.profil.provinsi}}</p>
+              <p><strong>Pendidikan terakhir: </strong>{{data.profil.pendidikan_terakhir}}</p>
+              <p><strong>No handphone: </strong>{{data.profil.no_hp}}</p>
+              <p><strong>Status: </strong>{{data.profil.status}}</p>
+              <p><strong>Agama: </strong>{{data.profil.agama}}</p>
+              <p><strong>Kewarganegaraan: </strong>{{data.profil.kewarganegaraan}}</p>
+              <p><strong>Pengalaman kerja: </strong>{{data.profil.pengalaman_kerja}}</p>
               <p><strong>Foto profil: </strong></p>
-              <img v-if="data['foto_profil']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_profil']}`">
-              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+              <img v-if="data.profil.foto_profil" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_profil}`">
+              <img  v-else-if="!data.profil.foto_profil" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
                <p><strong>Foto KTP: </strong></p>
-              <img v-if="data['foto_ktp']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_ktp']}`">
-              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+              <img v-if="data.profil.foto_ktp" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_ktp}`">
+              <img v-else-if="!data.profil.foto_ktp" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
                <p><strong>Foto dengan KTP: </strong></p>
-              <img v-if="data['foto_dengan_ktp']" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data['foto_dengan_ktp']}`">
-              <img else class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+              <img v-if="data.profil.foto_dengan_ktp" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_dengan_ktp}`">
+              <img v-else-if = "!data.profil.foto_dengan_ktp" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
           </section>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5 mb-4">Profil Usaha</h2>
-              <p><strong>Nama Perusahaan: </strong>{{data['nama_perusahaan']}}</p>
-              <p><strong>Alamat Perusahaan: </strong>{{data['alamat_perusahaan']}}</p>
-              <p><strong>Alamat: </strong>{{data['alamat_perusahaan']}}</p>
-              <p><strong>Status Perusahaan: </strong>{{data['status_perusahaan']}}</p>
+              <p><strong>Nama Perusahaan: </strong>{{data.usaha.nama_perusahaan}}</p>
+              <p><strong>Alamat Perusahaan: </strong>{{data.usaha.alamat_perusahaan}}</p>
+              <p><strong>Status Perusahaan: </strong>{{data.usaha.status_perusahaan}}</p>
               <p><strong>Dokumen Legalitas: </strong></p>
                <div class="mb-4">
                       <div class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
@@ -68,7 +67,7 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data['legalitas'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data['legalitas']}`">{{data['legalitas'].split('/')[2]}}</a></h1>
+                           <h1 v-if="data.usaha.legalitas!= null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.usaha.legalitas}`">{{data.usaha.legalitas.split('/')[2]}}</a></h1>
                       </div>
                     </div>
                   </div> 
@@ -83,22 +82,22 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data['dokumen_amdal'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data['dokumen_amdal']}`">{{data['dokumen_amdal'].split('/')[2]}}</a></h1>
+                           <h1 v-if="data.usaha.dokumen_amdal != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.usaha.dokumen_amdal}`">{{data.usaha.dokumen_amdal.split('/')[2]}}</a></h1>
                       </div>
                     </div>
                   </div>   
-              <p><strong>Informasi Pajak: </strong>{{data['informasi_pajak']}}</p>
-              <p><strong>NPWP: </strong>{{data['npwp']}}</p>
-              <p><strong>Deskripsi usaha: </strong>{{data['deskripsi_usaha']}}</p>
-              <p><strong>Email Perusahaan: </strong>{{data['email_perusahaan']}}</p>
+              <p><strong>Informasi Pajak: </strong>{{data.usaha.informasi_pajak}}</p>
+              <p><strong>NPWP: </strong>{{data.usaha.npwp}}</p>
+              <p><strong>Deskripsi usaha: </strong>{{data.usaha.deskripsi_usaha}}</p>
+              <p><strong>Email Perusahaan: </strong>{{data.usaha.email_perusahaan}}</p>
           </section>
            <section class="mb-5">
-            <h2 class="text-neutral-gray-5">Kajian Finansial</h2>
-              <p><strong>Jenis Produk: </strong>{{data['jenis_produk']}}</p>
-              <p><strong>Jumlah Produk yang dijual: </strong>{{data['jumlah_produk_yang_dijual']}}, {{data['tanggal_lahir']}}</p>
-              <p><strong>Bahan produk: </strong>{{data['bahan_produk']}}</p>
-              <p><strong>Kategori produk: </strong>{{data['kategori_produk']}}</p>
-              <p><strong>Harga produk: </strong>{{data['harga_produk']}}</p>
+            <h2 class="text-neutral-gray-5">Profil Produk</h2>
+              <p><strong>Jenis Produk: </strong>{{data.produk.jenis_produk}}</p>
+              <p><strong>Jumlah Produk yang dijual: </strong>{{data.produk.jumlah_produk_yang_dijual}}, {{data.produk.tanggal_lahir}}</p>
+              <p><strong>Bahan produk: </strong>{{data.produk.bahan_produk}}</p>
+              <p><strong>Kategori produk: </strong>{{data.produk.kategori_produk}}</p>
+              <p><strong>Harga produk: </strong>{{data.produk.harga_produk}}</p>
               <p><strong>Clearance dokumen: </strong></p>
                <div class="mb-4">
                       <div class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
@@ -110,26 +109,26 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data['keterangan_halal'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data['keterangan_halal']}`">{{data['keterangan_halal'].split('/')[2]}}</a></h1>
+                           <h1 v-if="data.produk.keterangan_halal != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.produk.keterangan_halal}`">{{data.produk.keterangan_halal.split('/')[2]}}</a></h1>
                       </div>
                     </div>
                   </div>   
-              <p><strong>Manfaat fungsional: </strong>{{data['manfaat_fungsional']}}</p>
-              <p><strong>Manfaat nonfungsional: </strong>{{data['manfaat_nonfungsional']}}</p>
+              <p><strong>Manfaat fungsional: </strong>{{data.produk.manfaat_fungsional}}</p>
+              <p><strong>Manfaat nonfungsional: </strong>{{data.produk.manfaat_nonfungsional}}</p>
           </section>
              <section class="mb-5">
             <h2 class="text-neutral-gray-5">Kajian Finansial</h2>
-              <p><strong>CAPEX: </strong>{{data['capex']}}</p>
-              <p><strong>OPEX: </strong>{{data['opex']}}, {{data['opex']}}</p>
-              <p><strong>SWOT Faktor Eksternal: </strong>{{data['swot_faktor_eksternal']}}</p>
-              <p><strong>SWOT Faktor Internal: </strong>{{data['swot_faktor_internal']}}</p>
-              <p><strong>Key Partners: </strong>{{data['key_partners']}}</p>
-              <p><strong>Key Activity: </strong>{{data['key_activity']}}</p>
-              <p><strong>Value Propotions: </strong>{{data['value_propotions']}}</p>
-              <p><strong>Customer Relationship: </strong>{{data['customer_relationship']}}</p>
-              <p><strong>Channels: </strong>{{data['channels']}}</p>
-              <p><strong>Cost Structure: </strong>{{data['cost_structure']}}</p>
-              <p><strong>Revenue Streams: </strong>{{data['revenue_streams']}}</p>
+              <p><strong>CAPEX: </strong>{{data.finansial.capex}}</p>
+              <p><strong>OPEX: </strong>{{data.finansial.opex}}</p>
+              <p><strong>SWOT Faktor Eksternal: </strong>{{data.finansial.swot_faktor_eksternal}}</p>
+              <p><strong>SWOT Faktor Internal: </strong>{{data.finansial.swot_faktor_internal}}</p>
+              <p><strong>Key Partners: </strong>{{data.finansial.key_partners}}</p>
+              <p><strong>Key Activity: </strong>{{data.finansial.key_activity}}</p>
+              <p><strong>Value Propotions: </strong>{{data.finansial.value_propotions}}</p>
+              <p><strong>Customer Relationship: </strong>{{data.finansial.customer_relationship}}</p>
+              <p><strong>Channels: </strong>{{data.finansial.channels}}</p>
+              <p><strong>Cost Structure: </strong>{{data.finansial.cost_structure}}</p>
+              <p><strong>Revenue Streams: </strong>{{data.finansial.revenue_streams}}</p>
           </section>
           <div class="d-flex justify-content-center bd-highlight mb-3">
               <div class="p-2 bd-highlight">
@@ -139,7 +138,7 @@
               <Link :href="`/detail/profil/${currentPage}/accept`" class="btn btn-primary-blue-6 text-neutral-white">Terima user ini</Link>
               </div>
               <div class="p-2 bd-highlight">
-             <button @click = "toggleComment()" class="btn btn-warning text-neutral-white">Beri tanggapan</button>
+             <button @click = "toggleComment()" class="btn btn-success text-neutral-white">Beri tanggapan</button>
              </div>
             </div>
         </div>
@@ -166,7 +165,6 @@ export default{
   },
   props:{
     data:Object,
-    id:Number
   },
   components:{
     DashboardLayout,

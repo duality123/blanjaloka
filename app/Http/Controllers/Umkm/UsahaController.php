@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 class UsahaController extends Controller
 {
-    public function fowm_wizard(Request $request)
+    public function form_wizard(Request $request)
     {
        if(!$request->user()->profil->isProfileComplete()){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Usaha Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu']);
@@ -39,13 +39,10 @@ class UsahaController extends Controller
         $this->validate($request, $rules, $customMessages);
         $data = [];
         $usaha =  Usaha::where('user_id','=',$request->user()->id);
-        $old_dokumen = DB::table('usaha')->select('legalitas','dokumen_amdal')->where('user_id','=',$request->user()->id)->first();
         if ($request->file('legalitas')) {
-            Storage::delete($old_dokumen->legalitas);
             $data['legalitas']=$request->file('legalitas')->store('umkm/dokumen_legalitas','public') ;
         };
-        if($request->file('dokumen_amdal')){
-            Storage::delete($old_dokumen->dokumen_amdal);   
+        if($request->file('dokumen_amdal')){   
             $data['dokumen_amdal']= $request->file('dokumen_amdal')->store('umkm/dokumen_amdal','public') ; 
         }
 

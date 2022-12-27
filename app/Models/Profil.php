@@ -1,22 +1,46 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Profil;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Eventual;
 use App\Models\User;
 class Profil extends Model
 {
     public $timestamps = false;
     protected $table='profil';
     use HasFactory;
+    protected $fillable = ['user_id',  
+                           'foto_profil', 
+                           'id',
+                           'nama_lengkap',
+                           'tanggal_lahir',  
+                           'pendidikan_terakhir',  
+                           'tempat_kelahiran',  
+                           'alamat',   
+                           'kelurahan',   
+                           'kecamatan',  
+                           'kabupaten',   
+                           'provinsi', 
+                           'foto_ktp', 
+                           'foto_dengan_ktp',   
+                           'no_hp', 
+                           'status',   
+                           'kewarganegaraan',   
+                           'agama', 
+                           'pengalaman_kerja'
+                           ];  
 
 
 
    public function user(){
-         return $this->belongsToMany(User::class,'id','user_id');
+         return $this->belongsTo(User::class,'user_id','id');
     }
-
+   public function eventual()
+    {
+        return $this->hasMany(Eventual::class,'profil_id');
+   }
     public function foto_profil()
     {
         return $this->foto_profil;

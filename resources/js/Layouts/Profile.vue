@@ -91,7 +91,7 @@ export default{
 .notification .badge {
   position: absolute;
   top: -20px;
-  right: -120px;
+  right: -30px;
   padding: 10px 10px;
   border-radius: 50%;
   background: red;

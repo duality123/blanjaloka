@@ -10,6 +10,7 @@ use App\Models\Elearning;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Logbook;
 use App\Models\Notifikasi;
 use App\Models\BabElearning;
@@ -19,18 +20,13 @@ use Illuminate\Support\Facades\Storage;
 class KegiatanController extends Controller
 {
 
-    public function list_eventual(Request $request,$page1,$page2){
-        $data = Eventual::fetchAndPaginate($limit=10,$offset=$page2,$kegiatan_id=$page1);
-        $kegiatan = DB::table('kegiatan')->select('tema','id')->where('id','=',$page1)->first();
-        return Inertia::render('Dashboard/Kegiatan/List_eventual',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],
-                                                           'kegiatan'=>$kegiatan]);
+    public function list_eventual(Request $request,$page1){
+  
+    $data = Eventual::with(['profil'])->where('kegiatan_id','=',$page1)->orderBy('waktu','asc')->paginate(10);
+  //  $data = Eventual::select('id','status','perihal','link_meeting','kontak','nama_mentor','jadwal')->where('kegiatan_id','=',$page1)->orderBy('waktu','asc')->paginate(10);
+    
+    $kegiatan = Kegiatan::select('tema','id')->where('id','=',$page1)->first();
+        return Inertia::render('Dashboard/Kegiatan/List_eventual',['items'=>$data, 'kegiatan'=>$kegiatan]);
     }
 
     public function ubah_eventual_status(Request $request){
@@ -38,7 +34,8 @@ class KegiatanController extends Controller
         $data['jadwal'] = $request->post('jadwal');
         $data['link_meeting'] = $request->post('link_meeting');
         $data['status']  = intval($request->post('status'));
-        Eventual::where('id','=',$request->post('id'))->update($data);
+        $event= Eventual::where('id','=',$request->post('id'));
+        $event->update($data);
         $request->session()->flash('success','Status eventual berhasil diubah');
         return back();
     }
@@ -55,41 +52,28 @@ class KegiatanController extends Controller
          return back();
     }
 
-    public function list_elearning(Request $request,$page1,$page2){
-        $data = Elearning::fetchAndPaginate($limit=10,$offset=$page2,$kegiatan_id=$page1);
-        $kegiatan = DB::table('kegiatan')->select('tema','id')->where('id','=',$page1)->first();
-        return Inertia::render('Dashboard/Kegiatan/List_elearning',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],
+    public function list_elearning(Request $request,$page1){
+
+        $data = Elearning::select('elearning.id','elearning.judul','elearning.deskripsi','elearning.foto','elearning.id','elearning.hari_tanggal_waktu')->where('kegiatan_id','=',$page1)->orderBy('hari_tanggal_waktu','asc')->paginate(10);
+        $kegiatan = Kegiatan::select('tema','id')->where('id','=',$page1)->first();
+        return Inertia::render('Dashboard/Kegiatan/List_elearning',['items'=>$data,
                                                            'kegiatan'=>$kegiatan]);
     }
 
     public function tambah_elearning($id){
-        $kegiatan = DB::table('kegiatan')->select('tema')->where('id','=',$id)->first();
+        $kegiatan = Kegiatan::select('tema')->where('id','=',$id)->first();
         return Inertia::render('Dashboard/Kegiatan/Tambah_elearning',['kegiatan'=>$kegiatan]);
     }
 
-    public function list_bab(Request $request,$id,$page){
-        $data = BabElearning::fetchAndPaginate($limit=10,$page=$page,$elearning_id = $id);
+    public function list_bab(Request $request,$id){
+        $data = BabElearning::select("bab.id",'bab.judul','bab.deskripsi','bab.bab',"bab.link_video")->where('elearning_id','=',$id)->orderBy('bab','asc')->paginate(10);
         $elearning = DB::table('elearning')->select('judul','kegiatan_id')->where('id','=',$id)->first();
-        return Inertia::render('Dashboard/Kegiatan/Bab_elearning',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],
+        return Inertia::render('Dashboard/Kegiatan/Bab_elearning',['items'=>$data,
                                                            'elearning'=>$elearning]);
     }
 
     public function tambah_bab(Request $request,$id){
-        $elearning = DB::table('elearning')->select('judul')->where('id','=',$id)->first();
+        $elearning = Elearning::select('judul')->where('id','=',$id)->first();
         return Inertia::render('Dashboard/Kegiatan/Tambah_bab',['elearning'=>$elearning]);
     }
 
@@ -139,7 +123,7 @@ class KegiatanController extends Controller
         $this->validate($request, $rules, $customMessages);
         $data = [];
         $data['deskripsi'] = $request->post('deskripsi');
-        $data['elearning_id'] = $request->post('id');
+        $data['elearning_id'] = $request->post('elearning_id');
         $data['judul'] = $request->post('judul');
         $data['link_video'] = $request->post('link_video');
         $data['bab'] = $request->post('bab');
@@ -179,7 +163,7 @@ class KegiatanController extends Controller
 
     public function edit_elearning_view(Request $request,$slug){
        
-    $data =  DB::table('elearning')->select('hari_tanggal_waktu','deskripsi','judul','foto')->where('id','=',$slug)->first();
+    $data =   Elearning::select('hari_tanggal_waktu','deskripsi','judul','foto')->where('id','=',$slug)->first();
     return Inertia::render('Dashboard/Kegiatan/Edit_elearning',['elearning'=>$data]);
 
     }
@@ -187,7 +171,7 @@ class KegiatanController extends Controller
 
     public function detail_elearning(Request $request,$slug){
        
-        $data =  DB::table('elearning')->select('hari_tanggal_waktu','deskripsi','judul','foto')->where('id','=',$slug)->first();
+        $data =  Elearning::select('hari_tanggal_waktu','deskripsi','judul','foto')->where('id','=',$slug)->first();
         return Inertia::render('Dashboard/Kegiatan/Edit_elearning',['elearning'=>$data]);
 
     }
@@ -208,10 +192,10 @@ class KegiatanController extends Controller
 
         $this->validate($request, $rules, $customMessages);
         $elearning = Elearning::where('id','=',$request->post('id'));
-        $old_gambar = DB::table('elearning')->select('gambar')->where('id','=',$request->post('id'))->first();
+        $old_gambar = DB::table('elearning')->select('foto')->where('id','=',$request->post('id'))->first();
         $data = [];
         if ($request->file('gambar')) {
-              Storage::delete($old_gambar->gambar);
+              Storage::delete($old_gambar->foto);
               $gambar= $request->file('gambar')->store('elearning/gambar','public') ;
               $data['foto'] = $gambar;
         }
@@ -270,41 +254,33 @@ class KegiatanController extends Controller
         $request->session()->flash($session,$message);
         return back();
     }
-    public function eventual(Request $request,$id){
+    public function hapus_eventual(Request $request,$id){
         $event = Eventual::where('id','=',$id)->select('profil_id','jadwal','kegiatan_id')->first();
-        $kegiatan = Kegiatan::where('id','=',$event->kegiatan_id)->select('tema')->first();
-        $user = Profil::where('user_id','=',$event->profil_id)->select('id')->first();
-        Notifikasi::create(['nama'=>'Eventual Dibatalkan','pesan'=>'Eventual yang anda minta pada kegiatan '.$kegiatan->tema.' tanggal '.$event->jadwal. ' sudah dihapus. Kontak admin bila terjadi kesalahan','user_id'=>$user->id,'tanggal'=>now()]);
+        Notifikasi::create(['nama'=>'Eventual Dibatalkan','pesan'=>'Eventual yang anda minta pada kegiatan '.$event->kegiatan->tema.' tanggal '.$event->jadwal. ' sudah dihapus. Kontak admin bila terjadi kesalahan','user_id'=>$event->profil->user_id,'tanggal'=>now()]);
+        $event = Eventual::where('id','=',$id);
         $event->delete();
         $request->session()->flash('success','eventual berhasil ditolak !');
         return back();
     }
 
-    public function list_logbook($page1,$page2){
-        $data = User::fetchAndPaginate4Inkubasi($limit=10,$page=$page2,$kegiatan_id=$page1);
+    public function list_logbook($page1){
+        $user_id = [];
+        $list_participants = DB::table('kegiatan_umkm')->select('umkm_id')->where('kegiatan_id','=',$page1)->get();
+        foreach($list_participants as $participants){
+           $user_id[] = ($participants->umkm_id);
+        }
+        $data = User::with('profil')->whereIn('id', $user_id)->paginate(10);
+ 
         $kegiatan =  DB::table('kegiatan')->select('tema','id')->where('id','=',$page1)->first();
-        return Inertia::render('Dashboard/Kegiatan/Daftar_logbook',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],
+        return Inertia::render('Dashboard/Kegiatan/Daftar_logbook',['items'=>$data,
                                                            'kegiatan'=>$kegiatan],);
     }
 
-    public function list_user_logbook($page1,$id_user,$page2){
-        $data = Logbook::fetchAndPaginate($limit=10,$page=$page2,$user_id=$id_user,$kegiatan_id=$page1);
+    public function list_user_logbook($page1,$id_user){
+      //  $data = Logbook::fetchAndPaginate($limit=10,$page=$page2,$user_id=$id_user,$kegiatan_id=$page1);
+        $data= Logbook::where('user_id','=',$id_user)->where('kegiatan_id','=',$page1)->paginate(10);
         $kegiatan =  DB::table('kegiatan')->select('tema','id')->where('id','=',$page1)->first();
-        return Inertia::render('Dashboard/Kegiatan/List_user_logbook',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],
+        return Inertia::render('Dashboard/Kegiatan/List_user_logbook',['items'=>$data,
                                                            'kegiatan'=>$kegiatan],);
     }
 
@@ -325,47 +301,59 @@ class KegiatanController extends Controller
         $kegiatan = DB::table('kegiatan')->select('tema','deskripsi','id','gambar')->where('id','=',$page)->first();
         return Inertia::render('Dashboard/Kegiatan/Edit_deskripsi',['kegiatan'=>$kegiatan]);
     }
-    public function index($page){
-        $data = Kegiatan::fetchAndPaginate($limit=10,$offset=$page);
+    public function index(){
+        $data = Kegiatan::select('tema','dimulai','berakhir','link','draft','jumlah_orang_diundang','kegiatan.id'
+            ,DB::raw('count(umkm_id) as total_peserta'))->leftJoin('kegiatan_umkm','kegiatan_umkm.kegiatan_id','=','kegiatan.id' )
+            ->groupBy('kegiatan.id','kegiatan.dimulai','kegiatan.berakhir','kegiatan.link','kegiatan.draft','kegiatan.jumlah_orang_diundang','kegiatan.tema','kegiatan.id')
+            ->orderBy('kegiatan.dimulai','asc')
+            ->paginate(10);   
+
         //dd($data['items']);
-        return Inertia::render('Dashboard/Kegiatan/Daftar_kegiatan',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last']],);
+        return Inertia::render('Dashboard/Kegiatan/Daftar_kegiatan',['items'=>$data]);
     }
 
     public function tambah(){
-        $roles = DB::table('roles')->select('user_id')->where('number','=',3)->get();
+        $roles = Role::select('user_id')->where('number','=',3)->get();
         $investor = [];
         foreach ($roles as $role) {
-            $target = DB::table('profil')->select('nama_lengkap','no_hp')->where('user_id','=',$role->user_id)->first();
-        
-            $investor[] = $target->nama_lengkap . '/' . $target->no_hp ;
+             $investor[] = $role->user->profil->nama_lengkap . '/' . $role->user->profil->no_hp ;
         }
-        return Inertia::render('Dashboard/Kegiatan/tambah_kegiatan',['investor'=>$investor]);
+        $roles = Role::select('user_id')->where('number','=',2)->get();
+        $umkm = [];
+        foreach ($roles as $role) {        
+            $umkm[] = $role->user->profil->nama_lengkap . '/' . $role->user->profil->no_hp ;
+        }
+        return Inertia::render('Dashboard/Kegiatan/tambah_kegiatan',['investor'=>$investor,'umkm'=>$umkm]);
     }
 
     public function edit_kegiatan($slug){
-        $roles = DB::table('roles')->select('user_id')->where('number','=',3)->get();
+        $roles = Role::select('user_id')->where('number','=',3)->get();
         $investor = [];
         foreach ($roles as $role) {
-            $target = DB::table('profil')->select('nama_lengkap','no_hp')->where('user_id','=',$role->user_id)->first();
-        
-            $investor[] = $target->nama_lengkap . '/' . $target->no_hp ;
+            $investor[] = $role->user->profil->nama_lengkap . '/' . $role->user->no_handphone  ;
         }
-        $kegiatan =  DB::table('kegiatan')->select('tema','deskripsi','jumlah_orang_diundang','masa_inkubasi','kurikulum','nama_juri','pic','kontak','draft','dimulai','berakhir','gambar')->where('id','=',$slug)->first();
-        $tempOldInvestor = DB::table('kegiatan_investor')->select('investor_id')->where('kegiatan_id','=',$slug)->get();
+        $kegiatan =  Kegiatan::select('kegiatan.tema','kegiatan.deskripsi','kegiatan.nama_juri','kegiatan.masa_inkubasi','kegiatan.pic','kegiatan.kontak','kegiatan.id','kegiatan.dimulai','kegiatan.berakhir','kegiatan.jumlah_orang_diundang','kegiatan.kurikulum','kegiatan.gambar','kegiatan.draft')->where('id','=',$slug)->first();
+       
         $oldInvestor = [];
-        foreach ($tempOldInvestor as $oldInv ) {
-            $target = DB::table('profil')->select('nama_lengkap','no_hp')->where('user_id','=',$oldInv->investor_id)->first();
-        
-            $oldInvestor[] = $target->nama_lengkap . '/' . $target->no_hp ;
+       // dd($kegiatan->investor);
+        foreach ($kegiatan->investor as $oldInv ) {
+    
+            $oldInvestor[] = $oldInv->profil->nama_lengkap . '/' . $oldInv->profil->no_hp ;
         }
-        return Inertia::render('Dashboard/Kegiatan/Edit_kegiatan',['investor'=>$investor,'kegiatan'=>$kegiatan,'oldInvestor'=>$oldInvestor]);
+
+        $roles = Role::select('user_id')->where('number','=',2)->get();
+        $umkm = [];
+        foreach ($roles as $role) {
+        
+            $umkm[] = $role->user->profil->nama_lengkap . '/' . $role->user->profil->no_hp ;
+        }
+        $oldUmkm = [];
+        foreach ($kegiatan->umkm as $old_umkm ) {
+            $oldUmkm[] = $old_umkm->profil->nama_lengkap . '/' . $old_umkm->profil->no_hp ;
+        }
+
+
+        return Inertia::render('Dashboard/Kegiatan/Edit_kegiatan',['umkm'=>$umkm,'oldUmkm'=>$oldUmkm,'investor'=>$investor,'kegiatan'=>$kegiatan,'oldInvestor'=>$oldInvestor]);
     }
 
 
@@ -385,6 +373,7 @@ class KegiatanController extends Controller
             'berakhir' =>'required',
         ]);
       $daftarInvestor =$request->post('nama_investor');
+      $daftarUmkm = $request->post('nama_umkm');
       $update =['tema' => $request->post('tema'),
                 'deskripsi' => $request->post('deskripsi'),
                 'jumlah_orang_diundang'=>$request->post('jumlah_orang_diundang'),
@@ -409,7 +398,13 @@ class KegiatanController extends Controller
         $target = DB::table('profil')->select('user_id')->where('no_hp','=',explode('/',$investor)[1])->first();
         $listInvestor[] = $target->user_id ;
       }
+      $listUmkm = [];
+      foreach ($daftarUmkm as $umkm) {
+        $target = DB::table('profil')->select('user_id')->where('no_hp','=',explode('/',$umkm)[1])->first();
+        $listUmkm[] = $target->user_id ;
+      }
       $kegiatan->investor()->sync($listInvestor);
+      $kegiatan->umkm()->sync($listUmkm);
       $request->session()->flash('success','Kegiatan berhasil dibuat');
 
       return back();
@@ -429,7 +424,6 @@ class KegiatanController extends Controller
             'nama_juri'=>'required',
             'pic'=>'required',
             'kontak'=>'required',
-            'draft'=>'required',
             'dimulai'=>'required',
             'berakhir' =>'required',
             'gambar'=>'required'
@@ -444,6 +438,7 @@ class KegiatanController extends Controller
 
       $this->validate($request, $rules, $customMessages);
       $daftarInvestor =$request->post('nama_investor');
+      $daftarUmkm =$request->post('nama_umkm');
       $gambar = $request->file('gambar')->store('kegiatan/gambar','public');
       //dd($gambar)
       $kegiatan = Kegiatan::create(['tema' => $request->post('tema'),
@@ -454,7 +449,7 @@ class KegiatanController extends Controller
                                     'nama_juri'=>$request->post('nama_juri'),
                                     'pic'=>$request->post('pic'),
                                     'kontak'=>$request->post('kontak'),
-                                    'draft'=>$request->post('draft') == true ? 1:0,
+                                    'draft'=>$request->post('draft') ? 1:0,
                                     'dimulai'=>$request->post('dimulai'),
                                     'berakhir' =>$request->post('berakhir'),
                                     'link'=>Str::random(100),
@@ -465,6 +460,13 @@ class KegiatanController extends Controller
         $listInvestor[] = $target->user_id ;
       }
       $kegiatan->investor()->attach($listInvestor);
+
+      $listUmkm = [];
+      foreach ($daftarUmkm as $umkm) {
+        $target = DB::table('profil')->select('user_id')->where('no_hp','=',explode('/',$umkm)[1])->first();
+        $listUmkm[] = $target->user_id ;
+      }
+      $kegiatan->umkm()->attach($listUmkm);
       $request->session()->flash('success','Kegiatan berhasil dibuat');
 
       return back();

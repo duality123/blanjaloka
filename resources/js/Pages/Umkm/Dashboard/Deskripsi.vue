@@ -21,8 +21,10 @@
                 </div>
       </div>
     </div>
-  </div>
-                 <Layout state="deskripsi" :tema="item.tema" :link="item.id">
+  </div>    
+                
+                 <Layout state="deskripsi" section="kegiatan" :tema="item.tema" :link="item.id">
+                  
                 <div class="d-flex justify-content-start mt-5">
                 <button class="btn btn-semantic-error-1 text-semantic-error-4 py-3" @click="popupControl">
                   <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />Keluar kegiatan</button>
@@ -34,12 +36,15 @@
                 </div>
                <div class="card mt-4">
   <div class="card-body">
-  <p><strong>Juri : </strong>{{item.nama_juri}}</p>
-  <p><strong>Investor : </strong><div v-for="invest in investor">{{invest}}</div></p>
-  <p><strong>Masa Inkubasi : </strong>{{item.masa_inkubasi}} Bulan</p>
-  <p><strong>PIC : </strong>{{item.pic}} Bulan</p>
-  <p><strong>Kontak PIC : </strong>{{item.kontak}}</p>
-  </div>
+
+<div class="d-flex flex-column">
+  <div class="p-2">Juri : {{item.nama_juri}}</div>
+ <div class="p-2">Nama investor : {{investor.toString()}} </div>
+  <div class="p-2">Masa Inkubasi : {{item.masa_inkubasi}} Bulan </div>
+  <div class="p-2"> PIC : {{item.pic}} </div>
+   <div class="p-2">Kontak PIC : {{item.kontak}} </div>
+</div>
+</div>
 </div>
        
   </Layout>

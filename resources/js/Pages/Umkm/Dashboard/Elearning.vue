@@ -9,7 +9,7 @@
                                 </p>
                                 
                     <div class="row row-cols-1 row-cols-md-3 g-4" >
-                      <div class="col" v-for="item in items">
+                      <div class="col" v-for="item in items.data">
                         <div class="card">
                           <img :src="`${this.$page.props.asset_url}/${item.foto}`" style="width:250px; height:250px" class="card-img-top" alt="...">
                           <div class="card-body">
@@ -21,42 +21,15 @@
                       </div>
                     </div>
 <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentLink== num ? 'active':'']">
-              <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <Pagination :links="items.links"/>
+  </div>
 
   </Layout>
 </template>
 
 <script>
 import Layout from '../../../Layouts/Kegiatanku.vue'
+import Pagination from '../../../components/Pagination.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{
@@ -69,7 +42,8 @@ export default{
   },
   components:{
     Layout,
-    Link
+    Link,
+    Pagination
   },
   mounted(){
 

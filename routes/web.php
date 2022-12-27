@@ -73,17 +73,19 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
         Route::get('/beranda/{slug}', 'beranda');
         
         Route::prefix('kegiatanku')->group(function () {
-            Route::get('/{page}', 'kegiatanku');
+            Route::get('/', 'kegiatanku');
             Route::get('/logbook/{slug}', 'umkmjurnal');
             Route::post('/tambah_eventual', 'tambah_eventual');
-            Route::post('/tambah_logbook','tambah_logbook');
+            Route::post('/edit_logbook','edit_logbook');
+            Route::post('/buat_logbook','buat_logbook');
             Route::get('/detail/{slug}', 'deskripsi');
-            Route::get('/{slug}/elearning/{page2}/', 'elearning');
+            Route::get('/{slug}/elearning/', 'elearning');
             Route::get('/elearning/materi/overview/{slug}', 'materi');
             Route::get('/eventual/{$page}', 'eventual');
             Route::get('/elearning/materi/detail/{slug}/{page2}', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
             Route::get('/eventual/{slug}', 'eventual');
+
      });
     
        //  Route::get('/kegiatanku/{page}/logbook', 'logbook');
@@ -126,26 +128,26 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
         Route::post('/edit_deskripsi', 'edit_deskripsi');
         Route::get('/{id}/tambah_elearning', 'tambah_elearning');
-        Route::get('/{slug1}/eventual/{slug2}', 'list_eventual');
+        Route::get('/{slug1}/eventual/', 'list_eventual');
         Route::post('/hapus_kegiatan', 'hapus_kegiatan');
         Route::post('/hapus_elearning', 'hapus_elearning');
         Route::post('/hapus_bab', 'hapus_bab');
-        Route::post('/hapus_eventual', 'hapus_eventual');
+        Route::post('{slug}/hapus_eventual', 'hapus_eventual');
         Route::post('/tambah_elearning/baru', 'add_elearning');
-        Route::get('/{page}', 'index');
-        Route::get('/{slug}/elearning/{slug2}','list_elearning');
+        Route::get('/', 'index');
+        Route::get('/{slug}/elearning/','list_elearning');
         Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/{slug}/edit', 'edit_kegiatan');
         Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
         Route::post('/elearning/edit', 'edit_elearning_post');
-        Route::get('/elearning/{slug1}/detail/{slug2}', 'list_bab');
+        Route::get('/elearning/{slug1}/detail/', 'list_bab');
         Route::get('/elearning/bab/{slug}/edit', 'edit_bab');
         Route::post('/elearning/bab/edit', 'edit_bab_post');
         Route::get('/elearning/{slug1}/tambah_bab', 'tambah_bab');
         Route::post('/tambah_bab/baru', 'tambah_bab_post');
-        Route::get('/{slug}/logbook/{slug2}', 'list_logbook');
+        Route::get('/{slug}/logbook/', 'list_logbook');
         Route::post('/logbook/ubah_status', 'ubah_status_logbook');
-        Route::get('/{slug}/detail_logbook/{id}/halaman/{slug2}', 'list_user_logbook');
+        Route::get('/{slug}/detail_logbook/{id}', 'list_user_logbook');
         Route::post('/edit_post', 'edit_kegiatan_post');
         Route::get('/{slug}/detail/elearning/{slug2}', 'list_elearning');
         Route::get('/tambah_kegiatan/baru/','tambah');
@@ -155,7 +157,7 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
 
 
     Route::prefix('pengguna')->group(function () {
-        Route::get('/{role}/{page}', [UserController::class, 'all']);
+        Route::get('/{role}', [UserController::class, 'all']);
         Route::post('hapus_user', [UserController::class, 'delete']);
     });
 });
@@ -181,7 +183,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return Inertia::render('Auth/Verification_success',['redirect'=>'/syarat_dan_ketentuan']);
+    return Inertia::render('Auth/Verification_success',['redirect'=>'/kebijakan_dan_privasi']);
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
@@ -240,7 +242,7 @@ Route::get('reset_password/success',function(){
 
 
 
-Route::get('/detail/profil/{slug}', [ProfilController::class, 'detail']);
+Route::get('/detail/profil/{slug}', [ProfilController::class, 'detailUMKM']);
 Route::post('/detail/profil/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
 Route::get('/detail/profil/{slug}/accept', [UserController::class, 'terima_user']);
 Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {

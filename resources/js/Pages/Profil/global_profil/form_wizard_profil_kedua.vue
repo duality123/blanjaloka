@@ -48,46 +48,46 @@
                   </div>
                   <div class="mb-4">
                     <label for="kelurahan" class="form-label text-neutral-gray-5">Kelurahan</label>
-                       <input type="text" class="form-control" v-model="form.kelurahan" id="kelurahan" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.kelurahan" id="kelurahan" placeholder="Masukkan Kelurahan Anda" >
                         <small class="text-danger" v-if="form.errors.kelurahan">{{ form.errors.kelurahan }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kecamatan" class="form-label text-neutral-gray-5">Kecamatan</label>
-                       <input type="text" class="form-control" v-model="form.kecamatan" id="kecamatan" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.kecamatan" id="kecamatan" placeholder="Masukkan Kecamatan Anda" >
                         <small class="text-danger" v-if="form.errors.kecamatan">{{ form.errors.kecamatan }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kabupaten" class="form-label text-neutral-gray-5">Kabupaten</label>
-                       <input type="text" class="form-control" v-model="form.kabupaten" id="kabupaten" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.kabupaten" id="kabupaten" placeholder="Masukkan Kabupaten Anda" >
                         <small class="text-danger" v-if="form.errors.kabupaten">{{ form.errors.kabupaten }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Provinsi</label>
-                      <input type="text" class="form-control" v-model="form.provinsi" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.provinsi" id="provinsi" placeholder="Masukkan Provinsi Anda" >
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">No Handphone</label>
-                      <input type="text" class="form-control" v-model="form.no_hp" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.no_hp" id="provinsi" placeholder="Masukkan nO Handphone Anda" >
                        <small class="text-danger" v-if="form.errors.no_hp">{{ form.errors.no_hp }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Status</label>
-                      <input type="text" class="form-control" v-model="form.status" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.status" id="provinsi" placeholder="Masukkan status Anda" >
                        <small class="text-danger" v-if="form.errors.status">{{ form.errors.status }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Kewarganeraan</label>
-                      <input type="text" class="form-control" v-model="form.kewarganegaraan" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.kewarganegaraan" id="provinsi" placeholder="Masukkan Kewarganegaraan Anda" >
                        <small class="text-danger" v-if="form.errors.kewarganegaraan">{{ form.errors.kewarganegaraan }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Agama</label>
-                      <input type="text" class="form-control" v-model="form.agama" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.agama" id="provinsi" placeholder="Masukkan agama Anda" >
                        <small class="text-danger" v-if="form.errors.agama">{{ form.errors.agama }}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Pengalaman Kerja</label>
-                      <input type="text" class="form-control" v-model="form.pengalaman_kerja" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.pengalaman_kerja" id="provinsi" placeholder="Masukkan Pengalaman kerja Anda" >
                        <small class="text-danger" v-if="form.errors.pengalaman_kerja">{{ form.errors.pengalaman_kerja}}</small>
                   </div>
                 <div class="d-flex justify-content-end">

@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-             <tr v-for="(index,no) in items">
+             <tr v-for="(index,no) in items.data">
               <th scope="row">{{++no}}</th>
               <td>{{index.waktu}}</td>
               <td>{{index.deskripsi}}</td>
@@ -50,41 +50,14 @@
         </table>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[ currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
-</div>
+         <Pagination :links="items.links"/>
+      </div>
 </Layout>
 </template>
 
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
+import Pagination from '../../../Components/Pagination.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -104,7 +77,7 @@ export default{
       }
     },
     props:{
-      items : Array,
+      items :Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,
@@ -116,7 +89,8 @@ export default{
     },
     components: {
       Layout,
-      Link
+      Link,
+      Pagination
     },
     methods:{
       changeStatus(num,id,waktu){

@@ -38,9 +38,7 @@ class ProdukController extends Controller
         $this->validate($request, $rules, $customMessages);
         $data = [];
         $produk =  Produk::where('user_id','=',$request->user()->id);
-        $old_dokumen = DB::table('produk')->select('keterangan_halal')->where('user_id','=',$request->user()->id)->first();
         if ($request->file('keterangan_halal')) {
-            Storage::delete($old_dokumen->keterangan_halal);
             $data['keterangan_halal'] = $request->file('keterangan_halal')->store('umkm/keterangan_halal','public'); 
         };
           $data['jenis_produk'] = $request->post('jenis_produk');

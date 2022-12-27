@@ -47,7 +47,7 @@
               </Link>
             </li>
             <li class="rounded p-4" :class="{'bg-primary-blue-2': state === 'kegiatan'}">
-              <Link href="/admin/dashboard/kegiatan/1"
+              <Link href="/admin/dashboard/kegiatan?page=1"
                 class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
               <img src="../assets/icons/icon_kegiatan_dashboard.png" alt="icon kegiatan" class="img-fluid">Kegiatan
               </Link>
@@ -69,15 +69,15 @@
                   <font-awesome-icon :icon="iconMenuPenggunaType" class="text-primary-blue-6" />
                 </div>
                 <ul v-if="isMenuPenggunaActive" class="sub_menu">
-                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/1/1'}">
-                    <Link href="/admin/dashboard/pengguna/1/1" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/1/'}">
+                    <Link href="/admin/dashboard/pengguna/1?page=1" class="text-decoration-none text-neutral-black">
                     Admin</Link>
                   </li>
-                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/3/1'}">
-                    <Link href="/admin/dashboard/pengguna/3/1" class="text-decoration-none text-neutral-black">Investor</Link>
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/3?page=1'}">
+                    <Link href="/admin/dashboard/pengguna/3?page=1" class="text-decoration-none text-neutral-black">Investor</Link>
                   </li>
-                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/2/1'}">
-                    <Link href="/admin/dashboard/pengguna/2/1" class="text-decoration-none text-neutral-black">
+                  <li class="rounded p-3" :class="{'bg-primary-blue-2': $page.url === '/admin/dashboard/pengguna/2?page=1'}">
+                    <Link href="/admin/dashboard/pengguna/2?page=1" class="text-decoration-none text-neutral-black">
                     UMKM</Link>
                   </li>
                 </ul>
@@ -231,6 +231,26 @@ const removePopup = () => {
 }
 .left_content .section_two a {
   font-weight: 600;
+}
+.notification {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+}
+
+.notification .badge {
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  padding: 10px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
 }
 .right_content {
   padding: 2rem

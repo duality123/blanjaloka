@@ -15,7 +15,7 @@ class ProfilPerusahaan extends Model
 
    public function user(){
          return 
-         $this->belongsTo(User::class,'id','user_id');
+         $this->belongsTo(User::class,'user_id','id');
     }
 
    public function profilPerusahaanList(){
@@ -30,7 +30,7 @@ class ProfilPerusahaan extends Model
     }
 
    public function isProfilPerusahaanComplete(){
-      if ($this->nama_perusahaan && $this->alamat_perusahaan && $this->nama_pic && $this->tanggal_berdiri && $this->nomor_telepon&&  $this->email_pic){
+      if ($this->nama_perusahaan && $this->alamat_perusahaan && $this->nama_pic && $this->tanggal_berdiri && $this->nomor_telepon &&  $this->email_pic){
          return true;
       }
       return false;

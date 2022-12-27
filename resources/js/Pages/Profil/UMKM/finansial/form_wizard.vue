@@ -4,8 +4,28 @@
       <div class="container">
         <div class="row gap-4">
 
-           <StatusChecked :sessionCondition="checkSessionCondition"/>          
-           <UmkmDashboardSidebar />
+           <StatusChecked :sessionCondition="checkSessionCondition"/> 
+        <!--
+           <div id="myModal" class="modal" v-if="this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted && this.popup" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "removePopup()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class=" d-flex justify-content-between">
+       <img src="../../../../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
+        </div>
+       <div class="d-flex justify-content-between text-center" style="margin-left: 2rem;">
+       <h2 >Data baru anda sedang diproses</h2>
+        </div>
+       <p>Rutinlah mengecek email anda tiap hari untuk pemberitahuan status akun anda!.Namun anda sekarang juga masih bisa mengubah data anda :)</p>
+      </div>
+
+    </div>   
+    -->      
+           <UmkmDashboardSidebar section="kajian_finansial" />
 
            <div class="col-lg-8">
                  <div class="card-body">
@@ -32,60 +52,60 @@
                 <form @submit.prevent="submit()">
                   <div class="mb-4">
                     <label for="nama_lengkap" class="form-label text-neutral-gray-5">CAPEX</label>
-                    <input type="text" v-model="form.capex" class="form-control" id="nama_lengkap" placeholder="Masukkan capex Anda" >
+                    <input type="text" v-model="form.capex" class="form-control" id="nama_lengkap" placeholder="CAPEX" >
                       <small class="text-danger" v-if="form.errors.capex">{{ form.errors.capex}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">OPEX</label>
-                    <input type="text" class="form-control" v-model="form.opex" id="tempat_kelahiran" placeholder="Masukkan tempat lahir Anda">
+                    <input type="text" class="form-control" v-model="form.opex" id="tempat_kelahiran" placeholder="OPEX">
                   </div>
                   <div class="mb-4">
                     <label for="tanggal_lahir" class="form-label text-neutral-gray-5">SWOT( Faktor Eksternal )</label>
-                      <input type="text" class="form-control" v-model="form.swot_faktor_eksternal" id="tanggal_lahir" placeholder="Masukkan tanggal lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.swot_faktor_eksternal" id="tanggal_lahir" placeholder="SWOT( Faktor Eksternal )" >
                         <small class="text-danger" v-if="form.errors.swot_faktor_eksternal">{{ form.errors.swot_faktor_eksternal}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="alamat" class="form-label text-neutral-gray-5">SWOT ( Faktor Internal )</label>
-                    <input type="text" class="form-control" id="alamat" v-model="form.swot_faktor_internal" placeholder="Masukkan alamat tinggal Anda" >
+                    <input type="text" class="form-control" id="alamat" v-model="form.swot_faktor_internal" placeholder="Masukkan SWOT ( Faktor Internal )" >
                     <small class="text-danger" v-if="form.errors.swot_faktor_internal">{{ form.errors.swot_faktor_internal}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="pendidikan_terakhir" class="form-label text-neutral-gray-5">Payback Period</label>
-                      <input type="number" class="form-control" v-model="form.payback_period" id="pendidikan_terakhir" placeholder="pendidikan terakhir Anda" >
+                      <input type="number" class="form-control" v-model="form.payback_period" id="pendidikan_terakhir" placeholder="Payback Period" >
                       <small class="text-danger" v-if="form.errors.payback_period">{{ form.errors.payback_period}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kelurahan" class="form-label text-neutral-gray-5">Key Partners</label>
-                       <input type="text" class="form-control" v-model="form.key_partners" id="kelurahan" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.key_partners" id="kelurahan" placeholder="Key Partners" >
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Key Activity</label>
-                      <input type="text" class="form-control" v-model="form.key_activity" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.key_activity" id="provinsi" placeholder="Key Activity" >
                     <small class="text-danger" v-if="form.errors.key_activity">{{ form.errors.key_activity}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kecamatan" class="form-label text-neutral-gray-5">Value Propotions</label>
-                       <input type="text" class="form-control" v-model="form.value_propotions" id="kecamatan" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.value_propotions" id="kecamatan" placeholder="Value Propotions" >
                        <small class="text-danger" v-if="form.errors.value_propotions">{{ form.errors.value_propotions}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kabupaten" class="form-label text-neutral-gray-5">Customer Relationship</label>
-                       <input type="text" class="form-control" v-model="form.customer_relationship" id="kabupaten" placeholder="Masukkan tempat lahir Anda" >
+                       <input type="text" class="form-control" v-model="form.customer_relationship" id="kabupaten" placeholder="Customer Relationship" >
                       <small class="text-danger" v-if="form.errors.customer_relationship">{{ form.errors.customer_relationship}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Cost Structure</label>
-                      <input type="text" class="form-control" v-model="form.cost_structure" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.cost_structure" id="provinsi" placeholder="Cost Structure" >
                     <small class="text-danger" v-if="form.errors.cost_structure">{{ form.errors.cost_structure}}</small>
                   </div>
                    <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Channels</label>
-                      <input type="text" class="form-control" v-model="form.channels" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.channels" id="provinsi" placeholder="Channels" >
                        <small class="text-danger" v-if="form.errors.channels">{{ form.errors.channels}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="provinsi" class="form-label text-neutral-gray-5">Revenue Streams</label>
-                      <input type="text" class="form-control" v-model="form.revenue_streams" id="provinsi" placeholder="Masukkan tempat lahir Anda" >
+                      <input type="text" class="form-control" v-model="form.revenue_streams" id="provinsi" placeholder="Revenue Streams" >
                        <small class="text-danger" v-if="form.errors.revenue_streams">{{ form.errors.revenue_streams}}</small>
                   </div>
                 
@@ -96,14 +116,13 @@
               </div>
             </div>
             </div>
-          </div>
         </section>
         </BaseLayout>
 </template>
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
-import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
-import StatusChecked from '../../../Components/StatusChcked.vue'
+import BaseLayout from '../../../../Layouts/Layout.vue'
+import UmkmDashboardSidebar from '../../../../Components/UmkmDashboardSidebar.vue'
+import StatusChecked from '../../../../Components/StatusChecked.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";
 export default{
@@ -111,6 +130,7 @@ export default{
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[1],
+      popup:true
     }
   },
   setup () {
@@ -160,8 +180,9 @@ export default{
       return false;
     },
     checkSessionCondition(){
-     if($page.props.auth.finansialComplete && $page.props.auth.usahaComplete && $page.props.auth.produkComplete && $page.props.auth.profilComplete && !$page.props.auth.user.accepted){
+     if(this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted){
       return true
+
      }
      return false
     }
@@ -169,7 +190,7 @@ export default{
   components:{
     BaseLayout,
     UmkmDashboardSidebar,
-    StatusChcked
+    StatusChecked
   },
   methods:{
     submit(){
@@ -178,6 +199,10 @@ export default{
       }
       this.form.post('/umkm/dashboard/kajian_finansial/')
     },
+     removePopup(){
+      this.popup =false
+    }
+
 
   },
 

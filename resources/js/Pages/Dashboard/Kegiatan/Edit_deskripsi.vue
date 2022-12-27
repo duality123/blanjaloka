@@ -60,7 +60,7 @@
       <button @click = "toggleEdit()" class="btn btn-primary-blue-6 text-neutral-white py-2">Edit Deskripsi
       </button>
     </div>
-        <div class="d-flex justify-content-start pt-3 mb-4" >
+        <div class="d-flex justify-content-center pt-3 mb-4" >
                    <img :src="`${$page.props.asset_url}/${kegiatan.gambar}`" alt="update icon" style="width:20rem" id="img" >
         </div>
         <p>{{kegiatan.deskripsi}}</p>
