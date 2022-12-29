@@ -230,7 +230,7 @@ export default{
            if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword'){
               this.form.legalitas = event.target.files[0]
               this.$page.props.auth.usaha['legalitas'] = null;
-               this.fileError = null
+              this.fileError = null
            }
            else{
                this.fileError = "dokumen anda harus pdf/docx !"

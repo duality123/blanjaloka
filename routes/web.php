@@ -14,17 +14,21 @@ use App\Http\Controllers\UMKM\DashboardUMKMController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Users\ProfilController;
+use App\Http\Controllers\Dashboard\JanjitemuController;
+use App\Http\Controllers\Dashboard\InvestasiAdminController;
 // use App\Http\Controllers\AuthenticatedController;
-
+use App\Http\Controllers\Investor\InvestorController;
 // base controller
 use App\Http\Controllers\{
     PagesController,
 };
 
+
 use App\Http\Controllers\Investor\{
     ProfilPerusahaanController,
     DokumenPerusahaanController,
-    DashboardController as InvestorDashboardController
+    InvestasiController
+  
 };
 
 // umkm controller
@@ -154,7 +158,18 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
         Route::post('/tambah_kegiatan','add');
         Route::post('/ubah_eventual_status', 'ubah_eventual_status');
     });
+     Route::get('janjitemu/',[JanjitemuController::class,'index']);
+      Route::post('tambah_janji_temu/',[JanjitemuController::class,'create']);
+    Route::post('hapus_janjitemu/',[JanjitemuController::class,'delete']);
+    Route::get('investasi/',[InvestasiAdminController::class,'index']);
 
+    Route::get('investasi/{slug}/detail',[InvestasiAdminController::class,'detail_investasi']);
+    Route::get('tambah_investasi/',[InvestasiAdminController::class,'create']);
+    Route::post('hapus_investasi/',[InvestasiAdminController::class,'delete']);
+     Route::post('tambah_investasi/',[InvestasiAdminController::class,'tambah_investasi']);
+     Route::get('investasi/{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
+
+      Route::post('investasi/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
 
     Route::prefix('pengguna')->group(function () {
         Route::get('/{role}', [UserController::class, 'all']);
@@ -164,7 +179,7 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
 
 //Profil Khusus Investor
 Route::prefix('investor/')->middleware(['auth','verified','shouldInvestor'])->group(function () {
-    Route::get('/', [InvestorDashboardController::class, 'index']);
+    Route::get('/', [InvestorController::class, 'index']);
     Route::prefix('dashboard/')->middleware(['auth','verified'])->group(function () {
         Route::get('profil_perusahaan', [ProfilPerusahaanController::class, 'form_wizard_profil_perusahaan']);
         Route::get('dokumen_perusahaan', [DokumenPerusahaanController::class, 'form_wizard_dokumen_perusahaan']);

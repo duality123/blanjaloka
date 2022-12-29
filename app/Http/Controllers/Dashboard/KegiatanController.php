@@ -372,6 +372,14 @@ class KegiatanController extends Controller
             'dimulai'=>'required',
             'berakhir' =>'required',
         ]);
+
+
+        $customMessages = [
+            'required' => 'Harap diisi bagian ini !.',
+            'max'=>'Karakter yang anda input melebihi batas :max .'
+
+        ];
+        $this->validate($request, $rules, $customMessages);
       $daftarInvestor =$request->post('nama_investor');
       $daftarUmkm = $request->post('nama_umkm');
       $update =['tema' => $request->post('tema'),

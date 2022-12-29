@@ -73,7 +73,7 @@ class ProfilController extends Controller
             'provinsi' => 'required|max:50',
             'kewarganegaraan' => 'required|max:30',
             'status' => 'required|max:30',
-            'pengalaman_kerja' => 'required|max:20',
+            'pengalaman_kerja' => 'required',
             'agama'=>'required|max:10'
         ];
 

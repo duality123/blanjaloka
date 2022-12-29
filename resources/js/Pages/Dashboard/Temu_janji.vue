@@ -1,16 +1,71 @@
 <template>
     <RemoveJanjiTemuLayout pesan="Anda yakin ingin menghapus Janji Temu ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/hapus_janjitemu" @toggleClose="switchClose()" />
   <DashboardLayout title="Janji Temu" state="janjitemu">
+      <div class="col-lg-8">
+
+              <div id="myModal" class="modal" v-if="popup" >
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "popupExit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="col-lg-12">
+       <div class=" d-flex justify-content-center">
+       <h2>Tambah Temu Janji</h2>
+     </div>
+           <div class="mt-2">
+      <form @submit.prevent="submit()">
+  
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Lokasi</label>
+         <input type="text" class="form-control" v-model="form.lokasi" id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+       <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Dimulai</label>
+         <input type="date" class="form-control" v-model="form.dimulai"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+       <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Berakhir</label>
+         <input type="date" class="form-control" v-model="form.berakhir"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+           <small class="text-danger"></small>
+      </div>
+        <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Nama UMKM</label>
+          <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
+                :options="umkm" v-model="form.umkm" />
+           <small class="text-danger"></small>
+      </div>
+         <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Nama Investor</label>
+          <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
+                :options="investor" v-model="form.investor" />
+           <small class="text-danger"></small>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
+      <h1 class="text-neutral-gray-5 mb-0">Kegiatan Janji Temu</h1>
     </div>
     <ul class="tabs mt-4">
       <li class="active" >
-      		<h3>Daftar Kegiatan</h3>
+      		<h3>Daftar Kegiatan Janji Temu</h3>
       </li>
     </ul>
     <section>
       <div class="d-flex justify-content-end">
+         <submit @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+                        + Tambah Janji Temu
+                    </submit>
       </div>
       <div class="table-responsive">
         <table class="table mt-3">
@@ -18,78 +73,38 @@
             <tr>
               <th scope="col">No</th>
               <th scope="col">Lokasi</th>
-              <th scope="col">Waktu</th>
+              <th scope="col">Mulai</th>
               <th scope="col">Investor</th>
                 <th scope="col">UMKM</th>
-                <th scope="col">Status</th>
+                <th scope="col">Berakhir</th>
                 <th scope="col">Aksi</th>
             </tr>
           </thead>
           <tbody>
-             <tr v-for="(index,no) in items">
+             <tr v-for="(index,no) in items.data">
               <th scope="row">{{++no}}</th>
                <td>{{index.lokasi}}</td>
                <td>{{index.waktu}}</td>
                 <td>{{index.nama_investor}}</td>
              <td>{{index.nama_umkm}}</td>
-             <td v-if="index.status==0">Menunggu</td>
-             <td v-else-if="index.status==1">Disetujui</td>
-              <td v-else-if="index.status==2">Reschedule</td>
-              <td v-else-if="index.status==3">Selesai</td>
-              <td>
-                        <div class="d-flex justify-content-center mt-2">
-                          <button  @click="action(id=index.id,aksi=1)" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">Disetujui</button>
-                        </div>
-                          <div class="d-flex justify-content-center mt-2">
-                           <button @click="action(id=index.id,aksi=2)" class="btn btn-semantic-warning-4 me-2 px-3  text-neutral-white cursor-pointer">
-                           Reschedule
-                          </button>
-                        </div>
-                          <div class="d-flex justify-content-center mt-2">
-                          <button @click="action(id=index.id,aksi=3)" class="btn btn-semantic-success-4 me-2 px-3 text-neutral-white cursor-pointer">
-                           Selesai
-                          </button>
-                        </div>
-                        <div class="d-flex justify-content-center mt-2">
-                          <button @click="switchClose(id=index.id)" class="btn btn-semantic-error-4 me-2 px-3 text-neutral-white cursor-pointer">
-                           Hapus
-                          </button>
-                        </div>
+             <td>{{index.berakhir}}</td>
+         
+              <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                  <button @click="this.toggleEdit(id=index.id)" class="btn btn-semantic-success-4 text-neutral-white">
+                  <img src="../../assets/icons/icon_update.png" alt="update icon">
+                  Edit
+                </button>
+                 <button @click="this.switchClose(elearning_id=index.id)"  class="btn btn-semantic-error-4 text-neutral-white">
+                  <img src="../../assets/icons/icon_delete.png" alt="delete icon">
+                  Hapus
+                </button  >
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{currentPage}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
+        <Pagination :links="items.links"/>
       </div>
     </section>
   </DashboardLayout>
@@ -100,6 +115,7 @@ import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 import DashboardLayout from '../../Layouts/Dashboard.vue';
 import RemoveJanjiTemuLayout from '../../Components/RemoveItem.vue';
+import Pagination from '../../Components/Pagination.vue';
 export default{
     data(){
         return{
@@ -113,29 +129,26 @@ export default{
   setup(props){
         const form = useForm({
          id:null,
-         tema:null,
-         mulai:null,
+         lokasi:'',
+         dimulai:null,
          berakhir:null,
-         jumlah_peserta:null,
-         status:null,
+         investor:'',
+         umkm:''
+         
     })
 
     return {form}
   },
     props:{
-      items : Array,
-      paginationNums : Array,
-      nextBlok:Number,
-      prevBlok:Number,
-      prev:Number,
-      next:Number,
-      first:Number,
-      last:Number
+      items : Object,
+      umkm:Array,
+      investor:Array
     },
     components: {
       DashboardLayout,
       Link,
-      RemoveJanjiTemuLayout
+      RemoveJanjiTemuLayout,
+      Pagination
     },
     mounted(){
       console.log( this.currentPage);
@@ -145,8 +158,18 @@ export default{
         this.deletePopup = !this.deletePopup          
         this.itemDelete = {id:id}
       },
-      action(id=null,aksi=null){
-        Inertia.post('/admin/dashboard/ubah_janji_temu',{'id':id,'update':aksi})
+      Edit(id=null){
+        Inertia.post('/admin/dashboard/ubah_janji_temu',{'id':id})
+      },
+      toggleEdit(id=null){
+        
+      }
+      popupExit(){
+        this.popup = ! this.popup
+      },
+      submit(){
+        this.popup = !this.popup
+        this.form.post('/admin/dashboard/tambah_janji_temu');
       }
     }
 
@@ -165,6 +188,8 @@ h1 {
 }
 .modal-content{
   text-align: start;
+  height: 450px;
+  overflow-y: scroll;
 }
 .modal {
   position: fixed; /* Stay in place */

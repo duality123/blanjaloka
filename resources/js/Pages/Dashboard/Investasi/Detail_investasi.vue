@@ -1,115 +1,96 @@
 <template>
 
-   <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
-      <div class="table-responsive">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Tanggal</th>
-              <th scope="col">Deskripsi</th>
-              <th scope="col">Bukti kegiatan</th>
-              <th scope="col">Status</th>
-              <th scope="col">Opsi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-for="(index,no) in items.data">
-              <th scope="row">{{++no}}</th>
-              <td>{{index.waktu}}</td>
-              <td class="deskripsi_td">{{index.deskripsi}}</td>
-              <td v-if="index.bukti_kegiatan == '-'">
-                  -
-              </td>
-              <td v-else>
-                  <img :src="`${$page.props.asset_url}/${index.bukti_kegiatan}`" alt="" style="width:5rem">
-              </td>
-              <td>
-                  <a href="#" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="index.status ==2">
-                            Ditolak
-                          </a>
-                          <a href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer" v-if="index.status ==0">
-                            Menunggu
-                          </a>
-                          
-                          <a href="#" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="index.status ==1">
-                            Disetujui
-                          </a>
-              </td>
-               <td>
-                          <button @click="changeStatus(2,index.id,index.waktu)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" >
-                            Tolak
-                          </button>
-                          
-                          <button @click="changeStatus(1,index.id,index.waktu)" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer" >
-                            Setujui
-                          </button>
-                        </td>
-            </tr>
-          </tbody>
-        </table>
+  <Layout section="deskripsi" :title="bisnis.name" :link="bisnis.id">
+ 
+      <div class="container">
+        <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
+      <button @click = "toggleEdit()" class="btn btn-primary-blue-6 text-neutral-white py-2">Edit Deskripsi
+      </button>
+    </div>
+        <div class="d-flex justify-content-center pt-3 mb-4" >
+                  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active" v-for="gambar in bisnis.foto_bisnis.split(',').filter(item => item)">
+                  <img :src="`${$page.props.asset_url}/${gambar}`" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+                    </div>
+            <p>{{bisnis.name}}</p>
       </div>
-      <div class="d-flex justify-content-center mt-4">
-         <Pagination :links="items.links"/>
-      </div>
-</Layout>
+  </Layout>
 </template>
 
 <script>
-import Layout from '../../../Layouts/Kegiatan.vue';
-import Pagination from '../../../Components/Pagination.vue';
+import Layout from '../../../Layouts/bisnis.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
-    setup(){
-      const form = useForm({
-        status:null,
-        id:null,
-        user_id:window.location.pathname.split('/')[6],
-        kegiatan_id:window.location.pathname.split('/')[4],
-        waktu:null
-      })
-      return { form }
-    },
-    data(){
-      return{
-        currentPage: document.location.pathname.split('/')[6]
-      }
-    },
-    props:{
-      items :Object,
-      paginationNums : Array,
-      nextBlok:Number,
-      prevBlok:Number,
-      prev:Number,
-      next:Number,
-      first:Number,
-      last:Number,
-      kegiatan:Object
-    },
-    components: {
-      Layout,
-      Link,
-      Pagination
-    },
-    methods:{
-      changeStatus(num,id,waktu){
-        this.form.status = num
-        this.form.id = id
-        this.form.waktu = waktu
-        this.form.post('/admin/dashboard/kegiatan/logbook/ubah_status')
-      }
+  data(){
+    return{
+      popup: false
     }
+  },
+  setup(props){
+    const form = useForm({
+  
+    })
+
+    return {form}
+  },
+  props:{
+    bisnis:Object
+  },
+  components:{
+    Layout,
+    Link
+  },
+  mounted(){
+    if (this.form.errors.deskripsi) {
+      this.popup =true
+    }
+  },
+  methods:{
+    submit(){
+      this.popup =false
+      this.form.post('/admin/dashboard/kegiatan/edit_deskripsi')
+    },
+    toggleEdit(){
+      this.popup = !this.popup
+    },
+     changePicture(event){
+        if(event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png'){
+        
+            if(event.target.files[0].size >= 5000000){
+              this.form.errors.gambar  = "Size foto anda lebih dari 5MB !" 
+              return
+            }
+        var image = document.getElementById('img');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        image.style.width = '5rem';
+        image.style.overflow = 'hidden';
+        this.form.gambar = event.target.files[0];
+        //console.log(this.process)
+      }
+      else{
+        this.form.errors.gambar  = "File yang anda upload bukanlah gambar !" 
+        return
+      }
+    },
+  }
 }
 </script>
 
 <style scoped>
-.deskripsi_td{
-  width:200px;
-}
-section{
-  width: 900px;
-}
+
 .close{
   border-width: 0px;
   background-color: white;

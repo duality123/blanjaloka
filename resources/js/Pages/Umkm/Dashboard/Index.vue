@@ -87,22 +87,19 @@
                   <table class="table">
                     <thead class="table-primary-blue-4">
                       <tr>
-                        <th scope="col">Tanggal</th>
                         <th scope="col">Lokasi</th>
+                         <th scope="col">Tanggal Dimulai</th>
+                          <th scope="col">Tanggal berakhir</th>
                         <th scope="col">Nama Investor</th>
-                        <th scope="col">Status</th>
+
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>11/10/22</td>
-                        <td>Lab 505</td>
-                        <td>Bu Malika</td>
-                        <td>
-                          <a href="#" class="btn btn-primary-blue-6 text-neutral-white">
-                            Dijadwalkan
-                          </a>
-                        </td>
+                     <tr v-for="(index,no) in items">
+                        <td>{{index.lokasi}}</td>
+                        <td>{{index.waktu}}</td>
+                        <td>{{index.berakhir}}</td>
+                        <td>{{index.nama_investor}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -127,6 +124,9 @@ setup(){
 components:{
   BaseLayout,
   UmkmDashboardSidebar
+},
+props:{
+  items:Object
 }
 }
 </script>

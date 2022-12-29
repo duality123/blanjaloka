@@ -133,7 +133,7 @@
                       <tr>
                         <th scope="col">No</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Deskripsi Kegiatan</th>
+                        <th class="desc_logbook" scope="col">Deskripsi Kegiatan</th>
                         <th scope="col">Bukti Kegiatan</th>
                         <th scope="col">Status</th>
                       </tr>
@@ -269,9 +269,13 @@ export default{
 
 
 <style scoped>
+.desc_logbook{
+  width:200px;
+}
  .modal-content{
   height: 450px;
   overflow-y: scroll;
+  text-align:start;
  }
  @media (max-width: 575.98px) {
   section {

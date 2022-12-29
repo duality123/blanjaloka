@@ -51,50 +51,25 @@
                   </p>
                 </div>
                     <div class="mt-5 mb-4 d-flex align-items-center borderc gap-3">
-                      <button @click="formToggle()" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
-                        Buat permintaan janji temu </button>
                 </div>
                 <h2 class="text-neutral-gray-5 mt-5 mb-3">Riwayat Janji Temu</h2>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">
-                      <tr>
-                        <th scope="col">Tanggal</th>
+                        <tr>
                         <th scope="col">Lokasi</th>
+                         <th scope="col">Tanggal Dimulai</th>
+                          <th scope="col">Tanggal berakhir</th>
                         <th scope="col">Nama Investor</th>
-                        <th scope="col">Status</th>
+
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>11/10/22</td>
-                        <td>Lab 505</td>
-                        <td>Pak Sulaiman</td>
-                        <td>
-                          <a href="#" class="btn btn-semantic-warning-4 text-neutral-white cursor-pointer">
-                            Reschedule
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>11/10/22</td>
-                        <td>Lab 505</td>
-                        <td>Bu Malika</td>
-                        <td>
-                          <a href="#" class="btn btn-primary-blue-6 text-neutral-white cursor-pointer">
-                            Dijadwalkan
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>11/10/22</td>
-                        <td>Lab 505</td>
-                        <td>Pak Sulaiman</td>
-                        <td>
-                          <a href="#" class="btn btn-semantic-success-4 text-neutral-white cursor-pointer">
-                            Selesai
-                          </a>
-                        </td>
+                       <tr v-for="(index,no) in items">
+                        <td>{{index.lokasi}}</td>
+                        <td>{{index.waktu}}</td>
+                        <td>{{index.berakhir}}</td>
+                        <td>{{index.nama_investor}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -128,6 +103,9 @@ export default{
   components:{
     BaseLayout,
     UmkmDashboardSidebar
+  },
+  props:{
+    items:Object
   },
   methods:{
     formToggle(){

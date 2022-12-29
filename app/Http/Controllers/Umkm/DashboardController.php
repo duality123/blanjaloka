@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Elearning;
 use App\Models\Notifikasi;
+use App\Models\Janjitemu;
+use App\Models\Profil;
 use Illuminate\Support\Facades\Storage;
 class DashboardController extends Controller
 {
@@ -19,13 +21,21 @@ class DashboardController extends Controller
          if(!$request->user()->accepted){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Akses Ditolak','desc'=>'Anda harus memenuhi seluruh profil lalu acc dari admin']);
         }
-        return Inertia::render('Umkm/Dashboard/Index');
+        $data = Janjitemu::select('investor_id','lokasi','waktu','id','berakhir')->where('umkm_id','=',$request->user()->id)->get();
+        
+    
+        for ($i=0; $i < count($data); $i++) { 
+           $investor_name = Profil::select('nama_lengkap')->where('user_id','=', $data[$i]->investor_id)->first();
+           $data[$i]->nama_investor = $investor_name->nama_lengkap;
+           
+        }
+        return Inertia::render('Umkm/Dashboard/Index',['items'=>$data]);
     }
 
     public function tambah_eventual(Request $request){
          $rules = [
             'perihal' => 'required',
-            'kontak' => 'required|max:20',
+            'kontak' => 'required|max:100',
             'mentor' => 'required|max:100',
           
         ];
@@ -196,7 +206,16 @@ class DashboardController extends Controller
         if(!$request->user()->accepted){
             return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
         }
-        return Inertia::render('Umkm/Dashboard/JanjiTemu');
+
+        $data = Janjitemu::select('investor_id','lokasi','waktu','id','berakhir')->where('umkm_id','=',$request->user()->id)->get();
+        
+    
+        for ($i=0; $i < count($data); $i++) { 
+           $investor_name = Profil::select('nama_lengkap')->where('user_id','=', $data[$i]->investor_id)->first();
+           $data[$i]->nama_investor = $investor_name->nama_lengkap;
+           
+        }
+        return Inertia::render('Umkm/Dashboard/JanjiTemu',['items'=>$data]);
     }
 
     public function umkmjurnal(Request $request,$slug)

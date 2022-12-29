@@ -22,6 +22,7 @@ import {
 import "bootstrap";
 import '../css/app.scss'
 import "vue-select/dist/vue-select.css";
+import '../../node_modules/bootstrap/dist/js/bootstrap.min.js'
 
 library.add(
     faEye,
