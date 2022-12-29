@@ -38,7 +38,8 @@ class shouldInvestor
             
             return $data;
         });
-        return $next($request);
+        
         */
+        return $next($request);
     }
 }

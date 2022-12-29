@@ -97,7 +97,7 @@
                                     <Link class="dropdown-item" href="/umkm/dashboard">UMKM Saya</Link>
                                 </li>
                                  <li v-if="$page.props.auth.user_role==3">
-                                    <Link class="dropdown-item" href="/umkm/dashboard">Investasi Saya</Link>
+                                    <Link class="dropdown-item" href="/investor/dashboard/profil_perusahaan">Investasi Saya</Link>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
