@@ -3,40 +3,123 @@
   <Layout section="deskripsi" :title="bisnis.name" :link="bisnis.id">
  
       <div class="container">
-        <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
-      <button @click = "toggleEdit()" class="btn btn-primary-blue-6 text-neutral-white py-2">Edit Deskripsi
-      </button>
-    </div>
-        <div class="d-flex justify-content-center pt-3 mb-4" >
-                  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                <div class="carousel-item active" v-for="gambar in bisnis.foto_bisnis.split(',').filter(item => item)">
-                  <img :src="`${$page.props.asset_url}/${gambar}`" class="d-block w-100" alt="...">
+
+          <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active" v-for="gambar in bisnis.foto_bisnis.split(',').filter(item => item)">
+      <div class="d-flex  align-items-center" >
+                  <img  :src="`${$page.props.asset_url}/${gambar}`" class="d-block w-100 carouselsize" alt="...">
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-                    </div>
-            <p>{{bisnis.name}}</p>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+<div class="card bg-primary-blue-1 border-primary-blue-6 mb-3 mt-3">
+  <div class="card-body">
+    <ul class="mt-2">
+      <li class="active" >
+      <h2 >Detail Bisnis</h2>
+    </li>
+  </ul>
+    <div class="row mt-5">
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="text-neutral-gray-4">Grafik Profit ({{bisnis.persentase_hasil_investasi}} %)</h3>
+            <Bar :chart-options="chartOptions" :chart-data="chartData" :height="250" class="mt-4" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="text-neutral-gray-4">Rasio Jumlah dan Target Investasi</h3>
+            <Bar :chart-options="chartOptions2" :chart-data="chartData2" :height="250" class="mt-4" />
+          </div>
+        </div>
+      </div>
+     
+    </div>
+<div class="d-flex flex-column">
+  <div class="p-2">Nama Bisnis : {{bisnis.name}}</div>
+ <div class="p-2">Jumlah Investor : {{bisnis.jumlah_investor}} </div>
+  <div class="p-2">Minimum Investasi : {{bisnis.minimum_investasi}} </div>
+  <div class="p-2">Kategori : {{bisnis.kategori}} </div>
+   <div class="p-2">Jumlah Investasi : {{bisnis.jumlah_investasi}} </div>
+  <div class="p-2">Target Investasi : {{bisnis.target_investasi}} </div>
+   <div class="p-2">Lokasi : {{bisnis.lokasi}} </div>
+    <div class="p-2" v-if="bisnis.persentase_hasil_investasi">Persentase hasil Investasi : {{bisnis.persentase_hasil_investasi}} %</div>
+     <div class="p-2" v-else>0 %</div>
+    <div class="p-2">Waktu balik modal mulai : {{bisnis.waktu_balik_modal_start}} </div>
+ <div class="p-2">Waktu balik modal end : {{bisnis.waktu_balik_modal_end}} </div>
+  <div class="p-2" v-if="bisnis.status">Status : Aktif </div>
+    <div class="p-2" v-else>Status :Tidak Aktif </div>
+</div>
+
+  </div>
+
       </div>
   </Layout>
 </template>
 
 <script>
-import Layout from '../../../Layouts/bisnis.vue';
+import Layout from '../../../Layouts/Bisnis.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
+import { Bar } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 export default{
-  data(){
+  data(props){
     return{
-      popup: false
+      popup: false,
+      chartData:{
+          labels: ['Jumlah Investasi','Total Penghasilan'],
+          datasets: [{
+          label: ['Rasio'],
+          data: [props.bisnis.jumlah_investasi,props.bisnis.total_penghasilan],
+          backgroundColor: ['#398AB9'],
+          borderRadius: 5,
+          }]
+        },
+      chartData2:{
+          labels: ['Jumlah Investasi','Target Investasi'],
+          datasets: [{
+          label: ['Rasio'],
+          data: [props.bisnis.jumlah_investasi,props.bisnis.target_investasi],
+          backgroundColor: ['#398AB9'],
+          borderRadius: 5,
+          }]
+        },
+       chartOptions :{
+          responsive: true,
+          plugins: {
+          legend: {
+          display: true,
+          position: 'bottom',
+          align: 'start'
+    }
+  }
+},
+ chartOptions2 :{
+          responsive: true,
+          plugins: {
+          legend: {
+          display: true,
+          position: 'bottom',
+          align: 'start'
+    }
+  }
+}
     }
   },
   setup(props){
@@ -51,13 +134,10 @@ export default{
   },
   components:{
     Layout,
-    Link
+    Link,
+    Bar
   },
-  mounted(){
-    if (this.form.errors.deskripsi) {
-      this.popup =true
-    }
-  },
+ 
   methods:{
     submit(){
       this.popup =false
@@ -90,102 +170,43 @@ export default{
 </script>
 
 <style scoped>
+.delete{
+  border-width:0px;
 
+  border-color: transparent;
+}
+.carousel-item  img{
+  width: auto;
+  margin:auto;
+  display: block;
+  max-width:350px;
+  height:200px;
+}
 .close{
   border-width: 0px;
   background-color: white;
 }
 
-.modal {
-  position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  display: block;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+.carousel-control-next-icon{
+ background-image: url('../../../assets/icons/carousel-right.png');
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin-top: 3rem;
-  margin-left: 25rem;
-  padding: 20px;
-  border-radius: 25px;
-  width: 40%;
-  text-align: center;
+.carousel-control-prev-icon{
+ background-image: url('../../../assets/icons/carousel-left.png');
 }
-h1 {
-  font-size: 2.1rem;
-  font-weight: 600;
-}
+
 ul {
   display: flex;
   column-gap: 2rem;
   list-style: none;
   padding: 0;
-  border-bottom: 1px solid #F0F0F0;
+ 
 }
 
 ul li {
   cursor: pointer;
-}
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
+   border-bottom: 2px solid #398AB9;
 
-}
-.custom-file-input::before {
-
-  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0\00a0Upload Gambar';
-  display: inline-block;
-  background-color:white;
-  background-image:url('../../../assets/icons/upload.png');
-  background-repeat: no-repeat;
-  background-size: 18px 20px;
-  border-radius: 3px;
-  padding: 8px;
-  background-origin: content-box;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  color:black;
-  font-size: 12px;
-}
-
-.custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-
-.custom-file-input2::-webkit-file-upload-button {
-  visibility: hidden;
-
-}
-
-.custom-file-input2::before {
-  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0  Ambil Gambar';
-  display: inline-block;
-  background-color:white;
-  background-image:url('../../../assets/icons/upload2.png');
-  background-repeat: no-repeat;
-  background-size: 18px 20px;
-  border-radius: 3px;
-  padding: 8px;
-  background-origin: content-box;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  color:black;
-  font-size: 12px;
-}
-
-.custom-file-input2:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 
 ul li {
@@ -193,8 +214,9 @@ ul li {
 }
 
 ul li a.active {
-  border-bottom: 2px solid #398AB9;
+  border-bottom: 2px solid #F0F0F0;
   color:  #398ab9;
+  margin-bottom: 0px;
 }
 
 ul li a {
@@ -203,73 +225,14 @@ ul li a {
   color: black;
 }
 
-@media (max-width: 575.98px) {
-  ul {
-    gap: 1rem;
-    flex-direction: column;
-  }
-
-}
-
-form section h2 {
-  font-size: 1.25rem;
-}
-
-.form-control {
-  background-color: transparent;
-  resize: none;
-}
-.modal-content{
-  text-align: start;
-}
-
-textarea::-webkit-scrollbar {
-  display: none;
-}
-
-.desc_count {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #3E4041;
-  position: absolute;
-  right: 0;
-  bottom: -1.5rem;
-}
-
-.count_input {
-  width: 14rem;
-}
-
-.count_input_leading {
-  position: absolute;
-  right: -3.5rem;
-  bottom: 0.5rem;
-}
-
-.telp_input .form-control {
-  padding-left: 2.5rem !important;
-}
-
-.telp_input .telp_leading {
-  position: absolute;
-  left: 0;
-  bottom: 0.5rem;
-}
-
-form button {
-  padding: 0.75rem 1.5rem;
-
-}
 
 @media (max-width: 575.98px) {
   ul {
     gap: 1rem;
     flex-direction: column;
   }
-  .modal-content{
-    margin-left: 3rem;
-    margin-top: 5rem;
-    width: 450px;
-  }
+
 }
+
+
 </style>

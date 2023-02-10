@@ -1,4 +1,4 @@
-<template>
+    <template>
     <AuthLayout title="Register">
         <div class="row justify-content-center my-5">
             <div class="col-lg-8">
@@ -96,20 +96,7 @@ const form = useForm({
 });
 const isInvestor = ref(false);
 const isUMKM = ref(false);
-watch(() => form.umkm,
-  (newState,oldState) => {
-    if(newState == true){
-        form.investor = false; 
-        isUMKM.value = true
-        isInvestor.value = false
-    }
-    else{
-        form.investor = true;
-        isUMKM.value = false
-        isInvestor.value = true
-    }
-  }
-)
+
 
 watch(() => form.investor,
   (newState,oldState) => {

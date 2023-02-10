@@ -1,40 +1,13 @@
 <template>
+  <stalkInvestor :popupStalk="popupStalkInvestor" :data="investor" @toggleTutup="togglePopup()"/>
   <BaseLayout title="UMKM Profile">
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
           <UmkmDashboardSidebar />
-             <div id="myModal"  class="modal"  v-if="this.popup ">
 
-    <div  id="myModal" class="modal" >
-
-      <div class="modal-content">
-        <div class=" d-flex justify-content-end">
-         <button @click = "formToggle()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-     <div class="col-lg-12">
-      <div class=" d-flex justify-content-center">
-      <h2>Kirim Laporan</h2>
-    </div>
-    <div class="mt-2">
-      <form @submit.prevent="submit()">
-      <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Berikan laporan anda ?</label>
-         <input type="text" class="form-control" id="provinsi" placeholder="Masukkan laporan anda" >
-           <small class="text-danger"></small>
-      </div>
-    
-      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
-                        Kirim</button>
-  </form>
-      </div>
-    </div>
-</div>
-    </div>
-  </div>
           <div class="col-lg-8">
+
             <div class="card">
               <div class="card-body">
                 <h1>Janji Temu</h1>
@@ -50,9 +23,21 @@
                     Jangan lupakan agenda bertemu! Janji temu merupakan fitur penting agar Anda dapat bertemu dan diskusi bersama investor.
                   </p>
                 </div>
-                    <div class="mt-5 mb-4 d-flex align-items-center borderc gap-3">
-                </div>
+                   
                 <h2 class="text-neutral-gray-5 mt-5 mb-3">Riwayat Janji Temu</h2>
+                <div class="row">
+                 <div class="col-xl-14 d-flex justify-content-start mb-2">
+        <MultiSearch :url="`/umkm/dashboard/janjitemu?page=1`" judul="Cari Jadwal janji temu" />
+         <div class="dropdown mx-3  ">
+  <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">Sudah selesai</Link></li>
+                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Belum Selesai</Link></li>
+              </ul>
+            </div>
+          </div>
+        </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">
@@ -61,20 +46,25 @@
                          <th scope="col">Tanggal Dimulai</th>
                           <th scope="col">Tanggal berakhir</th>
                         <th scope="col">Nama Investor</th>
+                         <th scope="col">Foto Investor</th>
 
                       </tr>
                     </thead>
                     <tbody>
-                       <tr v-for="(index,no) in items">
+                       <tr v-for="(index,no) in items.data">
                         <td>{{index.lokasi}}</td>
                         <td>{{index.waktu}}</td>
                         <td>{{index.berakhir}}</td>
-                        <td>{{index.nama_investor}}</td>
+                         <td><button @click="togglePopup(index.investor_id)" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">{{index.nama_lengkap}}</button></td>
+                         <td><img class="imgtd" :src="`${$page.props.asset_url}/${index.foto_profil}`"></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
+                <div class="d-flex justify-content-center mt-4">
+              <Pagination :links="items.links"/>
+            </div>
             </div>
           </div>
         </div>
@@ -84,13 +74,19 @@
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
+import BaseLayout from '../../../Layouts/LayoutUMKM.vue'
+import MultiSearch from '../../../Components/JanjiTemuMultiSearch.vue'
+import stalkInvestor from '../../../Layouts/stalkInvestor.vue'
+import Pagination from '../../../Components/Pagination.vue'
 import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
 export default{
   data(){
     return{
-      popup:false
+      popup:false,
+      popupStalkInvestor:false,
+      url:document.location.href
     }
   },
   setup(){
@@ -102,15 +98,25 @@ export default{
   },
   components:{
     BaseLayout,
-    UmkmDashboardSidebar
+    UmkmDashboardSidebar,
+    MultiSearch,
+    Pagination,
+    stalkInvestor,
+    Link
+
   },
   props:{
-    items:Object
+    items:Object,
+    investor:Object
   },
   methods:{
     formToggle(){
       this.popup = !this.popup
-    }
+    },
+    togglePopup(investor_id){
+    this.popupStalkInvestor = !this.popupStalkInvestor
+    Inertia.get('/umkm/dashboard/janjitemu',{id:investor_id},{ only: ['investor'],preserveState:true})
+  },
   }
 }
 </script>
@@ -118,6 +124,10 @@ export default{
 <style scoped>
 section {
   margin-top: 10rem !important;
+}
+.imgtd{
+  height: 100px;
+  width: 150px;
 }
 
 .sidebar ul {
@@ -202,7 +212,9 @@ h2 {
   font-size: 1.25rem;
   font-weight: 600;
 }
-
+td{
+  width:300px;
+}
 table thead tr td,
 table thead tr th {
   font-weight: 600;

@@ -1,48 +1,50 @@
 <template>
- <RemoveElearningLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/kegiatan/hapus_elearning" @toggleClose="switchClose()" />
+ <RemoveElearningLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/kegiatan/hapus_elearning" @toggleClose="switchClose()" />
   <Layout section="elearning" :title="kegiatan.tema" :link="kegiatan.id">
-                  <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
-      <Link :href="`/admin/dashboard/kegiatan/${currentPage}/tambah_elearning`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Elearning
+     <div class="row">
+         <div class="col d-flex justify-content-start">
+        <Search :url="`/admin/kegiatan/${kegiatan.id}/elearning?page=1`" judul="Cari Elarning" />
+        
+      </div>
+  <div class=" col d-flex justify-content-end">
+      <Link :href="`/admin/kegiatan/${kegiatan.id}/tambah_elearning`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Elearning
       </Link>
     </div>
-      <div class="table-responsive">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Waktu</th>
-              <th scope="col">Judul</th>
-              <th scope="col">Foto</th>
-              <th scope="col">Deskripsi</th>
-              <th scope="col">Opsi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-for="(index,no) in items.data">
-              <th scope="row">{{++no}}</th>
-               <td> {{index.hari_tanggal_waktu}}</td>
-                <td> <Link :href="`/admin/dashboard/kegiatan/elearning/${index.id}/detail?page=1`">{{index.judul}}</Link></td>
-                 <td v-if="index.bukti_kegiatan == '-'">
-                  -
-              </td>
-              <td v-else>
-                  <img :src="`${$page.props.asset_url}/${index.foto}`" alt="" style="width:5rem">
-              </td>
-              <td><p>{{index.deskripsi}}</p></td>
-                 <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <Link :href="`/admin/dashboard/kegiatan/elearning/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  Edit
-                </Link>
-                 <button @click="this.switchClose(elearning_id=index.id)"  class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
-                  Hapus
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  </div>
+         <div class="row">
+                  <div class="col-lg-4" v-for="(item,no) in items.data">
+
+                    <div class="card card_kegiatan mt-2">
+                       
+                      <div class="card-body">
+<div class=" d-flex justify-content-end">
+      <div class="dropdown">
+  <a href="#" role="button"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+     <font-awesome-icon icon="fas fa-ellipsis-h" />
+  </a>
+
+  <ul class="dropdown-menu-end dropdown-menu">
+    <li><Link :href="`/admin/kegiatan/${item.id}/edit`" class="dropdown-item" href="#">Edit</Link></li>
+    <li><button @click="switchClose(item.id)" class="dropdown-item delete" href="#">Hapus</button></li>
+  </ul>
+</div>
       </div>
+      <div class="col d-flex justify-content-center">
+        <div  class="bg-semantic-success-1 text-semantic-success-4 status">{{item.hari_tanggal_waktu}}</div>
+                  <img  :src="`${$page.props.asset_url}/${item.foto}`" class="gambar" alt="...">
+                </div>
+                 <div> 
+                          <h1 class="text-neutral-black mt-2">{{item.judul}}</h1>
+                          <p>{{item.deskripsi.substring(0,110)}}...</p>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                         <button class="btn btn-primary-blue-7 me-2 px-3 text-neutral-white cursor-pointer" @click="redirect(item.id)">Lihat Elearning</button>
+                       </div>
+              </div> 
+                        </div>
+                       
+                      </div>
+                    </div>    
       <div class="d-flex justify-content-center mt-4">
         <Pagination :links="items.links"/>
       </div>
@@ -54,11 +56,13 @@ import Layout from '../../../Layouts/Kegiatan.vue';
 import RemoveElearningLayout from '../../../Components/RemoveItem.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import Pagination from '../../../Components/Pagination.vue';
+import Search from '../../../Components/Search.vue';
 import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 export default{
    data(){
       return{
-        currentPage: document.location.pathname.split('/')[4],
+        currentPage: document.location.pathname.split('/')[3],
         deletePopup:false,
         itemDelete:null
       }
@@ -67,7 +71,10 @@ export default{
        switchClose(elearning_id=null){
           this.deletePopup = !this.deletePopup          
           this.itemDelete = {id:elearning_id}
-      }
+      },
+      redirect(id){
+        Inertia.get('/admin/kegiatan/elearning/'+id+'/bab')
+    }
     },
     props:{
       items : Object,
@@ -84,12 +91,53 @@ export default{
       Layout,
       Link,
       RemoveElearningLayout,
-      Pagination
+      Pagination,
+      Search
     }
 }
 </script>
 
 <style scoped>
+.delete{
+  border-width:0px;
+
+  border-color: transparent;
+}
+.gambar{
+  width: 190px;
+  height: 140px;
+  border-radius:25px;
+}
+
+.card_kegiatan {
+  border: none;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.card_kegiatan:hover {
+  background-color: #F2F7FA;
+}
+
+.card_kegiatan .status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+.card_kegiatan h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card_kegiatan p {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
 
 .close{
   border-width: 0px;
@@ -123,13 +171,7 @@ h1 {
   font-size: 2.1rem;
   font-weight: 600;
 }
-ul {
-  display: flex;
-  column-gap: 2rem;
-  list-style: none;
-  padding: 0;
-  border-bottom: 1px solid #F0F0F0;
-}
+
 
 ul li {
   cursor: pointer;
@@ -187,79 +229,7 @@ ul li {
 .custom-file-input2:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
-p{
-    white-space: nowrap; 
-  width: 300px; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
-}
-ul li {
-  padding-bottom: 0.5rem;
-}
 
-ul li a.active {
-  border-bottom: 2px solid #398AB9;
-  color:  #398ab9;
-}
-
-ul li a {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
-
-@media (max-width: 575.98px) {
-  ul {
-    gap: 1rem;
-    flex-direction: column;
-  }
-
-}
-
-form section h2 {
-  font-size: 1.25rem;
-}
-
-.form-control {
-  background-color: transparent;
-  resize: none;
-}
-.modal-content{
-  text-align: start;
-}
-
-textarea::-webkit-scrollbar {
-  display: none;
-}
-
-.desc_count {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #3E4041;
-  position: absolute;
-  right: 0;
-  bottom: -1.5rem;
-}
-
-.count_input {
-  width: 14rem;
-}
-
-.count_input_leading {
-  position: absolute;
-  right: -3.5rem;
-  bottom: 0.5rem;
-}
-
-.telp_input .form-control {
-  padding-left: 2.5rem !important;
-}
-
-.telp_input .telp_leading {
-  position: absolute;
-  left: 0;
-  bottom: 0.5rem;
-}
 
 form button {
   padding: 0.75rem 1.5rem;

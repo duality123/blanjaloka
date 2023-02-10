@@ -16,7 +16,7 @@
       <form @submit.prevent="submit()">
          <div class="mb-4">
          <label for="provinsi" class="form-label text-neutral-gray-5">Jadwal</label>
-         <input type="date" class="form-control" v-model="form.jadwal"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
+         <input type="datetime-local" class="form-control" v-model="form.jadwal"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
            <small class="text-danger"></small>
       </div>
       <div class="mb-4">
@@ -43,6 +43,10 @@
       </div>
     </div>
   <Layout section="eventual" :title="kegiatan.tema" :link="kegiatan.id">
+    <div class="col d-flex justify-content-start">
+        <Search :url="`/admin/kegiatan/${kegiatan.id}/eventual?page=1`" judul="Cari Eventual" />
+        
+      </div>
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
@@ -74,12 +78,12 @@
                             Selesai
                           </button>
                 </td>
-                 <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+                 <td class="d-flex flex-column flex-lg-row  gap-4">
                 <button @click="toggleEdit(index.jadwal,index.link_meeting,index.status,index.id)" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </button>
-                <Link :href="`/admin/dashboard/kegiatan/${index.id}/hapus_eventual`" method="post" class="btn btn-semantic-error-4 text-neutral-white">
+                <Link :href="`/admin/kegiatan/${index.id}/hapus_eventual`" method="post" class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
                 </Link>
@@ -98,6 +102,7 @@
 import Layout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import Pagination from '../../../Components/Pagination.vue';
+import Search from '../../../Components/Search.vue';
 import { ref } from 'vue';
 export default{
   setup(){
@@ -117,20 +122,13 @@ export default{
     },
     props:{
       items : Object,
-      eventual:Object,
-      paginationNums : Array,
-      nextBlok:Number,
-      prevBlok:Number,
-      prev:Number,
-      next:Number,
-      first:Number,
-      last:Number,
       kegiatan:Object
     },
     components: {
       Layout,
       Link,
-      Pagination
+      Pagination,
+      Search
     },
     methods:{
       toggleEdit(jadwal,link_meeting,status,id){
@@ -144,8 +142,7 @@ export default{
         this.popup = !this.popup
       },
       submit(){
-        this.popup=false;
-        this.form.post('/admin/dashboard/kegiatan/ubah_eventual_status')
+        this.form.post('/admin/kegiatan/ubah_eventual_status',{preserveState:true})
       }
     }
 }
@@ -154,7 +151,7 @@ export default{
 <style scoped>
 
 table{
-  width: 900px;
+  width: 100%;
 }
 
 .close{
@@ -222,7 +219,9 @@ ul li {
   color:black;
   font-size: 12px;
 }
-
+.btn_custom_outline:hover {
+    color: #FFFFFF !important;
+}
 .custom-file-input:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }

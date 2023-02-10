@@ -41,13 +41,11 @@
 </div>
     </div>
   </div>
-      <div id="myModal"  class="modal"  v-if="this.popupDet" >
-
-    <div  id="myModal" class="modal" >
-
-      <div class="modal-content">
+        <div class="col-lg-8">
+    <div  id="myModal" class="modal" v-if="popupDet" >
+      <div  class="modal-content">
         <div class=" d-flex justify-content-end">
-         <button @click = "popupDetail()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+         <button @click = "popupDetailClose()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -55,20 +53,24 @@
       <div class=" d-flex justify-content-center">
       <h2>Detail Konsultasi</h2>
     </div>
-    <div class="mt-2">
-     <div class="card-body">
-  <p><strong>Status : </strong>{{this.eventualDetail['status']}}</p>
-  <p><strong>Nama Lengkap : </strong>{{this.eventualDetail['nama_lengkap']}}</p>
-  <p><strong>No HP : </strong>{{this.eventualDetail['no_hp']}}</p>
-  <p><strong>Tanggal meeting : </strong>{{this.eventualDetail['tanggal']}}</p>
-  <p><strong>Nama Mentor : </strong>{{this.eventualDetail['nama_mentor']}}</p>
-  <p><strong>Link meeting : </strong>{{this.eventualDetail['link_meeting']}}</p>
-  <p><strong>Kontak : </strong>{{this.eventualDetail['kontak']}}</p>
-  <p><strong>Perihal : </strong>{{this.eventualDetail['perihal']}}</p>
+    <div v-if="this.eventualDetail == null" class="d-flex justify-content-center mt-4">
+    <div class="spinner-border text-primary"></div>
   </div>
-
+    <div class="mt-2" v-else>
+     <div class="card-body">
+      <p><strong>Status : </strong>{{this.eventualDetail['status']}}</p>
+      <p><strong>Nama Lengkap : </strong>{{this.eventualDetail['profil']['nama_lengkap']}}</p>
+      <p><strong>No HP : </strong>{{this.eventualDetail['profil']['no_hp']}}</p>
+      <p v-if="this.eventualDetail['tanggal']"><strong>Tanggal meeting : </strong>{{this.eventualDetail['tanggal']}}</p>
+      <p v-else><strong>Tanggal meeting : </strong>Belum di schedule</p>
+      <p><strong>Nama Mentor : </strong>{{this.eventualDetail['nama_mentor']}}</p>
+      <p v-if="this.eventualDetail['link_meeting']"><strong>Link meeting : </strong>{{this.eventualDetail['link_meeting']}}</p>
+      <p v-else><strong>Link meeting : </strong>Belum di schedule</p>
+      <p><strong>Kontak : </strong>{{this.eventualDetail['kontak']}}</p>
+      <p><strong>Perihal : </strong>{{this.eventualDetail['perihal']}}</p>
       </div>
-    </div>
+</div>
+      </div>
 </div>
     </div>
   </div>
@@ -88,10 +90,13 @@
                 </div>
                 <div class="my-4 d-flex align-items-center borderc gap-3">
                     <h2 class="text-neutral-gray-5 m-0 me-auto">Riwayat Eventual Anda</h2>
-                    <submit @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+                    <button @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
                         + Daftar Konsultasi
-                    </submit>
+                    </button>
                 </div>
+                 <div class=" d-flex justify-content-start">
+        <Search :url="`/umkm/dashboard/eventual?page=1`" judul="Cari kegiatan" />
+           </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">
@@ -103,20 +108,20 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(event,number) in eventual">
+                      <tr v-for="(event,number) in eventual.data">
                         <td>{{++number}}</td>
                         <td>{{event.perihal}}</td>
                         <td>
                             {{event.nama_mentor}}
                         </td>
                         <td>
-                        <button @click="this.popupDetail(event.status,event.nama_lengkap,event.no_hp,event.jadwal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 0" href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">
+                        <button @click="this.popupDetail(event.id)" v-if="event.status == 0" href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer">
                           Menunggu
                         </button>
-                        <button @click="popupDetail(event.status,event.nama_lengkap,event.no_hp,event.tanggal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 1" href="#" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">
+                        <button @click="popupDetail(event.id)" v-if="event.status == 1" href="#" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">
                             Disetujui
                           </button>
-                         <button @click="popupDetail(event.status,event.nama_lengkap,event.no_hp,event.tanggal,event.nama_mentor,event.link_meeting,event.kontak,event.perihal)" v-if="event.status == 2" href="#" class="btn btn-semantic-success-4 me-2 px-3 text-neutral-white cursor-pointer">
+                         <button @click="popupDetail(event.id)" v-if="event.status == 2" href="#" class="btn btn-semantic-success-4 me-2 px-3 text-neutral-white cursor-pointer">
                             Selesai
                           </button>
                           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,44 +132,43 @@
                     </tbody>
                   </table>
                 </div>
+                    <div class="d-flex justify-content-center mt-4">
+              <Pagination :links="eventual.links"/>
+            </div>
   </Layout>
 </template>
 
 
 <script>
+import Search from '../../../Components/Search.vue'
+import Pagination from '../../../Components/Pagination.vue'
 import Layout from '../../../Layouts/Kegiatanku.vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
 export default{
   data(){
     return{
       popup:false,
       popupDet : false,
-      eventualDetail :{
-        status:null,
-        nama_lengkap:null,
-        no_hp:null,
-        nama_mentor:null,
-        link_meeting:null,
-        tanggal:null,
-        kontak:null,
-        perihal:null
-      },
+    
   
     }
   },
-  setup(){
+  setup(props){
     const form = useForm({
      perihal:null,
      kontak:null,
      mentor:null,
-     kegiatan_id: document.location.pathname.split('/')[5]
+     kegiatan_id: props.kegiatan.id
     })
 
     return {form}
   },
   components:{
     Layout,
-    Link
+    Link,
+    Pagination,
+    Search
   },
   mounted(){
     if (this.form.errors.perihal ||  this.form.errors.kontak || this.form.errors.mentor) {
@@ -174,38 +178,29 @@ export default{
   methods:{
     submit(){
       this.popup=false;
-      this.form.post('/umkm/dashboard/kegiatanku/tambah_eventual')
+      this.form.post('/umkm/dashboard/kegiatanku/tambah_eventual',{onSuccess: () => this.form.reset()})
 
     },
-    popupDetail(status,nama_lengkap,no_hp,tanggal,nama_mentor,link_meeting,kontak,perihal){
+    popupDetail(eventual_id = null){
       this.popupDet = !this.popupDet
-      if (this.popupDet) {
-        this.eventualDetail['status'] = status
-        if(this.eventualDetail['status'] == 0){
-            this.eventualDetail['status'] = 'Menunggu'
-        }
-        else if(this.eventualDetail['status'] == 1){
-           this.eventualDetail['status'] = 'Disetujui'
-        }
-        else{
-           this.eventualDetail['status'] = 'Selesai'
-        }
-        this.eventualDetail['nama_lengkap'] = nama_lengkap
-        this.eventualDetail['no_hp'] = no_hp
-        this.eventualDetail['tanggal'] = tanggal
-        this.eventualDetail['nama_mentor'] = nama_mentor
-        this.eventualDetail['link_meeting'] =link_meeting
-        this.eventualDetail['kontak'] =kontak
-        this.eventualDetail['perihal'] =perihal
-      }
+      Inertia.get('/umkm/dashboard/kegiatanku/eventual/'+this.kegiatan.id,{id:eventual_id},{ only: ['eventualDetail'],preserveState:true})
+          
+      },
+     popupDetailClose(){
+      this.popupDet = !this.popupDet
+       Inertia.get('/umkm/dashboard/kegiatanku/eventual/'+this.kegiatan.id,{},{ only: ['eventualDetail'],preserveState:true})
     },
     popupExit(){
       this.popup = !this.popup
     }
   },
+  mounted(){
+    console.log(this.eventualDetail)
+  },
   props:{
     eventual:Object,
-    kegiatan:Object
+    kegiatan:Object,
+    eventualDetail:Object
   }
 
 

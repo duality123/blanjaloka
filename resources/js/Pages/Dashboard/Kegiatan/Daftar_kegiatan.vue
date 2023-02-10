@@ -1,58 +1,62 @@
 <template>
-    <RemoveKegiatanLayout pesan="Anda yakin ingin menghapus kegiatan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/kegiatan/hapus_kegiatan" @toggleClose="switchClose()" />
+    <RemoveKegiatanLayout pesan="Anda yakin ingin menghapus kegiatan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/kegiatan/hapus_kegiatan" @toggleClose="switchClose()" />
   <DashboardLayout title="Daftar kegiatan" state="kegiatan">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-    </div>
     <ul class="tabs mt-4">
       <li class="active" >
       		<h3>Daftar Kegiatan</h3>
       </li>
     </ul>
     <section>
-      <div class="d-flex justify-content-end">
-        <Link href="/admin/dashboard/kegiatan/tambah_kegiatan/baru" class="btn btn-primary-blue-6 text-neutral-white py-2">
+      <div class="row">
+         <div class="col d-flex justify-content-start">
+        <Search url="/admin/kegiatan?page=1" judul="Cari Kegiatan" />
+        <div class="dropdown mx-3  ">
+  <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">Sudah selesai</Link></li>
+                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Belum Selesai</Link></li>
+              </ul>
+            </div>
+           </div>
+      <div class=" col d-flex justify-content-end">
+        <Link href="/admin/kegiatan/tambah_kegiatan" class="btn btn-primary-blue-6 text-neutral-white py-2">
           <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Kegiatan
         </Link>
       </div>
-      <div class="table-responsive">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Tema</th>
-              <th scope="col">Id Kegiatan</th>
-              <th scope="col">Mulai</th>
-              <th scope="col">Berakhir</th>
-              <th scope="col">Jumlah peserta</th>
-              <th scope="col">Status</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-for="(index,no) in items.data">
-              <th scope="row">{{++no}}</th>
-              <td><Link :href="`/admin/dashboard/kegiatan/${index.id}/detail`">{{index.tema}}</Link></td>
-               <td>{{index.id}}</td>
-               <td>{{index.dimulai}}</td>
-                <td>{{index.berakhir}}</td>
-                 <td>{{index.total_peserta}}/{{index.jumlah_orang_diundang}}</td>
-                <td v-if="index.draft">Aktif</td>
-                <td v-else>Tidak Aktif</td>
-              <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <Link :href="`/admin/dashboard/kegiatan/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  Edit
-                </Link>
-                <button @click="this.switchClose(kegiatan_id=index.id)" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
-                  Hapus
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    </div>
+            <div class="row card-body mt-4">
+                  <div class="col-lg-4" v-for="(item,no) in items.data">
+                    <div class="card card_kegiatan mt-2">                  
+                      <div class="card-body">
+<div class=" d-flex justify-content-end">
+      <div class="dropdown">
+  <a href="#" role="button"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+     <font-awesome-icon icon="fas fa-ellipsis-h" />
+  </a>
+
+  <ul class="dropdown-menu-end dropdown-menu">
+    <li><Link :href="`/admin/kegiatan/${item.id}/edit`" class="dropdown-item">Edit</Link></li>
+    <li><button @click="switchClose(item.id)" class="dropdown-item delete" >Hapus</button></li>
+  </ul>
+</div>
       </div>
+      <div class="col d-flex justify-content-center">
+                  <div v-if="new Date(item.berakhir.split(' ')[0]) > this.now" class="bg-semantic-success-1 text-semantic-success-4 status">Sedang Berlangsung </div>
+                   <div v-else-if="new Date(item.dimulai.split(' ')[0]) > this.now" class="bg-neutral-gray-1 text-semantic-success-4 status">Belum dimulai </div>
+                           <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Selesai </div>
+                  <img  :src="`${$page.props.asset_url}/${item.gambar}`" class="gambar" alt="...">
+                </div>
+                 <div> 
+                          <h1 class="text-neutral-black mt-2">{{item.tema}}</h1>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                         <button class="btn btn-primary-blue-7 me-2 px-3 text-neutral-white cursor-pointer" @click="redirect(item.id)">Lihat Kegiatan</button>
+                       </div>
+              </div> 
+                        </div>             
+                      </div>
+                    </div>         
       <div class="d-flex justify-content-center mt-4">
       <Pagination :links="items.links"/>
       </div>
@@ -64,13 +68,18 @@
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import RemoveKegiatanLayout from '../../../Components/RemoveItem.vue';
+import Search from '../../../Components/Search.vue';
 import Pagination from '../../../Components/Pagination.vue';
+import { Inertia } from "@inertiajs/inertia";
 export default{
     data(){
         return{
           popup:false,
           deletePopup:false,
-          itemDelete:null
+          itemDelete:null,
+          cari:null,
+          now:null,
+          url: document.location.href
 
       }
     },
@@ -86,26 +95,40 @@ export default{
 
     return {form}
   },
+  mounted(){
+    let uri = window.location.search.substring(1)
+    let params = new URLSearchParams(uri)
+    if (params.get('cari')) {
+      this.cari = params.get('cari')
+    }
+    const date = new Date();
+    var month = ['01','02','03','04','05','06','07','08','09','10','11','12']
+    var bulan = month[date.getMonth()]
+    var tahun = date.getFullYear();
+    var tanggal = (date.getDate()  >= 10)? date.getDate()  : "0" + date.getDate();
+    this.now = new Date(tahun+ '-' + bulan + '-' + tanggal);
+    console.log(this.now)
+  },
     props:{
       items :Object,
-      paginationNums : Array,
-      nextBlok:Number,
-      prevBlok:Number,
-      prev:Number,
-      next:Number,
-      first:Number,
-      last:Number
     },
     components: {
       DashboardLayout,
       Link,
       RemoveKegiatanLayout,
-      Pagination
+      Pagination,
+      Search
     },
     methods:{
        switchClose(kegiatan_id=null){
         this.deletePopup = !this.deletePopup          
         this.itemDelete = {id:kegiatan_id}
+      },
+      search(){
+        Inertia.get('/admin/kegiatan?page=1',{cari:this.cari})
+      },
+       redirect(link){
+        Inertia.get('/admin/kegiatan/'+link+'/detail')
       }
     }
 
@@ -113,11 +136,58 @@ export default{
 </script>
 
 <style scoped>
+.delete{
+  border-width:0px;
+
+  border-color: transparent;
+}
+.gambar{
+  width: 190px;
+  height: 140px;
+  border-radius:25px;
+}
+
+.card_kegiatan {
+  border: none;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.card_kegiatan:hover {
+  background-color: #F2F7FA;
+}
+
+.card_kegiatan .status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+.card_kegiatan h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card_kegiatan p {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 h1 {
   font-size: 2.1rem;
   font-weight: 600;
 }
-
+td{
+  width:300px;
+}
+.imgtd{
+  width: 150px;
+  height: 100px;
+}
 .close{
   border-width: 0px;
   background-color: white;
@@ -156,7 +226,7 @@ h1 {
   border-bottom: 1px solid #F0F0F0;
 }
 table{
-	width: 900px;
+	width: 100%;
 }
 
 .tabs li {
@@ -177,99 +247,4 @@ table{
 }
 
 
-
-table thead tr td,
-table thead tr th {
-  font-weight: 600;
-  color: #3E4041;
-  border: none;
-  text-align: center;
-}
-
-table tbody tr td,
-table tbody tr th {
-  font-weight: 400;
-  color: #3E4041;
-  border-bottom: none;
-  text-align: center;
-}
-
-table tbody tr:nth-child(2n) td,
-table tbody tr:nth-child(2n) th {
-  background-color: #F2F7FA;
-}
-
-.pagination {
-  display: flex;
-  flex-direction: row;
-  column-gap: 2rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  list-style: none;
-  background-color: #FFFFFF;
-}
-
-
-.modal-content{
-  text-align: start;
-}
-
-
-.form-control {
-  overflow:
-}
-
-.form-control::-webkit-outer-spin-button,
-.form-control::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.form-control:focus {
-  box-shadow: none;
-}
-
-.pagination li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 12px;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: 300ms;
-}
-
-.pagination li:hover {
-  background-color: #398AB9;
-}
-
-.pagination li:hover a,
-.pagination li:hover a svg {
-  color: #FFFFFF !important;
-}
-
-.pagination li a {
-  text-decoration: none;
-  color: #3E4041;
-  font-weight: 600;
-}
-
-.pagination li.active {
-  background-color: #398AB9;
-}
-
-.pagination li.active a {
-  color: #FFFFFF;
-}
-
-@media (max-width: 575.98px) {
-  ul {
-    gap: 1rem;
-    flex-direction: column;
-  }
-
-  .pagination li:nth-child(3),
-  .pagination li:nth-child(4) {
-    display: none;
-  }
-}
 </style>

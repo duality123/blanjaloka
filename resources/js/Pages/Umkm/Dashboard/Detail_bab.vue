@@ -1,20 +1,20 @@
 <template>
-  <Layout state="elearning" :title="elearning.bab_judul" :link="elearning.kegiatan_id">
+  <Layout state="elearning" :title="elearning.bab[this.currentPage-1].judul" :link="elearning.kegiatan_id">
            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#">E-learning</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">{{elearning.judul}}</li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{elearning.bab_judul}}</li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{elearning.bab[this.currentPage-1].judul}}</li>
                                     </ol>
                                 </nav>
                                 
                                   <iframe width="800" height="315"
-                                    :src="`${elearning.link_video}`">
+                                    :src="`${elearning.bab[this.currentPage-1].link_video}`">
                                 </iframe>
 
                                 <h3 class="mt-4"></h3>
                                 <p>
-                                   {{elearning.bab_deskripsi}}
+                                   {{elearning.bab[this.currentPage-1].deskripsi}}
                                 </p>
                                 
                                 <div v-if="next" class="float-end">
@@ -32,7 +32,7 @@ export default{
   data(){
     return{
       tabItems:null,
-      currentPage:window.location.pathname.split('/')[4],
+      currentPage:window.location.pathname.split('/')[7],
       currentLink:window.location.pathname.split('/')[6]
     }
   },

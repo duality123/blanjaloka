@@ -12,14 +12,14 @@
                                 
                                 <h6>Deskripsi</h6>
                                 <p class="mb-5">
-                                   {{elearning.deskrips}}
+                                   {{elearning.deskripsi}}
                                 </p>
                                 
                                 <div class="bab-materi">
                                     
-                                    <a href="#" class="d-flex mb-5 card-kegiatan" v-for="(bab,no) in babs">
+                                    <a href="#" class="d-flex mb-5 card-kegiatan" v-for="(bab,no) in elearning.bab">
                                         <span class="number rounded-circle mx-4 p-3">{{++no}}</span>
-                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/detail/${elearning.id}/${no}`">{{bab.judul}}</Link></span> 
+                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/materi/detail/${elearning.id}/${no}`">{{bab.judul}}</Link></span> 
                                         <span class="ms-auto p-3"> > </span>
                                     </a>
 

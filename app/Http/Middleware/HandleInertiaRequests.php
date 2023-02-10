@@ -47,20 +47,7 @@ class HandleInertiaRequests extends Middleware
           
            'auth' => [
                 'user' => $request->user(),
-                'user_role'=>$request->user()?$request->user()->Role->number:null,        
-                'profil' => $request->user()?($request->user()->Role->number != 1 ?$request->user()->profil->profilList():null):null,
-                'profileComplete'=> $request->user()?($request->user()->Role->number != 1 ?$request->user()->profil->isProfileComplete():null):null,
-                'usahaComplete'=>$request->user()?($request->user()->Role->number == 2 ? $request->user()->usaha->isUsahaComplete():null):null,
-                'produkComplete' =>$request->user()?($request->user()->Role->number == 2 ?  $request->user()->produk->isProdukComplete():null):null,
-                'finansialComplete' =>$request->user()?($request->user()->Role->number == 2 ?$request->user()->finansial->isFinansialComplete():null):null,
-                'usaha' => $request->user()?($request->user()->Role->number == 2 ? $request->user()->usaha->usahaList():null):null,
-                'produk' => $request->user()?($request->user()->Role->number == 2 ? $request->user()->produk->produkList():null):null,
-                'inkubasi' =>$request->user()?($request->user()->Role->number == 2 ? $request->user()->inkubasi():null):null,
-                'finansial'=> $request->user()?($request->user()->Role->number == 2 ?$request->user()->finansial->finansialList():null):null,
-                'profilPerusahaan' =>$request->user()?($request->user()->Role->number == 3 ?$request->user()->profilPerusahaan->profilPerusahaanList():null):null,
-                'profilPerusahaanComplete' =>$request->user()?($request->user()->Role->number == 3 ?$request->user()->profilPerusahaan->isProfilPerusahaanComplete():null):null,
-                'dokumenPerusahaan' =>$request->user()?($request->user()->Role->number == 3?$request->user()->dokumenPerusahaan->dokumenPerusahaanList():null):null,
-                'dokumenPerusahaanComplete' =>$request->user()?($request->user()->Role->number == 3?$request->user()->dokumenPerusahaan->isDokumenPerusahaanComplete():null):null
+               
             ]           
              
             ,

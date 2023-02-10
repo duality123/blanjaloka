@@ -20,14 +20,13 @@
         </div>
       </div>
     </div>
-        <div v-if="$page.props.auth.user">
         <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.profilPerusahaanComplete || !$page.props.auth.dokumenPerusahaanComplete ' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
             <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</Link>
              <Link v-else-if="!$page.props.auth.profilPerusahaanComplete" href="/investor/dashboard/profil_perusahaan"
-                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi Profil Perusahaan</Link>
+                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi Profil Perusahaan  </Link>
 
              <Link v-else-if="!$page.props.auth.dokumenPerusahaanComplete" href="/umkm/dashboard/dokumen_perusahaan"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
@@ -37,16 +36,11 @@
     <div v-else-if="!$page.props.auth.user.accepted"
             class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
               <p v-if="!$page.props.auth.user.accepted" class="text-neutral-white mb-0">Data anda sedang diproses silahkan cek email secara berkala !</p>
-        </div>
-        </div>
-         
-      
-        <nav class="navbar navbar-expand-lg" :class="{ 'bg-primary-blue-6': scrollPosition > 100 }">
+        </div>      
+        <nav class="navbar navbar-expand-lg bg-primary-blue-6">
             <div class="container">
                 <Link class="navbar-brand" href="/">
-                <img v-if="scrollPosition < 100" src="../assets/images/blanjaloka_logo_blue.png" alt="blanjaloka logo"
-                    class="img-fluid">
-                <img v-if="scrollPosition > 100" src="../assets/images/blanjaloka_logo_white.png" alt="blanjaloka logo"
+                <img src="../assets/images/blanjaloka_logo_white.png" alt="blanjaloka logo"
                     class="img-fluid">
                 </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -56,22 +50,14 @@
                 </button>
                 <div class="collapse navbar-collapse" id="blanjaloka_navbar">
                     <div class="navbar-nav ms-auto">
-                        <Link href="/" class="nav-link"
-                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">
+                        <Link href="/investor/beranda" class="nav-link text-neutral-white">
                         Beranda</Link>
-                        <a href="#" class="nav-link"
-                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Tentang
-                            Program</a>
-                        <a href="#" class="nav-link"
-                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Panduan</a>
+                        <Link href="/about" class="nav-link text-neutral-white ">Tentang
+                            Program</Link>
+                        <Link href="/panduan" class="nav-link text-neutral-white">Panduan</Link>
+                        <Link href="/contact" class="nav-link text-neutral-white">Hubungi Admin</Link>
                     </div>
                     <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
-                        <Link v-if="!$page.props.auth.user" href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
-                            :class="{ 'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
-                        Masuk</Link>
-                        <Link v-if="!$page.props.auth.user" href="/register" class="btn px-4 py-2"
-                            :class="{ 'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100 }">
-                        Daftar</Link>
                         <li v-if="$page.props.auth.user" class="nav-item dropdown">
                             <a href="#"
                                 class="d-flex align-items-center justify-content-center gap-2 bg-neutral-white rounded-pill p-2 dropdown-toggle user_profile_menu"
@@ -83,7 +69,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <Link class="dropdown-item d-flex align-items-center justify-content-between"
-                                        href="/notifikasi/UMKM/1">
+                                        href="/notifikasi/Investor">
                                     <span>Notifikasi</span>
                                     <div v-if="$page.props.auth.user.notifikasi" class="bg-primary-blue-6 text-white notif_badge">{{$page.props.auth.user.notifikasi}}</div>
                                     </Link>
@@ -92,13 +78,13 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <Link class="dropdown-item" href="/profil/1">Akun Saya</Link>
+                                    <Link class="dropdown-item" href="/investor/profil/1">Akun Saya</Link>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li>
-                                    <Link class="dropdown-item" href="/investor/dashboard/profil_perusahaan">Investasi</Link>
+                                <li >
+                                    <Link class="dropdown-item" href="/investor/dashboard">Investasi Saya</Link>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -140,9 +126,9 @@
             <div class="row align-items-end py-4 gap-4">
                 <div class="col-lg ps-lg-0">
                     <div class="d-flex gap-4">
-                        <Link href="/kebijakan-privasi" class="text-decoration-none text-neutral-gray-4">Kebijakan
+                        <Link href="/kebijakan_privasi" class="text-decoration-none text-neutral-gray-4">Kebijakan
                         Privasi</Link>
-                        <Link href="/syarat-dan-ketentuan" class="text-decoration-none text-neutral-gray-4">Syarat dan
+                        <Link href="/syarat_dan_ketentuan" class="text-decoration-none text-neutral-gray-4">Syarat dan
                         Ketentuan</Link>
                     </div>
                     <p class="text-neutral-gray-4 mt-3 mb-0">&copy; Copyright 2022. All Rights Reserved</p>
@@ -167,6 +153,7 @@
 
 <script setup>
 import { Head, Link,usePage } from '@inertiajs/inertia-vue3'
+import contactUs from '../Components/contactUs.vue'
 import { ref, onMounted } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 const scrollPosition = ref(0);
@@ -177,11 +164,7 @@ const props = defineProps({
     }
 });
 onMounted(() => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    window.addEventListener('scroll', () => {
-        scrollPosition.value = window.scrollY;
-    });
+    
 });
 
 const logout = () => {
@@ -200,6 +183,7 @@ const removePopup = () => {
 .foto_profil{
     border-radius: 50%;
     width: 60px;
+    height: 50px;
 }
 .nav-link,
 a.btn {
@@ -210,8 +194,7 @@ a.btn {
 }
 .modal-content{
   height: 450px;
-  overflow-y: scroll;
- }
+}
 .notif_badge {
     width: 2rem;
     height: 2rem;
@@ -221,7 +204,6 @@ a.btn {
     border-radius: 50%;
 }
 .dropdown-toggle::after {
-    display: none;
 }
 .navbar-expand-lg .navbar-nav .dropdown-menu {
     width: 15rem;
@@ -234,6 +216,35 @@ a.btn {
 }
 .btn_custom_outline {
     border-width: 2px !important;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+}
+.step .number {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  color: #FFFFFF;
+}
+.step h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #AEAEAE;
+}
+.step.clear .number {
+  background-color: #398AB9;
+}
+.step.clear h1 {
+  color: #3E4041;
 }
 .btn_custom_outline:hover {
     color: #FFFFFF !important;

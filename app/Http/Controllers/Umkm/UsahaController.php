@@ -24,6 +24,8 @@ class UsahaController extends Controller
         $rules = [
             'nama_perusahaan' => 'required|max:200',
             'alamat_perusahaan' => 'required|max:100',
+            'dokumen_amdal'=>'required',
+            'dokumen_legalitas'=>'required',
             'status_perusahaan' => 'required|max:50',
             'informasi_pajak' => 'required|max:100',
             'npwp' => 'required|max:100',
@@ -38,11 +40,19 @@ class UsahaController extends Controller
 
         $this->validate($request, $rules, $customMessages);
         $data = [];
-        $usaha =  Usaha::where('user_id','=',$request->user()->id);
-        if ($request->file('legalitas')) {
+        $usaha =  Usaha::where('user_id','=',$request->user()->id)->first();
+        if ($request->file('legalitas') && $usaha->legalitas) {
+            Storage::disk('public')->delete($usaha->legalitas);
             $data['legalitas']=$request->file('legalitas')->store('umkm/dokumen_legalitas','public') ;
-        };
-        if($request->file('dokumen_amdal')){   
+        }
+        elseif($request->file('legalitas')){
+            $data['legalitas']=$request->file('legalitas')->store('umkm/dokumen_legalitas','public') ;
+        }
+        if($request->file('dokumen_amdal') && $usaha->dokumen_amdal){ 
+            Storage::delete($usaha->dokumen_amdal);  
+            $data['dokumen_amdal']= $request->file('dokumen_amdal')->store('umkm/dokumen_amdal','public') ; 
+        }
+        elseif($request->file('dokumen_amdal')){
             $data['dokumen_amdal']= $request->file('dokumen_amdal')->store('umkm/dokumen_amdal','public') ; 
         }
 

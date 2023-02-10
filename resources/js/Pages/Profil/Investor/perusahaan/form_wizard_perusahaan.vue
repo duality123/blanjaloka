@@ -13,7 +13,7 @@
                 </div>
                  <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="20" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M10 14.75C10.2167 14.75 10.396 14.6793 10.538 14.538C10.6793 14.396 10.75 14.2167 10.75 14V9.725C10.75 9.525 10.6793 9.354 10.538 9.212C10.396 9.07067 10.2167 9 10 9C9.78333 9 9.60433 9.07067 9.463 9.212C9.321 9.354 9.25 9.53333 9.25 9.75V14.025C9.25 14.225 9.321 14.396 9.463 14.538C9.60433 14.6793 9.78333 14.75 10 14.75ZM10 7.3C10.2333 7.3 10.425 7.22067 10.575 7.062C10.725 6.904 10.8 6.70833 10.8 6.475C10.8 6.25833 10.725 6.07067 10.575 5.912C10.425 5.754 10.2333 5.675 10 5.675C9.76667 5.675 9.575 5.754 9.425 5.912C9.275 6.07067 9.2 6.25833 9.2 6.475C9.2 6.70833 9.275 6.904 9.425 7.062C9.575 7.22067 9.76667 7.3 10 7.3ZM10 19.5C8.68333 19.5 7.446 19.25 6.288 18.75C5.12933 18.25 4.125 17.575 3.275 16.725C2.425 15.875 1.75 14.8707 1.25 13.712C0.75 12.554 0.5 11.3167 0.5 10C0.5 8.68333 0.75 7.44567 1.25 6.287C1.75 5.129 2.425 4.125 3.275 3.275C4.125 2.425 5.12933 1.75 6.288 1.25C7.446 0.75 8.68333 0.5 10 0.5C11.3167 0.5 12.5543 0.75 13.713 1.25C14.871 1.75 15.875 2.425 16.725 3.275C17.575 4.125 18.25 5.129 18.75 6.287C19.25 7.44567 19.5 8.68333 19.5 10C19.5 11.3167 19.25 12.554 18.75 13.712C18.25 14.8707 17.575 15.875 16.725 16.725C15.875 17.575 14.871 18.25 13.713 18.75C12.5543 19.25 11.3167 19.5 10 19.5ZM10 18C12.2167 18 14.1043 17.221 15.663 15.663C17.221 14.1043 18 12.2167 18 10C18 7.78333 17.221 5.89567 15.663 4.337C14.1043 2.779 12.2167 2 10 2C7.78333 2 5.896 2.779 4.338 4.337C2.77933 5.89567 2 7.78333 2 10C2 12.2167 2.77933 14.1043 4.338 15.663C5.896 17.221 7.78333 18 10 18Z"
                         fill="#398AB9" />
@@ -33,6 +33,20 @@
                      <small class="text-danger" v-if="form.errors.nama_perusahaan">{{ form.errors.nama_perusahaan}}</small>
                   </div>
                   <div class="mb-4">
+                    <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Kategori Perusahaan</label>
+                    <input type="text" class="form-control" v-model="form.kategori_perusahaan" id="tempat_kelahiran" placeholder="Masukkan kategori perusahaan Anda (contoh : kuliner)">
+                    <small class="text-danger" v-if="form.errors.kategori_perusahaan">{{ form.errors.kategori_perusahaan}}
+                    </small>
+                 </div>
+                  <div class="mb-4">
+                    <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Deskripsi Perusahaan</label>
+                    <input type="text" class="form-control" v-model="form.deskripsi_perusahaan" id="tempat_kelahiran" placeholder="Masukkan deskripsi perusahaan anda">
+                    <small class="text-danger" v-if="form.errors.deskripsi_perusahaan">{{ form.errors.deskripsi_perusahaan}}
+                    </small>
+                 </div>
+
+               
+                  <div class="mb-4">
                     <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Alamat Perusahaan</label>
                     <input type="text" class="form-control" v-model="form.alamat_perusahaan" id="tempat_kelahiran" placeholder="Masukkan status perusahaan Anda">
                     <small class="text-danger" v-if="form.errors.alamat_perusahaan">{{ form.errors.alamat_perusahaan}}
@@ -40,16 +54,18 @@
                  </div>
                   <div class="mb-4">
                     <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Nama PIC</label>
-                    <input type="text" class="form-control" v-model="form.nama_pic" id="tempat_kelahiran" placeholder="Masukkan status perusahaan Anda">
+                    <input type="text" class="form-control" v-model="form.nama_pic" id="Masukkan nama PIC" placeholder="Masukkan status perusahaan Anda">
                     <small class="text-danger" v-if="form.errors.nama_pic">{{ form.errors.nama_pic}}
                     </small>
                  </div>
                 <div class="mb-4">
                     <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Email PIC</label>
-                    <input type="text" class="form-control" v-model="form.email_pic" id="tempat_kelahiran" placeholder="Masukkan status perusahaan Anda">
+                    <input type="text" class="form-control" v-model="form.email_pic" id="Masukkan email PIC" placeholder="Masukkan status perusahaan Anda">
                     <small class="text-danger" v-if="form.errors.email_pic">{{ form.errors.email_pic}}
                     </small>
                  </div>
+
+
               
                 <div class="mb-4">
                     <label for="tempat_kelahiran" class="form-label text-neutral-gray-5">Tanggal Berdiri</label>
@@ -86,6 +102,7 @@ export default{
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[2],
+      process:false
     }
   },
   setup () {
@@ -94,8 +111,10 @@ export default{
       alamat_perusahaan:usePage().props.value.auth.profilPerusahaan.alamat_perusahaan,
       nama_pic:usePage().props.value.auth.profilPerusahaan.nama_pic,
       tanggal_berdiri: usePage().props.value.auth.profilPerusahaan.tanggal_berdiri?usePage().props.value.auth.profilPerusahaan.tanggal_berdiri.split(' ')[0]:'',
+      deskripsi_perusahaan :usePage().props.value.auth.profilPerusahaan.deskripsi_perusahaan,
       nomor_telepon: usePage().props.value.auth.profilPerusahaan.nomor_telepon,
-      email_pic:usePage().props.value.auth.profilPerusahaan.email_pic
+      email_pic:usePage().props.value.auth.profilPerusahaan.email_pic,
+      kategori_perusahaan:usePage().props.value.auth.profilPerusahaan.kategori_perusahaan
     })
 
     return { form }
@@ -113,12 +132,28 @@ export default{
     Link,
     InvestorDashboardSidebar
   },
+
+  watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+        }
+     },
+     deep: true, 
+  }
+},
   methods:{
     submit(){
-        this.form.post('/investor/dashboard/profil_perusahaan')
-    },
+      if (!this.$page.props.auth.profilPerusahaanComplete || this.process) {
+         this.form.post('/investor/dashboard/profil_perusahaan')
+      }
+      else{
+          Inertia.get('/investor/dashboard/dokumen_perusahaan')
+      }
  
     }
+      }
 }
 </script>
 

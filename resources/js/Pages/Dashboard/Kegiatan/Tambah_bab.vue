@@ -1,11 +1,12 @@
 <template>
   <DashboardLayout title="Tambah Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">{{elearning.judul}}</h1>
+      <h1 class="text-neutral-gray-5 mb-0">{{bab.judul}}</h1>
     </div>
     <div class="d-flex mt-4">
       <Link href="admin/dashboard/kegiatan/1" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Bab</p>
+       <Link :href="`/admin/kegiatan/${bab.eleaning_id}/elearning?page=1`" class="text-decoration-none text-primary-blue-6 me-2">> Elearning</Link>
+      <p class="text-neutral-gray-4">> Tambah Bab</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -61,7 +62,7 @@ const form = useForm({
   deskripsi:null,
   link_video:null,
   bab:null,
-  elearning_id : window.location.pathname.split('/')[5]
+  elearning_id : props.elearning.id
 });
 
 
@@ -79,7 +80,7 @@ const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/tambah_bab/baru')
+  form.post('/admin/kegiatan/tambah_bab')
 }
 
 const props = defineProps({

@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import BaseLayout from '../../Layouts/Layout.vue'
+import BaseLayout from '../../Layouts/UnauthenticatedLayout.vue'
 import { Inertia } from '@inertiajs/inertia'
 const nextPage = () => {
   Inertia.get('/syarat_dan_ketentuan')

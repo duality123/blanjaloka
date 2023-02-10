@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import BaseLayout from '../../Layouts/Layout.vue'
+import BaseLayout from '../../Layouts/UnauthenticatedLayout.vue'
 import { ref } from 'vue'
 const isCheckKebijakanPrivasi = ref(false);
 </script>

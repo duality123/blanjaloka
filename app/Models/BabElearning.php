@@ -14,9 +14,15 @@ class BabElearning extends Model
     use HasFactory;
 
 
+    public function scopeFilter($query,array $filters){
+       if($filters['cari'] ?? false) {
+            $query->where('judul', 'like', '%' . request('cari') . '%')
+                ->orWhere('deskripsi', 'like', '%' . request('cari') . '%');
+        }
+   }
 
    public function elearning(){
-         return $this->belongsTo(Elearning::class,'id','elearning_id');
+         return $this->belongsTo(Elearning::class,'elearning_id','id');
     }
 
 

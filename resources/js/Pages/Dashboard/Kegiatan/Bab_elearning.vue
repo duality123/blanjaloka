@@ -1,9 +1,14 @@
 <template>
- <RemoveBabLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/kegiatan/hapus_bab" @toggleClose="switchClose()" />
-  <Layout section='elearning' :title="elearning.judul" :link="elearning.kegiatan_id">
-       <div class="d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
-      <Link :href="`/admin/dashboard/kegiatan/elearning/${currentPage}/tambah_bab`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Bab
+ <RemoveBabLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/kegiatan/hapus_bab" @toggleClose="switchClose()" />
+  <Layout section='elearning' :title="elearning.judul" :link="elearning.kegiatan.slug">
+     <div class="row">
+         <div class="col d-flex justify-content-start">
+        <Search :url="`/admin/kegiatan/elearning/${elearning.slug}/bab?page=1`" judul="Cari Bab" />
+      </div>
+       <div class=" col d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
+      <Link :href="`/admin/kegiatan/${elearning.slug}/tambah_bab`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Bab
       </Link>
+    </div>
     </div>
       <div class="table-responsive">
         <table class="table mt-3">
@@ -25,7 +30,7 @@
                 <td><p>{{index.link_video}}</p></td>
                 <td><p>{{index.bab}}</p></td>
                  <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <Link :href="`/admin/dashboard/kegiatan/elearning/bab/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
+                <Link :href="`/admin/kegiatan/bab/${index.slug}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </Link>
@@ -38,22 +43,23 @@
           </tbody>
         </table>
       </div>
-  </Layout>
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center ">
           <Pagination :links="items.links" />
       </div>
+        </Layout>
 </template>
 
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
 import RemoveBabLayout from '../../../Components/RemoveItem.vue';
 import Pagination from '../../../Components/Pagination.vue';
+import Search from '../../../Components/Search.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
    data(){
       return{
-        currentPage: document.location.pathname.split('/')[5],
+        currentPage: document.location.pathname.split('/')[4],
         deletePopup:false,
         itemDelete:null
       }
@@ -73,12 +79,13 @@ export default{
       Link,
       Layout,
       RemoveBabLayout,
-      Pagination
+      Pagination,
+      Search
     },
     methods:{
       switchClose(bab_id=null){
         this.deletePopup = !this.deletePopup          
-        this.itemDelete = {id:kegiatan_id}
+        this.itemDelete = {id:bab_id}
       }
     }
 }
@@ -184,12 +191,9 @@ ul li {
 }
 p{
     white-space: nowrap; 
-  width: 100px; 
+  width: 150px; 
   overflow: hidden;
   text-overflow: ellipsis; 
-}
-ul li {
-  padding-bottom: 0.5rem;
 }
 
 ul li a.active {

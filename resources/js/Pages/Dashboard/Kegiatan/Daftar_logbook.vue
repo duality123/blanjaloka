@@ -1,20 +1,35 @@
 <template>
-
+        
   <Layout section="logbook" :title="kegiatan.tema" :link="kegiatan.id">
+     <div class="col d-flex justify-content-start">
+        <MultiSearch :url="`/admin/kegiatan/${kegiatan.id}/logbook?page=1`"  />
+        
+      </div>
       <div class="table-responsive">
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>
               <th scope="col">No</th>
+              <th scope="col">Foto Profil</th>
               <th scope="col">Nama Peserta</th>
-              <th scope="col">Profil</th>
+              <th scope="col">No HP</th>
+              <th scope="col">Nama Perusahaan</th>
+              <th scope="col">Kategori Perusahaan</th>
+              <th scope="col">Aksi</th>
             </tr>
           </thead>
           <tbody>
              <tr v-for="(index,no) in items.data">
               <th scope="row">{{++no}}</th>
-               <td>  <Link :href="`/admin/dashboard/kegiatan/${currentPage}/detail_logbook/${index.id}?page=1`">{{index.profil.nama_lengkap}}</Link></td>
-                <td>  <Link :href="`/detail/profil/${index.id}`">Lihat profil</Link></td>
+                <td>
+                             <div class="row "><img class="tdimg" :src="`${$page.props.asset_url}/${index.foto_profil}`"></div>
+                </td>
+                <td>  <Link  class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" :href="`/detail/profil/umkm/${index.id}`" >{{index.nama_lengkap}}</Link></td>
+                <td>{{index.no_hp}}</td>
+                 <td>{{index.nama_perusahaan}}</td>
+                  <td>{{index.kategori_produk}}</td>
+                <td>  <Link :href="`/admin/kegiatan/${kegiatan.id}/detail_logbook/${index.id}?page=1`" class="btn btn-primary-blue-6 text-neutral-white py-2" >Lihat logbook</Link>
+                </td>
             </tr>
           </tbody>
         </table>
@@ -28,6 +43,7 @@
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
 import Pagination from '../../../components/Pagination.vue';
+import MultiSearch from '../../../Components/MultiSearchUMKM.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -50,7 +66,8 @@ export default{
     components: {
       Layout,
       Link,
-      Pagination
+      Pagination,
+      MultiSearch
     },
 }
 </script>
@@ -61,7 +78,10 @@ export default{
   border-width: 0px;
   background-color: white;
 }
-
+.tdimg{
+  width: 200px;
+  height: 100px;
+}
 .modal {
   position: fixed; /* Stay in place */
   padding-top: 100px; /* Location of the box */

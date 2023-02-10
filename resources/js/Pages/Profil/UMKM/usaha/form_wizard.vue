@@ -3,7 +3,6 @@
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
-          <StatusChecked :sessionCondition="checkSessionCondition"/>
           <UmkmDashboardSidebar section="profil_usaha"/>
                <div class="col-lg-8">
                  <div class="card-body">
@@ -40,7 +39,7 @@
                   </div>
                             <div class="mb-4">
                     <label for="dokumen_amdal" class="form-label text-neutral-gray-5 mb-2">Dokumen Legalitas</label>
-                    <div v-if="form.legalitas == null" class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
+                    <div class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
                       <div>
                         <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
@@ -48,36 +47,22 @@
                             fill="#265C7B" />
                         </svg>
                       </div>
-                      <div class="position-relative">
+                      <div class="flex-grow-1" v-if="form.legalitas == null">
                         <h1 class="text-neutral-gray-5">Upload your file</h1>
+                      </div>
+                      <div class="flex-grow-1" v-if="$page.props.auth.user.usaha['legalitas']">
+                        <h1><a :href="`${this.$page.props.asset_url}/${this.$page.props.auth.usaha['legalitas']}`">Lihat File</a></h1>
                       </div>
                       <div class="position-relative">
                         <h2 class="text-primary-blue-6">Pilih</h2>
                         <input type="file" @change="inputDokumen($event,'legalitas')" id="dokumen_amdal">
                       </div>
                     </div>
-                      <div v-else class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
-                      <div>
-                        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M7.25 11.95V15.625C7.25 15.8417 7.321 16.021 7.463 16.163C7.60433 16.3043 7.78333 16.375 8 16.375C8.21667 16.375 8.396 16.3043 8.538 16.163C8.67933 16.021 8.75 15.8417 8.75 15.625V11.95L10.075 13.275C10.1417 13.3417 10.225 13.396 10.325 13.438C10.425 13.4793 10.521 13.496 10.613 13.488C10.7043 13.4793 10.7957 13.4583 10.887 13.425C10.979 13.3917 11.0583 13.3333 11.125 13.25C11.275 13.1 11.35 12.925 11.35 12.725C11.35 12.525 11.275 12.35 11.125 12.2L8.625 9.7C8.54167 9.61667 8.446 9.554 8.338 9.512C8.22933 9.47067 8.11667 9.45 8 9.45C7.88333 9.45 7.771 9.47067 7.663 9.512C7.55433 9.554 7.45833 9.61667 7.375 9.7L4.875 12.2C4.725 12.35 4.65 12.525 4.65 12.725C4.65 12.925 4.73333 13.1 4.9 13.25C5.05 13.4 5.221 13.4793 5.413 13.488C5.60433 13.496 5.78333 13.4167 5.95 13.25L7.25 11.95ZM2.3 19.5C1.8 19.5 1.375 19.325 1.025 18.975C0.675 18.625 0.5 18.2 0.5 17.7V2.3C0.5 1.8 0.675 1.375 1.025 1.025C1.375 0.675 1.8 0.5 2.3 0.5H9.5C9.75 0.5 9.98333 0.545667 10.2 0.637C10.4167 0.729 10.6083 0.858333 10.775 1.025L14.975 5.225C15.1417 5.39167 15.271 5.58333 15.363 5.8C15.4543 6.01667 15.5 6.25 15.5 6.5V17.7C15.5 18.2 15.325 18.625 14.975 18.975C14.625 19.325 14.2 19.5 13.7 19.5H2.3ZM9.5 5.6V2H2.3C2.23333 2 2.16667 2.03333 2.1 2.1C2.03333 2.16667 2 2.23333 2 2.3V17.7C2 17.7667 2.03333 17.8333 2.1 17.9C2.16667 17.9667 2.23333 18 2.3 18H13.7C13.7667 18 13.8333 17.9667 13.9 17.9C13.9667 17.8333 14 17.7667 14 17.7V6.5H10.4C10.15 6.5 9.93733 6.41233 9.762 6.237C9.58733 6.06233 9.5 5.85 9.5 5.6Z"
-                            fill="#265C7B" />
-                        </svg>
-                      </div>
-                      <div class="position-relative">
-                           <h1 v-if="this.$page.props.auth.usaha['legalitas'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${this.$page.props.auth.usaha['legalitas']}`">{{form.legalitas.split('/')[2]}}</a></h1>
-                        <h1 v-else class="text-neutral-gray-5">{{form.legalitas.name}}</h1>
-                      </div>
-                      <div class="position-relative break">
-                        <h2 class="text-primary-blue-6">Ganti Dokumen</h2>
-                        <input type="file" @change="inputDokumen($event,'legalitas')" id="dokumen_amdal">
-                      </div>
-                    </div>
-                      <small class="text-danger text-center" v-if="this.fileError" >{{this.fileError}}</small>
+                      <small class="text-danger text-center" v-if="form.errors.legalitas" >{{form.errors.legalitas}}</small>
                   </div>
                     <div class="mb-4">
                     <label for="dokumen_amdal" class="form-label text-neutral-gray-5 mb-2">Dokumen AMDAL</label>
-                    <div v-if="form.dokumen_amdal==null" class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
+                    <div class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
                       <div>
                         <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
@@ -85,9 +70,11 @@
                             fill="#265C7B" />
                         </svg>
                       </div>
-                      <div class="position-relative">
+                      <div class="flex-grow-1" v-if="form.dokumen_amdal == null">
                         <h1 class="text-neutral-gray-5">Upload your file</h1>
-                        <p class="text-neutral-gray-3">Format file .pdf, maks 10MB</p>
+                      </div>
+                      <div class="flex-grow-1" v-if="$page.props.auth.user.usaha['dokumen_amdal']">
+                        <h1><a :href="`${$page.props.asset_url}/${this.$page.props.auth.usaha['dokumen_amdal']}`">Lihat File</a></h1>
                       </div>
                       <div class="position-relative">
                         <h2 class="text-primary-blue-6">Pilih</h2>
@@ -95,25 +82,7 @@
                       </div>
                       
                     </div>
-                    <div v-else class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
-                      <div>
-                        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M7.25 11.95V15.625C7.25 15.8417 7.321 16.021 7.463 16.163C7.60433 16.3043 7.78333 16.375 8 16.375C8.21667 16.375 8.396 16.3043 8.538 16.163C8.67933 16.021 8.75 15.8417 8.75 15.625V11.95L10.075 13.275C10.1417 13.3417 10.225 13.396 10.325 13.438C10.425 13.4793 10.521 13.496 10.613 13.488C10.7043 13.4793 10.7957 13.4583 10.887 13.425C10.979 13.3917 11.0583 13.3333 11.125 13.25C11.275 13.1 11.35 12.925 11.35 12.725C11.35 12.525 11.275 12.35 11.125 12.2L8.625 9.7C8.54167 9.61667 8.446 9.554 8.338 9.512C8.22933 9.47067 8.11667 9.45 8 9.45C7.88333 9.45 7.771 9.47067 7.663 9.512C7.55433 9.554 7.45833 9.61667 7.375 9.7L4.875 12.2C4.725 12.35 4.65 12.525 4.65 12.725C4.65 12.925 4.73333 13.1 4.9 13.25C5.05 13.4 5.221 13.4793 5.413 13.488C5.60433 13.496 5.78333 13.4167 5.95 13.25L7.25 11.95ZM2.3 19.5C1.8 19.5 1.375 19.325 1.025 18.975C0.675 18.625 0.5 18.2 0.5 17.7V2.3C0.5 1.8 0.675 1.375 1.025 1.025C1.375 0.675 1.8 0.5 2.3 0.5H9.5C9.75 0.5 9.98333 0.545667 10.2 0.637C10.4167 0.729 10.6083 0.858333 10.775 1.025L14.975 5.225C15.1417 5.39167 15.271 5.58333 15.363 5.8C15.4543 6.01667 15.5 6.25 15.5 6.5V17.7C15.5 18.2 15.325 18.625 14.975 18.975C14.625 19.325 14.2 19.5 13.7 19.5H2.3ZM9.5 5.6V2H2.3C2.23333 2 2.16667 2.03333 2.1 2.1C2.03333 2.16667 2 2.23333 2 2.3V17.7C2 17.7667 2.03333 17.8333 2.1 17.9C2.16667 17.9667 2.23333 18 2.3 18H13.7C13.7667 18 13.8333 17.9667 13.9 17.9C13.9667 17.8333 14 17.7667 14 17.7V6.5H10.4C10.15 6.5 9.93733 6.41233 9.762 6.237C9.58733 6.06233 9.5 5.85 9.5 5.6Z"
-                            fill="#265C7B" />
-                        </svg>
-                      </div>
-                       <div class="position-relative">
-                           <h1 v-if="this.$page.props.auth.usaha['dokumen_amdal'] != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${this.$page.props.auth.usaha['dokumen_amdal']}`">{{form.dokumen_amdal.split('/')[2]}}</a></h1>
-                        <h1 v-else class="text-neutral-gray-5 break">{{form.dokumen_amdal.name}}</h1>
-                      </div>
-                      <div class="position-relative">
-                        <h2 class="text-primary-blue-6">Ganti Dokumen</h2>
-                        <input type="file" @change="inputDokumen($event,'dokumen_amdal')" id="dokumen_amdal">
-                      </div>
-                      
-                    </div>
-                      <small class="text-danger text-center" v-if="this.fileError2" >{{this.fileError2}}</small>
+                      <small class="text-danger text-center" v-if="form.errors.dokumen_amdal" >{{form.errors.dokumen_amdal}}</small>
                   </div>    
 
                   <div class="mb-4">
@@ -154,100 +123,89 @@
 </template>
 
 <script>
-import BaseLayout from '../../../../Layouts/Layout.vue'
+import BaseLayout from '../../../../Layouts/LayoutUMKM.vue'
 import UmkmDashboardSidebar from '../../../../Components/UmkmDashboardSidebar.vue'
 import StatusChecked from '../../../../Components/StatusChecked.vue'
 import { ref } from 'vue'
-import { useForm,Link } from "@inertiajs/inertia-vue3";
+import { useForm,Link,usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 export default{
   data(){
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[2],
-      fileError:null,
-      fileError2:null,
+      process:false
     }
   },
+  watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+        }
+     },
+     deep: true, 
+  }
+},
   setup () {
     const form = useForm({
-      nama_perusahaan: null,
-      status_perusahaan: null,
-      legalitas: null,
-      dokumen_amdal: null,
-      informasi_pajak: null,
-      npwp: null,
-      deskripsi_usaha: null,
-      email_perusahaan:null,
-      alamat_perusahaan :null
+      nama_perusahaan: usePage().props.value.auth.usaha['nama_perusahaan'],
+      status_perusahaan: usePage().props.value.auth.usaha['status_perusahaan'],
+      legalitas: usePage().props.value.auth.usaha['legalitas'],
+      dokumen_amdal: usePage().props.value.auth.usaha['dokumen_amdal'],
+      informasi_pajak: usePage().props.value.auth.usaha['informasi_pajak'],
+      npwp: usePage().props.value.auth.usaha['npwp'],
+      deskripsi_usaha: usePage().props.value.auth.usaha['deskripsi_usaha'],
+      email_perusahaan:usePage().props.value.auth.usaha['email_perusahaan'],
+      alamat_perusahaan :usePage().props.value.auth.usaha['alamat_perusahaan']
     })
 
     return { form }
   },
-  mounted(){
-     this.form.nama_perusahaan= this.$page.props.auth.usaha['nama_perusahaan']
-     this.form.status_perusahaan= this.$page.props.auth.usaha['status_perusahaan']
-     this.form.legalitas= this.$page.props.auth.usaha['legalitas']
-     this.form.dokumen_amdal= this.$page.props.auth.usaha['dokumen_amdal']
-     this.form.informasi_pajak= this.$page.props.auth.usaha['informasi_pajak']
-     this.form.npwp= this.$page.props.auth.usaha['npwp']
-     this.form.deskripsi_usaha= this.$page.props.auth.usaha['deskripsi_usaha']
-     this.form.email_perusahaan= this.$page.props.auth.usaha['email_perusahaan']
-     this.form.alamat_perusahaan = this.$page.props.auth.usaha['alamat_perusahaan']   
-  },
+  watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+        }
+     },
+     deep: true, 
+  }
+},
   computed:{
     formCheck(){
-      if (this.form.nama_perusahaan == null && this.form.status_perusahaan == null && this.form.legalitas == null && this.form.dokumen_amdal == null && this.form.informasi_pajak == null && this.form.npwp == null && this.form.deskripsi_usaha== null && this.email_perusahaan == null && this.form.alamat_perusahaan == null){
+      if (this.form.nama_perusahaan == null || this.form.status_perusahaan==null|| this.form.legalitas==null || this.form.dokumen_amdal || this.form.informasi_pajak || this.form.npwp || this.form.deskripsi_usaha || this.form.email_perusahaan || this.form.alamat_perusahaan ){
         return true
       }
       return false;
     },
-    checkSessionCondition(){
-     if(this.$page.props.auth.finansialComplete && this.$page.props.auth.usahaComplete && this.$page.props.auth.produkComplete && this.$page.props.auth.profilComplete && !this.$page.props.auth.user.accepted){
-      return true
-     }
-     return false
-    }
   },
   components:{
     BaseLayout,
     Link,
     UmkmDashboardSidebar,
-    StatusChecked
   },
   methods:{
     submit(){
-         if (this.form.dokumen_amdal=='' || this.form.legalitas == '') {
-            this.fileError = "Masukkan dokumen legalitas anda terlebih dahulu"
-            this.fileError2 = "Masukkan dokumen amdal anda terlebih dahulu"
-            return
+       if (this.process || !this.$page.props.auth.usahaComplete) {
+           this.form.post('/umkm/dashboard/profil_usaha/')
         }
-        this.form.post('/umkm/dashboard/profil_usaha/')
+       else{
+          Inertia.get('/umkm/dashboard/profil_produk/')
+       }
+       
  
     },
   inputDokumen(event,id){
-        if (id == 'legalitas') {
-           if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword'){
-              this.form.legalitas = event.target.files[0]
-              this.$page.props.auth.usaha['legalitas'] = null;
-              this.fileError = null
+           if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword'|| event.target.files[0].type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+              this.form['id'] = event.target.files[0]
+              this.$page.props.auth.usaha['id'] = null;
+              this.form.errors['id'] = null
            }
            else{
-               this.fileError = "dokumen anda harus pdf/docx !"
-               console.log('test')
+              this.form.errors['id']= "dokumen anda harus pdf/docx !"
            }
-        }
-        else{
-           if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword'){
-               this.form.dokumen_amdal = event.target.files[0]
-              this.$page.props.auth.usaha['dokumen_amdal'] = null;
-               this.fileError2 = null
-           }
-            else{
-                this.fileError2 = "dokumen anda harus pdf/docx !"
-          
-           }
-        }
+        
     },
 
   

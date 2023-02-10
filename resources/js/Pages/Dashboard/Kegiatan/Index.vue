@@ -2,7 +2,7 @@
   <DashboardLayout title="Kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-      <Link href="/admin/dashboard/kegiatan/create" class="btn btn-primary-blue-6 text-neutral-white py-2">
+      <Link href="/admin/kegiatan/create" class="btn btn-primary-blue-6 text-neutral-white py-2">
       <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Kegiatan
       </Link>
     </div>

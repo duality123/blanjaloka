@@ -17,6 +17,13 @@ class DokumenPerusahaan extends Model
          return $this->belongsTo(User::class,'id','user_id');
     }
 
+   public function delete(){
+     Storage::disk('public')->delete($this->foto_ktp_pic);
+     Storage::disk('public')->delete($this->foto_buku_tabungan);
+     Storage::disk('public')->delete($this->foto_npwp_perusahaan);
+     parent::delete();
+   }
+
     public function foto_npwp()
     {
         return $this->foto_profil;

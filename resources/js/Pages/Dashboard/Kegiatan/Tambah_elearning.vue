@@ -1,11 +1,12 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+  <DashboardLayout title="Tambah Elearning" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">{{kegiatan.tema}}</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Elearning</p>
+      <Link :href="`/admin/kegiatan/${kegiatan.id}/detail?page=1`" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+         <Link :href="`/admin/kegiatan/${kegiatan.id}/elearning?page=1`" class="text-decoration-none text-primary-blue-6 me-2">> Elearning</Link>
+      <p class="text-neutral-gray-4">> Tambah Elearning</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -13,7 +14,7 @@
           <section class="mb-5">
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Waktu</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
+              <input type="datetime-local" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.waktu" />
                 <small class="text-danger text-center" v-if="form.errors.waktu">{{form.errors.waktu}}</small>
             </div>
@@ -72,7 +73,7 @@ const form = useForm({
   waktu:null,
   judul:null,
   gambar:null,
-  kegiatan_id:window.location.pathname.split('/')[4]
+  kegiatan_id:props.kegiatan.id
 });
 
 
@@ -113,7 +114,7 @@ const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/tambah_elearning/baru')
+  form.post('/admin/kegiatan/tambah_elearning')
 }
 </script>
 

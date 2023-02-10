@@ -2,10 +2,15 @@
     <div v-if="links.length >= 3">
 
             <ul class="pagination">
+            
                 <template v-for="link in links">
-                <li  v-if="link.url !== null"  :class="{'active':link.url ==  this.url }">
-                     <Link :href="link.url" >
-                         {{link.label}}
+                <li  v-if="link.url !== null"  :class="{'active':link.active }">
+                
+                     <Link v-if="this.lazy" :data="postLazyData" method="post" :only="this.lazy" preserve-state  :href="link.url+'&'+parameters">
+                          {{decode(link.label)}}
+                    </Link>
+                    <Link v-else :href="link.url+'&'+parameters" preserve-state  >
+                          {{decode(link.label)}}
                     </Link>
                 </li>
                 </template>
@@ -20,12 +25,43 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
             Link
         },
          props: {
-            links:Object    },
+            links:Object,
+            lazy:Array,
+            },
         data(){
             return{
-                url : document.location.href 
+                parameters : document.location.search.substring(8),
+                currentPage :document.location.href,
+                cari:false ,
+                postLazyData:document.sessionStorage
             }
+        },
+    mounted(){
+        let uri = window.location.search.substring(1)
+        let params = new URLSearchParams(uri)
+        if (params.get('cari')) {
+            this.cari= true
         }
+         else if(params.get('investor')) {
+          this.cari = true
+        }
+        else if(params.get('umkm')){
+            this.cari = true
+        }
+    },
+    methods:{
+        decode(strings){
+           if(strings.includes(' &raquo;')){
+              return 'Berikutnya'
+           }
+           else if(strings.includes('&laquo; ')){
+              return 'Sebelumnya'
+           }
+           else{
+            return strings;
+           }
+        }
+    }
 }
 </script>
 <style scoped>

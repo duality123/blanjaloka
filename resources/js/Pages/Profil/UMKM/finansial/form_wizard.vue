@@ -2,11 +2,8 @@
    <BaseLayout title="UMKM Profile">
     <section class="mt-10">
       <div class="container">
-        <div class="row gap-4">
-
-           <StatusChecked :sessionCondition="checkSessionCondition"/> 
-        <!--
-           <div id="myModal" class="modal" v-if="this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted && this.popup" >
+        <div class="row gap-4">   
+           <div id="myModal" class="modal" v-if="this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted" >
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
@@ -24,7 +21,7 @@
       </div>
 
     </div>   
-    -->      
+         
            <UmkmDashboardSidebar section="kajian_finansial" />
 
            <div class="col-lg-8">
@@ -120,57 +117,52 @@
         </BaseLayout>
 </template>
 <script>
-import BaseLayout from '../../../../Layouts/Layout.vue'
+import BaseLayout from '../../../../Layouts/LayoutUMKM.vue'
 import UmkmDashboardSidebar from '../../../../Components/UmkmDashboardSidebar.vue'
 import StatusChecked from '../../../../Components/StatusChecked.vue'
 import { ref } from 'vue'
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm,usePage } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 export default{
   data(){
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[1],
-      popup:true
+      popup:true,
+      process:false
     }
   },
   setup () {
     const form = useForm({
-      capex: null,
-      opex: null,
-      swot_faktor_eksternal: null,
-      payback_period: null,
-      swot_faktor_internal: null,
-      key_partners: null,
-      key_activity:null,
-      value_propotions: null,
-      customer_relationship: null,
-      channels:null,
-      cost_structure:null,
-      revenue_streams:null
+      capex: usePage().props.value.auth.finansial['capex'],
+      opex: usePage().props.value.auth.finansial['opex'],
+      swot_faktor_eksternal: usePage().props.value.auth.finansial['swot_faktor_eksternal'],
+      payback_period: usePage().props.value.auth.finansial['payback_period'],
+      swot_faktor_internal: usePage().props.value.auth.finansial['swot_faktor_internal'],
+      key_partners: usePage().props.value.auth.finansial['key_partners'],
+      key_activity:usePage().props.value.auth.finansial['key_activity'],
+      value_propotions: usePage().props.value.auth.finansial['value_propotions'],
+      customer_relationship: usePage().props.value.auth.finansial['customer_relationship'],
+      channels:usePage().props.value.auth.finansial['channels'],
+      cost_structure:usePage().props.value.auth.finansial['cost_structure'],
+      revenue_streams:usePage().props.value.auth.finansial['revenue_streams']
     })
     return { form }
   },
-   props:{
-    popup:{
-      type:Boolean,
-      default:false
-    },
-  },
-  mounted(){
-    //console.log( this.$page.props.auth.profil['tanggal_lahir'])
-      this.form.capex= this.$page.props.auth.finansial['capex']
-      this.form.opex=this.$page.props.auth.finansial['opex']
-      this.form.swot_faktor_eksternal=this.$page.props.auth.finansial['swot_faktor_eksternal']
-      this.form.payback_period= this.$page.props.auth.finansial['payback_period']
-      this.form.swot_faktor_internal=  this.$page.props.auth.finansial['swot_faktor_internal']
-      this.form.key_partners= this.$page.props.auth.finansial['key_partners']
-      this.form.value_propotions = this.$page.props.auth.finansial['value_propotions']
-      this.form.customer_relationship= this.$page.props.auth.finansial['customer_relationship']
-      this.form.channels= this.$page.props.auth.finansial['channels']
-      this.form.cost_structure= this.$page.props.auth.finansial['cost_structure']
-      this.form.revenue_streams= this.$page.props.auth.finansial['revenue_streams']
-      this.form.key_activity= this.$page.props.auth.finansial['key_activity']
-  },
+
+watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+          console.log(this.process);
+        }
+     },
+     deep: true, 
+  }
+},
+
+
   computed:{
     formCheck(){
        if (this.form.capex == null || this.form.opex == null   || this.form.swot_faktor_eksternal == null   || this.form.key_partners == null  || 
@@ -179,25 +171,21 @@ export default{
       }
       return false;
     },
-    checkSessionCondition(){
-     if(this.$page.props.auth.finansialComplete && !this.$page.props.auth.user.accepted){
-      return true
 
-     }
-     return false
-    }
   },
   components:{
     BaseLayout,
     UmkmDashboardSidebar,
-    StatusChecked
+  
   },
   methods:{
     submit(){
-      if (this.form.capex == null || this.form.opex == null   || this.form.swot_faktor_eksternal == null   || this.form.key_partners == null  || this.form.value_propotions == null  ||  this.form.customer_relationship == null  ||  this.form.channels == null  ||  this.form.cost_structure == null  || this.form.swot_faktor_internal == null  || this.form.payback_period == null && this.form.revenue_streams == null) {
-        return 
-      }
+    if(this.process || !this.$page.props.auth.finansialComplete){
       this.form.post('/umkm/dashboard/kajian_finansial/')
+    }
+    else{
+      Inertia.get('/umkm/dashboard/kegiatanku')
+    }
     },
      removePopup(){
       this.popup =false

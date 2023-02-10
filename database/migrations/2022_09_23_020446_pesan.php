@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-<<<<<<< HEAD
+
       Schema::create('pesan', function (Blueprint $table) {
           $table->id();
           $table->foreignId('pengirim')->references('id')->on('users')->onDelete('restrict');
@@ -21,9 +21,7 @@ return new class extends Migration
           $table->timestamp('update')->nullable();
           $table->timestamp('tanggal_kirim')->nullable();
       });
-=======
-        //
->>>>>>> 4d26dc5c2536a724370326f1054053f22d834f13
+
     }
 
     /**
@@ -33,10 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-<<<<<<< HEAD
         dropIfExists('pesan');
-=======
-        //
->>>>>>> 4d26dc5c2536a724370326f1054053f22d834f13
     }
 };

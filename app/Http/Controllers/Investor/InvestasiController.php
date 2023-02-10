@@ -16,15 +16,9 @@ class InvestasiController extends Controller
        if(!$request->user()->accepted){
             return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin']);
         }
-        $data = Bisnis::fetchAndPaginate($limit=9,$page=$slug,$request->user()->id);
-        return Inertia::render('Profil/Investor/bisnis/Daftar_bisnis',['items'=>$data['items'],
-                                                           'paginationNums'=>$data['paginate']['nums'],
-                                                           'nextBlok'=>$data['paginate']['nextBlok'],
-                                                           'prevBlok'=>$data['paginate']['prevBlok'],
-                                                           'prev'=>$data['paginate']['prev'],
-                                                           'next'=>$data['paginate']['next'],
-                                                           'first'=>$data['paginate']['first'],
-                                                           'last'=>$data['paginate']['last'],]);
+        $user = User::where('id','=',$request->user()->id)->first();
+        $data = $user->bisnisinvestor()->paginate(10)
+        return Inertia::render('Profil/Investor/bisnis/Daftar_bisnis',['items'=>$data['items']]);
     }
 
     public function add(Request $request)

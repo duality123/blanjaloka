@@ -15,7 +15,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{item.judul}}</h5>
                             <p class="card-text">{{item.deskripsi}}</p>
-                            <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/overview/${item.id}`" class="btn btn-primary d-block">Ikuti Pembelajaran</Link>
+                            <Link :href="`/umkm/dashboard/kegiatanku/materi/${item.id}`" class="btn btn-primary d-block">Ikuti Pembelajaran</Link>
                           </div>
                         </div>
                       </div>
@@ -52,7 +52,7 @@ export default{
   },
   props:{
       kegiatan:Object,
-      items : Array,
+      items : Object,
       paginationNums : Array,
       nextBlok:Number,
       prevBlok:Number,

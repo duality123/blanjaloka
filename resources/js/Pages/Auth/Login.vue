@@ -74,7 +74,7 @@ const passwordInputType = ref('password');
 const passwordEyeType = ref('fa-solid fa-eye-slash');
 
 
-const form = reactive({
+const form = useForm({
 
     email: '',
     password: '',
@@ -127,11 +127,11 @@ const handleTogglePassword = (e) => {
 
 const handleSubmit = () => {
 
-  Inertia.post('/login',{
+  form.post('/login',{
                   email : form.email,
                   password : form.password,
                   remember : form.remember,
-  });
+  },{preserveState:false});
 
   return {
     form,

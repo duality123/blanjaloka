@@ -52,6 +52,7 @@ class CreateNewUser implements CreatesNewUsers
         
         if ($input['investor']) {
             Role::where('user_id','=',$user->id)->update(['number'=>3]);
+            $user->profil()->create([]);
             $user->profilPerusahaan()->create([]);
             $user->dokumenPerusahaan()->create([]);
         }

@@ -1,59 +1,82 @@
 <template>
-    <RemoveKegiatanLayout pesan="Anda yakin ingin menghapus kegiatan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/hapus_investasi" @toggleClose="switchClose()" />
-  <DashboardLayout title="Daftar kegiatan" state="funding">
-    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Kegiatan</h1>
-    </div>
+    <RemoveInvestasiLayout pesan="Anda yakin ingin menghapus kegiatan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/investasi/hapus_investasi" @toggleClose="switchClose()" />
+  <DashboardLayout section = "funding" title="Daftar Bisnis" state="funding">
     <ul class="tabs mt-4">
       <li class="active" >
-      		<h3>Daftar Kegiatan</h3>
+      		<h3>Daftar Investasi</h3>
       </li>
     </ul>
     <section>
-      <div class="d-flex justify-content-end">
-        <Link href="/admin/dashboard/tambah_investasi" class="btn btn-primary-blue-6 text-neutral-white py-2">
+       <div class="row">
+         <div class="col d-flex justify-content-start">
+      <Search :url="`/admin/investasi?page=1`" judul="Cari Bisnis" /> 
+         <div class="dropdown mx-3  ">
+  <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{profit:'t'}" class="dropdown-item" :href="url">Profit</Link></li>
+                <li><Link preserve-state :data="{profit:'f'}" class="dropdown-item" :href="url">Belum Profit</Link></li>
+              </ul>
+            </div>
+      </div>  
+      <div class="col d-flex justify-content-end">
+        <Link href="/admin/investasi/tambah_investasi" class="btn btn-primary-blue-6 text-neutral-white py-2">
           <font-awesome-icon icon="fa-solid fa-plus" /> Tambah Bisnis
         </Link>
       </div>
-      <div class="table-responsive">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-               <th scope="col">Nama Bisnis</th>
-              <th scope="col">jumlah investasi</th>
-              <th scope="col">target investasi</th>
-              <th scope="col">jumlah investor</th>
-              <th scope="col">jumlah UMKM</th>
-              <th scope="col">kategori</th>
-              <th scope="col">minimum investasi</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-for="(index,no) in items.data">
-              <th scope="row">{{++no}}</th>
-                <td><Link :href="`/admin/dashboard/investasi/${index.id}/detail`">{{index.name}}</Link></td>
-               <td>{{index.jumlah_investasi}}</td>
-               <td>{{index.target_investasi}}</td>
-               <td>{{index.jumlah_investor}}</td>
-               <td>{{index.total_umkm}}</td>
-              <td>{{index.kategori}}</td>
-              <td>{{index.minimum_investasi}}</td>
-              <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <Link :href="`/admin/dashboard/investasi/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_update.png" alt="update icon">
-                  Edit
-                </Link>
-                <button @click="this.switchClose(id=index.id)" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../../assets/icons/icon_delete.png" alt="delete icon">
-                  Hapus
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    </div>
+     <div class="card-body mt-4">
+                <div class="row">
+                  <div class="col-lg-4" v-for="(item,no) in items.data">
+
+                    <div class="card card_kegiatan mt-2">
+                       
+                      <div class="card-body">
+<div class="col d-flex justify-content-start">
+   <div v-if="item.persentase_hasil_investasi > 0" class="bg-semantic-success-1 text-semantic-success-4 status">Profit ( {{item.persentase_hasil_investasi}} % )</div>
+        <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Belum Profit ( {{item.persentase_hasil_investasi}} % )</div>
+</div>
+<div class=" d-flex justify-content-end">
+      <div class="dropdown-">
+  <a href="#" role="button"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+     <font-awesome-icon icon="fas fa-ellipsis-h" />
+  </a>
+
+  <ul class="dropdown-menu-end dropdown-menu">
+    <li><Link :href="`/admin/investasi/${item.id}/edit`" class="dropdown-item" href="#">Edit</Link></li>
+    <li><button @click="switchClose(item.id)" class="dropdown-item delete" href="#">Hapus</button></li>
+  </ul>
+</div>
       </div>
+  <div :id="`carouselExampleControlsNoTouching${no}`" class="carousel slide" data-bs-touch="false">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="2000" v-for="gambar in item.foto_bisnis.split(',').filter(item => item)">
+      <div class="col d-flex justify-content-center">
+                  <img  :src="`${$page.props.asset_url}/${gambar}`" class="gambar" alt="...">
+                </div>
+              </div>
+  </div>
+  <button class="carousel-control-prev " type="button" :data-bs-target="`#carouselExampleControlsNoTouching${no}`" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon   " aria-hidden="true"></span>
+    <span class="visually-hidden ">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" :data-bs-target="`#carouselExampleControlsNoTouching${no}`" data-bs-slide="next">
+    <span class="carousel-control-next-icon   " aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div> 
+<h1 class="text-neutral-black mt-2">{{item.name}}</h1>
+<div class="col d-flex justify-content-center">
+                          <button class="btn btn-primary-blue-7 me-2 px-3 text-neutral-white cursor-pointer" @click="redirect(item.id)">Lihat Bisnis</button>
+</div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>          
+              </div>
       <div class="d-flex justify-content-center mt-4">
       <Pagination :links="items.links"/>
       </div>
@@ -63,15 +86,18 @@
 
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
-import RemoveKegiatanLayout from '../../../Components/RemoveItem.vue';
+import RemoveInvestasiLayout from '../../../Components/RemoveItem.vue';
 import Pagination from '../../../Components/Pagination.vue';
+import Search from '../../../Components/Search.vue';
 export default{
     data(){
         return{
           popup:false,
           deletePopup:false,
-          itemDelete:null
+          itemDelete:null,
+          url:document.location.href
 
       }
     },
@@ -93,13 +119,17 @@ export default{
     components: {
       DashboardLayout,
       Link,
-      RemoveKegiatanLayout,
-      Pagination
+      RemoveInvestasiLayout,
+      Pagination,
+      Search
     },
     methods:{
        switchClose(id=null){
         this.deletePopup = !this.deletePopup          
         this.itemDelete = {id:id}
+      },
+      redirect(link){
+        Inertia.get('/admin/investasi/'+link+'/detail')
       }
     }
 
@@ -107,40 +137,29 @@ export default{
 </script>
 
 <style scoped>
+.delete{
+  border-width:0px;
+
+  border-color: transparent;
+}
 h1 {
   font-size: 2.1rem;
   font-weight: 600;
 }
-
-.close{
-  border-width: 0px;
-  background-color: white;
-}
-.modal-content{
-  text-align: start;
-}
-.modal {
-  position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  display: block;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+.carousel-control-next-icon{
+ background-image: url('../../../assets/icons/carousel-right.png');
 }
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin-top: 3rem;
-  margin-left: 25rem;
-  padding: 20px;
-  border-radius: 25px;
-  width: 40%;
-  text-align: center;
+.carousel-control-prev-icon{
+ background-image: url('../../../assets/icons/carousel-left.png');
+}
+.gambar{
+  width: 190px;
+  height: 140px;
+  border-radius:25px;
+}
+table{
+	width: 100%;
 }
 .tabs {
   display: flex;
@@ -149,10 +168,6 @@ h1 {
   padding: 0;
   border-bottom: 1px solid #F0F0F0;
 }
-table{
-	width: 900px;
-}
-
 .tabs li {
   cursor: pointer;
 }
@@ -165,6 +180,36 @@ table{
   border-bottom: 2px solid #398AB9;
 }
 
+.card_kegiatan {
+  border: none;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.card_kegiatan:hover {
+  background-color: #F2F7FA;
+}
+
+.card_kegiatan .status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  border-bottom-right-radius: 0.375rem;
+}
+
+.card_kegiatan h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card_kegiatan p {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 .tabs li a {
   text-decoration: none;
   font-weight: 600;
@@ -172,22 +217,13 @@ table{
 
 
 
-table thead tr td,
-table thead tr th {
-  font-weight: 600;
-  color: #3E4041;
-  border: none;
-  text-align: center;
-}
-
 table tbody tr td,
 table tbody tr th {
-  font-weight: 400;
+  font-weight: 600;
   color: #3E4041;
   border-bottom: none;
-  text-align: center;
+  text-align: start;
 }
-
 table tbody tr:nth-child(2n) td,
 table tbody tr:nth-child(2n) th {
   background-color: #F2F7FA;
@@ -232,28 +268,6 @@ table tbody tr:nth-child(2n) th {
   transition: 300ms;
 }
 
-.pagination li:hover {
-  background-color: #398AB9;
-}
-
-.pagination li:hover a,
-.pagination li:hover a svg {
-  color: #FFFFFF !important;
-}
-
-.pagination li a {
-  text-decoration: none;
-  color: #3E4041;
-  font-weight: 600;
-}
-
-.pagination li.active {
-  background-color: #398AB9;
-}
-
-.pagination li.active a {
-  color: #FFFFFF;
-}
 
 @media (max-width: 575.98px) {
   ul {

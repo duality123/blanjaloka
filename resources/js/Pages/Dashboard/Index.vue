@@ -4,6 +4,7 @@
       <h1 class="text-neutral-gray-5 mb-0">Dashboard</h1>
       <h2 class="text-neutral-gray-5" id="waktuDisplay"></h2>
     </div>
+    <!--
     <div class="row mt-5">
       <div class="col-lg-6 mb-4">
         <div class="card">
@@ -38,13 +39,67 @@
         </div>
       </div>
     </div>
+  -->
+
+       <ul class="tabs mt-4">
+      <li class="active" >
+          <h3>Daftar Kegiatan Janji Temu Yang Akan Berakhir</h3>
+      </li>
+    </ul>
+       <div class="row">
+         <div class="col-xl-12 d-flex justify-content-start">
+        <MultiSearchJanjiTemu url="/admin/dashboard?page=1" judul="Cari jadwal janji temu" />
+           <div class="dropdown  ">
+  <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">Sudah selesai</Link></li>
+                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Belum Selesai</Link></li>
+              </ul>
+            </div>
+           </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mt-3">
+          <thead class="table-primary-blue-4">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Lokasi</th>
+              <th scope="col">Mulai</th>
+              <th scope="col">Berakhir</th>
+              <th scope="col">Investor</th>
+                <th scope="col">UMKM</th>
+            </tr>
+          </thead>
+          <tbody>
+             <tr v-for="(index,no) in items.data">
+              <th scope="row">{{++no}}</th>
+               <td>{{index.lokasi}}</td>
+               <td>{{index.waktu}}</td>
+             <td>{{index.berakhir}}</td>
+                  <td><Link :href="`/detail/profil/investor/${index.investor.profil.user_id}`" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">{{index.investor.profil.nama_lengkap}}</Link>
+                  </td>       
+                     <td><Link  :href="`/detail/profil/umkm/${index.umkm.profil.user_id}`" class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer">{{index.umkm.profil.nama_lengkap}}</Link>
+                  </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-center mt-4">
+        <Pagination :links="items.links"/>
+      </div>
+
   </DashboardLayout>
 </template>
 
 <script setup>
+import { Link, useForm } from '@inertiajs/inertia-vue3'
 import DashboardLayout from '../../Layouts/Dashboard.vue';
+import Pagination from '../../Components/Pagination.vue';
+import Search from '../../Components/Search.vue';
 import { ref,computed,onMounted,onUnmounted } from 'vue';
 import {usePage} from  '@inertiajs/inertia-vue3';
+import MultiSearchJanjiTemu from '../../Components/JanjiTemuMultiSearch.vue'
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -52,7 +107,7 @@ const hapusSapa = () =>{
   var target=  document.getElementById('remove')
   target.remove();
 }
-
+let url = document.location.href
 const day = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const month =['Januari','Februari',"Maret",'April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 let hari = '0';
@@ -103,6 +158,10 @@ const chartOptions = ref({
   }
 });
 
+const props = defineProps({
+   items:Object
+});
+
 
 </script>
 
@@ -113,7 +172,105 @@ const chartOptions = ref({
     align: start;
   }
 }
+h1 {
+  font-size: 2.1rem;
+  font-weight: 600;
+}
+.tdnama{
+  margin-left: 4px;
+}
 
+.tdimg{
+  width: 200px;
+  height: 100px;
+}
+table{
+
+}
+
+.close{
+  border-width: 0px;
+  background-color: white;
+}
+.modal-content{
+  text-align: start;
+  height: 450px;
+  overflow-y: scroll;
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
+.tabs {
+  display: flex;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+table{
+  width:100%;
+}
+
+.tabs li {
+  cursor: pointer;
+}
+
+.tabs li {
+  padding-bottom: 0.5rem;
+}
+
+.tabs li.active {
+  border-bottom: 2px solid #398AB9;
+}
+
+.tabs li a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+
+
+table thead tr td,
+table thead tr th {
+  overflow-x: none;
+  font-weight: 600;
+  color: #3E4041;
+  border: none;
+  text-align: center;
+}
+
+table tbody tr td,
+table tbody tr th {
+  font-weight: 400;
+  color: #3E4041;
+  border-bottom: none;
+  text-align: center;
+}
+
+table tbody tr:nth-child(2n) td,
+table tbody tr:nth-child(2n) th {
+  background-color: #F2F7FA;
+}
+
+
+@media (max-width: 575.98px) {
+  ul {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .pagination li:nth-child(3),
+  .pagination li:nth-child(4) {
+    display: none;
+  }
+}
 .hide{
   display: none;
 }
@@ -133,18 +290,6 @@ section{
   background-color: white;
 }
 
-.modal {
-  position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  display: block;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
-}
 
 /* Modal Content */
 .modal-content {

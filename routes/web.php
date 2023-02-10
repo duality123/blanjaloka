@@ -3,38 +3,45 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthenticatedController;
-use App\Http\Controllers\Dashboard\KegiatanController;
-use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\UMKM\UsahaController;
-use App\Http\Controllers\UMKM\ProdukController;
-use App\Http\Controllers\UMKM\FinansialController;
-use App\Http\Controllers\Users\NotifikasiController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UMKM\DashboardUMKMController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Users\ProfilController;
-use App\Http\Controllers\Dashboard\JanjitemuController;
-use App\Http\Controllers\Dashboard\InvestasiAdminController;
 // use App\Http\Controllers\AuthenticatedController;
-use App\Http\Controllers\Investor\InvestorController;
 // base controller
 use App\Http\Controllers\{
     PagesController,
 };
-
+use App\Http\Controllers\Users\{
+    ProfilController,
+    NotifikasiController,
+    ProfilInvestorController 
+};
 
 use App\Http\Controllers\Investor\{
     ProfilPerusahaanController,
     DokumenPerusahaanController,
-    InvestasiController
+    InvestasiController,
+    InvestorController
   
 };
 
 // umkm controller
 use App\Http\Controllers\UMKM\{
     AccountController,
+    FundingController,
+    DashboardUMKMController,
+    FinansialController,
+    ProdukController,
+    UsahaController,
+
     DashboardController as UmkmDashboardController
+};
+
+use App\Http\Controllers\Admin\{
+    KegiatanController,
+    UserController,
+    JanjitemuController,
+    InvestasiAdminController,
+    InformasiController
 };
 use Illuminate\Http\Request;
 use App\Models\Profil;
@@ -64,15 +71,32 @@ Route::get('/', [PagesController::class, 'home']);
 // umkm route
 Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(function () {
     // umkm account route
-
-    Route::get('/join/{slug}', [UmkmDashboardController::class, 'join_kegiatan']);
     Route::prefix('account')->controller(AccountController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/notifikasi', 'notifikasi');
     });
+    Route::get('/beranda', [UmkmDashboardController::class, 'beranda']);
+    Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
+    Route::get('1', [ProfilController::class, 'form_wizard_profil_pertama']);
+    Route::get('2', [ProfilController::class, 'form_wizard_profil_kedua']);
+    Route::get('3', [ProfilController::class, 'form_wizard_profil_ketiga']);
+    Route::prefix('proses/')->group(function () {
+        Route::post('wizard_pertama', [ProfilController::class, 'process_wizard_profil_pertama']);
+        Route::post('wizard_kedua', [ProfilController::class, 'process_wizard_profil_kedua']);
+        Route::post('wizard_ketiga', [ProfilController::class, 'process_wizard_profil_ketiga']);
+    });
+ });
 
     // umkm dashboard route
     Route::prefix('dashboard')->controller(UmkmDashboardController::class)->group(function () {
+        Route::prefix('funding')->controller(FundingController::class)->group(function () {
+              Route::get('/', 'show_bisnis');
+               Route::get('/{slug}', 'deskripsi_bisnis');
+               Route::get('{slug}/daftar_investor/', 'list_investor_investasi');
+                Route::get('{slug}/daftar_umkm/', 'list_funding_umkm');
+              Route::get('{slug}/data_fundingku/', 'fundingku');
+              Route::get('{slug}/keluar/', 'leave_funding');
+        });
         Route::get('/', 'index');
         Route::get('/beranda/{slug}', 'beranda');
         
@@ -82,19 +106,21 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
             Route::post('/tambah_eventual', 'tambah_eventual');
             Route::post('/edit_logbook','edit_logbook');
             Route::post('/buat_logbook','buat_logbook');
-            Route::get('/detail/{slug}', 'deskripsi');
+            Route::get('/{slug}', 'deskripsi');
             Route::get('/{slug}/elearning/', 'elearning');
-            Route::get('/elearning/materi/overview/{slug}', 'materi');
+            Route::get('/materi/{slug}', 'materi');
             Route::get('/eventual/{$page}', 'eventual');
-            Route::get('/elearning/materi/detail/{slug}/{page2}', 'detail_materi');
+            Route::get('/materi/detail/{slug}/{page2}', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
             Route::get('/eventual/{slug}', 'eventual');
+            Route::get('/tugas_akhir/{slug}', 'tugas_akhir');
+            Route::post('/tugas_akhir', 'tugas_akhir_post');
 
      });
     
        //  Route::get('/kegiatanku/{page}/logbook', 'logbook');
         //  Route::get('/kegiatanku/{page}/eventual', 'eventual');
-        Route::get('/janjitemu', 'janjitemu');
+        Route::any('/janjitemu', 'janjitemu');
         
         Route::prefix('profil_usaha/')->group(function () {
             Route::get('/', [UsahaController::class, 'form_wizard']);
@@ -124,54 +150,101 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
 });
  
 // admin route
-Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(function () {
+Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
     // admin dashboard route
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/detail/profil/{slug}/hapus', [UserController::class, 'delete']);
+    Route::get('dashboard/', [DashboardController::class, 'index']);
     // admin kegiatan route
+    
+ 
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
+        Route::get('/', 'index');
         Route::post('/edit_deskripsi', 'edit_deskripsi');
-        Route::get('/{id}/tambah_elearning', 'tambah_elearning');
+        Route::get('/{slug}/tambah_elearning', 'tambah_elearning'); 
         Route::get('/{slug1}/eventual/', 'list_eventual');
+        Route::get('/{slug1}/publikasi/', 'publikasi');
+        Route::post('/ubah_status_publikasi/', 'ubah_status_kelulusan');
+        Route::any('/{slug}/investor/', 'daftar_investor');
+        Route::any('/{slug}/umkm/', 'daftar_umkm');
         Route::post('/hapus_kegiatan', 'hapus_kegiatan');
+        Route::get('/{slug}/tugas_akhir', 'tugas_akhir');
         Route::post('/hapus_elearning', 'hapus_elearning');
         Route::post('/hapus_bab', 'hapus_bab');
         Route::post('{slug}/hapus_eventual', 'hapus_eventual');
-        Route::post('/tambah_elearning/baru', 'add_elearning');
-        Route::get('/', 'index');
+        Route::post('/tambah_elearning', 'add_elearning');
         Route::get('/{slug}/elearning/','list_elearning');
         Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/{slug}/edit', 'edit_kegiatan');
         Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
         Route::post('/elearning/edit', 'edit_elearning_post');
-        Route::get('/elearning/{slug1}/detail/', 'list_bab');
-        Route::get('/elearning/bab/{slug}/edit', 'edit_bab');
-        Route::post('/elearning/bab/edit', 'edit_bab_post');
-        Route::get('/elearning/{slug1}/tambah_bab', 'tambah_bab');
-        Route::post('/tambah_bab/baru', 'tambah_bab_post');
+        Route::get('/elearning/{slug1}/bab/', 'list_bab');
+        Route::get('/bab/{slug}/edit', 'edit_bab');
+        Route::post('/bab/edit', 'edit_bab_post');
+        Route::get('/{slug1}/tambah_bab', 'tambah_bab');
+        Route::post('/tambah_bab', 'tambah_bab_post');
         Route::get('/{slug}/logbook/', 'list_logbook');
         Route::post('/logbook/ubah_status', 'ubah_status_logbook');
         Route::get('/{slug}/detail_logbook/{id}', 'list_user_logbook');
         Route::post('/edit_post', 'edit_kegiatan_post');
-        Route::get('/{slug}/detail/elearning/{slug2}', 'list_elearning');
-        Route::get('/tambah_kegiatan/baru/','tambah');
-        Route::post('/tambah_kegiatan','add');
+        Route::get('/tambah_kegiatan/','tambah');
+        Route::post('/tambah_kegiatan','tambah_kegiatan_post');
         Route::post('/ubah_eventual_status', 'ubah_eventual_status');
+        Route::post('/tambah_investor', 'tambah_investor_post');
+        Route::post('/tambah_umkm', 'tambah_umkm_post');
+        Route::post('/hapus_investor', 'hapus_investor');
+        Route::post('/hapus_umkm', 'hapus_umkm');
+        Route::post('/hapus_jawaban', 'hapus_jawaban');
+        Route::post('/tambah_tugas_akhir', 'tambah_tugas');
+         Route::post('/hapus_tugas_akhir', 'hapus_soal');
+
+     
     });
-     Route::get('janjitemu/',[JanjitemuController::class,'index']);
-      Route::post('tambah_janji_temu/',[JanjitemuController::class,'create']);
-    Route::post('hapus_janjitemu/',[JanjitemuController::class,'delete']);
-    Route::get('investasi/',[InvestasiAdminController::class,'index']);
 
-    Route::get('investasi/{slug}/detail',[InvestasiAdminController::class,'detail_investasi']);
-    Route::get('tambah_investasi/',[InvestasiAdminController::class,'create']);
-    Route::post('hapus_investasi/',[InvestasiAdminController::class,'delete']);
-     Route::post('tambah_investasi/',[InvestasiAdminController::class,'tambah_investasi']);
-     Route::get('investasi/{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
+       Route::any('janjitemu/',[JanjitemuController::class,'index']);
+       Route::post('tambah_janji_temu/',[JanjitemuController::class,'create']);
+       Route::post('edit_janji_temu/',[JanjitemuController::class,'edit']);
+       Route::post('hapus_janjitemu/',[JanjitemuController::class,'delete']);
+       Route::get('investasi/',[InvestasiAdminController::class,'index']);
 
+
+    Route::prefix('investasi')->controller(InvestasiAdminController::class)->group(function () {
+         Route::get('/tambah_investasi',[InvestasiAdminController::class,'tambah_investasi']);
+         Route::post('/hapus_investasi',[InvestasiAdminController::class,'hapus_investasi']);
+          Route::post('/tambah_investasi_post',[InvestasiAdminController::class,'tambah_investasi_post']);
+       Route::get('/{slug}/detail',[InvestasiAdminController::class,'detail_investasi']);
+       Route::post('/submit_record_investor',[InvestasiAdminController::class,'tambah_investasi_investor']);
+       Route::post('/edit_record_investor',[InvestasiAdminController::class,'edit_investasi_investor_post']);
+       Route::post('/edit_record_umkm',[InvestasiAdminController::class,'edit_umkm_funding_post']);
+        Route::post('/submit_record_umkm',[InvestasiAdminController::class,'tambah_funding_umkm']);
+       Route::get('/{slug}/investor_investasi',[InvestasiAdminController::class,'list_investor_investasi']);
+        Route::get('/{slug}/umkm_funding',[InvestasiAdminController::class,'list_umkm_funding']);
+       Route::any('/{slug}/investor',[InvestasiAdminController::class,'daftar_investor']);
+       Route::any('/{slug}/umkm',[InvestasiAdminController::class,'daftar_umkm']);
+       Route::post('/hapus_investasi_investor',[InvestasiAdminController::class,'hapus_investasi_investor_post']);
+       Route::post('/hapus_funding_umkm/',[InvestasiAdminController::class,'hapus_funding_umkm_post']);
+       Route::get('/{slug}/detail_investasi/{slug2}',[InvestasiAdminController::class,'investor_investasi_detail']);
+        Route::get('/{slug}/detail_funding/{slug2}',[InvestasiAdminController::class,'umkm_funding_detail']);
+       Route::post('/hapus_investor',[InvestasiAdminController::class,'hapus_investor']);
+       Route::post('/tambah_investor',[InvestasiAdminController::class,'tambah_investor_post']);
+       Route::post('/tambah_umkm',[InvestasiAdminController::class,'tambah_umkm_post']);
+       Route::post('/hapus_umkm/',[InvestasiAdminController::class,'hapus_umkm']);
+       Route::get('/{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
+      Route::get('{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
       Route::post('investasi/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
+       Route::post('/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
+   });
+     Route::prefix('info_admin')->controller(InvestasiAdminController::class)->group(function () {
+         Route::get('/',[InformasiController::class,'daftar_informasi']);
+         Route::post('/tambah_info',[InformasiController::class,'tambah_informasi']);
+         Route::post('/tandai',[InformasiController::class,'tandai_informasi']);
+         Route::post('/edit_info',[InformasiController::class,'edit_informasi']);
+         Route::post('/hapus_info',[InformasiController::class,'hapus_informasi']);
+   });
+       
+   Route::get('/pesan',[PagesController::class,'laporan_all']);
 
     Route::prefix('pengguna')->group(function () {
+        Route::post('/ubah_password', [UserController::class, 'ubah_password']);
+        Route::post('/tambah_user', [UserController::class, 'tambah_user']);
         Route::get('/{role}', [UserController::class, 'all']);
         Route::post('hapus_user', [UserController::class, 'delete']);
     });
@@ -179,14 +252,49 @@ Route::prefix('admin/dashboard')->middleware(['auth','shouldAdmin'])->group(func
 
 //Profil Khusus Investor
 Route::prefix('investor/')->middleware(['auth','verified','shouldInvestor'])->group(function () {
-    Route::get('/', [InvestorController::class, 'index']);
+
+Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
+    Route::get('1', [ProfilInvestorController::class, 'form_wizard_profil_pertama']);
+    Route::get('2', [ProfilInvestorController::class, 'form_wizard_profil_kedua']);
+    Route::get('3', [ProfilInvestorController::class, 'form_wizard_profil_ketiga']);
+    Route::prefix('proses/')->group(function () {
+        Route::post('wizard_pertama', [ProfilInvestorController::class, 'process_wizard_profil_pertama']);
+        Route::post('wizard_kedua', [ProfilInvestorController::class, 'process_wizard_profil_kedua']);
+        Route::post('wizard_ketiga', [ProfilInvestorController::class, 'process_wizard_profil_ketiga']);
+    });
+    });
+    Route::get('/beranda', [InvestorController::class, 'beranda']);
     Route::prefix('dashboard/')->middleware(['auth','verified'])->group(function () {
+        Route::get('/', [InvestorController::class, 'dashboard']);
+        Route::any('janjitemu/', [InvestorController::class, 'janji_temu']);
+        Route::prefix('kegiatan')->group(function () {
+            Route::get('/{slug}', [InvestorController::class, 'deskripsi']);
+            Route::get('daftar_umkm/{slug}', [InvestorController::class, 'daftar_umkm']);
+            Route::get('keluar/{slug}', [InvestorController::class, 'leave_kegiatan']);
+            Route::get('{slug1}/logbook/{slug2}',[InvestorController::class,'logbook_umkm']);
+            Route::get('{slug1}/laporan/{slug2}',[InvestorController::class,'tugas_akhir_umkm']);
+
+           });
+        Route::prefix('bisnisku')->group(function () {
+            Route::get('daftar_umkm/{slug}',[InvestorController::class,'list_umkm']);
+            Route::get('daftar_investor/{slug}',[InvestorController::class,'list_investor']);
+            Route::get('investasi/{slug}',[InvestorController::class,'investasiku']);
+            Route::get('/{slug}',[InvestorController::class,'deskripsi_bisnis']);
+            Route::get('/',[InvestorController::class,'show_bisnis']);
+            Route::get('keluar/{slug}',[InvestorController::class,'keluar_bisnis']);
+
+        });
+
+      
+   
+        Route::get('kegiatan', [InvestorController::class, 'kegiatan']);
         Route::get('profil_perusahaan', [ProfilPerusahaanController::class, 'form_wizard_profil_perusahaan']);
         Route::get('dokumen_perusahaan', [DokumenPerusahaanController::class, 'form_wizard_dokumen_perusahaan']);
-
         Route::post('profil_perusahaan', [ProfilPerusahaanController::class, 'process_wizard']);
         Route::post('dokumen_perusahaan', [DokumenPerusahaanController::class, 'process_wizard']);
  });
+     Route::any('janjitemu', [InvestorController::class, 'ajukan_janji_temu']);
+
 
 });
 
@@ -198,7 +306,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return Inertia::render('Auth/Verification_success',['redirect'=>'/kebijakan_dan_privasi']);
+    return Inertia::render('Auth/Verification_success');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
@@ -208,17 +316,38 @@ Route::get('/halaman_verifikasi',function(Request $request){
 
 Route::get('/syarat_dan_ketentuan',function(){
     return Inertia::render('SyaratDanKetentuan');
-})->middleware('auth');
+})->middleware(['auth']);
+
+
+Route::get('/panduan',function(){
+    return Inertia::render('panduan');
+});
+
+Route::get('/contact',function(){
+    return Inertia::render('Hubungi_kami');
+});
+
+
+
+Route::prefix('laporan/')->middleware(['auth','shouldAdmin'])->group(function () {
+        Route::post('/',[PagesController::class,'laporan_post']);
+        Route::post('/tandai',[PagesController::class,'tandai']);
+        Route::post('/hapus',[PagesController::class,'hapus']);
+
+});
+
+
+
+Route::get('/about',function(){
+    return Inertia::render('Tentang_program');
+});
+
 
 
 Route::get('/kebijakan_dan_privasi',function(){
     return Inertia::render('KebijakanPrivasi');
-})->middleware('auth');
+});
 
-
-Route::get('/role',function(){
-    return Inertia::render('Auth/Pilih_role');
-})->middleware('auth','no_role');
 
 
 
@@ -256,24 +385,21 @@ Route::get('reset_password/success',function(){
 **/
 
 
+Route::prefix('/detail/profil/')->middleware(['auth','verified','shouldAdmin'])->group(function () {
+    Route::get('/umkm/{slug}', [ProfilController::class, 'detailUMKM']);
+    Route::get('/investor/{slug}', [ProfilController::class, 'detailInvestor']);
+    Route::post('/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
+    Route::get('/{slug}/accept', [UserController::class, 'terima_user']);
+    Route::get('/{slug}/hapus', [UserController::class, 'delete']);
 
-Route::get('/detail/profil/{slug}', [ProfilController::class, 'detailUMKM']);
-Route::post('/detail/profil/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
-Route::get('/detail/profil/{slug}/accept', [UserController::class, 'terima_user']);
-Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
-    Route::get('1', [ProfilController::class, 'form_wizard_profil_pertama']);
-    Route::get('2', [ProfilController::class, 'form_wizard_profil_kedua']);
-    Route::get('3', [ProfilController::class, 'form_wizard_profil_ketiga']);
-    Route::prefix('proses/')->group(function () {
-        Route::post('wizard_pertama', [ProfilController::class, 'process_wizard_profil_pertama']);
-        Route::post('wizard_kedua', [ProfilController::class, 'process_wizard_profil_kedua']);
-        Route::post('wizard_ketiga', [ProfilController::class, 'process_wizard_profil_ketiga']);
-    });
- });
+});
 
 Route::prefix('/notifikasi/')->middleware(['auth','verified'])->group(function () {
-    Route::get('{slug}', [NotifikasiController::class, 'show']);
-    Route::get('hapus/{id}', [ProfilController::class, 'delete']);
+    Route::any('UMKM', [NotifikasiController::class, 'show'])->middleware(['shouldUmkm']);
+    Route::any('admin', [NotifikasiController::class, 'show'])->middleware(['shouldAdmin']);
+    Route::any('Investor', [NotifikasiController::class, 'show'])->middleware(['shouldInvestor']);
+    Route::post('hapus_notif/', [NotifikasiController::class, 'delete']);
+    Route::post('tandai_notif/', [NotifikasiController::class, 'tandai_notif']);
  });
 
 
@@ -301,4 +427,3 @@ Route::get('umkm/kegiatanku', [DashboardUMKMController::class, 'kegiatanku']);
 
 
 
-Route::get('/notifikasi/{role}/{slug}', [NotifikasiController::class, 'show']);

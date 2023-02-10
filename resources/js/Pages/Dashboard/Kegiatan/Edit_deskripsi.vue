@@ -1,9 +1,9 @@
 <template>
 
   <Layout section="deskripsi" :title="kegiatan.tema" :link="kegiatan.id">
-     <div class="col-lg-8">
+     <div class="col-lg-8" v-if="popup">
 
-              <div id="myModal" class="modal" v-if="popup" >
+              <div id="myModal" class="modal"  >
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click = "toggleEdit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
@@ -19,8 +19,8 @@
         <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-               <div v-if="form.gambar != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
+               <div v-if="this.previewImage != null" class="d-flex justify-content-center pt-3 mb-4">
+                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -63,7 +63,20 @@
         <div class="d-flex justify-content-center pt-3 mb-4" >
                    <img :src="`${$page.props.asset_url}/${kegiatan.gambar}`" alt="update icon" style="width:20rem" id="img" >
         </div>
-        <p>{{kegiatan.deskripsi}}</p>
+        <div class="card bg-primary-blue-1 mb-3 border-primary-blue-6" >
+<div class="card-body">
+   <ul class="tabs mt-2">
+      <li class="active" >
+      <h2 >Deskripsi Kegiatan</h2>
+    </li>
+  </ul>
+  <div class="d-flex flex-column ">
+
+   
+    <div class="p-2">{{kegiatan.deskripsi}}</div>
+  </div>
+</div>
+</div>
       </div>
   </Layout>
 </template>
@@ -75,7 +88,8 @@ import { ref } from 'vue';
 export default{
   data(){
     return{
-      popup: false
+      popup: false,
+      previewImage:null
     }
   },
   setup(props){
@@ -102,10 +116,11 @@ export default{
   methods:{
     submit(){
       this.popup =false
-      this.form.post('/admin/dashboard/kegiatan/edit_deskripsi')
+      this.form.post('/admin/kegiatan/edit_deskripsi',{preserveState:true})
     },
     toggleEdit(){
       this.popup = !this.popup
+      this.previewImage = this.form.gambar
     },
      changePicture(event){
         if(event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/png'){
@@ -114,11 +129,11 @@ export default{
               this.form.errors.gambar  = "Size foto anda lebih dari 5MB !" 
               return
             }
-        var image = document.getElementById('img');
+        var image = document.getElementById('foto1');
+        this.form.gambar = event.target.files[0];
         image.src = URL.createObjectURL(event.target.files[0]);
         image.style.width = '5rem';
         image.style.overflow = 'hidden';
-        this.form.gambar = event.target.files[0];
         //console.log(this.process)
       }
       else{
@@ -169,11 +184,37 @@ ul {
   column-gap: 2rem;
   list-style: none;
   padding: 0;
-  border-bottom: 1px solid #F0F0F0;
+  
 }
 
 ul li {
   cursor: pointer;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+ul li {
+  padding-bottom: 0.5rem;
+}
+
+ul li a.active {
+  border-bottom: 2px solid #F0F0F0;
+  color:  #398ab9;
+  margin-bottom: 0px;
+}
+
+ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  color: black;
+}
+
+
+.tabs {
+  display: flex;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid #F0F0F0;
 }
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
@@ -229,20 +270,6 @@ ul li {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 
-ul li {
-  padding-bottom: 0.5rem;
-}
-
-ul li a.active {
-  border-bottom: 2px solid #398AB9;
-  color:  #398ab9;
-}
-
-ul li a {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
 
 @media (max-width: 575.98px) {
   ul {
@@ -312,5 +339,21 @@ form button {
     margin-top: 5rem;
     width: 450px;
   }
+}
+.tabs li {
+  cursor: pointer;
+}
+
+.tabs li {
+  padding-bottom: 0.5rem;
+}
+
+.tabs li.active {
+  border-bottom: 2px solid #398AB9;
+}
+
+.tabs li a {
+  text-decoration: none;
+  font-weight: 600;
 }
 </style>

@@ -10,13 +10,35 @@ class Notifikasi extends Model
 {
     public $timestamps = false;
     protected $table='notifikasi';
-    protected $fillable =['nama','pesan','user_id','redirect'];
+    protected $fillable =['nama','pesan','user_id','redirect','tanggal','tandai'];
     use HasFactory;
 
 
 
+   public function scopeFilter($query,array $filters){
+       if($filters['cari'] ?? false) {
+            $query->where('pesan', 'like', '%' . request('cari') . '%')
+                ->orWhere('tanggal', 'like', '%' . request('cari') . '%');
+        }
+
+       if($filters['tanda'] ?? false) {
+             $kondisi;
+                 if (request('tanda')=='t') {
+                        $kondisi = 1;
+                 }
+                else{
+                    $kondisi = 0;
+                }
+            $query->where('tandai','=',$kondisi);
+        }
+   }
+
+
+
+
+
    public function user(){
-         return $this->belongsToMany(User::class,'id','user_id');
+         return $this->belongsTo(User::class,'id','user_id');
     }
 
    static function deleteNotif($id){

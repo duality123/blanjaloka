@@ -1,78 +1,71 @@
 <template>
-<Layout section="publikasi" :title="kegiatan.tema" :link="kegiatan.id">
-<div class="d-flex flex-column-reverse">
+<Layout section="publikasi" :title="kegiatan.tema" :link="kegiatan.id"><section>
+<div class="row">
 
-  <div class="p-2"><strong>Nama Investor</strong> = {{investor}}</div>
-  <div class="p-2"><strong>Nama Juri</strong> = {{kegiatan.juri}}</div>
-   <div class="p-2"><strong>Nama Mentor</strong> = {{kegiatan.mentor}}</div>
-
+      <div class=" col d-flex justify-content-end">
+        <button @click="cetakPDF()" href="/admin/kegiatan/tambah_kegiatan/baru" class="btn btn-primary-blue-6 text-neutral-white py-2">
+        Cetak PDF
+        </button>
+      </div>
 </div>
 
-      <div class="table-responsive">
+ <MultiSearch :url="`/admin/kegiatan/22/publikasi/${kegiatan.id}/?page=1`"  />
+ <div class="d-flex justify-content-center mt-4">
+  <h3>Daftar UMKM Lulus Inkubasi {{kegiatan.tema}}</h3>
+</div>
+<div class="d-flex justify-content-start mt-4">
+  <div><strong>Nama Juri</strong> = {{kegiatan.nama_juri}}</div>
+</div>
+
+
+      <div class="table-responsive" >
         <table class="table mt-3">
           <thead class="table-primary-blue-4">
             <tr>
               <th scope="col">No</th>
-              <th scope="col">UMKM</th>
-              <th scope="col">Nilai</th>
+              <th scope="col">Foto</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Nama Perusahaan</th>
+              <th scope="col">Kategori Produk</th>
+              <th scope="col">No HP</th>
             </tr>
           </thead>
           <tbody>
-             <tr v-for="(index,no) in items">
+             <tr  v-for="(index,no) in items.data">
               <th scope="row">{{++no}}</th>
-               <td> {{index.nama_lengkap}}</td>
-                   <td> {{index.nilai}}</td>
+              <td><img class="imgtd" :src="`${$page.props.asset_url}/${index.foto_profil}`"/></td>
+              <td><Link :href="`/detail/profil/investor/${index.id}/`">{{index.nama_lengkap}}</Link></td>
+              <td>{{index.nama_perusahaan}}</td>
+              <td>{{index.kategori_produk}}</td>
+              <td>{{index.no_hp}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <ul class="pagination">
-          <li v-if="prev">
-            <Link :href="`/admin/dashboard/users/umkm/${prev}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-left" class="text-primary-blue-6" />
-            </Link>
-          </li>
-          <li v-if="first">
-              <Link :href="`/admin/dashboard/users/umkm/${first}`">{{first}}</Link>
-          </li>
-          <li v-if="prevBlok">
-              <Link :href="`/admin/dashboard/users/umkm/${prevBlok}`">...</Link>
-          </li>
-          <div v-for="num in paginationNums">
-          <li :class="[currentPage == num ? 'active':'']">
-              <Link :href="`/admin/dashboard/users/umkm/${num}`">{{num}}</Link>
-          </li>
-        </div>
-        <li v-if="nextBlok">
-          <Link :href="`/admin/dashboard/users/umkm/${nextBlok}`">...</Link>
-        </li>
-        <li v-if="last">
-            <Link :href="`/admin/dashboard/users/umkm/${last}`">{{last}}</Link>
-        </li>
-          <li v-if="next">
-            <Link :href="`/admin/dashboard/users/umkm/${next}`">
-              <font-awesome-icon icon="fa-solid fa-chevron-right" class="text-primary-blue-6" />
-            </Link>
-          </li>
-        </ul>
+        <div class="d-flex justify-content-center mt-4">
+         <Pagination :links="items.links"/>
       </div>
+      </div>
+  </section>
   </Layout>
 </template>
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
+import Pagination from '../../../Components/Pagination.vue';
+import MultiSearch from '../../../Components/MultiSearchUMKM.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 import { ref } from 'vue';
 export default{
-    setup(){
-    },
+   
     data(){
       return{
         currentPage: document.location.pathname.split('/')[6]
       }
     },
     props:{
-      items : Array,
+      items : Object,
       paginationNums : Array,
       investor:Array,
       nextBlok:Number,
@@ -85,14 +78,16 @@ export default{
     },
     components: {
       Layout,
-      Link
+      Link,
+      Pagination,
+      MultiSearch,
     },
     methods:{
-      changeStatus(num,id,waktu){
-        this.form.status = num
-        this.form.id = id
-        this.form.waktu = waktu
-        this.form.post('/admin/dashboard/kegiatan/logbook/ubah_status')
+      changeStatus(userid){
+        Inertia.post('/admin/kegiatan/ubah_status_publikasi',{user_id:userid,slug:this.kegiatan.slug})
+      },
+      cetakPDF(){
+        
       }
     }
 }
@@ -101,12 +96,19 @@ export default{
   <style scoped>
 
 table{
-  width: 900px;
+  width: 100%;
 }
-
+.imgtd{
+  height: 100px;
+  width: 150px;
+}
 .close{
   border-width: 0px;
   background-color: white;
+}
+
+td{
+  width: 200px;
 }
 
 .modal {

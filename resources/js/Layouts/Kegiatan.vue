@@ -1,35 +1,48 @@
 <template>
 
-  <DashboardLayout title="Kegiatan" state="kegiatan">
+  <Layout title="Kegiatan" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">{{title}}</h1>
     </div>
       <ul class="mt-4">
                     <li :class="[section=='deskripsi'?'active':'']">
-                      <Link :href="`/admin/dashboard/kegiatan/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Deskripsi</Link>
+                      <Link :href="`/admin/kegiatan/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Deskripsi</Link>
                     </li>
                    <li :class="[section=='elearning'?'active':'']">
-                      <Link :class="[section=='elearning'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/elearning?page=1`">Elearning</Link>
+                      <Link :class="[section=='elearning'?'active':'']" :href="`/admin/kegiatan/${link}/elearning?page=1`">Elearning</Link>
                     </li>
                     <li :class="[section=='eventual'?'active':'']">
-                        <Link :class="[section=='eventual'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/eventual?page=1`" >Eventual</Link>
+                        <Link :class="[section=='eventual'?'active':'']" :href="`/admin/kegiatan/${link}/eventual?page=1`" >Eventual</Link>
                     </li>
                     <li :class="[section=='logbook'?'active':'']">
-                        <Link :class="[section=='logbook'?'active':'']" :href="`/admin/dashboard/kegiatan/${link}/logbook?page=1`">Logbook</Link>
+                        <Link :class="[section=='logbook'?'active':'']" :href="`/admin/kegiatan/${link}/logbook?page=1`">Logbook</Link>
                     </li> 
+                      <li :class="[section=='investor'?'active':'']">
+                        <Link :class="[section=='investor'?'active':'']" :href="`/admin/kegiatan/${link}/investor?page=1`">Investor</Link>
+                    </li> 
+                      <li :class="[section=='umkm'?'active':'']">
+                        <Link :class="[section=='umkm'?'active':'']" :href="`/admin/kegiatan/${link}/umkm?page=1`">UMKM</Link>
+                    </li> 
+                        <li :class="[section=='tugas_akhir'?'active':'']">
+                        <Link :class="[section=='tugas_akhir'?'active':'']" :href="`/admin/kegiatan/${link}/tugas_akhir?page=1`">Tugas Akhir</Link>
+                    </li> 
+                      <li :class="[section=='publikasi'?'active':'']">
+                        <Link :class="[section=='publikasi'?'active':'']" :href="`/admin/kegiatan/${link}/publikasi?page=1`">Publikasi</Link>
+                    </li> 
+                  
                   
       </ul>
           <section>
             <slot/>
         </section>
-</DashboardLayout>
+</Layout>
 </template>
 <script>
-  import DashboardLayout from './Dashboard.vue'
+  import Layout from './Dashboard.vue'
   import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
   export default{
     components:{
-      DashboardLayout,
+      Layout,
       Link
     },
     props:{

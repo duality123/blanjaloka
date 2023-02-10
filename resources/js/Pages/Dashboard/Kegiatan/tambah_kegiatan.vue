@@ -1,11 +1,11 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+  <DashboardLayout title="Tambah Kegiatan" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Tambah Kegiatan</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Kegiatan</p>
+      <Link href="/dashboard/kegiatan?page=1" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <p class="text-neutral-gray-4">> Tambah Kegiatan</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -21,13 +21,13 @@
 
               <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal mulai</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
+              <input type="datetime-local" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.dimulai" />
                <small class="text-danger text-center" v-if="form.errors.dimulai">{{form.errors.dimulai}}</small>
             </div>
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal berakhir</label>
-              <input type="date" class="form-control px-0" id="nama_juri"
+              <input type="datetime-local" class="form-control px-0" id="nama_juri"
                 v-model="form.berakhir" />
                 <small class="text-danger text-center" v-if="form.errors.berakhir">{{form.errors.berakhir}}</small> 
             </div>
@@ -59,18 +59,46 @@
               <input type="text" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.nama_juri" />
             </div>
+      <!--
             <div class="mb-4">
               <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="investor" v-model="form.nama_investor" />
-               <small class="text-danger text-center" v-if="form.errors.nama_investor">{{form.errors.nama_investor}}</small>
-            </div>
-             <div class="mb-4">
+                   <v-select v-model="form.nama_investor" multiple :options="investor" label="nama_lengkap" placeholder="Masukkan nama-nama Investor">
+                  <template #option="{ nama_lengkap, foto_profil  }">
+                  <div class="d-flex justify-content-start">
+                  <div style="margin: 4px"> <img style="width: 30px; height: 30px;" :src="`${this.$page.props.asset_url}/${foto_profil}`" /></div>
+                  <div class="">{{ nama_lengkap }}</div>
+                  </div>
+                  </template>
+                  <template #selected-option="{ nama_lengkap, foto_profil }">
+                  <div class="d-flex justify-content-start">
+                  <div class=""><img style="width: 30px; height: 30px;" :src="`${this.$page.props.asset_url}/${foto_profil}`" /></div>
+                  <div style="margin: 4px"> {{ nama_lengkap }}</div>
+                  </div>
+                  </template>
+                  </v-select>
+              <small class="text-danger text-center" v-if="form.errors.nama_investor">{{form.errors.nama_investor}}</small>
+              </div>
+
+            <div class="mb-4">
               <label for="nama_umkm" class="form-label text-neutral-gray-5">Nama UMKM</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="umkm" v-model="form.nama_umkm" />
-               <small class="text-danger text-center" v-if="form.errors.nama_umkm">{{form.errors.nama_umkm}}</small>
+                  <v-select multiple :options="umkm" v-model="form.nama_umkm" label="nama_lengkap" placeholder="Masukkan nama-nama UMKM">
+                  <template #option="{ nama_lengkap, foto_profil  }">
+                  <div class="d-flex justify-content-start">
+                  <div style="margin: 4px"> <img style="width: 30px; height: 30px;" :src="`${this.$page.props.asset_url}/${foto_profil}`" /></div>
+                  <div class="">{{ nama_lengkap }}</div>
+                  </div>
+                  </template>
+                  <template #selected-option="{ nama_lengkap, foto_profil }">
+                  <div class="d-flex justify-content-start">
+                  <div><img style="width: 30px; height: 30px;" :src="`${this.$page.props.asset_url}/${foto_profil}`" /></div>
+                  <div style="margin: 4px">{{ nama_lengkap }}</div>
+                </div>
+                  </template>
+                  </v-select>
+                <small class="text-danger text-center" v-if="form.errors.nama_umkm">{{form.errors.nama_umkm}}</small>
             </div>
+
+            -->
           </section>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5 mb-4">Bagian 3</h2>
@@ -146,6 +174,7 @@
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
+import {onMounted,watch} from 'vue';
 const form = useForm({
   tema: '',
   deskripsi: '',
@@ -163,6 +192,8 @@ const form = useForm({
   nama_umkm:null,
   gambar:null
 });
+
+
 
 
 const refDeskripsikegiatan = ref(null);
@@ -195,16 +226,20 @@ const ubahGambar = (event) => {
       }
     }
 
+
+
+
+
 const props = defineProps({
-  investor:Array,
-  umkm:Array
+  investor:Object,
+  umkm:Object
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  console.log(form.draft)
-  form.post('/admin/dashboard/kegiatan/tambah_kegiatan')
+ 
+  form.post('/admin/kegiatan/tambah_kegiatan')
 }
 </script>
 

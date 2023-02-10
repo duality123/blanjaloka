@@ -1,12 +1,24 @@
 <template>
 
-  <DashboardLayout title="Kegiatan" state="kegiatan">
+  <DashboardLayout title="Investasi" state="funding">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">{{title}}</h1>
     </div>
       <ul class="mt-4">
                     <li :class="[section=='deskripsi'?'active':'']">
-                      <Link :href="`/admin/dashboard/bisnis/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Deskripsi</Link>
+                      <Link :href="`/admin/investasi/${link}/detail`" :class="[section=='deskripsi'?'active':'']" >Detail</Link>
+                    </li>
+                      <li :class="[section=='investor'?'active':'']">
+                      <Link :href="`/admin/investasi/${link}/investor?page=1`" :class="[section=='investor'?'active':'']" >Investor</Link>
+                    </li>
+                     <li :class="[section=='umkm'?'active':'']">
+                      <Link :href="`/admin/investasi/${link}/umkm?page=1`" :class="[section=='umkm'?'active':'']" >UMKM</Link>
+                    </li>
+                    <li :class="[section=='investasi'?'active':'']">
+                      <Link :href="`/admin/investasi/${link}/investor_investasi?page=1`" :class="[section=='investasi'?'active':'']" >Investasi</Link>
+                    </li>
+                    <li :class="[section=='funding'?'active':'']">
+                      <Link :href="`/admin/investasi/${link}/umkm_funding?page=1`" :class="[section=='funding'?'active':'']" >Funding</Link>
                     </li>
                    
                   

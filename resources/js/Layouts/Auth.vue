@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+import contactUs from '../Components/contactUs.vue'
 import { Head,usePage } from '@inertiajs/inertia-vue3'
 import {onMounted} from 'vue';
 import lottie from 'lottie-web';
@@ -59,12 +60,35 @@ const removePopup = () => {
 </script>
 
 <style>
-h1 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-top: 3rem;
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
 }
-
+.step .number {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  color: #FFFFFF;
+}
+.step h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #AEAEAE;
+}
+.step.clear .number {
+  background-color: #398AB9;
+}
+.step.clear h1 {
+  color: #3E4041;
+}
 p {
   font-size: 16px;
   font-weight: 400;

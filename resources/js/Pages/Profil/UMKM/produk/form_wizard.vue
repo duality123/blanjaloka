@@ -3,7 +3,6 @@
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
-          <StatusChecked :sessionCondition="checkSessionCondition"/>
           <UmkmDashboardSidebar section="profil_produk"/>
            <div class="col-lg-8">
                  <div class="card-body">
@@ -55,7 +54,7 @@
                   </div>
                   <div class="mb-4">
                     <label for="dokumen_legalitas" class="form-label text-neutral-gray-5 mb-2">Clearance Documents</label>
-                    <div v-if="!form.keterangan_halal" class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
+                    <div  class="d-flex align-items-center px-4 py-2 bg-primary-blue-1 gap-2 input_upload_custom">
                       <div>
                         <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
@@ -63,34 +62,19 @@
                             fill="#265C7B" />
                         </svg>
                       </div>
-                      <div class="position-relative">
+                      <div class="flex-grow-1" v-if="form.keterangan_halal== null">
                         <h1 class="text-neutral-gray-5">Upload your file</h1>
-                        <p class="text-neutral-gray-3">Format file .pdf, maks 10MB</p>
                       </div>
-                      <div class="position-relative">
-                        <h2 class="text-primary-blue-6">Pilih</h2>
-                        <input @change="inputDokumen($event)" type="file" id="dokumen_legalitas">
-                      </div>
-                    </div>
 
-                         <div v-else class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
-                      <div>
-                        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M7.25 11.95V15.625C7.25 15.8417 7.321 16.021 7.463 16.163C7.60433 16.3043 7.78333 16.375 8 16.375C8.21667 16.375 8.396 16.3043 8.538 16.163C8.67933 16.021 8.75 15.8417 8.75 15.625V11.95L10.075 13.275C10.1417 13.3417 10.225 13.396 10.325 13.438C10.425 13.4793 10.521 13.496 10.613 13.488C10.7043 13.4793 10.7957 13.4583 10.887 13.425C10.979 13.3917 11.0583 13.3333 11.125 13.25C11.275 13.1 11.35 12.925 11.35 12.725C11.35 12.525 11.275 12.35 11.125 12.2L8.625 9.7C8.54167 9.61667 8.446 9.554 8.338 9.512C8.22933 9.47067 8.11667 9.45 8 9.45C7.88333 9.45 7.771 9.47067 7.663 9.512C7.55433 9.554 7.45833 9.61667 7.375 9.7L4.875 12.2C4.725 12.35 4.65 12.525 4.65 12.725C4.65 12.925 4.73333 13.1 4.9 13.25C5.05 13.4 5.221 13.4793 5.413 13.488C5.60433 13.496 5.78333 13.4167 5.95 13.25L7.25 11.95ZM2.3 19.5C1.8 19.5 1.375 19.325 1.025 18.975C0.675 18.625 0.5 18.2 0.5 17.7V2.3C0.5 1.8 0.675 1.375 1.025 1.025C1.375 0.675 1.8 0.5 2.3 0.5H9.5C9.75 0.5 9.98333 0.545667 10.2 0.637C10.4167 0.729 10.6083 0.858333 10.775 1.025L14.975 5.225C15.1417 5.39167 15.271 5.58333 15.363 5.8C15.4543 6.01667 15.5 6.25 15.5 6.5V17.7C15.5 18.2 15.325 18.625 14.975 18.975C14.625 19.325 14.2 19.5 13.7 19.5H2.3ZM9.5 5.6V2H2.3C2.23333 2 2.16667 2.03333 2.1 2.1C2.03333 2.16667 2 2.23333 2 2.3V17.7C2 17.7667 2.03333 17.8333 2.1 17.9C2.16667 17.9667 2.23333 18 2.3 18H13.7C13.7667 18 13.8333 17.9667 13.9 17.9C13.9667 17.8333 14 17.7667 14 17.7V6.5H10.4C10.15 6.5 9.93733 6.41233 9.762 6.237C9.58733 6.06233 9.5 5.85 9.5 5.6Z"
-                            fill="#265C7B" />
-                        </svg>
+                      <div class="flex-grow-1" v-if="$page.props.auth.user.produk['keterangan_halal']">
+                        <h1><a _blank :href="`${this.$page.props.asset_url}/${this.$page.props.auth.produk['keterangan_halal']}`">Lihat File</a></h1>
                       </div>
                        <div class="position-relative">
-                           <h1 v-if="$page.props.auth.produk['keterangan_halal'] != null" class="text-neutral-gray-5"><a :href="`${$page.props.asset_url}/${$page.props.auth.produk['keterangan_halal']}`">{{form.keterangan_halal.split('/')[2]}}</a></h1>
-                        <h1 v-else class="text-neutral-gray-5">{{form.keterangan_halal.name}}</h1>
+                        <h2 class="text-primary-blue-6">Pilih</h2>
+                        <input type="file" @change="inputDokumen($event,'dokumen_amdal')" id="dokumen_amdal">
                       </div>
-                      <div class="position-relative">
-                        <h2 class="text-primary-blue-6">Ganti Dokumen</h2>
-                        <input type="file" @change="inputDokumen($event)" id="dokumen_amdal">
-                      </div>
-                    </div>
-                     <small class="text-danger text-center" v-if="this.fileError" >{{this.fileError}}</small>
+                    </div>                        
+                     <small class="text-danger text-center" v-if="form.errors.keterangan_halal" >{{form.errors.keterangan_halal}}</small>
                   </div>
                   <div class="mb-4">
                     <label for="kabupaten" class="form-label text-neutral-gray-5">Manfaat Fungsional</label>
@@ -115,44 +99,33 @@
 </template>
 
 <script>
-import BaseLayout from '../../../../Layouts/Layout.vue'
+import BaseLayout from '../../../../Layouts/LayoutUMKM.vue'
 import UmkmDashboardSidebar from '../../../../Components/UmkmDashboardSidebar.vue'
 import StatusChecked from '../../../../Components/StatusChecked.vue'
 import { ref } from 'vue'
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm,usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 export default{
   data(){
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[1],
-      fileError:null
+      process:false
     }
   },
   setup () {
     const form = useForm({
-      jenis_produk: '',
-      jumlah_produk_yang_dijual:'',
-      bahan_produk:'',
-      kategori_produk: null,
-      harga_produk: null,
-      keterangan_halal: null,
-      manfaat_fungsional: null,
-      manfaat_nonfungsional:null,
+      jenis_produk: usePage().props.value.auth.produk.jenis_produk,
+      jumlah_produk_yang_dijual:usePage().props.value.auth.produk.jumlah_produk_yang_dijual,
+      bahan_produk:usePage().props.value.auth.produk.bahan_produk,
+      kategori_produk: usePage().props.value.auth.produk.kategori_produk,
+      harga_produk: usePage().props.value.auth.produk.harga_produk,
+      keterangan_halal: usePage().props.value.auth.produk.keterangan_halal,
+      manfaat_fungsional: usePage().props.value.auth.produk.manfaat_fungsional,
+      manfaat_nonfungsional:usePage().props.value.auth.produk.jenis_produk,
     })
 
     return { form }
-  },
-  mounted(){
-      this.form.jenis_produk= this.$page.props.auth.produk['jenis_produk']
-      this.form.jumlah_produk_yang_dijual= this.$page.props.auth.produk['jumlah_produk_yang_dijual']
-      this.form.bahan_produk= this.$page.props.auth.produk['bahan_produk']
-      this.form.kategori_produk=this.$page.props.auth.produk['kategori_produk']
-      this.form.harga_produk= this.$page.props.auth.produk['harga_produk']
-      this.form.keterangan_halal=this.$page.props.auth.produk['keterangan_halal']
-      this.form.manfaat_fungsional=this.$page.props.auth.produk['manfaat_fungsional']
-      this.form.manfaat_nonfungsional=this.$page.props.auth.produk['manfaat_nonfungsional']
-      console.log( this.form.manfaat_nonfungsional)
   },
   computed:{
     formCheck(){
@@ -161,42 +134,49 @@ export default{
       }
       return false
     },
-    checkSessionCondition(){
-     if(this.$page.props.auth.finansialComplete && this.$page.props.auth.usahaComplete && this.$page.props.auth.produkComplete && this.$page.props.auth.profilComplete && !this.$page.props.auth.user.accepted){
-      return true
-     }
-     return false
-    }
+   
   },
+
+  watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+        }
+     },
+     deep: true, 
+
+  }
+},
   components:{
     BaseLayout,
     UmkmDashboardSidebar,
-    StatusChecked
+
   },
   methods:{
     submit(){
-      if (this.form.keterangan_halal=='') {
-        this.fileError = "Masukkan dokumen clearance dokumen terlebih dahulu"
-        return
-        }
-         this.form.post('/umkm/dashboard/profil_produk/')     
+
+      if(this.process || !this.$page.props.auth.produkComplete){
+           this.form.post('/umkm/dashboard/profil_produk/')   
+      }
+      else{
+        Inertia.get('/umkm/dashboard/kajian_finansial')
+      }
+          
     },
   inputDokumen(event){
-        if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword'){
+        if(event.target.files[0].type == 'application/pdf' || event.target.files[0].type == 'application/msword' || event.target.files[0].type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
             this.form.keterangan_halal = event.target.files[0]
             this.$page.props.auth.produk['keterangan_halal'] = null
-            this.fileError = null
+            this.errors.keterangan_halal = null
    
            }
            else{
-               this.fileError = "dokumen anda harus pdf/docx !"
+               this.errors.keterangan_halal  = "dokumen anda harus pdf/docx !"
 
            }
     },
   },
-  computed:{
-
-}
 }
 </script>
 

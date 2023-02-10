@@ -3,11 +3,26 @@
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
-          <UmkmDashboardSidebar section="kegiatan" />
+          
+          <UmkmDashboardSidebar section="kegiatanku" />
           <div class="col-lg-8">
+
             <div class="card">
+
               <div class="card-body">
+
                 <h1>Kegiatanku</h1>
+                  <div class=" d-flex justify-content-start">
+        <Search :url="`/umkm/dashboard/kegiatanku?page=1`" judul="Cari kegiatan" />
+         <div class="dropdown mx-3  ">
+  <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">Sudah selesai</Link></li>
+                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Belum Selesai</Link></li>
+              </ul>
+            </div>
+           </div>
                 <div class="row">
                   <div class="col-lg-5" v-for="item in items.data">
                     <div class="card card_kegiatan">
@@ -15,15 +30,18 @@
                       
                         <div class="position-relative overflow-hidden rounded">
                           <img :src="`${$page.props.asset_url}/${item.gambar}`" alt="kegiatanku image"
-                            class="img-fluid w-100 " />
-                          <div v-if="new Date(item.berakhir.split(' ')[0]) > this.now" class="bg-semantic-success-1 text-semantic-success-4 status">Sedang Berlangsung</div>
-                           <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Selesai</div>
+                            class="img-fluid kegiatanku-image " />
+                           <div v-if="new Date(item.berakhir.split(' ')[0]) > this.now" class="bg-semantic-success-1 text-semantic-success-4 status">Sedang Berlangsung </div>
+                       <div v-else-if="new Date(item.dimulai.split(' ')[0]) > this.now" class="bg-neutral-gray-1 text-semantic-success-4 status">Belum dimulai </div>
+                               <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Selesai</div>
                         </div>
                         <div> 
                           <h1 class="text-neutral-black mt-2">{{item.tema}}</h1>
                           <p class="text-neutral-gray-4 mb-0">{{item.dimulai.split(' ')[0]}} - {{item.berakhir.split(' ')[0]}}</p>
                         </div>
+                        <div class=" d-flex justify-content-center">
                          <button class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" @click="redirect(item.id)">Lihat Kegiatan</button>
+                       </div>
                       </div>
                     </div>
                   </div>
@@ -41,15 +59,16 @@
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/Layout.vue'
+import BaseLayout from '../../../Layouts/LayoutUMKM.vue'
 import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
 import Pagination from '../../../Components/Pagination.vue'
+import Search from '../../../Components/Search.vue'
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 export default{
   data(){
     return{
-       currentPage : window.location.pathname.split('/')[4],
+       url:document.location.href,
        now:null
     }
   },
@@ -64,22 +83,29 @@ export default{
       last:Number
   },
   mounted(){
+     let uri = window.location.search.substring(1)
+    let params = new URLSearchParams(uri)
+    if (params.get('cari')) {
+      this.cari = params.get('cari')
+    }
     const date = new Date();
-    var bulan = (date.getMonth() >= 10)? date.getMonth()  : "0" + date.getMonth() ;
+    var month = ['01','02','03','04','05','06','07','08','09','10','11','12']
+    var bulan = month[date.getMonth()]
     var tahun = date.getFullYear();
     var tanggal = (date.getDate()  >= 10)? date.getDate()  : "0" + date.getDate();
-    this.now = tahun+ '-' + bulan + '-' + tanggal;
     this.now = new Date(tahun+ '-' + bulan + '-' + tanggal);
+    console.log(this.now)
   },
   components:{
     BaseLayout,
     Link,
     UmkmDashboardSidebar,
-    Pagination
+    Pagination,
+    Search
   },
   methods:{
      redirect(data){
-    Inertia.get("/umkm/dashboard/kegiatanku/detail/"+data)
+    Inertia.get("/umkm/dashboard/kegiatanku/"+data)
   }
   }
 }
@@ -89,6 +115,10 @@ export default{
 
 section {
   margin-top: 10rem !important;
+}
+.kegiatanku-image{
+  width: 300px;
+  height: 200px;
 }
 .pagination li {
   display: flex;

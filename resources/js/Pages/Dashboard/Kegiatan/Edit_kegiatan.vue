@@ -1,11 +1,11 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+  <DashboardLayout title="Edit Kegiatan" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">Edit Kegiatan</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Kegiatan</p>
+      <Link href="/admin/kegiatan?page=1" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <p class="text-neutral-gray-4"> > Tambah Kegiatan</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -20,13 +20,13 @@
 
               <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal mulai</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
-                v-model="form.dimulai.split(' ')[0]" />
+              <input type="datetime-local" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
+                v-model="form.dimulai" />
             </div>
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Tanggal berakhir</label>
-              <input type="date" class="form-control px-0" id="nama_juri"
-                v-model="form.berakhir.split(' ')[0]" />
+              <input type="datetime-local" class="form-control px-0" id="nama_juri"
+                v-model="form.berakhir" />
             </div>
             <div class="mb-4">
               <label for="deskripsi_kegiatan" class="form-label text-neutral-gray-5">Deskripsi Kegiatan</label>
@@ -54,16 +54,7 @@
               <input type="text" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.nama_juri" />
             </div>
-            <div class="mb-4">
-              <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="investor" v-model="form.nama_investor" />
-            </div>
-            <div class="mb-4">
-              <label for="nama_investor" class="form-label text-neutral-gray-5">Nama UMKM</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor kegiatan" id="nama_investor"
-                :options="umkm" v-model="form.nama_umkm" />
-            </div>
+            
           </section>
           <section class="mb-5">
             <h2 class="text-neutral-gray-5 mb-4">Bagian 3</h2>
@@ -91,7 +82,7 @@
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
                   <div v-if="form.gambar != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
+                   <img :src="`${$page.props.asset_url}/${previewImage}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -99,7 +90,7 @@
     
                 <div class="row" style="margin-left:2px;" >
                 <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 9rem;">
+                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 10rem;">
                 </div >
                 <div class="col d-flex justify-content-between">
                 <p class="text-primary"  style="padding-left:28px;">atau</p>
@@ -141,7 +132,7 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref, computed,onMounted,onUnmounted } from 'vue'
 const form = useForm({
-  id: window.location.pathname.split('/')[4],
+  id: props.kegiatan.id,
   tema: props.kegiatan.tema,
   deskripsi: props.kegiatan.deskripsi,
   jumlah_orang_diundang: props.kegiatan.jumlah_orang_diundang,
@@ -165,7 +156,7 @@ onMounted(()=>{
   checked.value=true
  }
 })
- 
+let previewImage = props.kegiatan.gambar
 const refDeskripsikegiatan = ref(null);
 const refJumlahPartisipan = ref(null);
 const refMasaInkubasi = ref(null);
@@ -182,11 +173,11 @@ const ubahGambar = (event) => {
               form.errors.gambar = "Size foto anda lebih dari 5MB !" 
               return
             }
-        var image = document.getElementById('img');
+        form.gambar = event.target.files[0];
+        var image = document.getElementById('foto1');
         image.src = URL.createObjectURL(event.target.files[0]);
         image.style.width = '10rem';
         image.style.overflow = 'hidden';
-        form.gambar = event.target.files[0];
         //console.log(this.process)
       }
       else{
@@ -197,18 +188,17 @@ const ubahGambar = (event) => {
     }
 
 const props = defineProps({
-  investor:Array,
+  investor:Object,
   kegiatan:Object,
-  oldInvestor:Array,
-  umkm:Array,
-  oldUmkm:Array
+  oldInvestor:Object,
+  umkm:Object,
+  oldUmkm:Object
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  console.log(form.draft)
-  form.post('/admin/dashboard/kegiatan/edit_post')
+  form.post('/admin/kegiatan/edit_post')
 }
 </script>
 

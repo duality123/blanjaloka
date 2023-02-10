@@ -37,19 +37,26 @@
                         <Link href="/" class="nav-link"
                             :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">
                         Beranda</Link>
-                        <a href="#" class="nav-link"
+                        <Link href="/about" class="nav-link"
                             :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Tentang
-                            Program</a>
-                        <a href="#" class="nav-link"
-                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Panduan</a>
+                            Program</Link>
+                        <Link href="/panduan" class="nav-link"
+                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Panduan</Link>
+                           <Link href="/contact" class="nav-link"
+                            :class="{ 'text-neutral-white': scrollPosition > 100, 'text-neutral-gray-4': scrollPosition < 100 }">Hubungi Kami</Link>
                     </div>
-                    <div class="navbar-nav align-items-lg-center gap-3 ms-auto">
+                    <div v-if="!$page.props.auth.user" class="navbar-nav align-items-lg-center gap-3 ms-auto">
                         <Link  href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
                             :class="{ 'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
                         Masuk</Link>
                         <Link  href="/register" class="btn px-4 py-2"
                             :class="{ 'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100 }">
                         Daftar</Link>
+                    </div>
+                     <div v-else class="navbar-nav align-items-lg-center gap-3 ms-auto">
+                        <Link  href="/logout" method="post" class="btn px-4 py-2 border-5 btn_custom_outline"
+                            :class="{ 'btn-outline-neutral-white  text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 btn_custom_outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
+                        Keluar</Link>
                     </div>
                 </div>
             </div>
@@ -80,9 +87,9 @@
             <div class="row align-items-end py-4 gap-4">
                 <div class="col-lg ps-lg-0">
                     <div class="d-flex gap-4">
-                        <Link href="/kebijakan-privasi" class="text-decoration-none text-neutral-gray-4">Kebijakan
+                        <Link href="/kebijakan_privasi" class="text-decoration-none text-neutral-gray-4">Kebijakan
                         Privasi</Link>
-                        <Link href="/syarat-dan-ketentuan" class="text-decoration-none text-neutral-gray-4">Syarat dan
+                        <Link href="/syarat_dan_ketentuan" class="text-decoration-none text-neutral-gray-4">Syarat dan
                         Ketentuan</Link>
                     </div>
                     <p class="text-neutral-gray-4 mt-3 mb-0">&copy; Copyright 2022. All Rights Reserved</p>
@@ -103,11 +110,11 @@
             </div>
         </div>
     </footer>
-
 </template>
 
 <script setup>
 import { Head, Link,usePage } from '@inertiajs/inertia-vue3'
+import contactUs from '../Components/contactUs.vue'
 import { ref, onMounted } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 const scrollPosition = ref(0);
@@ -162,7 +169,6 @@ a.btn {
     border-radius: 50%;
 }
 .dropdown-toggle::after {
-    display: none;
 }
 .navbar-expand-lg .navbar-nav .dropdown-menu {
     width: 15rem;

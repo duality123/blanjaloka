@@ -1,11 +1,11 @@
 <template>
-          <div id="myModal"  class="modal"  v-if="this.popup ">
+          <div id="myModal"  class="modal"  v-if="this.popupEdit ">
 
     <div  id="myModal" class="modal" >
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
-         <button @click = "popupExit(null)" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+         <button @click = "togglePopupEdit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -14,7 +14,7 @@
       <h2>Kirim Laporan</h2>
     </div>
     <div class="mt-2">
-      <form @submit.prevent="submit()">
+      <form @submit.prevent="submitEdit()">
       <div class="mb-4">
          <label for="provinsi" class="form-label text-neutral-gray-5">Berikan laporan anda ?</label>
          <input type="text" class="form-control" v-model="form.deskripsi" id="provinsi" placeholder="Masukkan laporan anda" >
@@ -23,8 +23,8 @@
        <div class="mb-4">
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
-            <div class="d-flex justify-content-center pt-3 mb-4" v-if="previewImage">
-                   <img :src="`${$page.props.asset_url}/${previewImage}`" alt="update icon" style="overflow: hidden; width: 250px;" id="img" >
+            <div class="d-flex justify-content-center pt-3 mb-4" v-if="this.previewImage">
+                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 250px;" id="img" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4" >
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
@@ -60,7 +60,7 @@
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
-         <button @click = "togglePopNewLogbook()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+         <button @click = "togglePopupNewLogbook()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -116,14 +116,11 @@
                     </svg>
                   </div>
                   <p class="fw-semibold text-primary-blue-6 mb-0">
-                        Anda diharuskan menulis logbook mingguan setiap harinya untuk laporan kegiatan. Saat ini kamu berada di hari <span class="text-neutral-black">ke-12</span> untuk inkubasi UMKM. Jika laporan ditolak, harap untuk mengubah laporan tersebut</p>
+                        Anda disarankan menulis logbook setiap harinya untuk laporan kegiatan. <span class="text-neutral-black"> Tulis laporan harian dengan  detail dan lengkap karena itu bisa menjadi faktor penentu Investor memilih anda</span> Jika laporan anda ditolak tolong hendak ubah ulang laporan anda</p>
                 </div>
                 <div class="mt-5 mb-4 d-flex align-items-center borderc gap-3">
-                    <h2 class="text-neutral-gray-5 m-0 me-auto">Daftar Laporan Mingguan</h2>
-                  <button href="#" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
-                        Unggah Laporan Akhir
-                    </button> 
-                   <button @click="togglePopNewLogbook()" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
+                    <h2 class="text-neutral-gray-5 m-0 me-auto">Daftar Laporan Harian</h2>
+                   <button @click="togglePopupNewLogbook()" class="fs-btn p-2 px-3 btn text-primary-blue-6 border-primary-blue-6">
                         Unggah Logbook
                     </button> 
                 </div>
@@ -150,7 +147,7 @@
                             -
                         </td>
                         <td>
-                          <button  @click="popupExit(event.id,gambar=event.bukti_kegiatan,deskripsi=event.deskripsi)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="event.status ==2">
+                          <button  @click="togglePopupEdit(id=event.id,gambar=event.bukti_kegiatan,deskripsi=event.deskripsi)" class="btn btn-semantic-error-4 px-3 me-2 text-neutral-white cursor-pointer" v-if="event.status ==2">
                             Ditolak ( revisi ulang )
                           </button>
                           <button href="#" class="btn btn-semantic-warning-4 me-2 px-3 text-neutral-white cursor-pointer" v-else-if="event.status ==0">
@@ -160,7 +157,7 @@
                           <button href="#" class="btn btn-semantic-success-4 px-3 me-2 text-neutral-white cursor-pointer" v-else-if="event.status ==1">
                             Disetujui
                           </button>
-                           <button v-else @click="popupExit(event.id)" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+                           <button v-else @click="togglePopupNewLogbook()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
                         + Buat laporan
                         </button>
                           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,17 +178,18 @@ import { useForm, Link } from '@inertiajs/inertia-vue3'
 export default{
   data(){
     return{
-      popup:false,
+      popupEdit:false,
+      popupNewLogbook:false,
       previewImage:null,
-      popupNewLogbook:false
+      url:document.location.href
     }
   },
-  setup(){
+  setup(props){
     const form = useForm({
      id:null,
      gambar:null,
      deskripsi:'',
-     kegiatan_id : document.location.pathname.split('/')[5]
+     kegiatan_id : props.kegiatan.id
     })
 
     return {form}
@@ -200,40 +198,24 @@ export default{
     Layout,
     Link
   },
-  mounted(){
-    if (this.form.errors.deskripsi) {
-      this.popup =true
-    }
-  },
   methods:{
-    submit(){
-      if (this.form.gambar == null) {
-        this.form.errors.gambar = 'Gambar tak boleh kosong' 
-      }
-
-      this.popup=false;
-      this.form.post('/umkm/dashboard/kegiatanku/edit_logbook')
+    submitEdit(){
+      this.form.post('/umkm/dashboard/kegiatanku/edit_logbook',{preserveState:true})
 
     },
     submitNewLogbook(){
-      if (this.form.gambar == null) {
-        this.form.errors.gambar = 'Gambar tak boleh kosong' 
-      }
-
-      this.popupNewLogbook=false;
-      this.form.post('/umkm/dashboard/kegiatanku/buat_logbook')
+      this.form.post('/umkm/dashboard/kegiatanku/buat_logbook',{onSuccess: () => this.form.reset()})
 
     },
-    popupExit(id,gambar=null,deskripsi=null){
-        this.previewImage = gambar,
+    togglePopupEdit(id = null,gambar=null,deskripsi=null){
+        this.previewImage= gambar,
+        this.form.id=id,
         this.form.deskripsi = deskripsi,
-        this.form.id= id 
-        this.popup = !this.popup
+        this.popupEdit = !this.popupEdit
     },
-    togglePopNewLogbook(){
+    togglePopupNewLogbook(){
+      this.form.reset()
       this.popupNewLogbook = !this.popupNewLogbook
-      this.form.gambar =null
-      this.form.deskripsi =''
     },
 
     ubahGambar(event){
@@ -248,7 +230,6 @@ export default{
         image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form.gambar = event.target.files[0];
-        console.log(this.form.gambar)
       }
       else{
         this.form.errors.gambar = "File yang anda upload bukanlah gambar !" 
@@ -259,7 +240,7 @@ export default{
   },
   props:{
    logbook:Object,
-    kegiatan:Object
+  kegiatan:Object
   }
 
 
@@ -271,6 +252,102 @@ export default{
 <style scoped>
 .desc_logbook{
   width:200px;
+}
+.close{
+  border-width: 0px;
+  background-color: white;
+}
+
+.modal {
+  position: fixed; /* Stay in place */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
+h1 {
+  font-size: 2.1rem;
+  font-weight: 600;
+}
+ul {
+  display: flex;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+ul li {
+  cursor: pointer;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+
+}
+.custom-file-input::before {
+
+  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0\00a0Upload Gambar';
+  display: inline-block;
+  background-color:white;
+  background-image:url('../../../assets/icons/upload.png');
+  background-repeat: no-repeat;
+  background-size: 18px 20px;
+  border-radius: 3px;
+  padding: 8px;
+  background-origin: content-box;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  color:black;
+  font-size: 12px;
+}
+
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.custom-file-input2::-webkit-file-upload-button {
+  visibility: hidden;
+
+}
+
+.custom-file-input2::before {
+  content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0  Ambil Gambar';
+  display: inline-block;
+  background-color:white;
+  background-image:url('../../../assets/icons/upload2.png');
+  background-repeat: no-repeat;
+  background-size: 18px 20px;
+  border-radius: 3px;
+  padding: 8px;
+  background-origin: content-box;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  color:black;
+  font-size: 12px;
+}
+
+.custom-file-input2:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
  .modal-content{
   height: 450px;

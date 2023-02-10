@@ -29,6 +29,9 @@
                 <button class="btn btn-semantic-error-1 text-semantic-error-4 py-3" @click="popupControl">
                   <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />Keluar kegiatan</button>
                 </div>
+                  <div class="d-flex  justify-content-center mt-4" >
+                                      <img  :src="`${$page.props.asset_url}/${item.gambar}`" class="d-block w-100 gambar" alt="...">
+                                    </div>
                  <div class="d-flex flex-column flex-lg-row mt-4">
                   <p class="fw-semibold  mb-0">
                     {{item.deskripsi}}
@@ -82,13 +85,6 @@ export default{
     elearning:Object
   }
 }
-
-
-
-
-
-
-
 </script>
 
 
@@ -97,7 +93,10 @@ export default{
   border-width: 0px;
   background-color: white;
 }
-
+.gambar{
+   max-width:350px;
+  height:200px;
+}
 .modal {
   position: fixed; /* Stay in place */
   padding-top: 100px; /* Location of the box */

@@ -22,10 +22,13 @@ class shouldInvestor
             return redirect('/');
 
         }
-        /*
+     
         Inertia::share('auth', function(Request $request){
             $data = [];
             $data['user'] = $request->user();
+            $data['janji_temu'] = $request->user()->janji_temu_investor();
+            $data['inkubasi'] = $request->user()->inkubasiInvestor();
+            $data['pendanaan'] = $request->user()->pendanaanInvestor();
             $data['profilPerusahaan'] =$request->user()->profilPerusahaan->profilPerusahaanList();
             $data['profilPerusahaanComplete'] =$request->user()->profilPerusahaan->isProfilPerusahaanComplete();
             $data['dokumenPerusahaan'] =$request->user()->dokumenPerusahaan->dokumenPerusahaanList();
@@ -39,7 +42,7 @@ class shouldInvestor
             return $data;
         });
         
-        */
+      
         return $next($request);
     }
 }

@@ -1,11 +1,12 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+  <DashboardLayout title="Edit Kegiatan" state="kegiatan">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
       <h1 class="text-neutral-gray-5 mb-0">{{elearning.judul}}</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <p class="text-neutral-gray-4"> Tambah Elearning</p>
+      <Link :href="`/admin/kegiatan/${elearning.kegiatan_id}/detail?page=1`" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <Link :href="`/admin/kegiatan/${elearning.kegiatan_id}/elearning?page=1`" class="text-decoration-none text-primary-blue-6 me-2">> Elearning</Link>
+      <p class="text-neutral-gray-4">>  Edit Elearning</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -13,7 +14,7 @@
           <section class="mb-5">
             <div class="mb-4">
               <label for="nama_juri" class="form-label text-neutral-gray-5">Waktu</label>
-              <input type="date" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
+              <input type="datetime-local" class="form-control px-0" multiple placeholder="Masukkan nama juri kegiatan(contoh: Rahman, Bobby)" id="nama_juri"
                 v-model="form.waktu" />
                 <small class="text-danger text-center" v-if="form.errors.waktu">{{form.errors.waktu}}</small>
             </div>
@@ -28,7 +29,7 @@
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Foto</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
                  <div v-if="form.gambar != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${form.gambar}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
+                   <img :src="`${$page.props.asset_url}/${previewImage}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -36,7 +37,7 @@
 
                 <div class="row" style="margin-left:2px;" >
                 <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 9rem;">
+                <input type="file" ref ="foto_profil" class="custom-file-input " @change="ubahGambar($event)"  style="width: 10rem;">
                 </div >
                 <div class="col d-flex justify-content-between">
                 <p class="text-primary"  style="padding-left:28px;">atau</p>
@@ -70,15 +71,15 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 const form = useForm({
-  tema:props.elearning.tema,
+  tema:props.elearning.judul,
   deskripsi: props.elearning.deskripsi,
-  waktu:props.elearning.hari_tanggal_waktu.split(' ')[0],
+  waktu:props.elearning.hari_tanggal_waktu,
   judul:props.elearning.judul,
   gambar:props.elearning.foto,
-  id:window.location.pathname.split('/')[5]
+  id:props.elearning.id
 });
 
-
+let previewImage  = form.gambar;
 const refDeskripsikegiatan = ref(null);
 const refJumlahPartisipan = ref(null);
 const refMasaInkubasi = ref(null);
@@ -95,6 +96,7 @@ const ubahGambar = (event) => {
               form.errors.gambar = "Size foto anda lebih dari 5MB !" 
               return
             }
+
         var image = document.getElementById('foto1');
         image.src = URL.createObjectURL(event.target.files[0]);
         image.style.width = '10rem';
@@ -116,7 +118,7 @@ const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const handleSubmit = () => {
-  form.post('/admin/dashboard/kegiatan/elearning/edit')
+  form.post('/admin/kegiatan/elearning/edit')
 }
 </script>
 

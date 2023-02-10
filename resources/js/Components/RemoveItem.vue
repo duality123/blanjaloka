@@ -1,7 +1,7 @@
 <template>
 	   <div class="col-lg-8">
 
-              <div id="myModal" class="modal" v-if="popup && notSubmit">
+              <div id="myModal" class="modal" v-if="popup">
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click="$emit('toggleClose')" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
@@ -27,34 +27,35 @@
 import { Link,useForm } from '@inertiajs/inertia-vue3'
 import { Inertia } from "@inertiajs/inertia";
 export default{
-	data(){
-		return{
-				notSubmit : true
-		}
-	},
 	props:{
 		pesan:null,
 		url:null,
 		popup:Boolean,
-		itemDelete:Object
+		itemDelete:Object,
+    lazy:null,
+    delete:false
 	},
 	methods:{
 		closeQuit(){
 			this.popup = false;
 		},
 		hapusAction(){
-			this.notSubmit= false 
-			Inertia.post(this.url,this.itemDelete);
+      this.$emit('toggleClose');
+			Inertia.post(this.url,this.itemDelete,{only:this.lazy,preserveState:true,preserveScroll:true});
+
 		}
 	},
 	components:{
 		Link
 	},
-	emits: ['toggleClose'],
+	emits: ['toggleClose','spinClose'],
 }
 
 </script>
 <style scoped>
+  .btn_custom_outline:hover {
+    color: #FFFFFF !important;
+}
 .close{
   border-width: 0px;
   background-color: white;

@@ -14,7 +14,7 @@ class ProfilPerusahaanController extends Controller
     public function form_wizard_profil_perusahaan(Request $request)
     {
        if(!$request->user()->profil->isProfileComplete()){
-            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Profil Usaha Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu']);
+            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Profil Perusahaan Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu']);
         }
         return Inertia::render('Profil/Investor/perusahaan/form_wizard_perusahaan');
     }
@@ -28,6 +28,8 @@ class ProfilPerusahaanController extends Controller
             'tanggal_berdiri' => 'required',
             'nomor_telepon' => 'required|max:20',
             'email_pic' => 'required|max:255',
+            'kategori_perusahaan' => 'required|max:255',
+            'deskripsi_perusahaan'=>'required'
         ];
 
         $customMessages = [
@@ -42,11 +44,13 @@ class ProfilPerusahaanController extends Controller
 
         
         $data['nama_perusahaan']= $request->post('nama_perusahaan');
+        $data['deskripsi_perusahaan']= $request->post('deskripsi_perusahaan');
         $data['alamat_perusahaan']= $request->post('alamat_perusahaan');
         $data['nama_pic']= $request->post('nama_pic');
         $data['tanggal_berdiri']= $request->post('tanggal_berdiri');
         $data['nomor_telepon']= $request->post('nomor_telepon');
         $data['email_pic']=$request->post('email_pic');
+        $data['kategori_perusahaan'] =  $request->post('kategori_perusahaan');
         $profil =  ProfilPerusahaan::where('user_id','=',$request->user()->id)->update($data);
         return redirect('investor/dashboard/dokumen_perusahaan');
 

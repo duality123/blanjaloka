@@ -1,23 +1,23 @@
 <template>
  <BaseLayout title="UMKM Akun Saya">
-    <section>
+    <section class="section-top">
       <div class="container">
         <div class="row gap-4">
           <div class="col-lg-2 sidebar">
-            <ul>
-              <li :class="[page=='notifikasi'?'active':'']">
-                <Link href="/notifikasi/UMKM/1" class="text-neutral-black notification">
+            <ul>         
+               <li :class="[page=='notifikasi'?'active':'']">
+                <Link  href="/notifikasi/UMKM" class="text-neutral-black notification">
                   <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M1 16.875C0.783333 16.875 0.604333 16.8 0.463 16.65C0.321 16.5 0.25 16.325 0.25 16.125C0.25 15.9084 0.321 15.729 0.463 15.587C0.604333 15.4457 0.783333 15.375 1 15.375H2.25V8.12505C2.25 6.79172 2.66667 5.59572 3.5 4.53705C4.33333 3.47905 5.41667 2.80005 6.75 2.50005V1.80005C6.75 1.45005 6.871 1.15405 7.113 0.912049C7.35433 0.670715 7.65 0.550049 8 0.550049C8.35 0.550049 8.64567 0.670715 8.887 0.912049C9.129 1.15405 9.25 1.45005 9.25 1.80005V2.50005C10.5833 2.80005 11.6667 3.47905 12.5 4.53705C13.3333 5.59572 13.75 6.79172 13.75 8.12505V15.375H15C15.2167 15.375 15.396 15.4457 15.538 15.587C15.6793 15.729 15.75 15.9084 15.75 16.125C15.75 16.325 15.6793 16.5 15.538 16.65C15.396 16.8 15.2167 16.875 15 16.875H1ZM8 19.8C7.5 19.8 7.075 19.625 6.725 19.275C6.375 18.925 6.2 18.5 6.2 18H9.8C9.8 18.5 9.625 18.925 9.275 19.275C8.925 19.625 8.5 19.8 8 19.8ZM3.75 15.375H12.25V8.12505C12.25 6.94172 11.8333 5.93738 11 5.11205C10.1667 4.28738 9.16667 3.87505 8 3.87505C6.83333 3.87505 5.83333 4.28738 5 5.11205C4.16667 5.93738 3.75 6.94172 3.75 8.12505V15.375Z"
                       fill="#686868" />
                   </svg>
                   <span>Notifikasi</span>
-                  <div v-if="$page.props.auth.user.notif" class="bg-primary-blue-6 text-white badge">{{$page.props.auth.user.notif}}</div>
+                  <div v-if="$page.props.auth.user.notifikasi" class="bg-primary-blue-6 text-white badge">{{$page.props.auth.user.notifikasi}}</div>
                 </Link>
               </li>
               <li :class="[page=='profil'?'active':'']">
-                <Link href="/profil/1" class="text-neutral-black">
+                <Link href="/umkm/profil/1" class="text-neutral-black">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M8 7.69995C7.03333 7.69995 6.20833 7.35395 5.525 6.66195C4.84167 5.97062 4.5 5.14995 4.5 4.19995C4.5 3.23328 4.84167 2.40828 5.525 1.72495C6.20833 1.04162 7.03333 0.699951 8 0.699951C8.96667 0.699951 9.79167 1.04162 10.475 1.72495C11.1583 2.40828 11.5 3.23328 11.5 4.19995C11.5 5.14995 11.1583 5.97062 10.475 6.66195C9.79167 7.35395 8.96667 7.69995 8 7.69995ZM13.975 15.3H2.025C1.59167 15.3 1.22933 15.1543 0.938 14.863C0.646 14.571 0.5 14.2166 0.5 13.8V13.075C0.5 12.5916 0.633333 12.1416 0.9 11.725C1.16667 11.3083 1.525 10.9833 1.975 10.75C2.95833 10.2666 3.95433 9.90395 4.963 9.66195C5.971 9.42062 6.98333 9.29995 8 9.29995C9.01667 9.29995 10.0293 9.42062 11.038 9.66195C12.046 9.90395 13.0417 10.2666 14.025 10.75C14.475 10.9833 14.8333 11.3083 15.1 11.725C15.3667 12.1416 15.5 12.5916 15.5 13.075V13.8C15.5 14.2166 15.354 14.571 15.062 14.863C14.7707 15.1543 14.4083 15.3 13.975 15.3ZM2 13.8H14V13.075C14 12.875 13.9417 12.6916 13.825 12.525C13.7083 12.3583 13.55 12.2166 13.35 12.1C12.4833 11.6833 11.6043 11.3623 10.713 11.137C9.821 10.9123 8.91667 10.8 8 10.8C7.08333 10.8 6.179 10.9123 5.287 11.137C4.39567 11.3623 3.51667 11.6833 2.65 12.1C2.45 12.2166 2.29167 12.3583 2.175 12.525C2.05833 12.6916 2 12.875 2 13.075V13.8ZM8 6.19995C8.55 6.19995 9.021 6.00395 9.413 5.61195C9.80433 5.22062 10 4.74995 10 4.19995C10 3.64995 9.80433 3.17895 9.413 2.78695C9.021 2.39562 8.55 2.19995 8 2.19995C7.45 2.19995 6.97933 2.39562 6.588 2.78695C6.196 3.17895 6 3.64995 6 4.19995C6 4.74995 6.196 5.22062 6.588 5.61195C6.97933 6.00395 7.45 6.19995 8 6.19995Z"
@@ -48,8 +48,8 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-5">
-            <slot />
+          <div class="col-lg-5" >
+            <slot/>
           </div>
         </div>
       </div>
@@ -57,16 +57,22 @@
   </BaseLayout>
 </template>
 <script>
-import BaseLayout from './Layout.vue'
+import BaseLayout from './LayoutUMKM.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
-
+import contactUs from '../Components/contactUs.vue'
 export default{
+  data(){
+    return{
+      currentURL:document.location.pathname.split('/')[1]
+    }
+  },
   props: {
     page: String
   },
   components:{
     BaseLayout,
-    Link
+    Link,
+    contactUs
   },
   setup(){
     document.body.scrollTop = 0;
@@ -91,13 +97,13 @@ export default{
 .notification .badge {
   position: absolute;
   top: -20px;
-  right: -30px;
+  right: -150px;
   padding: 10px 10px;
   border-radius: 50%;
   background: red;
   color: white;
 }
-  section {
+.section-top {
   margin-top: 10rem !important;
 }
 .sidebar ul {
@@ -151,4 +157,5 @@ export default{
     margin-top: 15rem !important;
   }
 }
+
 </style>

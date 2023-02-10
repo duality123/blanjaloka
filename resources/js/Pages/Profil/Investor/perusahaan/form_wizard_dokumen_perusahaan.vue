@@ -3,7 +3,24 @@
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
-           <StatusChecked :sessionCondition="checkSessionCondition"/> 
+            <div id="myModal" class="modal" v-if="this.$page.props.auth.dokumenPerusahaanComplete && !this.$page.props.auth.user.accepted" >
+
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "removePopup()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class=" d-flex justify-content-between">
+       <img src="../../../../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
+        </div>
+       <div class="d-flex justify-content-between text-center" style="margin-left: 2rem;">
+       <h2 >Data baru anda sedang diproses</h2>
+        </div>
+       <p>Rutinlah mengecek email anda tiap hari untuk pemberitahuan status akun anda!.Namun anda sekarang juga masih bisa mengubah data anda :)</p>
+      </div>
+
+    </div> 
           <InvestorDashboardSidebar />
                <div class="col-lg-8">
                <div class="card-body">
@@ -130,8 +147,8 @@
 </template>
 <script>
 import BaseLayout from '../../../../Layouts/LayoutInvestor.vue'
-import InvestorDashboardSidebar from '../../../../Components/InvestorDashboardSidebar.vue'
 import StatusChecked from '../../../../Components/StatusChecked.vue'
+import InvestorDashboardSidebar from '../../../../Components/InvestorDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm,Link,usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
@@ -140,6 +157,7 @@ export default{
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[2],
+      process:false
     }
   },
   setup () {
@@ -161,12 +179,6 @@ export default{
       }
       return false;
     },
-    checkSessionCondition(){
-     if(this.$page.props.auth.dokumenPerusahaanComplete && this.$page.props.auth.profilPerusahaanComplete && !this.$page.props.auth.user.accepted){
-      return true
-     }
-     return false
-    }
   },
   components:{
     BaseLayout,
@@ -174,21 +186,25 @@ export default{
     InvestorDashboardSidebar,
     StatusChecked
   },
+watch: {
+  form: {
+     handler(newVal, oldVal){ 
+        if (newVal) {
+          this.process = true;
+        }
+     },
+     deep: true, 
+  }
+},
   methods:{
     submit(){
-      if (this.form.foto_npwp == null ||this.form.foto_ktp_pic == null||this.form.foto_buku_tabungan == null ){
-          if (this.form.foto_npwp == null ){
-             this.form.errors.form.npwp = "Mohon upload foto anda terlebih dahulu !"
-           }
-         if (this.form.foto_ktp_pic == null ){
-            this.form.errors.foto_ktp_pic = "Mohon upload foto anda terlebih dahulu !"
-           }
-          if (this.form.foto_buku_tabungan == null) {
-             this.form.errors.foto_buku_tabungan = "Mohon upload foto anda terlebih dahulu !"
-          }
-           return
-        }
+      if (!this.$page.props.auth.dokumenPerusahaanComplete || this.process) {
         this.form.post('/investor/dashboard/dokumen_perusahaan')
+      }
+      else{
+        Inertia.get('/investor/dashboard/kegiatan?page=1')
+      }
+       
     },
      changePicture(event,id){
         if(event.target.files[0].type == 'image/jpeg' ||event.target.files[0].type == 'image/png'){

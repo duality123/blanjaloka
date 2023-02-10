@@ -25,38 +25,46 @@
       </form>
       </div>
 </div>
-    </div>
+</div>
+
+
+
+  
           <section class="mb-5">
-            <h2 class="text-neutral-gray-5">Profil Diri</h2>
-              <p><strong>Nama Lengkap: </strong>{{data.profil.nama_lengkap}}</p>
-              <p><strong>Tempat/tanggal lahir: </strong>{{data.profil.tempat_kelahiran}}, {{data.profil.tanggal_lahir}}</p>
-              <p><strong>Alamat: </strong>{{data.profil.alamat}}</p>
-              <p><strong>Kelurahan: </strong>{{data.profil.kelurahan}}</p>
-              <p><strong>Kecamatan: </strong>{{data.profil.kecamatan}}</p>
-              <p><strong>Kabupaten: </strong>{{data.profil.kabupaten}}</p>
-              <p><strong>Provinsi: </strong>{{data.profil.provinsi}}</p>
-              <p><strong>Pendidikan terakhir: </strong>{{data.profil.pendidikan_terakhir}}</p>
-              <p><strong>No handphone: </strong>{{data.profil.no_hp}}</p>
-              <p><strong>Status: </strong>{{data.profil.status}}</p>
-              <p><strong>Agama: </strong>{{data.profil.agama}}</p>
-              <p><strong>Kewarganegaraan: </strong>{{data.profil.kewarganegaraan}}</p>
-              <p><strong>Pengalaman kerja: </strong>{{data.profil.pengalaman_kerja}}</p>
-              <p><strong>Foto profil: </strong></p>
-              <img v-if="data.profil.foto_profil" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_profil}`">
-              <img  v-else-if="!data.profil.foto_profil" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
-               <p><strong>Foto KTP: </strong></p>
-              <img v-if="data.profil.foto_ktp" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_ktp}`">
-              <img v-else-if="!data.profil.foto_ktp" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
-               <p><strong>Foto dengan KTP: </strong></p>
-              <img v-if="data.profil.foto_dengan_ktp" class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_dengan_ktp}`">
-              <img v-else-if = "!data.profil.foto_dengan_ktp" class="mt-2 mb-2" src="../../assets/images/user_profile_img.png">
+             <div class="d-flex flex-column">
+         <div class="p-2"><h2 class="text-neutral-gray-5">Profil Diri</h2></div>
+          <div class="p-2"><strong>Nama Lengkap: </strong>{{data.profil.nama_lengkap}}</div>
+          <div class="p-2"><strong>Tempat/tanggal lahir: </strong>{{data.profil.tempat_kelahiran}}, {{data.profil.tanggal_lahir}}</div>
+          <div class="p-2"><strong>Alamat: </strong>{{data.profil.alamat}}</div>
+             <div class="p-2"><strong>Kelurahan: </strong>{{data.profil.kelurahan}}</div>
+             <div class="p-2"><strong>Kecamatan: </strong>{{data.profil.kecamatan}}</div>
+             <div class="p-2"><strong>Kabupaten: </strong>{{data.profil.kabupaten}}</div>
+             <div class="p-2"><strong>Provinsi: </strong>{{data.profil.provinsi}}</div>
+              <div class="p-2"><strong>Pendidikan terakhir: </strong>{{data.profil.pendidikan_terakhir}}</div>
+              <div class="p-2"><strong>No handphone: </strong>{{data.profil.no_hp}}</div>
+              <div class="p-2"><strong>Status: </strong>{{data.profil.status}}</div>
+              <div class="p-2"><strong>Agama: </strong>{{data.profil.agama}}</div>
+              <div class="p-2"><strong>Kewarganegaraan: </strong>{{data.profil.kewarganegaraan}}</div>
+              <div class="p-2"><strong>Pengalaman kerja: </strong>{{data.profil.pengalaman_kerja}}</div>
+              <div class="p-2"><strong>Foto profil: </strong></div>
+              <div class="p-2" v-if="data.profil.foto_profil"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_profil}`"></div>
+              <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
+              <div class="p-2"><strong>Foto KTP: </strong></div>
+               <div class="p-2" v-if="data.profil.foto_ktp"><img  class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_ktp}`"></div>
+              <div class="p-2" v-else><img class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
+               <div class="p-2"><strong>Foto dengan KTP: </strong></div>
+              <div class="p-2" v-if="data.profil.foto_dengan_ktp" ><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_dengan_ktp}`"></div>
+              <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
+            </div>
           </section>
           <section class="mb-5">
-            <h2 class="text-neutral-gray-5 mb-4">Profil Usaha</h2>
-              <p><strong>Nama Perusahaan: </strong>{{data.usaha.nama_perusahaan}}</p>
-              <p><strong>Alamat Perusahaan: </strong>{{data.usaha.alamat_perusahaan}}</p>
-              <p><strong>Status Perusahaan: </strong>{{data.usaha.status_perusahaan}}</p>
-              <p><strong>Dokumen Legalitas: </strong></p>
+              <div class="d-flex flex-column">
+         <div class="p-2"><h2 class="text-neutral-gray-5 mb-4">Profil Usaha</h2></div>
+         <div class="p-2"><strong>Nama Perusahaan: </strong>{{data.usaha.nama_perusahaan}}</div>
+        <div class="p-2"><strong>Alamat Perusahaan: </strong>{{data.usaha.alamat_perusahaan}}</div>
+        <div class="p-2"><strong>Status Perusahaan: </strong>{{data.usaha.status_perusahaan}}</div>
+        <div class="p-2"><strong>Dokumen Legalitas: </strong></div>
+        <div class="p-2">
                <div class="mb-4">
                       <div class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
                       <div>
@@ -67,11 +75,15 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data.usaha.legalitas!= null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.usaha.legalitas}`">{{data.usaha.legalitas.split('/')[2]}}</a></h1>
+                           <h1  class="text-neutral-gray-5">
+                            <a :href="`${$page.props.asset_url}/${data.usaha.legalitas}`">Lihat File</a>
+                          </h1>
                       </div>
                     </div>
                   </div> 
-              <p><strong>Dokumen Amdal: </strong></p>
+              </div>
+             <div class="p-2"><strong>Dokumen Amdal: </strong></div>
+             <div class="p-2">
               <div class="mb-4">
                       <div class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
                       <div>
@@ -82,23 +94,28 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data.usaha.dokumen_amdal != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.usaha.dokumen_amdal}`">{{data.usaha.dokumen_amdal.split('/')[2]}}</a></h1>
+                           <h1 class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.usaha.dokumen_amdal}`">Lihat File</a></h1>
                       </div>
                     </div>
                   </div>   
-              <p><strong>Informasi Pajak: </strong>{{data.usaha.informasi_pajak}}</p>
-              <p><strong>NPWP: </strong>{{data.usaha.npwp}}</p>
-              <p><strong>Deskripsi usaha: </strong>{{data.usaha.deskripsi_usaha}}</p>
-              <p><strong>Email Perusahaan: </strong>{{data.usaha.email_perusahaan}}</p>
+                </div>
+              <div class="p-2"><strong>Informasi Pajak: </strong>{{data.usaha.informasi_pajak}}</div>
+              <div class="p-2"><strong>NPWP: </strong>{{data.usaha.npwp}}</div>
+              <div class="p-2"><strong>Deskripsi usaha: </strong>{{data.usaha.deskripsi_usaha}}</div>
+              <div class="p-2"><strong>Email Perusahaan: </strong>{{data.usaha.email_perusahaan}}</div>
+            </div>
           </section>
            <section class="mb-5">
-            <h2 class="text-neutral-gray-5">Profil Produk</h2>
-              <p><strong>Jenis Produk: </strong>{{data.produk.jenis_produk}}</p>
-              <p><strong>Jumlah Produk yang dijual: </strong>{{data.produk.jumlah_produk_yang_dijual}}, {{data.produk.tanggal_lahir}}</p>
-              <p><strong>Bahan produk: </strong>{{data.produk.bahan_produk}}</p>
-              <p><strong>Kategori produk: </strong>{{data.produk.kategori_produk}}</p>
-              <p><strong>Harga produk: </strong>{{data.produk.harga_produk}}</p>
-              <p><strong>Clearance dokumen: </strong></p>
+
+        <div class="d-flex flex-column">
+            <div class="p-2"><h2 class="text-neutral-gray-5">Profil Produk</h2></div>
+              <div class="p-2"><strong>Jenis Produk: </strong>{{data.produk.jenis_produk}}</div>
+              <div class="p-2"><strong>Jumlah Produk yang dijual: </strong>{{data.produk.jumlah_produk_yang_dijual}}, {{data.produk.tanggal_lahir}}</div>
+             <div class="p-2"><strong>Bahan produk: </strong>{{data.produk.bahan_produk}}</div>
+             <div class="p-2"><strong>Kategori produk: </strong>{{data.produk.kategori_produk}}</div>
+               <div class="p-2"><strong>Harga produk: </strong>{{data.produk.harga_produk}}</div>
+               <div class="p-2"><strong>Clearance dokumen: </strong></div>
+                <div class="p-2">
                <div class="mb-4">
                       <div class="d-flex align-items-center px-4 py-2 alert alert-success gap-2 input_upload_custom">
                       <div>
@@ -109,26 +126,30 @@
                         </svg>
                       </div>
                        <div class="flex-grow-1">
-                           <h1 v-if="data.produk.keterangan_halal != null" class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.produk.keterangan_halal}`">{{data.produk.keterangan_halal.split('/')[2]}}</a></h1>
+                           <h1  class="text-neutral-gray-5"><a :href="`${this.$page.props.asset_url}/${data.produk.keterangan_halal}`">Lihat File</a></h1>
                       </div>
                     </div>
+                  </div>
                   </div>   
-              <p><strong>Manfaat fungsional: </strong>{{data.produk.manfaat_fungsional}}</p>
-              <p><strong>Manfaat nonfungsional: </strong>{{data.produk.manfaat_nonfungsional}}</p>
+              <div class="p-2"><strong>Manfaat fungsional: </strong>{{data.produk.manfaat_fungsional}}</div>
+               <div class="p-2"><strong>Manfaat nonfungsional: </strong>{{data.produk.manfaat_nonfungsional}}</div>
+            </div>
           </section>
              <section class="mb-5">
-            <h2 class="text-neutral-gray-5">Kajian Finansial</h2>
-              <p><strong>CAPEX: </strong>{{data.finansial.capex}}</p>
-              <p><strong>OPEX: </strong>{{data.finansial.opex}}</p>
-              <p><strong>SWOT Faktor Eksternal: </strong>{{data.finansial.swot_faktor_eksternal}}</p>
-              <p><strong>SWOT Faktor Internal: </strong>{{data.finansial.swot_faktor_internal}}</p>
-              <p><strong>Key Partners: </strong>{{data.finansial.key_partners}}</p>
-              <p><strong>Key Activity: </strong>{{data.finansial.key_activity}}</p>
-              <p><strong>Value Propotions: </strong>{{data.finansial.value_propotions}}</p>
-              <p><strong>Customer Relationship: </strong>{{data.finansial.customer_relationship}}</p>
-              <p><strong>Channels: </strong>{{data.finansial.channels}}</p>
-              <p><strong>Cost Structure: </strong>{{data.finansial.cost_structure}}</p>
-              <p><strong>Revenue Streams: </strong>{{data.finansial.revenue_streams}}</p>
+              <div class="d-flex flex-column">
+         <div class="p-2"><h2 class="text-neutral-gray-5">Kajian Finansial</h2></div>
+          <div class="p-2"><strong>CAPEX: </strong>{{data.finansial.capex}}</div>
+          <div class="p-2"><strong>OPEX: </strong>{{data.finansial.opex}}</div>
+          <div class="p-2"><strong>SWOT Faktor Eksternal: </strong>{{data.finansial.swot_faktor_eksternal}}</div>
+          <div class="p-2"><strong>SWOT Faktor Internal: </strong>{{data.finansial.swot_faktor_internal}}</div>
+          <div class="p-2"><strong>Key Partners: </strong>{{data.finansial.key_partners}}</div>
+          <div class="p-2"><strong>Key Activity: </strong>{{data.finansial.key_activity}}</div>
+          <div class="p-2"><strong>Value Propotions: </strong>{{data.finansial.value_propotions}}</div>
+          <div class="p-2"><strong>Customer Relationship: </strong>{{data.finansial.customer_relationship}}</div>
+        <div class="p-2"><strong>Channels: </strong>{{data.finansial.channels}}</div>
+        <div class="p-2"><strong>Cost Structure: </strong>{{data.finansial.cost_structure}}</div>
+        <div class="p-2"><strong>Revenue Streams: </strong>{{data.finansial.revenue_streams}}</div>
+        </div>
           </section>
           <div class="d-flex justify-content-center bd-highlight mb-3">
               <div class="p-2 bd-highlight">
@@ -138,12 +159,12 @@
               <Link :href="`/detail/profil/${currentPage}/accept`" class="btn btn-primary-blue-6 text-neutral-white">Terima user ini</Link>
               </div>
               <div class="p-2 bd-highlight">
-             <button @click = "toggleComment()" class="btn btn-success text-neutral-white">Beri tanggapan</button>
+             <button @click = "toggleComment()" class="btn btn-semantic-success-4 text-neutral-white">Beri tanggapan</button>
              </div>
             </div>
+          </div>
         </div>
       </div>
-    </div>
   </DashboardLayout>
 </template>
 <script>
@@ -153,7 +174,7 @@ import { ref } from 'vue';
 export default{
   data(){
     return{
-      currentPage : window.location.pathname.split('/')[3],
+      currentPage : window.location.pathname.split('/')[4],
       comment:false
     }
   },
@@ -169,9 +190,6 @@ export default{
   components:{
     DashboardLayout,
     Link
-  },
-  mounted(){
-    console.log(this.data)
   },
   methods:{
     toggleComment(){

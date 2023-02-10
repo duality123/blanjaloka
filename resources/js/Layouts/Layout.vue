@@ -20,29 +20,6 @@
         </div>
       </div>
     </div>
-        <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.usahaComplete  || !$page.props.auth.produkComplete ||!$page.props.auth.finansialComplete' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
-            <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
-            <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
-                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
-                Profil</Link>
-             <Link v-else-if="!$page.props.auth.usahaComplete " href="/umkm/dashboard/profil_usaha/"
-                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi Profil Usaha</Link>
-
-             <Link v-else-if="!$page.props.auth.produkComplete" href="/umkm/dashboard/profil_produk/"
-                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
-                Profil Produk</Link>
-             <Link v-else-if="!$page.props.auth.finansialComplete" href="/umkm/dashboard/kajian_finansial/"
-                class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
-                Kajian Finansial</Link>
-       </div>
-
-        <div v-else-if="!$page.props.auth.user.accepted"
-            class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
-              <p v-if="!$page.props.auth.user.accepted" class="text-neutral-white mb-0">Data anda sedang diproses silahkan cek email secara berkala !</p>
-        </div>
-        
-         
-      
         <nav class="navbar navbar-expand-lg" :class="{ 'bg-primary-blue-6': scrollPosition > 100 }">
             <div class="container">
                 <Link class="navbar-brand" href="/">
@@ -79,7 +56,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <Link class="dropdown-item d-flex align-items-center justify-content-between"
-                                        href="/notifikasi/UMKM/1">
+                                        href="/notifikasi/UMKM">
                                     <span>Notifikasi</span>
                                     <div v-if="$page.props.auth.user.notifikasi" class="bg-primary-blue-6 text-white notif_badge">{{$page.props.auth.user.notifikasi}}</div>
                                     </Link>
@@ -162,10 +139,12 @@
             </div>
         </div>
     </footer>
+    <contactUs/>
 </template>
 
 <script setup>
 import { Head, Link,usePage } from '@inertiajs/inertia-vue3'
+import contactUs from '../Components/contactUs.vue'
 import { ref, onMounted } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 const scrollPosition = ref(0);
@@ -221,7 +200,37 @@ a.btn {
     border-radius: 50%;
 }
 .dropdown-toggle::after {
-    display: none;
+  
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+}
+.step .number {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  color: #FFFFFF;
+  position: sticky;
+}
+.step h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #AEAEAE;
+}
+.step.clear .number {
+  background-color: #398AB9;
+}
+.step.clear h1 {
+  color: #3E4041;
 }
 .navbar-expand-lg .navbar-nav .dropdown-menu {
     width: 15rem;

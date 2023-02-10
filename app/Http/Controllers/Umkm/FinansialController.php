@@ -59,15 +59,18 @@ class FinansialController extends Controller
         $profil = Finansial::where('user_id','=',$request->user()->id)->update($data);
        
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
-        $isNotifExist = DB::table('notifikasi')->select('id')->where('redirect','=',$request->user()->id)->first();
-        if (!$isNotifExist) {
+        $isNotExist = DB::table('notifikasi')->select('id')->where('redirect','=','/detai/profil/umkm/'.$request->user()->id)->first();
+        if (!$request->user()->accepted) {
              foreach ($admins as $admin) {
-                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Baru','pesan'=>'Seorang user mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=> $request->user()->id,'tanggal'=>now()]);
+                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Baru','pesan'=>'Seorang user mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=> '/detai/profil/umkm/'.$request->user()->id,'tanggal'=>now()]);
                  $updateNotif =  DB::table('users')->select('notifikasi')->where('id','=',$admin->user_id)->first();
                  $updateNotif = $updateNotif->notifikasi+= 1;
                 User::where('id','=',$admin->user_id)->update(['notifikasi'=>$updateNotif]);
 
             }
+        }
+        if($request->user()->accepted){
+            return redirect('/umkm/dashboard/kegiatanku');
         }
         return redirect('umkm/dashboard/kajian_finansial');
 

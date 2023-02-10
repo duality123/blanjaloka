@@ -1,11 +1,11 @@
 <template>
-  <DashboardLayout title="Tambah Kegiatan">
+  <DashboardLayout title="Tambah Kegiatan" state="funding">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4">
-      <h1 class="text-neutral-gray-5 mb-0">Tambah Investasi</h1>
+      <h1 class="text-neutral-gray-5 mb-0">Edit Investasi</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/dashboard/kegiatan" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
-      <p class="text-neutral-gray-4"> Tambah Investasi</p>
+      <Link href="admin/investasi/" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
+      <p class="text-neutral-gray-4">Edit Investasi</p>
     </div>
     <div class="row">
       <div class="col-lg-6">
@@ -66,14 +66,21 @@
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Jumlah Investasi</label>
 
-              <input v-model="form.jumlah_investasi" type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+              <input v-model="form.jumlah_investasi" type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan jumlah investasi"
               >
                <small class="text-danger text-center" v-if="form.errors.jumlah_investasi">{{form.errors.jumlah_investasi}}</small> 
             </div>
              <div class="mb-4">
+              <label for="kurikulum" class="form-label text-neutral-gray-5">Total Penghasilan</label>
+
+              <input v-model="form.total_penghasilan" type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan total penghasilan"
+              >
+               <small class="text-danger text-center" v-if="form.errors.total_penghasilan">{{form.errors.total_penghasilan}}</small> 
+            </div>
+             <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Target Investasi</label>
 
-              <input v-model="form.target_investasi" type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+              <input v-model="form.target_investasi" type="number" class="form-control mb-3" id="kurikulum" placeholder="Masukkan target investasi"
               >
                <small class="text-danger text-center" v-if="form.errors.target_investasi">{{form.errors.target_investasi}}</small> 
             </div>
@@ -84,34 +91,22 @@
                <small class="text-danger text-center" v-if="form.errors.jumlah_investor" >{{form.errors.jumlah_investor}}</small> 
             </div>
              <div class="mb-4">
-             <label for="nama_investor" class="form-label text-neutral-gray-5">Nama Investor</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor" id="nama_investor"
-                :options="investor" v-model="form.nama_investor" />
-               <small class="text-danger text-center" v-if="form.errors.nama_investor">{{form.errors.nama_investor}}</small>
-              </div>
-             <div class="mb-4">
-             <label for="nama_investor" class="form-label text-neutral-gray-5">Nama UMKM</label>
-              <v-select multiple placeholder="Masukkan nama-nama investor" id="nama_investor"
-                :options="umkm" v-model="form.nama_umkm" />
-               <small class="text-danger text-center" v-if="form.errors.nama_umkm">{{form.errors.nama_umkm}}</small>
-              </div>
-             <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Waktu balik modal start</label>
-              <input type="date" v-model="form.waktu_balik_modal_start" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+              <input type="datetime-local" v-model="form.waktu_balik_modal_start" class="form-control mb-3" id="kurikulum" placeholder="Masukkan wakti balik modal start"
               >
                <small class="text-danger text-center" v-if="form.errors.waktu_balik_modal_start" >{{form.errors.waktu_balik_modal_start}}</small> 
             </div>
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Waktu balik modal end</label>
-              <input type="date"  v-model="form.waktu_balik_modal_end" class="form-control mb-3" id="kurikulum" placeholder="Masukkan waktu balik modal"
+              <input type="datetime-local"  v-model="form.waktu_balik_modal_end" class="form-control mb-3" id="kurikulum" placeholder="Masukkan waktu balik modal end"
               >
                <small class="text-danger text-center" v-if="form.errors.waktu_balik_modal_end" >{{form.errors.waktu_balik_modal_end}}</small> 
             </div>
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Presentasi hasil investasi</label>
-              <input type="number"  v-model="form.persentase_hasil_investasi" class="form-control mb-3" id="kurikulum" placeholder="Masukkan waktu balik modal"
+              <input type="number"  v-model="form.persentase_hasil_investasi" class="form-control mb-3" id="kurikulum" placeholder="Masukkan persentase hasil investasi"
               >
-               <small class="text-danger text-center" v-if="form.errors.presentase_hasil_investasi" >{{form.errors.presentase_hasil_investasi}}</small> 
+               <small class="text-danger text-center" v-if="form.errors.persentase_hasil_investasi" >{{form.errors.persentase_hasil_investasi}}</small> 
             </div>
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Minimum investasi</label>
@@ -130,13 +125,13 @@
           </div>
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Kategori</label>
-              <input type="text" v-model="form.kategori"  class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+              <input type="text" v-model="form.kategori"  class="form-control mb-3" id="kurikulum" placeholder="Masukkan kategori"
               >
                <small class="text-danger text-center" v-if="form.errors.kategori">{{form.errors.kategori}}</small> 
             </div>
              <div class="mb-4">
               <label for="kurikulum" class="form-label text-neutral-gray-5">Lokasi</label>
-              <input type="text"  v-model="form.lokasi" class="form-control mb-3" id="kurikulum" placeholder="Masukkan deskripsi"
+              <input type="text"  v-model="form.lokasi" class="form-control mb-3" id="kurikulum" placeholder="Masukkan lokasi"
               >
                <small class="text-danger text-center" v-if="form.errors.lokasi">{{form.errors.lokasi}}</small> 
             </div>
@@ -155,21 +150,20 @@ import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
 import { ref, computed,onMounted,onUnmounted } from 'vue'
 const form = useForm({
-  id: window.location.pathname.split('/')[4],
+  id:props.bisnis.id,
   name:props.bisnis.name,
   foto_bisnis:props.bisnis.foto_bisnis.split(',').filter(item => item), 
   jumlah_investasi:props.bisnis.jumlah_investasi, 
   target_investasi:props.bisnis.target_investasi,  
   jumlah_investor:props.bisnis.jumlah_investor,
-  waktu_balik_modal_start:props.bisnis.waktu_balik_modal_start.split(' ')[0],
-  waktu_balik_modal_end:props.bisnis.waktu_balik_modal_end.split(' ')[0],
+  waktu_balik_modal_start:props.bisnis.waktu_balik_modal_start,
+  waktu_balik_modal_end:props.bisnis.waktu_balik_modal_end,
   minimum_investasi:props.bisnis.minimum_investasi,
   persentase_hasil_investasi:props.bisnis.persentase_hasil_investasi,
   kategori :props.bisnis.kategori, 
   lokasi :props.bisnis.lokasi,
   status :props.bisnis.status,
-  nama_investor:props.oldInvestor,
-  nama_umkm:props.oldUmkm
+  total_penghasilan:props.bisnis.total_penghasilan
 });
 
 
@@ -218,15 +212,15 @@ const props = defineProps({
   investor:Array,
   bisnis:Object,
   oldInvestor:Array,
-  umkm:Array,
-  oldUmkm:Array
+  umkm:Object,
+  oldUmkm:Object
 
 })
 const handleResizeMasaInkubasi = () => {
   refMasaInkubasi.value.style.width = '1.5rem';
 }
 const submitForm = () => {
-  form.post('/admin/dashboard/investasi/edit_post')
+  form.post('/admin/investasi/edit_post')
 }
 </script>
 

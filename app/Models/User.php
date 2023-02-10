@@ -12,9 +12,17 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Profil;
 use App\Models\Usaha;
 use App\Models\Produk;
+use App\Models\Bisnis;
 use App\Models\Kegiatan;
 use App\Models\Role;
-
+use App\Models\Janjitemu;
+use App\Models\Investasi;
+use App\Models\ProfilPerusahaan;
+use App\Models\TugasAkhirJawaban;
+use App\Models\kegiatan_umkm_pivot;
+use App\Models\kegiatan_investor_pivot;
+use App\Models\bisnis_umkm_pivot;
+use App\Models\bisnis_investor_pivot;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -27,6 +35,59 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_recovery_codes'
     ];
 
+    public function scopeFilter_umkm($query,array $filters){
+       if($filters['nama_umkm'] ?? false) {
+            $query ->whereHas('profil', function ($query) {
+              $query->where('nama_lengkap', 'like', '%' . request('nama_umkm') . '%');
+        });
+      }
+      if($filters['lokasi_umkm'] ?? false) {
+            $query ->whereHas('profil', function ($query) {
+              $query->where('provinsi', 'like', '%' . request('lokasi_umkm') . '%');
+        });
+      }
+     if($filters['perusahaan_umkm'] ?? false) {
+            $query->whereRelation('usaha','nama_perusahaan', 'like', '%' . request('perusahaan_umkm') . '%');
+        }
+     if ($filters['produk_umkm'] ?? false) {
+         $query->whereRelation('produk', 'kategori_produk', 'like', '%' . request('produk_umkm') . '%');
+     }
+
+    
+   }
+
+    public function scopeFilter_investor($query,array $filters){
+       if($filters['nama_investor'] ?? false) {
+            $query ->whereHas('profil', function ($query) {
+              $query->where('nama_lengkap', 'like', '%' . request('nama_investor') . '%');
+        });
+      }
+      if($filters['lokasi_investor'] ?? false) {
+            $query ->whereHas('profil', function ($query) {
+              $query->where('provinsi', 'like', '%' . request('lokasi_investor') . '%');
+        });
+      }
+     if($filters['perusahaan_investor'] ?? false) {
+            $query->whereRelation('usaha','nama_perusahaan', 'like', '%' . request('perusahaan_investor') . '%');
+        }
+     if ($filters['kategori_investor'] ?? false) {
+         $query->whereRelation('produk', 'kategori_produk', 'like', '%' . request('kategori_investor') . '%');
+     }
+
+    
+   }
+
+    public function scopeFilter_user_panel($query,array $filters){
+       if($filters['cari'] ?? false) {
+            $query ->whereHas('profil', function ($query) {
+               $query->where('nama_lengkap', 'like', '%' . request('cari') . '%');
+        })->orWhere('email','like','%'.request('cari').'%')->orWhere('users.name','like','%'.request('cari').'%')->orWhere('no_telepon','like','%'.request('cari').'%');
+      }
+
+    
+   }
+
+
     protected static function boot()
     {
         parent::boot();
@@ -36,57 +97,21 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    static function fetchAndPaginate($role,$limit = 0,$page=0){
-       $offset = ($limit * $page) - $limit;
-       $maxData = DB::select("select count(*) as total from users where role = '$role'");
-       $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
-       //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select users.id,users.email,users.created_at,users.accepted,users.no_telepon from users where id in (select user_id from roles where number = $role) limit $offset,$limit");
-       $data['paginate']['nums'] = [];
-       $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
-       $loopIndex = $index;
-       while (count($data['paginate']['nums']) < 5 && $loopIndex <= $data['paginate']['totalPaginasi'] ) {
-          $data['paginate']['nums'][] = $loopIndex;
-          $loopIndex++;
-       }
-       //dd($data['paginate']['nums']);
-       $data['paginate']['nextBlok'] = $loopIndex < $data['paginate']['totalPaginasi'] ?  $index + 5 : 0;
-       $data['paginate']['prevBlok'] = $page > 5 ?  $page - 5 : 0;
-       //dd($data['paginate']['totalPaginasi']);
-       $data['paginate']['prev'] = ($page - 1 > 0) ? $page - 1 : 0;
-       $data['paginate']['first'] = ($page > 5) ? 1 : 0;
-       $data['paginate']['last'] = ($page+4 < $data['paginate']['totalPaginasi']) ? $data['paginate']['totalPaginasi'] : 0;
-       $data['paginate']['next'] = ($page + 1 < $data['paginate']['totalPaginasi'] )? $page + 1 : 0;
-      // dd($data);
-       return $data;
-    }
-
-    static function fetchAndPaginate4Inkubasi($limit = 0,$page=0,$kegiatan_id=null){
-       $offset = ($limit * $page) - $limit;
-       $maxData = DB::select("select count(*) as total from kegiatan_umkm where kegiatan_id = '$kegiatan_id'");
-       $data['paginate']['totalPaginasi'] = ceil(($maxData[0]->total)/ $limit);
-       //var_dump($maxData[0]->total);
-       $data['items'] = DB::select("select nama_lengkap,user_id as id from profil where user_id in (select umkm_id from kegiatan_umkm where kegiatan_id = '$kegiatan_id') order by nama_lengkap asc limit $offset,$limit");
-       
-       $data['paginate']['nums'] = [];
-       $index = ($page % 5 == 0) ? intval($page) - (intval($page) - 4 ): (intval($page) - ((intval($page) % 5))) + 1 ;
-       $loopIndex = $index;
-       while (count($data['paginate']['nums']) < 5 && $loopIndex <= $data['paginate']['totalPaginasi'] ) {
-          $data['paginate']['nums'][] = $loopIndex;
-          $loopIndex++;
-       }
-       //dd($data['paginate']['nums']);
-       $data['paginate']['nextBlok'] = $loopIndex < $data['paginate']['totalPaginasi'] ?  $index + 5 : 0;
-       $data['paginate']['prevBlok'] = $page > 5 ?  $page - 5 : 0;
-       //dd($data['paginate']['totalPaginasi']);
-       $data['paginate']['prev'] = ($page - 1 > 0) ? $page - 1 : 0;
-       $data['paginate']['first'] = ($page > 5) ? 1 : 0;
-       $data['paginate']['last'] = ($page+4 < $data['paginate']['totalPaginasi']) ? $data['paginate']['totalPaginasi'] : 0;
-       $data['paginate']['next'] = ($page + 1 < $data['paginate']['totalPaginasi'] )? $page + 1 : 0;
-      // dd($data);
-       return $data;
-    }
-
+     public function delete(){
+        $this->profil()->delete();
+        if ($this->Role()->number == 2) {
+            $this->produk()->delete();
+            $this->finansial()->delete();
+            $this->dokumenPerusahaan()->delete();
+            $this->logbook()->delete();
+            
+        }
+        else{
+            $this->dokumenPerusahaan()->delete();
+            $this->profilPerusahaan()->delete();
+        }
+        parent::delete();
+   }
   
   
 
@@ -104,27 +129,110 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+     public function inkubasiInvestor(){
+        $data = DB::table('kegiatan_investor')->where('investor_id','=',$this->id)->get();
+        if ($data) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+     public function pendanaanInvestor(){
+        $data = DB::table('investasi')->where('user_id','=',$this->id)->get();
+        if ($data) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
+
+    public function janji_temu(){
+        $data = DB::table('janji_temu')->where('umkm_id','=',$this->id)->get();
+        if ($data) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+     public function janji_temu_investor(){
+        $data = DB::table('janji_temu')->where('investor_id','=',$this->id)->get();
+        if ($data) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+     public function pendanaan(){
+        $data = DB::table('funding')->where('user_id','=',$this->id)->get();
+        if ($data) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
    public function kegiatanumkm(){
-            return $this->belongsToMany(Kegiatan::class,'kegiatan_umkm','umkm_id','kegiatan_id');
+            return $this->belongsToMany(Kegiatan::class,'kegiatan_umkm','umkm_id','kegiatan_id')->using(kegiatan_umkm_pivot::class)->withPivot('lulus_funding')->orderBy('dimulai','desc');
     }
    public function kegiataninvestor(){
-            return $this->belongsToMany(Kegiatan::class,'kegiatan_investor','investor_id','kegiatan_id');
+            return $this->belongsToMany(Kegiatan::class,'kegiatan_investor','investor_id','kegiatan_id')->orderBy('dimulai','desc');
    }
+
+   public function bisnisinvestor(){
+            return $this->belongsToMany(Bisnis::class,'bisnis_investor','investor_id','bisnis_id')->orderBy('name','asc');
+   }
+
+    public function bisnisumkm(){
+            return $this->belongsToMany(Bisnis::class,'bisnis_peserta','umkm_id','bisnis_id')->orderBy('name','asc');
+   }
+
 
     public function janjitemuinvestor(){
-         return $this->hasMany(Eventual::class,'investor_id');
+         return $this->hasMany(Janjitemu::class,'investor_id');
+    }
+
+    public function kegiatanumkm_pivot(){
+         return $this->hasMany(kegiatan_umkm_pivot::class,'umkm_id');
+    }
+
+     public function kegiataninvestor_pivot(){
+         return $this->hasMany(kegiatan_investor_pivot::class,'investor_id');
+    }
+
+    public function bisnisumkm_pivot(){
+            return $this->hasMany(bisnis_umkm_pivot::class,'umkm_id');
+    }
+   public function bisnisinvestor_pivot(){
+            return $this->hasMany(bisnis_investor_pivot::class,'investor_id');
    }
 
+
+    public function investasi(){
+         return $this->hasMany(investasi::class,'user_id');
+   }
 
     public function janjitemumkm(){
-         return $this->hasMany(Eventual::class,'umkm_id');
+         return $this->hasMany(Janjitemu::class,'umkm_id');
    }
-
+    public function TugasAkhirJawaban(){
+        return $this->hasOne(TugasAkhirJawaban::class,'user_id');
+    }
 
     public function produk(){
         return $this->hasOne(Produk::class);
     }
+ 
     public function usaha(){
         return $this->hasOne(Usaha::class);
     }
@@ -138,7 +246,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(DokumenPerusahaan::class);
     }
     public function profilPerusahaan(){
-        return $this->hasOne(profilPerusahaan::class);
+        return $this->hasOne(ProfilPerusahaan::class);
     }
 
     public function getPermissionArray()

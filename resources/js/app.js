@@ -16,7 +16,8 @@ import {
     faEllipsis,
     faTimes,
     faEllipsisVertical,
-    faBars
+    faBars,
+    fas
 } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap";
@@ -35,7 +36,8 @@ library.add(
     faTimes,
     faEllipsis,
     faEllipsisVertical,
-    faBars
+    faBars,
+    fas
 );
 
 
@@ -43,7 +45,11 @@ createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
-            import.meta.glob("./Pages/**/*.vue")
+            import.meta.glob([
+            "./Pages/**/*.vue",
+            "./css/..",
+            "./assets/../."
+            ])
         ),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })

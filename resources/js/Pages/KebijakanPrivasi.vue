@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import BaseLayout from '../Layouts/Layout.vue'
+import BaseLayout from '../Layouts/UnauthenticatedLayout.vue'
 import { ref } from 'vue'
 export default{
   data(){

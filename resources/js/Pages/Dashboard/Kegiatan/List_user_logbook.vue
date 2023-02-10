@@ -61,12 +61,12 @@ import Pagination from '../../../Components/Pagination.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
-    setup(){
+    setup(props){
       const form = useForm({
         status:null,
         id:null,
-        user_id:window.location.pathname.split('/')[6],
-        kegiatan_id:window.location.pathname.split('/')[4],
+        user_id:window.location.pathname.split('/')[5],
+        kegiatan_id:props.kegiatan.id,
         waktu:null
       })
       return { form }
@@ -97,7 +97,7 @@ export default{
         this.form.status = num
         this.form.id = id
         this.form.waktu = waktu
-        this.form.post('/admin/dashboard/kegiatan/logbook/ubah_status')
+        this.form.post('/admin/kegiatan/logbook/ubah_status')
       }
     }
 }

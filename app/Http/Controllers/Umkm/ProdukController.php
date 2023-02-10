@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 class ProdukController extends Controller
 {
     public function form_wizard(Request $request)
@@ -27,6 +27,7 @@ class ProdukController extends Controller
             'harga_produk' => 'required',
             'manfaat_fungsional' => 'required',
             'manfaat_nonfungsional' => 'required',
+            'keterangan_halal'=>'required'
         ];
 
         $customMessages = [
@@ -37,10 +38,14 @@ class ProdukController extends Controller
 
         $this->validate($request, $rules, $customMessages);
         $data = [];
-        $produk =  Produk::where('user_id','=',$request->user()->id);
-        if ($request->file('keterangan_halal')) {
+        $produk =  Produk::where('user_id','=',$request->user()->id)->first();
+        if ($request->file('keterangan_halal') && $produk->keterangan_halal) {
+            Storage::disk('public')->delete($produk->keterangan_halal);
             $data['keterangan_halal'] = $request->file('keterangan_halal')->store('umkm/keterangan_halal','public'); 
-        };
+        }
+        elseif($request->file('keterangan_halal')){
+            $data['keterangan_halal'] = $request->file('keterangan_halal')->store('umkm/keterangan_halal','public'); 
+        }
           $data['jenis_produk'] = $request->post('jenis_produk');
           $data['jumlah_produk_yang_dijual'] = $request->post('jumlah_produk_yang_dijual');
           $data['bahan_produk'] = $request->post('bahan_produk');

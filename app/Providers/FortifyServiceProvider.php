@@ -42,18 +42,18 @@ class FortifyServiceProvider extends ServiceProvider
               $request->session()->flash('success','Selamat datang');
               if ($request->user()->Role->number == 2 ) {
                 if ($request->user()->accepted == 1 ) {
-                    return redirect('/profil/1');
+                    return redirect('/umkm/dashboard');
                 }
                 else{
-                    return redirect('/profil/1');
+                    return redirect('/umkm/profil/1');
                 }
             }
                elseif ($request->user()->Role->number == 3 ){
                 if ($request->user()->accepted == 1 ) {
-                    return redirect('/profil/1');
+                    return redirect('/investor/dashboard/');
                 }
                 else{
-                    return redirect('/profil/1');
+                    return redirect('/investor/profil/1');
                 }
                 }
                 
