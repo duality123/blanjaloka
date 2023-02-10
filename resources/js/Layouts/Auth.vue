@@ -95,7 +95,7 @@ p {
   margin-bottom: 0;
 }
 
-form {
+.form-class {
   margin-top: 1.5rem;
 }
 

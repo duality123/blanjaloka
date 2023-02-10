@@ -70,14 +70,12 @@ class PagesController extends Controller
                           'gambar'=>$gambar]);
         $get = User::where('id','=',$request->user()->id)->first();
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
-        if (!$request->user()->accepted) {
              foreach ($admins as $admin) {
                  $updateNotif =  DB::table('users')->select('notif_pesan')->where('id','=',$admin->user_id)->first();
                  $updateNotif = $updateNotif->notif_pesan+= 1;
                 User::where('id','=',$admin->user_id)->update(['notif_pesan'=>$updateNotif]);
 
             }
-        }
         $request->session()->flash('success','Laporan Berhasil Masuk !');
         return back();
 

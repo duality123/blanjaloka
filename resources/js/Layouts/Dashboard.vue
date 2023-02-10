@@ -221,7 +221,11 @@ const removePopup = () => {
    usePage().props.value.session.error = false;
 }
 </script>
-
+<style>
+  .btn_custom_outline:hover {
+    color: #FFFFFF !important;
+}
+</style>
 <style scoped>
 .btn_custom_outline:hover {
     color: #FFFFFF !important;
@@ -270,26 +274,7 @@ const removePopup = () => {
 .left_content .section_two a {
   font-weight: 600;
 }
-.notification {
-  color: white;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
-}
 
-.notification:hover {
-}
-
-.notification .badge {
-  position: absolute;
-  top: -20px;
-  right: -30px;
-  padding: 10px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
-}
 .right_content {
   padding: 2rem
 }
