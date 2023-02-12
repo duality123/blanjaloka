@@ -42,7 +42,7 @@
         <span>Kegiatan</span>
         </Link>
       </li>  
-        <li :class="{'active':state == 'bisnis','lowerOpacity':!this.$page.props.auth.user.accepted }}">
+        <li :class="{'active':state == 'bisnis','lowerOpacity':!this.$page.props.auth.user.accepted }">
               <Link href="/investor/dashboard/bisnisku?page=1" class="d-flex align-items-center gap-2 text-neutral-black">
                 <img src="../assets/icons/icon_funding_dashboard.png" alt="icon funding" class="img-fluid">Bisnis
               </Link>
