@@ -1,5 +1,5 @@
  <template>
- <BaseLayout title="UMKM Profile">
+ <BaseLayout title="Kegiatanku">
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">

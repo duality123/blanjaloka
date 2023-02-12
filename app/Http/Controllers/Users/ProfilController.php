@@ -126,7 +126,7 @@ class ProfilController extends Controller
     { 
          $rules = [
             'foto_ktp' => 'required',
-            'foto_dengan_ktp'=>'required'
+            'foto_selfie_ktp'=>'required'
         ];
 
         $customMessages = [

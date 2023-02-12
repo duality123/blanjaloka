@@ -1,5 +1,5 @@
 <template>
-   <BaseLayout title="UMKM Profile">
+   <BaseLayout title="UMKM Profil Finansial">
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">   

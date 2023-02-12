@@ -119,7 +119,7 @@
 
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
-import Layout from '../../../Layouts/kegiatan.vue';
+import Layout from '../../../Layouts/Kegiatan.vue';
 import RemoveInvestorLayout from '../../../Components/RemoveItem.vue';
 import RemoveInvestorLayoutModal from '../../../Components/RemoveItem.vue';
 import Pagination from '../../../Components/Pagination.vue';

@@ -34,7 +34,7 @@ import contactUs from '../Components/contactUs.vue'
 import { Head,usePage } from '@inertiajs/inertia-vue3'
 import {onMounted} from 'vue';
 import lottie from 'lottie-web';
-
+import animationsidebar1 from '../assets/animations/animationsidebar.js'
 const props = defineProps({
   title: {
     type: String,
@@ -44,7 +44,7 @@ const props = defineProps({
 onMounted(()=>{
       lottie.loadAnimation({
       container: document.getElementById('animationsidebar'),
-      path: '../storage/loginsidebar.json',
+      animationData: animationsidebar1,
       renderer: 'svg',
       loop: true,
       autoplay: true,

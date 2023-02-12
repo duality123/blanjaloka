@@ -5,21 +5,6 @@
         <meta name="description" content="Your page description">
     </Head>
     <header class="fixed-top">
-             <div id="myModal" class="modal" v-if="$page.props.session.success">
-      <div class="modal-content">
-        <div class=" d-flex justify-content-end">
-         <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class=" d-flex justify-content-between">
-       <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
-        </div>
-       <div class="d-flex justify-content-center text-center" style="margin-left: 2rem;">
-       <h2>{{$page.props.session.success}}</h2>
-        </div>
-      </div>
-    </div>
         <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.usahaComplete  || !$page.props.auth.produkComplete ||!$page.props.auth.finansialComplete' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
             <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
@@ -104,6 +89,21 @@
             </div>
         </nav>
     </header>
+           <div id="myModal" class="modal" v-if="$page.props.session.success">
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class=" d-flex justify-content-between">
+       <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
+        </div>
+       <div class="d-flex justify-content-center text-center" style="margin-left: 2rem;">
+       <h2>{{$page.props.session.success}}</h2>
+        </div>
+      </div>
+    </div>
     <slot />
     <section class="cta_section">
         <div class="container d-flex justify-content-center">

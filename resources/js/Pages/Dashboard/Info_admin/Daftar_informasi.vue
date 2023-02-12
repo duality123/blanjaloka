@@ -28,6 +28,35 @@
   </div>
       </div>
     </div>
+      <div class="col-lg-8" v-if="popupEdit" >
+              <div id="myModal" class="modal"  >
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "toggleEdit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="col-lg-12">
+       <div class=" d-flex justify-content-center">
+       <h2>Edit Info</h2>
+     </div>
+           <div class="mt-2">
+      <form @submit.prevent="submitEdit()">
+    
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Masukkan Pesan</label>
+         <input type="text" class="form-control" v-model="form.isi" id="provinsi" placeholder="Masukkan pesan info yang ingin anda buat" >
+           <small class="text-danger" v-if="form.errors.isi" >{{form.errors.isi}}</small>
+      </div>
+
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
         <Remove pesan="Anda yakin ingin menghapus pesan ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/info_admin/hapus_info" @toggleClose="switchClose()" />
       <Layout state="info" title="Info Admin" >
           <ul class="tabs mt-4">
@@ -63,7 +92,7 @@
                                   <button class="dropdown-toggle dropdown-toggle-info " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   </button>
                                               <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><button @click="popupTambah()" class="dropdown-item dropdown-toggle-info " :href="url">Edit</button></li>
+                                                <li><button @click="toggleEdit(info.id,info.isi)" class="dropdown-item " :href="url">Edit</button></li>
                                                  <li><button @click="switchClose(info.id)" class="dropdown-item" >Hapus</button></li>
                                                    <li><button @click="indexTandaiSingle(info.id)" class="dropdown-item" >Tandai</button></li>
                                               </ul>
@@ -86,7 +115,7 @@
 
 <script>
 import Layout from '../../../Layouts/Dashboard.vue';
-import Pagination from '../../../components/Pagination.vue';
+import Pagination from '../../../Components/Pagination.vue';
 import Search from '../../../Components/Search.vue';
 import Remove from '../../../Components/RemoveItem.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
@@ -95,7 +124,8 @@ import { ref } from 'vue';
 export default{
   setup(){
     const form = useForm({
-      isi:null
+      isi:null,
+      id:null
     })
     return {form}
   },
@@ -105,7 +135,8 @@ export default{
         tandai:[],
         itemDelete:null,
         deletePopup:false,
-        url:document.location.href
+        url:document.location.href,
+        popupEdit:false
       }
     },
     props:{
@@ -125,10 +156,19 @@ export default{
         this.itemDelete = {id:info_id}
       },
       toggleTambah(){
+        this.form.reset();
         this.popupTambah = !this.popupTambah
+      },
+       toggleEdit(id=null,isi=null){
+        this.form.id = id
+        this.form.isi = isi
+        this.popupEdit = !this.popupEdit
       },
       submitTambah(){
         this.form.post('/admin/info_admin/tambah_info',{preserveState:true})
+      },
+      submitEdit(){
+        this.form.post('/admin/info_admin/edit_info',{preserveState:true})
       },
       indexTandaiSingle(info_id=null){
         this.tandai.push(info_id)

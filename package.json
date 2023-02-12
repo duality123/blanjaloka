@@ -28,6 +28,7 @@
         "v-select": "^0.0.1",
         "vue": "^3.2.29",
         "vue-chartjs": "^4.1.1",
-        "vue-select": "^4.0.0-beta.5"
+        "vue-select": "^4.0.0-beta.5",
+        "vue3-lottie": "^2.4.0"
     }
 }

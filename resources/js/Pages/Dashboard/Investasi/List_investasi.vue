@@ -117,7 +117,7 @@
                     </div>
 
                       
-                     <small class="text-danger text-center" v-if="form.errors.file" >{{form.errors.file}}</small>
+                     <small class="text-danger text-center" v-if="form.errors.bukti" >{{form.errors.bukti}}</small>
       </div>
 
       <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
@@ -365,12 +365,10 @@ export default{
         this.popupEdit = !this.popupEdit
       },
       submitTambah(){
-        this.popupTambah = false
-        this.form.post('/admin/investasi/submit_record_investor',{onSuccess: () => this.form.reset()})
+        this.form.post('/admin/investasi/submit_record_investor',{onSuccess: () => this.form.reset()},{preserveState:true})
       },
        submitEdit(){
-        this.popupEdit= false
-        this.form.post('/admin/investasi/edit_record_investor',{onSuccess: () => this.form.reset()})
+        this.form.post('/admin/investasi/edit_record_investor',{onSuccess: () => this.form.reset()},{preserveState:true})
       },
         togglePopupStat(){
         this.modalStat= true
@@ -502,7 +500,7 @@ h1 {
   padding: 10px;
   border-radius: 25px;
   width: 40%;
-  text-align: center;
+  text-align: start;
 }
 .tabs {
   display: flex;

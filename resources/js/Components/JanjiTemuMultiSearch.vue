@@ -4,24 +4,24 @@
           <div class="row g-3">
         
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="Semua Lokasi" v-model="this.lokasi">
+              <input type="text" class="form-control" placeholder="Semua Lokasi" v-model="this.searchList.lokasi">
         </div>
  
    
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="berakhir" v-model="this.berakhir">
+              <input type="text" class="form-control" placeholder="berakhir" v-model="this.searchList.berakhir">
         </div>
       
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="dimulai" v-model="this.dimulai">
+              <input type="text" class="form-control" placeholder="dimulai" v-model="this.searchList.dimulai">
         </div>
          <div class="input-group col">
-              <input type="text" class="form-control" placeholder="UMKM" v-model="this.nama_umkm">
+              <input type="text" class="form-control" placeholder="UMKM" v-model="this.searchList.nama_umkm">
         </div>
 
 
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="Investor" v-model="this.nama_investor">
+              <input type="text" class="form-control" placeholder="Investor" v-model="this.searchList.nama_investor">
         </div>
 
         <div class="input-group col ">
@@ -38,23 +38,28 @@
   export default{
     data(){
       return{
-        lokasi:null,
-        berakhir:null,
-        dimulai:null,
-        nama_umkm:null,
-        nama_investor:null, 
+        searchList:{
+          lokasi:null,
+          berakhir:null,
+          dimulai:null,
+          nama_umkm:null,
+          nama_investor:null
+          } 
       }
     },
+
     methods:{
     search(){
       let uri = {}
-      uri['lokasi'] = this.lokasi
-      uri['event_berakhir'] =this.berakhir
-      uri['event_dimulai'] =this.dimulai
-      uri['nama_umkm'] = this.nama_umkm
-      uri['nama_investor'] = this.nama_investor
-      console.log( uri['nama_investor'])
-        Inertia.post(this.url,uri,{only:this.lazy,preserveScroll: true,preserveState:true })
+
+      sessionStorage.clear()
+      sessionStorage.setItem('lokasi', this.searchList.lokasi) 
+      sessionStorage.setItem('event_berakhir',this.searchList.berakhir) 
+      sessionStorage.setItem('event_dimulai',this.searchList.dimulai) 
+      sessionStorage.setItem('nama_umkm',this.searchList.nama_umkm)
+      sessionStorage.setItem('nama_investor',this.searchList.nama_investor)
+
+        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 
       }
     },

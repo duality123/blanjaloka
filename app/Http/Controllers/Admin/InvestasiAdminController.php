@@ -454,7 +454,7 @@ class InvestasiAdminController extends Controller{
       $investasi = $bisnis->investasi()->create($data);
       $bisnis->update(['total_penghasilan'=> $bisnis->total_penghasilan + $data['investasi_masuk'] - $data['investasi_keluar'],'jumlah_investasi'=>$bisnis->jumlah_investasi + $data['investasi_masuk'] - $data['investasi_keluar']]);
 
-      Notifikasi::create(['nama'=>'Track record investasi ditambah','pesan'=>'Data investasi di tambah bisnis '.$bisnis->name,'redirect'=>'/umkm/dashboard/funding/fundingku/'.$bisnis->id,'user_id'=>$data['user_id'],'tanggal'=>now()]);
+      Notifikasi::create(['nama'=>'Track record investasi ditambah','pesan'=>'Data investasi di tambah bisnis '.$bisnis->name,'redirect'=>'/investor/dashboard/bisnisku/investasi/'.$bisnis->id,'user_id'=>$data['user_id'],'tanggal'=>now()]);
         $invNotif = User::select('notifikasi')->where('id',$data['user_id'])->first();
         $invNotif->update(['notifikasi'=>$invNotif->notifikasi+=1]);
         $request->session()->flash('success','Investor berhasil ditambah');
@@ -491,7 +491,7 @@ class InvestasiAdminController extends Controller{
       $bisnis = Bisnis::select('name','id','persentase_hasil_investasi','total_penghasilan')->where('id',$data['bisnis_id'])->first();
       $bisnis->funding()->create($data);
       $bisnis->update(['total_penghasilan' => $bisnis->total_penghasilan+ $data['uang_masuk'] - $data['uang_keluar'],'persentase_hasil_investasi'=>(($bisnis->jumlah_investasi + $data['uang_masuk'] - $data['uang_keluar']-$bisnis->jumlah_investasi)/$bisnis->total_penghasilan) * 100]);
-      Notifikasi::create(['nama'=>'Track Record Ditambah','pesan'=>'Data funding ditambah di bisnis '.$bisnis->name,'redirect'=>'/investor/dashboard/bisnisku/investasi/'.$bisnis->id,'user_id'=>$data['user_id'],'tanggal'=>now()]);
+      Notifikasi::create(['nama'=>'Track Record Ditambah','pesan'=>'Data funding ditambah di bisnis '.$bisnis->name,'redirect'=>'/umkm/dashboard/fundingku/'.$bisnis->id.'/data_fundingku','user_id'=>$data['user_id'],'tanggal'=>now()]);
       $umkmNotif = User::select('notifikasi')->where('id',$data['user_id'])->first();
         $updateNotif = $umkmNotif->notifikasi +=1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);

@@ -1,8 +1,8 @@
 <template>
-<div class="col-lg-8" v-if="popup">
+<div class="col-lg-8" v-if="popupRequest">
 
-              <div id="myModal" class="modal"  >
-      <div class="modal-content">
+              <div id="myModal1" class="modal1"  >
+      <div class="modal-content1">
         <div class=" d-flex justify-content-end">
          <button @click = "$emit('togglePopup')" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
           <span aria-hidden="true">&times;</span>
@@ -10,7 +10,7 @@
       </div>
         <div class="col-lg-12">
       <div class=" d-flex justify-content-center">
-      <h2>Ajukan janji temu</h2>
+      <h2>Ajukan janji temu </h2>
     </div>
     <div class="mt-2">
       <form @submit.prevent="submit()">
@@ -35,6 +35,8 @@
 </template>
 <script>
 import { useForm, Link,usePage } from '@inertiajs/inertia-vue3'
+
+import { Inertia } from '@inertiajs/inertia'
 export default{
   setup(props){
     const form = useForm({
@@ -47,7 +49,7 @@ export default{
  
   methods:{
     submit(){
-      this.form.post('/investor/janjitemu',{preserveState:true})
+      form.post('/investor/janjitemu',{preserveState:true})
 
     },
    
@@ -80,7 +82,6 @@ export default{
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
 }

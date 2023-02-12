@@ -1,301 +1,5 @@
 <template>
-      <div class="col-lg-8" v-if="popupEdit">
-
-              <div id="myModal" class="modal"  >
-      <div class="modal-content">
-        <div class=" d-flex justify-content-end">
-         <button @click = "toggleEditClose()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="col-lg-12">
-       <div class=" d-flex justify-content-center">
-       <h2>Edit Temu Janji</h2>
-     </div>
-           <div class="mt-2">
-      <form @submit.prevent="editJanjiTemu()">
-      <div v-if="this.umkm_all == null" class="d-flex justify-content-center mt-4">
-            <div class="spinner-border text-primary"></div>
-      </div>
-      <div class="mt-4" v-else>
-    <ul class="tabs mt-2">
-      <li class="active" >
-          <h3>Pilih Investor</h3>
-      </li>
-    </ul>
-
-        <div class="row">
-         <div class="col d-flex justify-content-start">
-        <MultiSearchInvestor :lazy="['investor_all','umkm_all']" url="/admin/janjitemu?page=1" />
-        
-      </div>
-    </div>
-           <div class="table-responsive ">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Foto Investor</th>
-              <th scope="col">Nama Investor</th>
-              <th scope="col">Nama Perusahaan</th>
-              <th scope="col">Kategori Perusahaan</th>
-              <th scope="col">No HP</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr  v-for="(index,no) in investor_all">
-              <th scope="row">{{++no}}</th>
-              <td><img class="imagetd" :src="`${$page.props.asset_url}/${index.foto_profil}`"/></td>
-              <td><Link class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" :href="`/detail/profil/investor/${index.id}/`">{{index.nama_lengkap}}</Link></td>
-              <td>{{index.nama_perusahaan}}</td>
-              <td>{{index.kategori_perusahaan}}</td>
-              <td>{{index.no_hp}}</td>
-              <td>
-               <button v-if="this.form.investor!= index.id"  @click="this.togglePilihInvestor(id_investor=index.id)"  class="btn btn-primary-blue-6 text-neutral-white">
-                  <font-awesome-icon icon="fa-solid fa-plus" />
-                  Pilih {{this.form.investor}}
-                </button  >
-                <button v-else @click="this.toggleBatalPilihInvestor()" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../assets/icons/icon_delete.png" alt="delete icon">
-                  Batal pilih
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-        <div v-if="this.investorShowValue+10 <= this.countInvestor" class="d-flex justify-content-center mt-4">
-        <button @click="loadMoreInv()" class="btn btn-primary-blue-6 text-neutral-white">Lihat lebih banyak Investor</button>
-      </div>
-
-
-      <ul class="tabs mt-2">
-      <li class="active" >
-          <h3>Pilih UMKM </h3>
-      </li>
-    </ul>
-
-        <div class="row">
-         <div class="col d-flex justify-content-start">
-        <MultiSearchUMKM :lazy="['umkm_all','investor_all']" url="/admin/janjitemu?page=1" />
-        
-      </div>
-    </div>
-           <div class="table-responsive ">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-             <tr>
-              <th scope="col">No</th>
-              <th scope="col">Foto UMKM</th>
-              <th scope="col">Nama UMKM</th>
-              <th scope="col">Nama Perusahaan</th>
-              <th scope="col">Kategori Produk</th>
-              <th scope="col">No HP</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr  v-for="(index,no) in umkm_all">
-              <th scope="row">{{++no}}</th>
-              <td><img class="imagetd" :src="`${$page.props.asset_url}/${index.foto_profil}`"/></td>
-              <td><Link class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" :href="`/detail/profil/umkm/${index.id}/`">{{index.nama_lengkap}}</Link></td>
-              <td>{{index.nama_perusahaan}}</td>
-              <td>{{index.kategori_produk}}</td>
-              <td>{{index.no_hp}}</td>
-              <td >
-                <button v-if="this.form.umkm != index.id"  @click="this.togglePilihUmkm(id_investor=index.id)"  class="btn btn-primary-blue-6 text-neutral-white">
-                  <font-awesome-icon icon="fa-solid fa-plus" />
-                  Pilih
-                </button  >
-                <button v-else @click="this.toggleBatalPilihUmkm()" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../assets/icons/icon_delete.png" alt="delete icon">
-                  Batal pilih
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div v-if="this.umkmShowValue+10 <= this.countUMKM" class="d-flex justify-content-center mt-4">
-        <button @click = "loadMoreUMKM()" class="btn btn-outline-primary-blue-6 text-neutral-white">Lihat lebih banyak UMKM</button>
-      </div>
-
-      </div>
-      <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Lokasi</label>
-         <input type="text" class="form-control" v-model="form.lokasi" id="provinsi" placeholder="Masukkan lokasi kegiatan" >
-           <small class="text-danger"></small>
-      </div>
-       <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Dimulai</label>
-         <input type="datetime-local" class="form-control" v-model="form.dimulai"  id="provinsi" placeholder="Masukkan waktu dimulai kegiatan" >
-           <small class="text-danger"></small>
-      </div>
-       <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Berakhir</label>
-         <input type="datetime-local" class="form-control" v-model="form.berakhir"  id="provinsi" placeholder="Masukkan waktu berakhir kegiatan" >
-           <small class="text-danger"></small>
-      </div>
-       
-
-      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
-                        Kirim</button>
-  </form>
-      </div>
-    </div>
-  </div>
-      </div>
- 
-</div>
-<div class="col-lg-8" v-if="popup" >
-              <div id="myModal" class="modal" >
-      <div class="modal-content">
-        <div class=" d-flex justify-content-end">
-         <button @click = "popupExit()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="col-lg-12">
-       <div class=" d-flex justify-content-center">
-       <h2>Tambah Temu Janji</h2>
-     </div>
-      <div v-if="this.investor_all == null" class="d-flex justify-content-center mt-4">
-            <div class="spinner-border text-primary"></div>
-      </div>
-      <div class="mt-4" v-else>
-    <ul class="tabs mt-2">
-      <li class="active" >
-          <h3>Pilih Investor</h3>
-      </li>
-    </ul>
-
-        <div class="row">
-         <div class="col d-flex justify-content-start">
-        <MultiSearchInvestor :lazy="['investor_all','umkm_all']"  url="/admin/janjitemu?page=1"  />
-        
-      </div>
-    </div>
-
-           <div class="table-responsive ">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Foto Investor</th>
-              <th scope="col">Nama Investor</th>
-              <th scope="col">Nama Perusahaan</th>
-              <th scope="col">Kategori Perusahaan</th>
-              <th scope="col">No HP</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr  v-for="(index,no) in investor_all">
-              <th scope="row">{{++no}}</th>
-              <td><img class="imagetd" :src="`${$page.props.asset_url}/${index.foto_profil}`"/></td>
-              <td><Link class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" :href="`/detail/profil/investor/${index.id}/`">{{index.nama_lengkap}}</Link></td>
-              <td>{{index.nama_perusahaan}}</td>
-              <td>{{index.kategori_perusahaan}}</td>
-              <td>{{index.no_hp}}</td>
-              <td>
-               <button v-if="this.form.investor != index.id"  @click="this.togglePilihInvestor(id_investor=index.id)"  class="btn btn-primary-blue-6 text-neutral-white">
-                  <font-awesome-icon icon="fa-solid fa-plus" />
-                  Pilih
-                </button  >
-                <button v-else @click="this.toggleBatalPilihInvestor()" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../assets/icons/icon_delete.png" alt="delete icon">
-                  Batal pilih
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-        <div v-if="this.investorShowValue+10 <= this.countInvestor" class="d-flex justify-content-center mt-4">
-        <button @click="loadMoreInv()" class="btn btn-primary-blue-6 text-neutral-white">Lihat lebih banyak Investor</button>
-      </div>
-
-
-      <ul class="tabs mt-2">
-      <li class="active" >
-          <h3>Pilih UMKM</h3>
-      </li>
-    </ul>
-
-        <div class="row">
-         <div class="col d-flex justify-content-start">
-        <MultiSearchUMKM :lazy="['umkm_all','investor_all']" url="/admin/janjitemu?page=1"   />
-        
-      </div>
-    </div>
-           <div class="table-responsive ">
-        <table class="table mt-3">
-          <thead class="table-primary-blue-4">
-             <tr>
-              <th scope="col">No</th>
-              <th scope="col">Foto UMKM</th>
-              <th scope="col">Nama UMKM</th>
-              <th scope="col">Nama Perusahaan</th>
-              <th scope="col">Kategori Produk</th>
-              <th scope="col">No HP</th>
-              <th scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-             <tr v-if="umkm_all.length <= this.umkmShowValue "  v-for="(index,no) in umkm_all">
-              <th scope="row">{{++no}}</th>
-              <td><img class="imagetd" :src="`${$page.props.asset_url}/${index.foto_profil}`"/></td>
-              <td><Link :href="`/detail/profil/investor/${index.id}/`">{{index.nama_lengkap}}</Link></td>
-              <td>{{index.nama_perusahaan}}</td>
-              <td>{{index.kategori_produk}}</td>
-              <td>{{index.no_hp}}</td>
-              <td >
-                <button v-if="this.form.umkm != index.id"  @click="this.togglePilihUmkm(id_investor=index.id)"  class="btn btn-primary-blue-6 text-neutral-white">
-                  <font-awesome-icon icon="fa-solid fa-plus" />
-                  Pilih
-                </button  >
-                 <button v-else @click="this.toggleBatalPilihUmkm()" class="btn btn-semantic-error-4 text-neutral-white">
-                  <img src="../../assets/icons/icon_delete.png" alt="delete icon">
-                  Batal pilih
-                </button  >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-        <div v-if="this.umkmShowValue+10 <= this.countUMKM" class="d-flex justify-content-center mt-4">
-        <button @click="loadMoreUMKM()" class="btn btn-primary-blue-6 text-neutral-white">Lihat lebih banyak UMKM</button>
-      </div>
-
-      </div>
-           <div class="mt-2">
-      <form @submit.prevent="tambahJanjiTemu()">
-  
-      <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Lokasi</label>
-         <input type="text" class="form-control" v-model="form.lokasi" id="provinsi" placeholder="Masukkan lokasi" >
-           <small class="text-danger"></small>
-      </div>
-       <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Dimulai</label>
-         <input type="datetime-local" class="form-control" v-model="form.dimulai"  id="provinsi" placeholder="Masukkan waktu dimulai" >
-           <small class="text-danger"></small>
-      </div>
-       <div class="mb-4">
-         <label for="provinsi" class="form-label text-neutral-gray-5">Berakhir</label>
-         <input type="datetime-local" class="form-control" v-model="form.berakhir"  id="provinsi" placeholder="Masukkan waktu berakhir" >
-           <small class="text-danger"></small>
-      </div>
-
-      <button type="submit" class="btn btn-primary-blue-6 py-2 btn_custom_outline">
-                        Kirim</button>
-  </form>
-      </div>
-    </div>
-  </div>
-      </div>
-    </div>
+   <RemoveJanjiTemuLayout pesan="Anda yakin ingin menghapus janji temu ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/hapus_janjitemu" @toggleClose="switchClose()" />
     <DashboardLayout title="Janji Temu" state="janjitemu">
           <section>
     <ul class="tabs mt-4">
@@ -304,9 +8,9 @@
       </li>
     </ul>
        <div class="col d-flex justify-content-end mt-4 mb-4">
-         <button @click="popupOpen()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+         <Link href="/admin/tambah_janji_temu_view" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
                         + Tambah Janji Temu
-                    </button>
+                    </Link>
       </div>
          <div class="col-xl-12 d-flex justify-content-start">
          <MultiSearchJanjiTemu :url="`/admin/janjitemu/?page=1`" judul="Cari Jadwal janji temu" />
@@ -347,10 +51,10 @@
 
          
               <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                  <button @click="this.toggleEditOpen(id=index.id,lokasi=index.lokasi,waktu=index.waktu,umkm=index.umkm.id,investor=index.investor.id,berakhir=index.berakhir,dimulai=index.waktu)" class="btn btn-semantic-success-4 text-neutral-white">
+                  <Link :href="`/admin/ubah_janji_temu_view/${index.id}`" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../assets/icons/icon_update.png" alt="update icon">
                   Edit
-                </button>
+                </Link>
                  <button @click="this.switchClose(id=index.id)"  class="btn btn-semantic-error-4 text-neutral-white">
                   <img src="../../assets/icons/icon_delete.png" alt="delete icon">
                   Hapus
@@ -405,7 +109,7 @@ export default{
   setup(props){
         const form = useForm({
          janji_temu_id:null,
-         lokasi:'',
+         lokasi:null,
          dimulai:null,
          berakhir:null,
          investor:null,
@@ -413,6 +117,7 @@ export default{
 
          
     })
+
 
     return {form}
   },
@@ -440,61 +145,7 @@ export default{
         this.deletePopup = !this.deletePopup          
         this.itemDelete = {id:id}
       },
-      toggleEditOpen(id=null,lokasi=null,waktu=null,umkm=null,investor=null,berakhir=null,dimulai=null){
-        this.popupEdit = !this.popupEdit
-        this.form.janji_temu_id = id
-        this.form.lokasi = lokasi
-        this.form.dimulai= dimulai
-        this.form.umkm=umkm
-        this.form.investor=investor
-        this.form.berakhir=berakhir
-        console.log(this.form.umkm);
-        Inertia.visit('/admin/janjitemu?page=1',{ only:['investor_all','umkm_all','countUMKM','countInvestor'],preserveState:true }) 
-        
-      },
-      toggleEditClose(){
-        this.form.reset()
-        Inertia.visit('/admin/janjitemu?page=1',{preserveState:false }) 
-        
-      },
-      togglePilihInvestor(id_investor){
-          this.form.investor = id_investor
-      },
-      toggleBatalPilihInvestor(){
-          this.form.umkm = null
-      },
-      togglePilihUmkm(id_umkm){
-          this.form.umkm = id_umkm
-      },
-      toggleBatalPilihUmkm(){
-          this.form.umkm = null
-      },
-      popupOpen(){
-        this.popup = ! this.popup
-        console.log(this.popup)
-        Inertia.visit('/admin/janjitemu?page=1',{ only:['investor_all','umkm_all','countUMKM','countInvestor'],preserveState:true })       
-      },
-      popupExit(){
-        this.popup = ! this.popup
-        this.form.reset()
-        Inertia.visit('/admin/janjitemu?page=1',{preserveState:true })       
-      },
-      tambahJanjiTemu(){
-        this.form.post('/admin/tambah_janji_temu',{onSuccess: () => this.form.reset(),preserveState:false});
-      },
-      editJanjiTemu(){
-        this.form.post('/admin/edit_janji_temu',{preserveState:false});
-      },
-      loadMoreInv(){
-         this.investorShowValue = parseInt(  this.investorShowValue)+10
-        Inertia.get(document.location.href,{limitInv:this.investorShowValue},{ only:['investor_all','umkm_all','countUMKM','countInvestor'],preserveState:true })       
-      },
-
-       loadMoreUMKM(){
-        this.umkmShowValue = parseInt(  this.umkmShowValue)+10
-        Inertia.get(document.location.href,{limitUMKM:this.umkmShowValue},{ only:['investor_all','umkm_all','countUMKM','countInvestor'],preserveState:true })       
-      }
- 
+   
 
     }
 

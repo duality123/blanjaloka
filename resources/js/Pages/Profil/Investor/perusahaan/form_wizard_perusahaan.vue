@@ -1,5 +1,5 @@
 <template>
-   <BaseLayout title="Investor Profile">
+   <BaseLayout title="Investor Profil Perusahaan">
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">

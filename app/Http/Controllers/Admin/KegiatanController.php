@@ -36,6 +36,18 @@ class KegiatanController extends Controller
     }
 
     public function ubah_eventual_status(Request $request){
+         $rules = [
+            'jadwal' =>'required',
+            'link_meeting' => 'required',
+            'status' => 'required',
+        ];
+
+        $customMessages = [
+            'required' => 'Harap diisi bagian ini !.',
+            'max'=>'Karakter yang anda input melebihi batas :max .'
+
+        ];
+        $this->validate($request, $rules, $customMessages);
         $data = [];
         $data['jadwal'] = $request->post('jadwal');
         $data['link_meeting'] = $request->post('link_meeting');
@@ -57,6 +69,17 @@ class KegiatanController extends Controller
     }
 
     public function edit_deskripsi(Request $request){
+         $rules = [
+            'gambar' =>'required',
+            'deskripsi' => 'required'
+        ];
+
+        $customMessages = [
+            'required' => 'Harap diisi bagian ini !.',
+            'max'=>'Karakter yang anda input melebihi batas :max .'
+
+        ];
+        $this->validate($request, $rules, $customMessages);
         $data = [];
         $data['deskripsi'] = $request->post('deskripsi');
         $kegiatan = Kegiatan::where('id','=',$request->post('id'))->first();

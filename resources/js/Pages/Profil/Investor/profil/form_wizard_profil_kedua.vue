@@ -14,7 +14,7 @@
                         fill="#398AB9" />
                     </svg>
                   </div>
-                  <p class="fw-semibold text-primary-blue-6 mb-0">
+                  <p class="fw-semibold text-primary-blue-6 mb-2">
                     Anda wajib mengisi profil anda sesuai data anda saat ini !
                   </p>
                 </div>

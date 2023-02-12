@@ -24,7 +24,7 @@ class JanjitemuController extends Controller
 
     public function index(Request $request){
         $data = Janjitemu::with(['investor.profil:id,nama_lengkap,foto_profil,user_id','umkm.profil:id,nama_lengkap,foto_profil,user_id'])
-            ->filter(request(['cari','tanda']))
+            ->filter(request(['nama_investor','lokasi','nama_umkm','event_dimulai','event_berakhir','tanda']))
             ->orderBy('waktu','asc')
             ->paginate(10);
             $limitUMKM = $request->get('limitUMKM') ? $request->get('limitUMKM') : 10;
@@ -80,13 +80,13 @@ class JanjitemuController extends Controller
     {
      
         //dd($request->all());
-
+        //dd($request->post('lokasi'));
         $rules = [
-            'lokasi' => 'required|max:100',
+            'lokasi' => 'required|max:255',
             'dimulai' => 'required',
             'umkm'=>'required',
             'berakhir' =>'required',
-          
+            'investor' =>'required'      
         ];
 
         $customMessages = [
@@ -110,11 +110,76 @@ class JanjitemuController extends Controller
      $investor->update(['notifikasi'=>$invNotif+=1]);
      $umkmNotif = $umkm->notifikasi;
      $umkm->update(['notifikasi'=>$invNotif+=1]);
-      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/notifikasi/UMKM','user_id'=>$investor->id,'waktu'=>now()]);
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/notifikasi/Investor','user_id'=>$investor->id,'waktu'=>now()]);
+
        $request->session()->flash('success','Janji temu berhasil di request');
       return back();
     }
 
+    public function tambah_janji_temu_view(Request $request){
+        $limitUMKM = $request->get('limitUMKM') ? $request->get('limitUMKM') : 10;
+            $umkm_all = User::join('usaha','usaha.user_id','=','users.id')
+                        ->join('produk','produk.user_id','=','users.id')
+                        ->join('profil','profil.user_id','=','users.id')
+                        ->join('roles','roles.user_id','users.id')
+                        ->select('usaha.nama_perusahaan','users.id','produk.kategori_produk','profil.nama_lengkap','profil.no_hp','profil.foto_profil','profil.provinsi')  
+                         ->filter_umkm(request(['nama_umkm','lokasi_umkm','perusahaan_umkm','produk_umkm']))
+                         ->where('users.accepted',true)
+                         ->where('roles.number','=',2)
+                         ->orderBy('profil.nama_lengkap','asc')
+                         ->limit( $limitUMKM )->get();
+          $limitInv = $request->get('limitInv') ? $request->get('limitInv') : 10;
+          $investor_all = User::join('profil','profil.user_id','=','users.id')
+             ->join('profil_perusahaan','profil_perusahaan.user_id','=','users.id')
+             ->join('roles','roles.user_id','=','users.id')
+             ->select('nama_perusahaan','users.id','kategori_perusahaan','profil.nama_lengkap','profil.no_hp','profil.foto_profil')
+            ->filter_investor(request(['nama_investor','lokasi_investor','perusahaan_investor','kategori_investor'])) 
+            ->where('accepted',true)
+            ->where('roles.number','=',3)
+            ->orderBy('profil.nama_lengkap','asc')
+            ->limit($limitInv)
+            ->get();
+        $countUMKM = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',2)->get()->count();
+        $countInvestor = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',3)->get()->count();
+        return Inertia::render('Dashboard/Tambah_janji_temu',['umkm_all'=>$umkm_all,
+                                                       'investor_all'=>$investor_all,
+                                                       'countUMKM'=>$countUMKM,
+                                                       'countInvestor'=>$countInvestor]);
+    }
+
+       public function edit_janji_temu_view(Request $request,$slug){
+        $limitUMKM = $request->get('limitUMKM') ? $request->get('limitUMKM') : 10;
+            $umkm_all = User::join('usaha','usaha.user_id','=','users.id')
+                        ->join('produk','produk.user_id','=','users.id')
+                        ->join('profil','profil.user_id','=','users.id')
+                        ->join('roles','roles.user_id','users.id')
+                        ->select('usaha.nama_perusahaan','users.id','produk.kategori_produk','profil.nama_lengkap','profil.no_hp','profil.foto_profil','profil.provinsi')  
+                         ->filter_umkm(request(['nama_umkm','lokasi_umkm','perusahaan_umkm','produk_umkm']))
+                         ->where('users.accepted',true)
+                         ->where('roles.number','=',2)
+                         ->orderBy('profil.nama_lengkap','asc')
+                         ->limit( $limitUMKM )->get();
+          $limitInv = $request->get('limitInv') ? $request->get('limitInv') : 10;
+          $investor_all = User::join('profil','profil.user_id','=','users.id')
+             ->join('profil_perusahaan','profil_perusahaan.user_id','=','users.id')
+             ->join('roles','roles.user_id','=','users.id')
+             ->select('nama_perusahaan','users.id','kategori_perusahaan','profil.nama_lengkap','profil.no_hp','profil.foto_profil')
+            ->filter_investor(request(['nama_investor','lokasi_investor','perusahaan_investor','kategori_investor'])) 
+            ->where('accepted',true)
+            ->where('roles.number','=',3)
+            ->orderBy('profil.nama_lengkap','asc')
+            ->limit($limitInv)
+            ->get();
+        $countUMKM = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',2)->get()->count();
+        $countInvestor = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',3)->get()->count();
+        $janjitemu = Janjitemu::where('id','=',$slug)->first();
+
+        return Inertia::render('Dashboard/edit_janji_temu_view',['umkm_all'=>$umkm_all,
+                                                       'investor_all'=>$investor_all,
+                                                       'countUMKM'=>$countUMKM,
+                                                       'countInvestor'=>$countInvestor,
+                                                        'janjitemu'=>$janjitemu]);
+    }
 
     public function edit(Request $request)
     {
@@ -144,13 +209,31 @@ class JanjitemuController extends Controller
                                     'berakhir'=>$request->post('berakhir'),
                                     'investor_id'=>$investor]);
       $request->session()->flash('success','Janji temu berhasil di request');
+      $investor = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$investor)->first();
+      $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$umkm)->first();
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
+     $invNotif = $investor->notifikasi;
+     $investor->update(['notifikasi'=>$invNotif+=1]);
+     $umkmNotif = $umkm->notifikasi;
+     $umkm->update(['notifikasi'=>$invNotif+=1]);
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
 
       return back();
     }
    
 
       public function delete(Request $request){
-        $data = Janjitemu::where('id','=',$request->post('id'))->delete();
+        $data = Janjitemu::where('id','=',$request->post('id'))->first();
+          $investor = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$data->investor_id)->first();
+            $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$data->umkm_id)->first();
+          Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Undangan anda untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$data->lokasi.' dimulai pada '.$data->dimulai. ' dan berakhir pada '.$data->berakhir.' sudah selesai','redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
+         $invNotif = $investor->notifikasi;
+         $investor->update(['notifikasi'=>$invNotif+=1]);
+         $umkmNotif = $umkm->notifikasi;
+         $umkm->update(['notifikasi'=>$invNotif+=1]);
+       Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Undangan anda untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$data->lokasi.' dimulai pada '.$data->dimulai. ' dan berakhir pada '.$data->berakhir.' sudah selesai','redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
+
+        $data->delete();
         $request->session()->flash('success','Janji temu berhasil dihapus');
         return back();
     }

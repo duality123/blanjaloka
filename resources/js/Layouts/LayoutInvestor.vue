@@ -5,22 +5,7 @@
         <meta name="description" content="Your page description">
     </Head>
     <header class="fixed-top">
-             <div id="myModal" class="modal" v-if="$page.props.session.success">
-      <div class="modal-content">
-        <div class=" d-flex justify-content-end">
-         <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class=" d-flex justify-content-between">
-       <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
-        </div>
-       <div class="d-flex justify-content-center text-center" style="margin-left: 2rem;">
-       <h2>{{$page.props.session.success}}</h2>
-        </div>
-      </div>
-    </div>
-        <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.profilPerusahaanComplete || !$page.props.auth.dokumenPerusahaanComplete ' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
+                <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.profilPerusahaanComplete || !$page.props.auth.dokumenPerusahaanComplete ' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
             <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
@@ -101,6 +86,21 @@
             </div>
         </nav>
     </header>
+           <div id="myModal" class="modal" v-if="$page.props.session.success">
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "removePopup" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class=" d-flex justify-content-between">
+       <img src="../assets/images/success.png" style="width: 50%; margin-left: 8rem;">
+        </div>
+       <div class="d-flex justify-content-center text-center" style="margin-left: 2rem;">
+       <h2>{{$page.props.session.success}}</h2>
+        </div>
+      </div>
+    </div>
     <slot />
     <section class="cta_section">
         <div class="container d-flex justify-content-center">
@@ -178,7 +178,31 @@ const removePopup = () => {
 }
 
 </script>
+<style scoped>
+  .modal {
+  position: fixed; /* Stay in place */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
 
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
+</style>
 <style>
 .foto_profil{
     border-radius: 50%;
@@ -258,29 +282,7 @@ a.btn {
   background-color: white;
 }
 
-.modal {
-  position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  display: block;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
-}
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin-top: 3rem;
-  margin-left: 25rem;
-  padding: 20px;
-  border-radius: 25px;
-  width: 40%;
-  text-align: center;
-}
 footer {
     padding-top: 10rem;
 }

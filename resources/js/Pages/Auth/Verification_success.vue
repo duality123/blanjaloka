@@ -11,13 +11,13 @@
                 </div>
                 <p>Silahkan lanjutkan ke pengisian data anda.</p>
                 <div class="mt-5">
-                    <Link href="/kebijakan_dan_privasi" v-if="$page.props.auth.user_role==2"
+                    <Link href="/kebijakan_dan_privasi" v-if="$page.props.auth.user.role.number==2"
                         class="btn btn-primary-blue-6 text-neutral-white "
                         style="padding: 5px 60px"
                     >
                         Lanjutkan
                     </Link>
-                     <Link href="/profil/1" v-else-if="$page.props.auth.user_role==3"
+                     <Link href="/investor/profil/1" v-else-if="$page.props.auth.user.role.number==3"
                         class="btn btn-primary-blue-6 text-neutral-white "
                         style="padding: 5px 60px"
                     >

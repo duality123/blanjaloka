@@ -17,12 +17,12 @@
          <div class="mb-4">
          <label for="provinsi" class="form-label text-neutral-gray-5">Jadwal</label>
          <input type="datetime-local" class="form-control" v-model="form.jadwal"  id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
-           <small class="text-danger"></small>
+           <small class="text-danger" v-if="form.errors.jadwal">{{form.errors.jadwal}}</small>
       </div>
       <div class="mb-4">
          <label for="provinsi" class="form-label text-neutral-gray-5">Link Meeting</label>
          <input type="text" class="form-control" v-model="form.link_meeting" id="provinsi" placeholder="Masukkan deskripsi kegiatan" >
-           <small class="text-danger"></small>
+           <small class="text-danger" v-if="form.errors.link_meeting">{{form.errors.link_meeting}}</small>
       </div>
         <div class="mb-4">
          <label for="provinsi" class="form-label text-neutral-gray-5 mb-3 mb-2" >Status: </label>
@@ -139,10 +139,11 @@ export default{
         this.form.id = id
       },
       closePopup(){
+        console.log('test')
         this.popup = !this.popup
       },
       submit(){
-        this.form.post('/admin/kegiatan/ubah_eventual_status',{preserveState:true})
+        this.form.post('/admin/kegiatan/ubah_eventual_status',{onSuccess: () => this.form.reset()},{preserveState:true})
       }
     }
 }

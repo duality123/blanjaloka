@@ -75,7 +75,7 @@
     </div>
   </div>
 </div>
-<Layout state="eventual" :link="kegiatan.id" :title="kegiatan.tema">
+  <Layout state="eventual" :link="kegiatan.id" :title="kegiatan.tema">
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,13 +90,18 @@
                 </div>
                 <div class="my-4 d-flex align-items-center borderc gap-3">
                     <h2 class="text-neutral-gray-5 m-0 me-auto">Riwayat Eventual Anda</h2>
-                    <button @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
-                        + Daftar Konsultasi
-                    </button>
+                
                 </div>
-                 <div class=" d-flex justify-content-start">
+                <div class="row mb-4">
+                 <div class="col-xl-7 d-flex justify-content-start">
         <Search :url="`/umkm/dashboard/eventual?page=1`" judul="Cari kegiatan" />
            </div>
+           <div class="col d-flex justify-content-end">
+               <button @click="popupExit()" class="fs-btn p-2 px-3 btn text-white bg-primary-blue-6 border-primary-blue-6">
+                        + Daftar Konsultasi
+                    </button>
+          </div>
+        </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">
@@ -170,14 +175,9 @@ export default{
     Pagination,
     Search
   },
-  mounted(){
-    if (this.form.errors.perihal ||  this.form.errors.kontak || this.form.errors.mentor) {
-      this.popup =true
-    }
-  },
+
   methods:{
     submit(){
-      this.popup=false;
       this.form.post('/umkm/dashboard/kegiatanku/tambah_eventual',{onSuccess: () => this.form.reset()})
 
     },
@@ -188,7 +188,7 @@ export default{
       },
      popupDetailClose(){
       this.popupDet = !this.popupDet
-       Inertia.get('/umkm/dashboard/kegiatanku/eventual/'+this.kegiatan.id,{},{ only: ['eventualDetail'],preserveState:true})
+       Inertia.get('/umkm/dashboard/kegiatanku/eventual/'+this.kegiatan.id,{},{preserveState:true})
     },
     popupExit(){
       this.popup = !this.popup

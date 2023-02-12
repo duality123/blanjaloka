@@ -5,21 +5,21 @@
           <div class="row g-3">
         
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="Semua UMKM" v-model="this.nama_umkm">
+              <input type="text" class="form-control" placeholder="Semua UMKM" v-model="this.searchList.nama_umkm">
         </div>
  
    
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="semua perusahaan" v-model="this.perusahaan_umkm">
+              <input type="text" class="form-control" placeholder="semua perusahaan" v-model="this.searchList.perusahaan_umkm">
         </div>
       
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="semua kategori" v-model="this.produk_umkm">
+              <input type="text" class="form-control" placeholder="semua kategori" v-model="this.searchList.produk_umkm">
         </div>
 
 
         <div class="input-group col">
-              <input type="text" class="form-control" placeholder="semua lokasi" v-model="this.lokasi_umkm">
+              <input type="text" class="form-control" placeholder="semua lokasi" v-model="this.searchList.lokasi_umkm">
         </div>
 
         <div class="input-group col">
@@ -37,21 +37,23 @@
 	export default{
 	  data(){
 	  	return{
-	  		nama_umkm:null,
-	  		perusahaan_umkm:null,
-	  		produk_umkm:null,
-	  		lokasi_umkm:null,
-	
+            searchList:{
+                nama_umkm:null,
+                perusahaan_umkm:null,
+                produk_umkm:null,
+                lokasi_umkm:null,
+            }	
 	  	}
 	  },
 	  methods:{
 	  search(){
 	  	let uri = {}
-	  	uri['nama_umkm'] = this.nama_umkm
-	  	uri['perusahaan_umkm'] =this.perusahaan_umkm
-	  	uri['produk_umkm'] =this.produk_umkm
-	  	uri['lokasi_umkm'] = this.lokasi_umkm
-        Inertia.post(this.url,uri,{only:this.lazy,preserveScroll: true,preserveState:true })
+	  	sessionStorage.setItem('nama_investor', this.searchList.nama_investor) 
+          sessionStorage.setItem('perusahaan_investor',this.searchList.perusahaan_umkm) 
+          sessionStorage.setItem('kategori_investor',this.searchList.produk_umkm) 
+          sessionStorage.setItem('nama_umkm',this.searchList.lokasi_umkm)
+
+        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 
 	  	}
 	  },

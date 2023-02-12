@@ -25,7 +25,7 @@
                   kedepannya.</p>
                 <div class="card text-white bg-neutral-gray-1 mb-3 " >
                 <div v-if="$page.props.auth.profil['foto_profil'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_profil']}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto1" >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_profil']}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -35,8 +35,8 @@
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event)"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
-                <p class="text-primary"  style="padding-left:25px;">atau</p>
+                <div class="col d-flex justify-content-start">
+                <p class="text-primary" >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
@@ -99,7 +99,7 @@ export default{
             }
         var image = document.getElementById('foto1');
         image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '25rem';
+        image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form.foto_profil = event.target.files[0];
       }

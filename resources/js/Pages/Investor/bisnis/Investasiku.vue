@@ -110,8 +110,8 @@
 import Layout from '../../../Layouts/Bisnisku.vue'
 import { useForm, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
-import Search from '../../../components/Search.vue'
-import Pagination from '../../../components/Pagination.vue'
+import Search from '../../../Components/Search.vue'
+import Pagination from '../../../Components/Pagination.vue'
 import {
   Chart as ChartJS,
   CategoryScale,

@@ -230,10 +230,10 @@ export default{
 
       },
       submit(){
-        this.form.post('/admin/pengguna/ubah_password',{preserveState:true})
+        this.form.post('/admin/pengguna/ubah_password',{onSuccess: () => form.reset()},{preserveState:true})
       },
       submitNewUser(){
-        this.formAddUser.post('/admin/pengguna/tambah_user',{preserveState:true})
+        this.formAddUser.post('/admin/pengguna/tambah_user',{onSuccess: () => form.reset()},{preserveState:true})
       },
       newUser(user_role=null){
         this.addUser = !this.addUser

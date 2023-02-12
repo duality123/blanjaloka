@@ -42,7 +42,7 @@
 
 <script>
 import Layout from '../../../Layouts/Kegiatan.vue';
-import Pagination from '../../../components/Pagination.vue';
+import Pagination from '../../../Components/Pagination.vue';
 import MultiSearch from '../../../Components/MultiSearchUMKM.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';

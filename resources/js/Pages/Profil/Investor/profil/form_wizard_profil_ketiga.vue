@@ -33,7 +33,7 @@
     
                 <div class="row" style="margin-left:2px" >
                 <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp')"  style="width: 9rem;">
+                <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp')"  style="width: 10rem;">
                 </div >
                 <div class="col d-flex justify-content-between">
                 <p class="text-primary" style="padding-left:25px;">atau</p>
@@ -50,7 +50,7 @@
                   kedepannya.</p>
                 <div class="card text-white bg-neutral-gray-1 mb-3 " >
                  <div v-if="$page.props.auth.profil['foto_dengan_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_dengan_ktp']}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto_selfie_ktp" >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_dengan_ktp']}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto_selfie_ktp" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_selfie_ktp" >
@@ -131,7 +131,7 @@ watch: {
 
         var image = document.getElementById(id);
         image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '25rem';
+        image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form[id] = event.target.files[0]
         }
@@ -146,7 +146,7 @@ watch: {
         this.form.post('/investor/profil/proses/wizard_ketiga');
       }
      else{
-          Inertia.get('/investor/dashboard/profil_usaha');
+          Inertia.get('/investor/dashboard/profil_perusahaan');
     }
     
   }

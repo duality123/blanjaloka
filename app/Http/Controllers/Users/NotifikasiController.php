@@ -14,7 +14,7 @@ class NotifikasiController extends Controller
     {   
         $get = User::where('id','=',$request->user()->id)->first();
         $get->update(['notifikasi' => 0]);
-        $data = Notifikasi::where('user_id','=',29)
+        $data = Notifikasi::where('user_id','=',$request->user()->id)
         ->filter(request(['cari','tanda']))
         ->orderBy('tanggal','desc')->paginate(10);
       

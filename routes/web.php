@@ -25,7 +25,7 @@ use App\Http\Controllers\Investor\{
 };
 
 // umkm controller
-use App\Http\Controllers\UMKM\{
+use App\Http\Controllers\Umkm\{
     AccountController,
     FundingController,
     DashboardUMKMController,
@@ -201,6 +201,8 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
 
        Route::any('janjitemu/',[JanjitemuController::class,'index']);
        Route::post('tambah_janji_temu/',[JanjitemuController::class,'create']);
+       Route::get('tambah_janji_temu_view/',[JanjitemuController::class,'tambah_janji_temu_view']);
+       Route::get('ubah_janji_temu_view/{slug}',[JanjitemuController::class,'edit_janji_temu_view']);
        Route::post('edit_janji_temu/',[JanjitemuController::class,'edit']);
        Route::post('hapus_janjitemu/',[JanjitemuController::class,'delete']);
        Route::get('investasi/',[InvestasiAdminController::class,'index']);
@@ -294,6 +296,7 @@ Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
         Route::post('dokumen_perusahaan', [DokumenPerusahaanController::class, 'process_wizard']);
  });
      Route::any('janjitemu', [InvestorController::class, 'ajukan_janji_temu']);
+
 
 
 });

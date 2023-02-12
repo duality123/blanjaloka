@@ -35,6 +35,25 @@ class InformasiController extends Controller
         return back();
     }
 
+
+    public function edit_informasi(Request $request)
+    {   
+       
+         $rules = [
+            'isi' => 'required',          
+        ];
+
+        $customMessages = [
+            'required' => 'Harap diisi bagian ini !.',
+            'max'=>'Karakter yang anda input melebihi batas :max .'
+
+        ];
+        $this->validate($request, $rules, $customMessages);
+        Info_admin::where('id',$request->post('id'))->update(['isi'=>$request->post('isi')]);
+        $request->session()->flash('success','Informasi Berhasil Ditambah !');
+        return back();
+    }
+
     public function hapus_informasi(Request $request){
         $target = Info_admin::where('id','=',$request->post('id'))->delete();
         $request->session()->flash('success','Info berhasil dihapus');

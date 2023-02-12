@@ -1,5 +1,5 @@
 <template>
-   <BaseLayout title="UMKM Profile">
+   <BaseLayout title="UMKM Profil Usaha">
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
@@ -174,7 +174,7 @@ export default{
 },
   computed:{
     formCheck(){
-      if (this.form.nama_perusahaan == null || this.form.status_perusahaan==null|| this.form.legalitas==null || this.form.dokumen_amdal || this.form.informasi_pajak || this.form.npwp || this.form.deskripsi_usaha || this.form.email_perusahaan || this.form.alamat_perusahaan ){
+      if (this.form.nama_perusahaan == null || this.form.status_perusahaan==null|| this.form.legalitas==null || this.form.dokumen_amdal == null || this.form.informasi_pajak ==null || this.form.npwp ==null || this.form.deskripsi_usaha ==null|| this.form.email_perusahaan ==null || this.form.alamat_perusahaan == null){
         return true
       }
       return false;

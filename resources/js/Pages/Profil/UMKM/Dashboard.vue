@@ -39,7 +39,7 @@
                   </div>
                   <p  class="fw-semibold text-primary-blue-6 mb-0">
                     Harap lengkapi profil usaha, profil produk, dan kajian finansial agar data Anda dapat diseleksi
-                    untuk proses inkubasi!
+                    untuk proses inkubasi! 
                   </p>
                 </div>
                 <div

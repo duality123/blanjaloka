@@ -4,7 +4,7 @@
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
-          <InvestorDashboardSidebar />
+          <InvestorDashboardSidebar state="janjitemu" />
           <div class="col-lg-8">
             <div class="card">
               <div class="card-body">

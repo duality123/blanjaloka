@@ -150,6 +150,9 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref,onMounted } from 'vue';
 import lottie from 'lottie-web'
+import learn from '../assets/animations/learn.js'
+import landing1 from '../assets/animations/landing1.js'
+import landing2 from '../assets/animations/landing2.js'
 //http://127.0.0.1:5173/resources/js/assets/animations/landing1.json
 import BaseLayout from '../Layouts/UnauthenticatedLayout.vue'
 
@@ -158,7 +161,7 @@ import BaseLayout from '../Layouts/UnauthenticatedLayout.vue'
 onMounted(()=>{
       lottie.loadAnimation({
       container: document.getElementById('animation1'),
-      path: '../storage/landing1.json',
+      animationData:landing1,
       renderer: 'svg',
       loop: true,
       autoplay: true,
@@ -166,7 +169,7 @@ onMounted(()=>{
 });
  lottie.loadAnimation({
       container: document.getElementById('animation2'),
-      path: '../storage/landing2.json',
+      animationData:landing2,
       renderer: 'svg',
       loop: true,
       autoplay: true,
@@ -174,7 +177,7 @@ onMounted(()=>{
 });
   lottie.loadAnimation({
       container: document.getElementById('animation3'),
-      path: '../storage/learn.json',
+      animationData: learn,
       renderer: 'svg',
       loop: true,
       autoplay: true,

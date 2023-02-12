@@ -1,7 +1,7 @@
-<template>
-          <div id="myModal"  class="modal"  v-if="this.popupEdit ">
-
-    <div  id="myModal" class="modal" >
+<template>    
+  
+  
+          <div id="myModal"  class="modal" v-if="popupEdit" >
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
@@ -41,7 +41,7 @@
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
                 </div>
                 </div>
-                 <small class="text-danger text-center" v-if="form.errors.gambar">{{form.errors.gambar}}</small>
+                 <small class="text-danger text-center" v-if="formEdit.errors.gambar">{{formEdit.errors.gambar}}</small>
                 <div class="text-neutral-gray-3 text-center"><p class="fs-9">Format file .jpg/.jpeg/.png, ukuran file maksimal 5 MB</p></div>
             </div>
           </div>
@@ -52,7 +52,7 @@
     </div>
 </div>
     </div>
-  </div>
+
   <!---new logbokk -->
     <div id="myModal"  class="modal"  v-if="this.popupNewLogbook">
 
@@ -105,8 +105,7 @@
 </div>
     </div>
   </div>
-
-                  <Layout :title="kegiatan.tema" state="logbook" :link = "kegiatan.id">
+        <Layout :title="kegiatan.tema" state="logbook" :link = "kegiatan.id">   
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,7 +191,14 @@ export default{
      kegiatan_id : props.kegiatan.id
     })
 
-    return {form}
+    const formEdit = useForm({
+     id:null,
+     gambar:null,
+     deskripsi:'',
+     kegiatan_id : props.kegiatan.id
+    })
+
+    return {formEdit,form}
   },
   components:{
     Layout,
@@ -200,11 +206,11 @@ export default{
   },
   methods:{
     submitEdit(){
-      this.form.post('/umkm/dashboard/kegiatanku/edit_logbook',{preserveState:true})
+      this.form.post('/umkm/dashboard/kegiatanku/edit_logbook',{onSuccess: () => this.form.reset()},{preserveState:true})
 
     },
     submitNewLogbook(){
-      this.form.post('/umkm/dashboard/kegiatanku/buat_logbook',{onSuccess: () => this.form.reset()})
+      this.form.post('/umkm/dashboard/kegiatanku/buat_logbook',{onSuccess: () => this.form.reset()},{preserveState:true})
 
     },
     togglePopupEdit(id = null,gambar=null,deskripsi=null){

@@ -20,7 +20,7 @@
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3 " >
                <div v-if="this.previewImage != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 5rem;" id="foto1" >
+                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 15rem;" id="foto1" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto1" >
@@ -28,7 +28,7 @@
     
                 <div class="row" style="margin-left:2px;" >
                 <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event)"  style="width: 9rem;">
+                <input type="file" ref ="foto_profil" class="custom-file-input gambar" @change="changePicture($event)"  >
                 </div >
                 <div class="col d-flex justify-content-center">
                 <p class="text-primary" style="padding-right: 6px;">atau</p>
@@ -61,7 +61,7 @@
       </button>
     </div>
         <div class="d-flex justify-content-center pt-3 mb-4" >
-                   <img :src="`${$page.props.asset_url}/${kegiatan.gambar}`" alt="update icon" style="width:20rem" id="img" >
+                   <img :src="`${$page.props.asset_url}/${kegiatan.gambar}`" alt="update icon" style="width:30rem" id="img" >
         </div>
         <div class="card bg-primary-blue-1 mb-3 border-primary-blue-6" >
 <div class="card-body">
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import Layout from '../../../Layouts/kegiatan.vue';
+import Layout from '../../../Layouts/Kegiatan.vue';
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 export default{
@@ -95,7 +95,7 @@ export default{
   setup(props){
     const form = useForm({
      gambar:props.kegiatan.gambar,
-     id :window.location.pathname.split('/')[4],
+     id :window.location.pathname.split('/')[2],
      deskripsi:props.kegiatan.deskripsi,
     })
 
@@ -109,13 +109,10 @@ export default{
     Link
   },
   mounted(){
-    if (this.form.errors.deskripsi) {
-      this.popup =true
-    }
+
   },
   methods:{
     submit(){
-      this.popup =false
       this.form.post('/admin/kegiatan/edit_deskripsi',{preserveState:true})
     },
     toggleEdit(){
@@ -132,6 +129,7 @@ export default{
         var image = document.getElementById('foto1');
         this.form.gambar = event.target.files[0];
         image.src = URL.createObjectURL(event.target.files[0]);
+        image.style.width = '9rem';
         image.style.width = '5rem';
         image.style.overflow = 'hidden';
         //console.log(this.process)
@@ -151,10 +149,13 @@ export default{
   border-width: 0px;
   background-color: white;
 }
-
+.gambar{
+  width: 9rem;
+  height:5rem;
+}
 .modal {
   position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 0px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;
@@ -173,7 +174,8 @@ export default{
   padding: 20px;
   border-radius: 25px;
   width: 40%;
-  text-align: center;
+  text-align: start;
+  overflow-y:auto;
 }
 h1 {
   font-size: 2.1rem;

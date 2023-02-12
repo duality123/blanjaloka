@@ -68,18 +68,20 @@
          <div class="p-2"><h2 class="text-neutral-gray-5">Dokumen Perusahaan</h2></div>
           <div class="p-2"><strong>Nomor Akta Pendirian Perusahaan: </strong>{{data.dokumen_perusahaan.nomor_akta_pendirian_perusahaan}}</div>
           <div class="p-2"><strong>Foto NPWP Perusahaan</strong></div>
-          <div class="p-2"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_npwp_perusahaan}`"></div>
+          <div class="p-2" v-if="data.dokumen_perusahaan.foto_npwp_perusahaan"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_npwp_perusahaan}`"></div>
+          <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
     
           <div class="p-2"><strong>No NPWP Perusahaan</strong>{{data.dokumen_perusahaan.no_npwp_perusahaan}}</div>
           <div class="p-2"><strong>Foto KTP PIC: </strong></div>
-          <div class="p-2" >
+          <div class="p-2" v-if="data.dokumen_perusahaan.foto_ktp_pic">
           <img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_ktp_pic}`">
           </div>
+            <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
           <div class="p-2"><strong>No Rekening: </strong>{{data.dokumen_perusahaan.no_rekening}}</div>
-          <div class="p-2">
+          <div class="p-2" v-if="dokumen_perusahaan.foto_buku_tabungan">
             <img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_buku_tabungan}`">
-            
           </div>
+            <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
           
         </div>
           </section>

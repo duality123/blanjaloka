@@ -1,5 +1,5 @@
 <template>
-   <BaseLayout title="Investor Profile">
+   <BaseLayout title="Investor Dokumen Perusahaan">
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
@@ -64,18 +64,17 @@
                     <label for="nama_lengkap" class="form-label text-neutral-gray-5">Foto NPWP</label>
                    <div class="card text-white bg-neutral-gray-1 mb-3 " >
                 <div v-if="$page.props.auth.dokumenPerusahaan['foto_npwp_perusahaan'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_npwp_perusahaan']}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto_npwp" >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_npwp_perusahaan']}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto_npwp" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_npwp" >
                 </div>
-    
                 <div class="row" style="margin-left:2px;" >
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_npwp')"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
-                <p class="text-primary"  style="padding-left:25px;">atau</p>
+                <div class="col d-flex justify-content-center">
+                <p class="text-primary"  >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
@@ -89,7 +88,7 @@
                     <label for="nama_lengkap" class="form-label text-neutral-gray-5">Foto KTP PIC</label>
                    <div class="card text-white bg-neutral-gray-1 mb-3 " >
                 <div v-if="$page.props.auth.dokumenPerusahaan['foto_ktp_pic'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_ktp_pic']}`" alt="update icon" style="overflow: hidden; width: 250px;" id='foto_ktp_pic' >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_ktp_pic']}`" alt="update icon" style="overflow: hidden; width:10rem;" id='foto_ktp_pic' >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_ktp_pic" >
@@ -99,8 +98,8 @@
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp_pic')"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
-                <p class="text-primary"  style="padding-left:25px;">atau</p>
+                <div class="col d-flex justify-content-center">
+                <p class="text-primary"  >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
@@ -114,7 +113,7 @@
                     <label for="nama_lengkap" class="form-label text-neutral-gray-5">Foto Halaman Pertama Buku Tabungan</label>
                    <div class="card text-white bg-neutral-gray-1 mb-3 " >
                 <div v-if="$page.props.auth.dokumenPerusahaan['foto_buku_tabungan'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_buku_tabungan']}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto_buku_tabungan" >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.dokumenPerusahaan['foto_buku_tabungan']}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto_buku_tabungan" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_buku_tabungan" >
@@ -124,8 +123,8 @@
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_buku_tabungan')"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
-                <p class="text-primary"  style="padding-left:25px;">atau</p>
+                <div class="col d-flex justify-content-center">
+                <p class="text-primary"  >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
@@ -216,7 +215,7 @@ watch: {
 
         var image = document.getElementById(id);
         image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '25rem';
+        image.style.width = '10rem';
         image.style.overflow = 'hidden';
         this.form[id] = event.target.files[0];
         console.log(this.form.foto_buku_tabungan)

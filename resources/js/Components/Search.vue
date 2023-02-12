@@ -1,7 +1,7 @@
 <template>
         
           <div class="input-group">
-          	  <input type="text" class="form-control" :placeholder="this.judul" v-model="this.cari">
+          	  <input type="text" class="form-control" :placeholder="this.judul" v-model="this.searchList.cari">
              <button @click="search()" class="btn btn-primary-blue-6 text-neutral-white py-2">
              <font-awesome-icon icon="fas fa-search" /> </button>
      
@@ -12,13 +12,16 @@
 	export default{
 	  data(){
 	  	return{
-	  		cari:null
+	  		searchList:{
+	  			cari:null
+	  		}
 	  	} 
 	  },
 	  methods:{
 	  search(){
-	  	  let uriCari = {cari:this.cari}
-        Inertia.get(this.url,uriCari,{only:this.lazy,preserveScroll: true,preserveState:true })
+	  	sessionStorage.clear()
+      	sessionStorage.setItem('cari', this.searchList.cari) 
+        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 	  },
 	},
      

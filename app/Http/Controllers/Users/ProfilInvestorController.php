@@ -57,7 +57,7 @@ class ProfilInvestorController extends Controller
             $update = $request->file('foto_profil')->store('investor/foto_profil','public') ; 
         }
         $profil->update(['foto_profil' => $update]);
-        return redirect('umkm/profil/2');
+        return redirect('investor/profil/2');
     }
 
     public function process_wizard_profil_kedua(Request $request)
@@ -117,14 +117,14 @@ class ProfilInvestorController extends Controller
             'pengalaman_kerja'=>$pengalaman_kerja,
 
             ]);
-        return redirect('umkm/profil/3');
+        return redirect('investor/profil/3');
 
     }
     public function process_wizard_profil_ketiga(Request $request)
     { 
          $rules = [
             'foto_ktp' => 'required',
-            'foto_dengan_ktp'=>'required'
+            'foto_selfie_ktp'=>'required'
         ];
 
         $customMessages = [
@@ -152,7 +152,7 @@ class ProfilInvestorController extends Controller
              $update['foto_dengan_ktp'] = $request->file('foto_selfie_ktp')->store('investor/foto_selfie_ktp','public') ;
         }
         $profil->update($update);
-        $redirect = '/umkm/dashboard/profil_usaha/';
+        $redirect = '/investor/dashboard/profil_perusahaan/';
         
         return redirect($redirect);
 

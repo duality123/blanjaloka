@@ -76,12 +76,12 @@ class InvestorController extends Controller
        
 
    // $invest = $data->investor();
-    $umkm = User::with('profil','produk','finansial','usaha')->where('id',$request->get('id'))->first(); 
+        $umkm = User::with('profil','produk','finansial','usaha')->where('id',$request->get('id'))->first(); 
         return Inertia::render('Investor/kegiatan/Daftar_umkm',['kegiatan'=>$data,'items'=>$items,'umkm'=>Inertia::lazy(fn()=>$umkm)]);
     }
 
     public function ajukan_janji_temu(Request $request){
-
+        //dd($request->post('umkmid'));
         $rules = [
             'lokasi' => 'required|max:255',
             'waktu' => 'required',
@@ -92,11 +92,14 @@ class InvestorController extends Controller
             'required' => 'Harap diisi bagian ini !.',
             'max'=>'Karakter yang anda input melebihi batas :max karakter.'
         ];
+        $this->validate($request, $rules, $customMessages);
         $nama_inv = $request->user()->profil->nama_lengkap;
+        $no_telp_inv = $request->user()->profil->no_hp;
+        $profilperusahaaninv = $request->user()->profilPerusahaan->nama_perusahaan;
         $admins= Role::with('user')->where('number','=',1)->get();
         $targetJanjiTemu = User::with('profil:id,nama_lengkap,no_hp,user_id','usaha:id,nama_perusahaan,user_id')->where('id','=',$request->post('umkmid'))->first();
         foreach ($admins as $admin) {
-            $notif = Notifikasi::create(['nama'=>'Pengajuan Janji Temu','pesan'=>'investor '.$nama_inv.' dengan nama perusahaan '.$request->user()->profilPerusahaan->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' meminta untuk janji temu bersama '.$targetJanjiTemu->profil->nama_lengkap.' dengan usaha '.$targetJanjiTemu->usaha->nama_perusahaan.' dan dengan nomor telepon '.$targetJanjiTemu->profil->no_hp.' dilokasi '.$request->post('lokasi').' pada waktu '.$request->post('waktu'),'user_id'=>$admin->user_id,'redirect'=> '/admin/janjitemu?page=1','tanggal'=>now()]);
+            $notif = Notifikasi::create(['nama'=>'Pengajuan Janji Temu','pesan'=>'Investor '.$nama_inv.' dengan nama perusahaan '. $profilperusahaaninv.' serta no telepon '.$no_telp_inv.' meminta untuk janji temu bersama '.$targetJanjiTemu->profil->nama_lengkap.' dengan usaha '.$targetJanjiTemu->usaha->nama_perusahaan.' dan dengan nomor telepon '.$targetJanjiTemu->profil->no_hp.' dilokasi '.$request->post('lokasi').' pada waktu '.$request->post('waktu'),'user_id'=>$admin->user_id,'redirect'=> '/admin/janjitemu?page=1','tanggal'=>now()]);
                 $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
                 $request->session()->flash('success','Janji temu anda berhasil di request!');
 
@@ -113,7 +116,7 @@ class InvestorController extends Controller
         $request->session()->flash('success','Anda berhasil leave kegiatan!');
         $admins= Role::with('user')->where('number','=',1)->get();
         foreach ($admins as $admin) {
-        Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'tanggal'=>now()]);
+        Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil()->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan()->nama_perusahaan.' serta no telepon '.$request->user()->profil()->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'tanggal'=>now()]);
                 $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
                 
         }

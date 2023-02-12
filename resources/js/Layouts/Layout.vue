@@ -139,7 +139,6 @@
             </div>
         </div>
     </footer>
-    <contactUs/>
 </template>
 
 <script setup>

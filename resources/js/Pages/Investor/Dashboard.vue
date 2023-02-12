@@ -1,10 +1,10 @@
 <template>
   <stalkUMKM :popupStalk="popupStalkUMKM" :data="umkm" @toggleTutup="togglePopup()"/>
-  <BaseLayout title="UMKM Profile">
+  <BaseLayout title="Investor Dashboard" state='dashboard'>
     <section class="mt-4">
       <div class="container">
         <div class="row gap-4">
-          <InvestorDashboardSidebar />
+          <InvestorDashboardSidebar  state='dashboard' />
           <div class="col-lg-8">
             <div class="card">
               <div class="card-body">

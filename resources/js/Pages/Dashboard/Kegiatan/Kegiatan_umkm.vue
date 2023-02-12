@@ -133,7 +133,7 @@
 
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
-import Layout from '../../../Layouts/kegiatan.vue';
+import Layout from '../../../Layouts/Kegiatan.vue';
 import RemoveUMKMLayout from '../../../Components/RemoveItem.vue';
 import RemoveUMKMLayoutModal from '../../../Components/RemoveItem.vue';
 import Pagination from '../../../Components/Pagination.vue';

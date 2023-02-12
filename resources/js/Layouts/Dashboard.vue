@@ -62,7 +62,7 @@
               <img src="../assets/icons/icon_dashboard_dashboard.png" alt="icon dashboard" class="img-fluid">Dashboard
               </Link>
             </li>
-                <li class="rounded py-3 px-4"  :class="{ 'active': $page.url == '/admin/janjitemu?page=1' }">
+                <li class="rounded py-3 px-4"  :class="{ 'bg-primary-blue-2': state== 'janjitemu' }">
           <Link href="/admin/janjitemu?page=1" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
            <svg width="20" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

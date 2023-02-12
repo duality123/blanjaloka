@@ -6,10 +6,10 @@
                 <template v-for="link in links">
                 <li  v-if="link.url !== null"  :class="{'active':link.active }">
                 
-                     <Link v-if="this.lazy" :data="postLazyData" method="post" :only="this.lazy" preserve-state  :href="link.url+'&'+parameters">
+                     <Link v-if="this.lazy" :data="postData" method="post" :only="this.lazy" preserve-state  :href="link.url">
                           {{decode(link.label)}}
                     </Link>
-                    <Link v-else :href="link.url+'&'+parameters" preserve-state  >
+                    <Link v-else :data="postData" method="post" :href="link.url"  preserve-state  >
                           {{decode(link.label)}}
                     </Link>
                 </li>
@@ -33,21 +33,19 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
                 parameters : document.location.search.substring(8),
                 currentPage :document.location.href,
                 cari:false ,
-                postLazyData:document.sessionStorage
+                postData:{}
             }
         },
     mounted(){
-        let uri = window.location.search.substring(1)
-        let params = new URLSearchParams(uri)
-        if (params.get('cari')) {
-            this.cari= true
+        let search = Object.keys(sessionStorage)
+        let values = Object.values(sessionStorage)
+        for (var i = 0;i < search.length; i++) {
+         if(values[i] != 'null' ){
+            console.log(values[i])
+            this.postData[search[i]] = values[i]
         }
-         else if(params.get('investor')) {
-          this.cari = true
-        }
-        else if(params.get('umkm')){
-            this.cari = true
-        }
+    }
+        console.log(sessionStorage)
     },
     methods:{
         decode(strings){

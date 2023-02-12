@@ -29,7 +29,7 @@
 
 <script>
 import Layout from '../../../Layouts/Kegiatanku.vue'
-import Pagination from '../../../components/Pagination.vue'
+import Pagination from '../../../Components/Pagination.vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{

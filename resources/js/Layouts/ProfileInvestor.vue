@@ -57,7 +57,6 @@
       </div>
     </section>
   </BaseLayout>
-  <contactUs/>
 </template>
 <script>
 import BaseLayout from './LayoutInvestor.vue'

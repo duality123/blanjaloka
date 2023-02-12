@@ -1,7 +1,40 @@
 <template>
  <stalkUMKM :popupStalk="popupStalkUMKM" :data="umkm" @toggleTutup="togglePopup()"/>
-<RequestJanjiTemu :umkm_id="this.id_umkm" :popup="this.popupRequest" @togglePopup="this.popupToggle()"/>
+  <div class="col-lg-8" v-if="popupRequest">
+
+              <div id="myModal" class="modal"  >
+      <div class="modal-content">
+        <div class=" d-flex justify-content-end">
+         <button @click = "popupToggle()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="col-lg-12">
+      <div class=" d-flex justify-content-center">
+      <h2>Ajukan janji temu </h2>
+    </div>
+    <div class="mt-2">
+      <form @submit.prevent="submit()">
+      <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Lokasi ?</label>
+         <input type="text" class="form-control" v-model="form.lokasi" id="provinsi" placeholder="Masukkan hal lokasi dimana anda ingin ketemuan" >
+           <small class="text-danger" v-if="form.errors.lokasi">{{ form.errors.lokasi }}</small>
+      </div>
+       <div class="mb-4">
+         <label for="provinsi" class="form-label text-neutral-gray-5">Waktu (WIB) ?</label>
+         <input type="datetime-local" class="form-control" v-model="form.waktu" id="nama_investor" placeholder="(Masukkan waktu ketemuan.)" >
+          <small class="text-danger" v-if="form.errors.waktu">{{ form.errors.waktu }}</small>
+      </div>
+      <button type="submit" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                        Kirim</button>
+  </form>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 <Layout state='daftar_umkm' :link="kegiatan.id" :title="kegiatan.tema">
+
                 <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4 mb-4">
                   <div>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +73,7 @@
               <td>{{index.kategori_produk}}</td>
                   <td>
                     <Link class="btn btn-semantic-success-4 text-neutral-white m-2" :href="`/investor/dashboard/kegiatan/${kegiatan.id}/logbook/${index.id}`">Lihat Aktivitas</Link>
-                   <button @click="popupToggle(index.user_id)" class="btn btn-semantic-success-4 text-neutral-white">
+                   <button @click="popupToggle(index.id)" class="btn btn-semantic-success-4 text-neutral-white">
                   Ajukan Janji temu
                 </button>
                 </td>
@@ -69,18 +102,15 @@ export default{
       id_umkm:null,
       popupRequest:false,
       popupStalkUMKM:false,
-      umkm:null
     }
 
   },
-  setup(props){
+ setup(props){
     const form = useForm({
-     perihal:null,
-     kontak:null,
-     mentor:null,
-     kegiatan_id: props.kegiatan.id
+      lokasi:null,
+      waktu:null,
+      umkmid:null
     })
-
     return {form}
   },
   components:{
@@ -93,10 +123,15 @@ export default{
   },
   methods:{
     popupToggle(id=null){
-      this.id_umkm = id
+      this.form.umkmid = id
       this.popupRequest = !this.popupRequest
     },
- togglePopup(umkm_id){
+     submit(){
+
+      this.form.post('/investor/janjitemu',{onSuccess: () => this.form.reset()},{preserveState:true})
+    },
+
+  togglePopup(umkm_id){
     this.popupStalkUMKM = !this.popupStalkUMKM
     let url = document.location.href
     console.log(umkm_id)
@@ -122,6 +157,29 @@ td{
   width:300px;
 }
 
+  .modal {
+  position: fixed; /* Stay in place */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
 .tdimg{
   width: 200px;
   height: 100px;
