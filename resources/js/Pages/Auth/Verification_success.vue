@@ -31,7 +31,7 @@
 
 <script>
 import { Link, useForm } from '@inertiajs/inertia-vue3'
-import BaseLayout from "../../Layouts/Layout.vue";
+import BaseLayout from "../../Layouts/UnauthenticatedLayout.vue";
 export default{
 components: {
   BaseLayout,

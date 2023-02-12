@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import BaseLayout from "../../Layouts/Layout.vue";
+import BaseLayout from "../../Layouts/UnauthenticatedLayout.vue";
 import { Link,useForm } from '@inertiajs/inertia-vue3';
 export default{
 
