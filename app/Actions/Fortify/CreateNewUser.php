@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
                  Rule::unique(User::class),
             ],
             'password' => ['required','min:8',],
-            'no_telepon' => ['required','min:9','max:15','unique:Users',]
+            'no_telepon' => ['required','min:9','max:15','unique:users',]
         ];
         $message = [
               'email.required' => 'Email wajib diisi, silahkan isi sesuai data anda !',
