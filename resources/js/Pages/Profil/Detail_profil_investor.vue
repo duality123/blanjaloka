@@ -42,12 +42,15 @@
               <div class="p-2"><strong>Agama: </strong>{{data.profil.agama}}</div>
               <div class="p-2"><strong>Kewarganegaraan: </strong>{{data.profil.kewarganegaraan}}</div>
               <div class="p-2"><strong>Pengalaman kerja: </strong>{{data.profil.pengalaman_kerja}}</div>
-              <div class="p-2"><strong>Foto profil: </strong></div>
-              <div class="p-2" ><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_profil}`"></div>
+              <div class="p-2" ><strong>Foto profil: </strong></div>
+              <div class="p-2" v-if="data.profil.foto_profil"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_profil}`"></div>
+              <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
               <div class="p-2"><strong>Foto KTP: </strong></div>
-               <div class="p-2" ><img  class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_ktp}`"></div>
+               <div class="p-2" v-if="data.profil.foto_ktp"><img  class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_ktp}`"></div>
+               <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
                <div class="p-2"><strong>Foto dengan KTP: </strong></div>
-              <div class="p-2"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_dengan_ktp}`"></div>
+              <div class="p-2" v-if="data.profil.foto_dengan_ktp"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.profil.foto_dengan_ktp}`"></div>
+              <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
             </div>
           </section>
           <section class="mb-5">
