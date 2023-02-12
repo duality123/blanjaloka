@@ -120,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function inkubasi(){
-        $data = DB::table('kegiatan_umkm')->where('umkm_id','=',$this->id)->get();
+        $data = DB::table('kegiatan_umkm')->where('umkm_id','=',$this->id)->first();
         if ($data) {
             return true;
         }
@@ -130,7 +130,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
      public function inkubasiInvestor(){
-        $data = DB::table('kegiatan_investor')->where('investor_id','=',$this->id)->get();
+        $data = DB::table('kegiatan_investor')->where('investor_id','=',$this->id)->first();
         if ($data) {
             return true;
         }
@@ -140,7 +140,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
      public function pendanaanInvestor(){
-        $data = DB::table('investasi')->where('user_id','=',$this->id)->get();
+        $data = DB::table('investasi')->where('user_id','=',$this->id)->first();
         if ($data) {
             return true;
         }
@@ -153,8 +153,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public function janji_temu(){
-        $data = DB::table('janji_temu')->where('umkm_id','=',$this->id)->get();
-        if ($data) {
+        $data = DB::table('janji_temu')->where('umkm_id','=',$this->id)->first();
+        if ($data ) {
             return true;
         }
         else{
@@ -162,7 +162,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
      public function janji_temu_investor(){
-        $data = DB::table('janji_temu')->where('investor_id','=',$this->id)->get();
+        $data = DB::table('janji_temu')->where('investor_id','=',$this->id)->first();
         if ($data) {
             return true;
         }
@@ -172,7 +172,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
      public function pendanaan(){
-        $data = DB::table('funding')->where('user_id','=',$this->id)->get();
+        $data = DB::table('funding')->where('user_id','=',$this->id)->first();
         if ($data) {
             return true;
         }

@@ -20,7 +20,7 @@
                   </div>
                   <div :class="[$page.props.auth.inkubasi?'clear':'','step']">
                     <div class="number">3</div>
-                    <h1>Memilih UMKM</h1>
+                    <h1>Memilih UMKM </h1>
                   </div>
                   <div  :class="[$page.props.auth.janji_temu?'clear':'','step']">
                     <div class="number">4</div>
