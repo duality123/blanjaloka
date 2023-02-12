@@ -41,7 +41,7 @@
           <span>Kajian Finansial</span>
         </Link>
       </li>
-       <li :class="{'active':section == 'funding'}">
+       <li :class="{'active':section == 'funding','lowerOpacity':!this.$page.props.auth.user.accepted}">
               <Link href="/umkm/dashboard/funding?page=1" class="d-flex align-items-center gap-2 text-decoration-none text-neutral-black">
                 <img src="../assets/icons/icon_funding_dashboard.png" alt="icon funding" class="img-fluid">Funding
               </Link>
