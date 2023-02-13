@@ -154,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function janji_temu(){
         $data = DB::table('janji_temu')->where('umkm_id','=',$this->id)->first();
-        if ($data ) {
+        if ($data) {
             return true;
         }
         else{

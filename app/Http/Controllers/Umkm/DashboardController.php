@@ -59,7 +59,7 @@ class DashboardController extends Controller
         $data =Eventual::create($data);
       //  $kegiatan = Kegiatan::select('tema')->where('id',$data['kegiatan_id'] )->first();
              foreach ($admins as $admin) {
-                 $notif = Notifikasi::create(['nama'=>'Pengajuan Eventual','pesan'=>'UMKM'. $request->user()->profil->nama_lengkap. ' mengajukan untuk meeting di kegiatan '.$data->kegiatan->tema,'user_id'=>$admin->user_id,'redirect'=> '/admin/kegiatan?page=1'. $data['kegiatan_id'].'/eventual','tanggal'=>now()]);
+                 $notif = Notifikasi::create(['nama'=>'Pengajuan Eventual','pesan'=>'UMKM'. $request->user()->profil->nama_lengkap. ' mengajukan untuk meeting di kegiatan '.$data->kegiatan->tema,'user_id'=>$admin->user_id,'redirect'=> '/admin/kegiatan/'. $data['kegiatan_id'].'/eventual','tanggal'=>now()]);
                  $updateNotif =  DB::table('users')->select('notifikasi')->where('id','=',$admin->user_id)->first();
                  $updateNotif = $updateNotif->notifikasi+= 1;
                 User::where('id','=',$admin->user_id)->update(['notifikasi'=>$updateNotif]);
