@@ -127,7 +127,7 @@
                  </Link>
               </td>
               <td v-else-if="currentTabItem==3">
-                 <Link :href="`/detail/profil/umkm/${item.id}`"> 
+                 <Link :href="`/detail/profil/investor/${item.id}`"> 
                  {{item.nama_lengkap}}
                  </Link>
               </td>

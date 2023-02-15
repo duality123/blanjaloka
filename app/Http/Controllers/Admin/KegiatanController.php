@@ -128,7 +128,7 @@ class KegiatanController extends Controller
     public function edit_bab_post(Request $request){
          $rules = [
             'deskripsi' => 'required',
-            'judul' => 'required',
+            'judul' => 'required|max:255',
             'link_video' =>'required',
             'bab' => 'required',
         ];
@@ -153,7 +153,7 @@ class KegiatanController extends Controller
     public function tambah_bab_post(Request $request){
         $rules = [
             'deskripsi' => 'required',
-            'judul' => 'required',
+            'judul' => 'required|255',
             'link_video' =>'required',
             'bab' => 'required',
         ];
@@ -181,7 +181,7 @@ class KegiatanController extends Controller
        
         $rules = [
             'waktu' => 'required',
-            'judul' => 'required',
+            'judul' => 'required|255',
             'gambar' =>'required',
             'deskripsi' => 'required',
         ];
@@ -217,7 +217,7 @@ class KegiatanController extends Controller
        
         $rules = [
             'waktu' => 'required',
-            'judul' => 'required',
+            'judul' => 'required|255',
             'deskripsi' => 'required',
         ];
 
@@ -392,18 +392,19 @@ class KegiatanController extends Controller
 
 
     public function edit_kegiatan_post(Request $request){
-        $rules = [
+           $rules = [
             'tema' => 'required|max:255',
             'deskripsi' => 'required',
             'jumlah_orang_diundang'=>'required',
             'masa_inkubasi'=>'required',
             'kurikulum'=>'required|max:100',
             'nama_juri'=>'required|max:500',
-            'pic'=>'required',
+            'pic'=>'required|255',
             'kontak'=>'required|max:200',
             'draft'=>'required',
             'dimulai'=>'required',
             'berakhir' =>'required',
+            'gambar'=>'required'
         ];
 
 
@@ -464,18 +465,19 @@ class KegiatanController extends Controller
     {
         //dd($request->all());
 
-            $rules = [
+             $rules = [
             'tema' => 'required|max:255',
             'deskripsi' => 'required',
             'jumlah_orang_diundang'=>'required',
             'masa_inkubasi'=>'required',
             'kurikulum'=>'required|max:100',
             'nama_juri'=>'required|max:500',
-            'pic'=>'required',
+            'pic'=>'required|255',
             'kontak'=>'required|max:200',
             'draft'=>'required',
             'dimulai'=>'required',
             'berakhir' =>'required',
+            'gambar'=>'required'
         ];
 
 

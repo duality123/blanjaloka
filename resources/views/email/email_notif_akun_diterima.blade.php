@@ -10,7 +10,6 @@
     <!-- Fonts -->
 
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.scss') }}">
-    <!--<script src="{{mix('css/app.scss')}}"></script>-->
 </head>
 <body>
 <section class="mx-2 my-2 mt-2 mb-2">

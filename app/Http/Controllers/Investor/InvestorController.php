@@ -21,7 +21,7 @@ class InvestorController extends Controller
    public function janji_temu(Request $request)
     {
          if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses Ditolak','desc'=>'Anda harus memenuhi seluruh profil lalu acc dari admin']);
+            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Akses Ditolak','desc'=>'Anda harus memenuhi seluruh profil lalu acc dari admin','state'=>'janjitemu']);
         }
         //dd($request->post('nama_investor'));
         $data = Janjitemu::with(['umkm.profil'])->select('umkm_id','lokasi','waktu','id','berakhir')->where('investor_id','=',$request->user()->id)->filter(request(['nama_investor','lokasi','nama_umkm','event_dimulai','event_berakhir','tanda']))->orderBy('janji_temu.berakhir','desc')->paginate(10);
@@ -48,13 +48,13 @@ class InvestorController extends Controller
  public function kegiatan(Request $request)
     {
         if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
+            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !','state'=>'kegiatan']);
         }
         $user = User::where('id','=',$request->user()->id)->first();
         $kegiatanku = $user->kegiataninvestor()->filter(request(['cari']))->paginate(9);
         
         if($kegiatanku==null){
-            return Inertia::render('Profil/Noitemscreen',['title'=>'Anda belum diundang di kegiatan apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !']);
+            return Inertia::render('Profil/Investor/Noitemscreen',['title'=>'Anda belum diundang di kegiatan apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !','state'=>'kegiatan']);
         }
        
          return Inertia::render('Investor/kegiatan/Kegiatanku',['items'=>$kegiatanku ]);
@@ -161,7 +161,7 @@ class InvestorController extends Controller
       public function show_bisnis(Request $request)
     {
        if(!$request->user()->accepted){
-            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin']);
+            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin','state'=>'bisnis']);
         }
         $user = User::where('id','=',$request->user()->id)->first();
         $data = $user->bisnisinvestor()->filter(request(['cari']))->paginate(10);
@@ -242,9 +242,7 @@ class InvestorController extends Controller
  
   public function deskripsi_bisnis(Request $request,$link)
     {
-       if(!$request->user()->accepted){
-            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin']);
-        }
+       
         $data = Bisnis::where('id','=',$link)->first(); 
 
    // $invest = $data->investor();

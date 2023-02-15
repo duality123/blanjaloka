@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('elearning',function(Blueprint $table){
-        $table->id();
-         $table->foreignId('kegiatan_id')->references('id')->on('kegiatan')->onDelete('cascade');
-         $table->timestamp('hari_tanggal_waktu')->nullable();
+
+       Schema::create('bab', function (Blueprint $table) {
+         $table->id();
+         $table->foreignId('elearning_id')->references('id')->on('elearning')->onDelete('cascade');
+         $table->text('deskripsi')->nullable();
          $table->string('judul',255)->nullable();
          $table->text('link_video')->nullable();
-         $table->text('deskripsi')->nullable();
-        });
+         $table->smallInteger('bab',6)->nullable();
+           });
     }
 
     /**
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        dropIfExists('elearning');
+        dropIfExists('bab');
     }
 };

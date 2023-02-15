@@ -14,7 +14,7 @@ class FinansialController extends Controller
     public function form_wizard(Request $request)
     {
         if(!$request->user()->produk->isProdukComplete()){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Kajian finansial Belum Dapat Diisi','desc'=>'Harap penuhi profil produk terlebih dahulu']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Profil Kajian finansial Belum Dapat Diisi','desc'=>'Harap penuhi profil produk terlebih dahulu','section'=>'kajian_finansial']);
         }
         return Inertia::render('Profil/UMKM/finansial/form_wizard');
     }
@@ -60,9 +60,9 @@ class FinansialController extends Controller
        
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
         $isNotExist = DB::table('notifikasi')->select('id')->where('redirect','=','/detai/profil/umkm/'.$request->user()->id)->first();
-        if (!$request->user()->accepted) {
+        if (!$isNotExist) {
              foreach ($admins as $admin) {
-                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Baru','pesan'=>'Seorang user mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=> '/detai/profil/umkm/'.$request->user()->id,'tanggal'=>now()]);
+                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Baru','pesan'=>'UMKM '.$request->user()->profil->nama_lengkap. ' mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=> '/detai/profil/umkm/'.$request->user()->id,'tanggal'=>now()]);
                  $updateNotif =  DB::table('users')->select('notifikasi')->where('id','=',$admin->user_id)->first();
                  $updateNotif = $updateNotif->notifikasi+= 1;
                 User::where('id','=',$admin->user_id)->update(['notifikasi'=>$updateNotif]);

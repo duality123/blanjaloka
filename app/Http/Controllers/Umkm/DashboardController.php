@@ -74,13 +74,13 @@ class DashboardController extends Controller
      public function kegiatanku(Request $request)
     {
         if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !','section'=>'kegiatanku']);
         }
         $user = User::where('id','=',$request->user()->id)->first();
         $kegiatanku = $user->kegiatanumkm()->filter(request(['cari','berakhir']))->paginate(9);
         
         if($kegiatanku==null){
-            return Inertia::render('Profil/Noitemscreen',['title'=>'Anda belum join kegiatan apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !']);
+            return Inertia::render('Profil/UMKM/Noitemscreen',['title'=>'Anda belum join kegiatan apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !','section'=>'kegiatanku']);
         }
        
          return Inertia::render('Umkm/Dashboard/Kegiatanku',['items'=>$kegiatanku ]);
@@ -197,7 +197,7 @@ class DashboardController extends Controller
     public function janjitemu(Request $request)
     {
         if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !','section'=>'janjitemu']);
         }
 
         $data = Janjitemu::join('profil','profil.user_id','=','janji_temu.investor_id')->select('investor_id','lokasi','waktu','janji_temu.id','berakhir','profil.nama_lengkap','profil.foto_profil')->where('umkm_id','=',$request->user()->id)->orderBy('janji_temu.berakhir','desc')->filter(request(['cari','tanda']))->paginate(10);
@@ -207,10 +207,7 @@ class DashboardController extends Controller
 
     public function umkmjurnal(Request $request,$slug)
     {
-        if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil 
-                anda lalu acc admin dulu !']);
-        }
+       
         $kegiatan = Kegiatan::with('logbook')->select('tema','id')
                 ->where('kegiatan.id','=',$slug)->first();
         $logbook = $kegiatan->logbook()->where('user_id',$request->user()->id)->get();

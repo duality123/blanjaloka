@@ -76,11 +76,11 @@ class ProfilInvestorController extends Controller
         $status = $request->post('status');
         $agama = $request->post('agama');
         $pengalaman_kerja = $request->post('pengalaman_kerja');
-        $rules = [
-            'nama_lengkap' => 'required|max:200',
+       $rules = [
+            'nama_lengkap' => 'required|max:255',
             'tempat_kelahiran' => 'required|max:50',
             'tanggal_lahir' => 'required',
-            'alamat' => 'required|max:200',
+            'alamat' => 'required',
             'pendidikan_terakhir' => 'required|max:20',
             'kelurahan' => 'required|max:50',
             'kecamatan' => 'required|max:50',
@@ -91,6 +91,7 @@ class ProfilInvestorController extends Controller
             'pengalaman_kerja' => 'required',
             'agama'=>'required|max:10'
         ];
+
 
         $customMessages = [
             'required' => 'Harap diisi bagian ini !.',

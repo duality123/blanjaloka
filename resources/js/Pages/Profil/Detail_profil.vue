@@ -153,10 +153,10 @@
           </section>
           <div class="d-flex justify-content-center bd-highlight mb-3">
               <div class="p-2 bd-highlight">
-              <Link :href="`admin/dashboard/detail/profil/${currentPage}/hapus`" type="submit" class="btn btn-danger text-neutral-white">Hapus user ini</Link>
+              <Link :href="`admin/dashboard/detail/profil/${user_id}/hapus`" type="submit" class="btn btn-danger text-neutral-white">Hapus user ini</Link>
               </div>
               <div class="p-2 bd-highlight">
-              <Link :href="`/detail/profil/${currentPage}/accept`" class="btn btn-primary-blue-6 text-neutral-white">Terima user ini</Link>
+              <Link :href="`/detail/profil/${role}/${user_id}/accept`" class="btn btn-primary-blue-6 text-neutral-white">Terima user ini</Link>
               </div>
               <div class="p-2 bd-highlight">
              <button @click = "toggleComment()" class="btn btn-semantic-success-4 text-neutral-white">Beri tanggapan</button>
@@ -174,7 +174,8 @@ import { ref } from 'vue';
 export default{
   data(){
     return{
-      currentPage : window.location.pathname.split('/')[4],
+      user_id : window.location.pathname.split('/')[4],
+      role:window.location.pathname.split('/')[3],
       comment:false
     }
   },
@@ -196,7 +197,7 @@ export default{
       this.comment = !this.comment
     },
     submitComment(){
-      this.form.post('/detail/profil/'+this.currentPage+'/beri_tanggapan')
+      this.form.post('/detail/profil/'+this.role+'/'+this.user_id+'/beri_tanggapan')
     }
   }
 }

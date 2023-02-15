@@ -239,7 +239,6 @@ ul li a {
 }
  .modal-content{
   height: 450px;
-  overflow-y: scroll;
  }
 .sidebar ul li.active {
   border: 1px solid #AEAEAE;

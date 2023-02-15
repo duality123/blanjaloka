@@ -6,7 +6,7 @@
       <InvestorDashboardSidebar :state="state" />    
           <div class="col-lg-8">
        <div class="d-flex justify-content-center align-items-center">
-                <img src="../../../assets/icons/pc_fail.png" class="gambar">
+                <img src="../../../assets/images/empty.png" class="gambar">
      </div>
      <div class="text-center">
               <h2>{{title}}</h2>
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import BaseLayout from '../../../Layouts/LayoutInvestor.vue'
-import InvestorDashboardSidebar from '../../../Components/InvestorDashboardSidebar.vue'
+import BaseLayout from '../../Layouts/LayoutInvestor.vue'
+import InvestorDashboardSidebar from '../../Components/InvestorDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";
 export default{

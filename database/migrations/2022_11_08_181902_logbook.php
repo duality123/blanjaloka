@@ -14,8 +14,11 @@ return new class extends Migration
          $table->foreignId('kegiatan_id')->references('id')->on('users')->onDelete('cascade');
          $table->timestamp('hari_tanggal_bulan')->nullable();
          $table->text('link')->nullable();
-         $table->text('isi')->nullable();
+         $table->text('deskripsi')->nullable();
          $table->text('bukti_kegiatan')->nullable();
+         $table->tinyInteger('status',4)->nullable();
+         $table->timestamp('waktu')->default(now());
+
 
        });
      }

@@ -51,7 +51,7 @@ class ProfilController extends Controller
         $update ='';
         $profil =  Profil::where('user_id',$request->user()->id)->first();
         if ($request->file('foto_profil') && $profil->foto_profil) {
-            Storage::delete($profil->foto_profil);
+            Storage::disk('public')->delete($profil->foto_profil);
             $update = $request->file('foto_profil')->store('umkm/foto_profil','public') ; 
                
         }  
@@ -79,10 +79,10 @@ class ProfilController extends Controller
         $agama = $request->post('agama');
         $pengalaman_kerja = $request->post('pengalaman_kerja');
         $rules = [
-            'nama_lengkap' => 'required|max:200',
+            'nama_lengkap' => 'required|max:255',
             'tempat_kelahiran' => 'required|max:50',
             'tanggal_lahir' => 'required',
-            'alamat' => 'required|max:200',
+            'alamat' => 'required',
             'pendidikan_terakhir' => 'required|max:20',
             'kelurahan' => 'required|max:50',
             'kecamatan' => 'required|max:50',

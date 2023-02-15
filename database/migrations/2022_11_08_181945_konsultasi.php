@@ -8,20 +8,23 @@ return new class extends Migration
 {       
      public function up()
      {
-       Schema::create('konsultasi', function (Blueprint $table) {
+       Schema::create('eventual', function (Blueprint $table) {
          $table->id();
-         $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-         $table->foreignId('mentor_id')->references('id')->on('users')->onDelete('cascade');
-         $table->char('perihal',100)->nullable();
-         $table->text('pesan')->nullable();
-         $table->text('link')->nullable();
+         $table->foreignId('profil_id')->references('id')->on('profil')->onDelete('cascade');
+         $table->foreignId('kegiatan_id')->references('id')->on('kegiatan')->onDelete('cascade');
+         $table->string('perihal',100)->nullable();
+         $table->tinyInteger('status',4)->nullable();
+         $table->text('link_meeting')->nullable();
+         $table->timestamp('waktu')->default(now());
          $table->timestamp('jadwal')->nullable();
+         $table->varchar('kontak',255)->nullable();
+         $table->string('nama_mentor',100)->nullable();
 
        });
      }
 
      public function down()
      {
-         dropIfExists('konsultasi');
+         dropIfExists('eventual');
      }
 };

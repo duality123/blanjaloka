@@ -270,6 +270,7 @@ Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
         Route::get('/', [InvestorController::class, 'dashboard']);
         Route::any('janjitemu/', [InvestorController::class, 'janji_temu']);
         Route::prefix('kegiatan')->group(function () {
+            Route::get('/', [InvestorController::class, 'kegiatan']);
             Route::get('/{slug}', [InvestorController::class, 'deskripsi']);
             Route::get('daftar_umkm/{slug}', [InvestorController::class, 'daftar_umkm']);
             Route::get('keluar/{slug}', [InvestorController::class, 'leave_kegiatan']);
@@ -288,8 +289,6 @@ Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
         });
 
       
-   
-        Route::get('kegiatan', [InvestorController::class, 'kegiatan']);
         Route::get('profil_perusahaan', [ProfilPerusahaanController::class, 'form_wizard_profil_perusahaan']);
         Route::get('dokumen_perusahaan', [DokumenPerusahaanController::class, 'form_wizard_dokumen_perusahaan']);
         Route::post('profil_perusahaan', [ProfilPerusahaanController::class, 'process_wizard']);
@@ -391,8 +390,8 @@ Route::get('reset_password/success',function(){
 Route::prefix('/detail/profil/')->middleware(['auth','verified','shouldAdmin'])->group(function () {
     Route::get('/umkm/{slug}', [ProfilController::class, 'detailUMKM']);
     Route::get('/investor/{slug}', [ProfilController::class, 'detailInvestor']);
-    Route::post('/{slug}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
-    Route::get('/{slug}/accept', [UserController::class, 'terima_user']);
+    Route::post('/{slug}/{slug1}/beri_tanggapan', [UserController::class, 'beri_tanggapan']);
+    Route::get('/{slug}/{slug1}/accept', [UserController::class, 'terima_user']);
     Route::get('/{slug}/hapus', [UserController::class, 'delete']);
 
 });

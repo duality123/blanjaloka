@@ -66,11 +66,11 @@ class DokumenPerusahaanController extends Controller
         $data['no_npwp_perusahaan']= $request->post('no_npwp_perusahaan');
         $data['no_rekening']= $request->post('no_rekening_perusahaan');
         $dokumen->update($data);
-        $isNotifExist = DB::table('notifikasi')->select('id')->where('redirect','=','detail/profil/investor/'.$request->user()->id)->first();
+        $isNotifExist = DB::table('notifikasi')->select('id')->where('redirect','=','/detail/profil/investor/'.$request->user()->id)->first();
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
-        if (!$request->user()->accepted) {
+        if (!$isNotifExist) {
              foreach ($admins as $admin) {
-                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Investor Baru','pesan'=>'Seorang investor mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=>'detail/profil/investor/'.$request->user()->id,'tanggal'=>now()]);
+                 $notif = Notifikasi::create(['nama'=>'Pengajuan Data Investor Baru','pesan'=>'Investor '.$request->user()->profil->nama_lengkap.' mengajukan data barunya','user_id'=>$admin->user_id,'redirect'=>'/detail/profil/investor/'.$request->user()->id,'tanggal'=>now()]);
                  $updateNotif =  DB::table('users')->select('notifikasi')->where('id','=',$admin->user_id)->first();
                  $updateNotif = $updateNotif->notifikasi+= 1;
                 User::where('id','=',$admin->user_id)->update(['notifikasi'=>$updateNotif]);

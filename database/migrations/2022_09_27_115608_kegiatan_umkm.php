@@ -15,9 +15,10 @@ return new class extends Migration
     {
       Schema::create('kegiatan_umkm', function (Blueprint $table) {
         $table->id();
-        $table->Integer('umkm_id')->unsigned();
-        $table->Integer('kegiatan_id')->unsigned();
-        $table->foreignId('user_foreign')->references('id')->on('users')->onDelete('cascade');
+        $table->bigInteger('umkm_id')->unsigned();
+        $table->bigInteger('kegiatan_id')->unsigned();
+        $table->boolean('lulus_funding')->default(0);
+        $table->foreignId('investor_foreign')->references('id')->on('users')->onDelete('cascade');
         $table->foreignId('kegiatan_foreign')->references('id')->on('users')->onDelete('cascade');
       });
     }

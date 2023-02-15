@@ -47,7 +47,7 @@
                     </div>
                     <div v-if="!$page.props.auth.user" class="navbar-nav align-items-lg-center gap-3 ms-auto">
                         <Link  href="/login" class="btn px-4 py-2 border-5 btn_custom_outline"
-                            :class="{ 'btn-outline-neutral-white text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
+                            :class="{ 'btn-outline-neutral-white text-neutral-white btn_custom_outline2': scrollPosition > 100, 'btn-outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
                         Masuk</Link>
                         <Link  href="/register" class="btn px-4 py-2"
                             :class="{ 'btn-neutral-white text-primary-blue-6': scrollPosition > 100, 'btn-primary-blue-6 text-white': scrollPosition < 100 }">
@@ -55,7 +55,7 @@
                     </div>
                      <div v-else class="navbar-nav align-items-lg-center gap-3 ms-auto">
                         <Link  href="/logout" method="post" class="btn px-4 py-2 border-5 btn_custom_outline"
-                            :class="{ 'btn-outline-neutral-white  text-neutral-white': scrollPosition > 100, 'btn-outline-primary-blue-6 btn_custom_outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
+                            :class="{ 'btn-outline-neutral-white  text-neutral-white btn_custom_outline2': scrollPosition > 100, 'btn-outline-primary-blue-6 btn_custom_outline-primary-blue-6 text-primary-blue-6': scrollPosition < 100 }">
                         Keluar</Link>
                     </div>
                 </div>
@@ -158,7 +158,6 @@ a.btn {
 }
 .modal-content{
   height: 450px;
-  overflow-y: scroll;
  }
 .notif_badge {
     width: 2rem;
@@ -184,6 +183,13 @@ a.btn {
 }
 .btn_custom_outline:hover {
     color: #FFFFFF !important;
+}
+
+.btn_custom_outline2 {
+    border-width: 2px !important;
+}
+.btn_custom_outline2:hover {
+    color: #398ab9 !important;
 }
 .cta_section {
     padding-top: 10rem;

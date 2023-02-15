@@ -56,7 +56,7 @@ class UserController extends Controller
         $this->validate($request, $rules, $customMessages);
 
         if ($request->post('role') == 1) {
-           $user = User::create(['name'=>$request->post('nae'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>$request->post('password'),'accepted'=>true,'email_verified_at'=>now()]);
+           $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>$request->post('password'),'accepted'=>true,'email_verified_at'=>now()]);
            $user->Role()->update(['number'=>1]);
         }
         elseif($request->post('role') == 2){
@@ -81,15 +81,22 @@ class UserController extends Controller
     }
 
 
-     public function beri_tanggapan(Request $request,$id)
+     public function beri_tanggapan(Request $request,$role,$id)
     {
+         $redirect = '';
+        if ($role == 'investor') {
+            $redirect = '/investor/profil/1';
+        }
+        elseif ($role == 'umkm') {
+            $redirect = '/umkm/profil/1';
+        }
         $pesan = $request->post('pesan');      
-        $notif = Notifikasi::create(['nama'=>'Revisi Profil','pesan'=>$pesan,'user_id'=>$id,'redirect'=> '/profil/1','tanggal'=>now()]);
+        $notif = Notifikasi::create(['nama'=>'Revisi Profil','pesan'=>$pesan,'user_id'=>$id,'redirect'=> $redirect,'tanggal'=>now()]);
         $target = DB::table('users')->select('notifikasi')->where('id','=',$id)->first();
         $target = $target->notifikasi + 1;
         User::where('id','=',$id)->update(['notifikasi' => $target]);
         $request->session()->flash('success','Tanggapan berhasil dikirim');
-        return redirect('/admin/dashboard');
+        return back();
 
     }
 
@@ -101,15 +108,23 @@ class UserController extends Controller
         return redirect('umkm/dashboard/kegiatanku/1');
     }
 
-    public function terima_user(Request $request,$id){
-        $notif = Notifikasi::create(['nama'=>'Aktivasi sukes','pesan'=>'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka','user_id'=>$id,'redirect'=> '/profil/1']);
+    public function terima_user(Request $request,$role,$id){
+        $redirect = '';
+        if ($role == 'investor') {
+            $redirect = '/investor/dashboard/bisnisku?page=1';
+        }
+        elseif ($role == 'umkm') {
+            $redirect = '/umkm/dashboard/kegiatanku?page=1';
+        }
+        $notif = Notifikasi::create(['nama'=>'Aktivasi sukes','pesan'=>'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka','user_id'=>$id,'redirect'=> $redirect]);
         User::where('id','=',$id)->update(['accepted' => true]);
         $target = DB::table('users')->select('notifikasi')->where('id','=',$id)->first();
+        $targetEmail = DB::table('users')->select('email')->where('id','=',$id)->first();
         $target = $target->notifikasi + 1;
-        Mail::to($request->user()->email)->send(new CongratsMessage());
+        Mail::to( $targetEmail->email)->send(new CongratsMessage());
         User::where('id','=',$id)->update(['notifikasi' => $target]);
         $request->session()->flash('success','User ini diterima!');
-        return redirect('admin/dashboard');
+        return back();
     }
 
 }

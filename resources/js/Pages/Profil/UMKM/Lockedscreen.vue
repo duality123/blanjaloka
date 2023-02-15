@@ -3,10 +3,10 @@
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
-      <UmkmDashboardSidebar />    
+      <UmkmDashboardSidebar :section="section" />    
           <div class="col-lg-8">
        <div class="d-flex justify-content-center align-items-center">
-                <img src="../../assets/images/empty.png" class="gambar">
+                <img src="../../../assets/icons/pc_fail.png" class="gambar">
      </div>
      <div class="text-center">
               <h2>{{title}}</h2>
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import BaseLayout from '../../Layouts/LayoutUMKM.vue'
-import UmkmDashboardSidebar from '../../Components/UmkmDashboardSidebar.vue'
+import BaseLayout from '../../../Layouts/LayoutUMKM.vue'
+import UmkmDashboardSidebar from '../../../Components/UmkmDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";
 export default{
@@ -36,7 +36,8 @@ export default{
   },
   props:{
     title:String,
-    desc:String
+    desc:String,
+    section:String
   }
 }
 </script>

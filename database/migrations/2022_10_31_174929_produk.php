@@ -11,10 +11,10 @@ return new class extends Migration
        Schema::create('produk', function (Blueprint $table) {
          $table->id();
          $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-         $table->char('jenis_produk',50)->nullable();
+         $table->string('jenis_produk',50)->nullable();
          $table->smallInteger('jumlah_produk_yang_dijual')->nullable();
-         $table->char('bahan_produk',100)->nullable();
-         $table->char('kategori_produk',50)->nullable();
+         $table->string('bahan_produk',100)->nullable();
+         $table->string('kategori_produk',50)->nullable();
          $table->bigInteger('harga_produk')->nullable();
          $table->text('keterangan_halal')->nullable();
          $table->text('manfaat_fungsional')->nullable();

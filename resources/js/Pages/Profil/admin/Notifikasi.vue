@@ -1,4 +1,5 @@
 <template>
+  <Remove pesan="Anda yakin ingin menghapus notifikasi ini" :popup="deletePopup" :itemDelete="itemDelete" url="/notifikasi/hapus_notif/" @toggleClose="switchClose()" />
   <DashboardLayout title="Notifikasi" state='notifikasi'>
                    <section class="mt-4">
       <div class="container">
@@ -30,7 +31,7 @@
                                   <button class="dropdown-toggle close" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   </button>
                                               <ul class="dropdown-menu dropdown-menu-end">
-                                                 <li><button @click = "hapusNotif(id_notif=notifikasi.id)" class="dropdown-item close">Hapus</button></li>
+                                                 <li><button @click = "switchClose(id_notif=notifikasi.id)" class="dropdown-item close">Hapus</button></li>
                                                    <li><button @click="indexTandaiSingle(id_notif=notifikasi.id)" class="dropdown-item close" :href="url">Tandai</button></li>
                                               </ul>
                                             </div>
@@ -67,29 +68,34 @@
 import DashboardLayout from '../../../Layouts/Dashboard.vue';
 import Pagination from '../../../Components/Pagination.vue';
 import Search from '../../../Components/Search.vue';
+import Remove from '../../../Components/RemoveItem.vue';
 import {Link} from '@inertiajs/inertia-vue3';
 import {Inertia} from '@inertiajs/inertia';
 export default{
 data(){
   return{
     tandai:[],
-    url:document.location.href
+    url:document.location.href,
+    deletePopup:false,
+    itemDelete:null
   }
 },
 components:{
   DashboardLayout,
   Link,
   Pagination,
-  Search
+  Search,
+  Remove
 
 },
 props:{
   items:Object,
 },
 methods:{
-  hapusNotif(id_notif=null){
-    Inertia.post('/notifikasi/hapus_notif',{id:id_notif}, { preserveState: true,preserveScroll:true })
-  },
+   switchClose(id_notif=null){
+        this.deletePopup = !this.deletePopup          
+        this.itemDelete = {id:id_notif}
+      },
  tandaiPost(){
     Inertia.post('/notifikasi/tandai_notif',{id:this.tandai}, { preserveState: false,preserveScroll:true})
   },

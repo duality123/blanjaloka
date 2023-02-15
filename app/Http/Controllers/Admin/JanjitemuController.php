@@ -105,12 +105,12 @@ class JanjitemuController extends Controller
                                     'investor_id'=>$investor]);
       $investor = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$investor)->first();
       $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$umkm)->first();
-      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/notifikasi/UMKM','user_id'=>$umkm->id,'waktu'=>now()]);
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
      $invNotif = $investor->notifikasi;
      $investor->update(['notifikasi'=>$invNotif+=1]);
      $umkmNotif = $umkm->notifikasi;
      $umkm->update(['notifikasi'=>$invNotif+=1]);
-      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/notifikasi/Investor','user_id'=>$investor->id,'waktu'=>now()]);
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
 
        $request->session()->flash('success','Janji temu berhasil di request');
       return back();

@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-      Schema::create('kegiatan_investor', function (Blueprint $table) {
+    Schema::create('bisnis_peserta', function (Blueprint $table) {
         $table->id();
-        $table->Integer('investor_id')->unsigned();
-        $table->Integer('kegiatan_id')->unsigned();
-        $table->foreignId('investor_foreign')->references('id')->on('users')->onDelete('cascade');
-        $table->foreignId('kegiatan_foreign')->references('id')->on('users')->onDelete('cascade');
+        $table->bigInteger('umkm_id')->unsigned();
+        $table->bigInteger('bisnis_id')->unsigned();
+        $table->foreignId('umkm_foreign')->references('id')->on('users')->onDelete('cascade');
+        $table->foreignId('bisnis_foreign')->references('id')->on('users')->onDelete('cascade');
       });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        dropIfExists('kegiatan_investor');
+        dropIfExists('bisnis_peserta');
     }
 };

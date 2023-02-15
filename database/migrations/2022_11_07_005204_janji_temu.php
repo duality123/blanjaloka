@@ -10,10 +10,11 @@ return new class extends Migration
      {
        Schema::create('janji_temu', function (Blueprint $table) {
          $table->id();
-         $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-         $table->timestamp('hari_tanggal_waktu')->nullable();
-         $table->char('perihal',100)->nullable();
-         $table->text('pesan')->nullable();
+         $table->foreignId('umkm_id')->references('id')->on('users')->onDelete('cascade');
+         $table->foreignId('investor_id')->references('id')->on('users')->onDelete('cascade');
+         $table->timestamp('waktu')->nullable();
+         $table->string('lokasi',100)->nullable();
+         $table->timestamp('berakhir')->nullable();
        });
      }
 

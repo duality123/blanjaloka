@@ -12,7 +12,7 @@ class ProdukController extends Controller
     public function form_wizard(Request $request)
     {
        if(!$request->user()->usaha->isUsahaComplete()){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Produk Belum Dapat Diisi','desc'=>'Harap penuhi profil usaha terlebih dahulu']);
+            return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Produk Belum Dapat Diisi','desc'=>'Harap penuhi profil usaha terlebih dahulu','section'=>'profil_produk']);
         }
         return Inertia::render('Profil/UMKM/produk/form_wizard');
     }

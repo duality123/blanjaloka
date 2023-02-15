@@ -17,24 +17,25 @@ return new class extends Migration
          $table->id();
          $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
          $table->text('foto_profil')->nullable();
-         $table->char('nama_lengkap',200)->nullable();
+         $table->string('nama_lengkap',255)->nullable();
          $table->timestamp('tanggal_lahir')->nullable();
-         $table->char('pendidikan_terakhir',20)->nullable();
-         $table->char('tempat_kelahiran',50)->nullable();
-         $table->char('alamat',200)->nullable();
-         $table->char('kelurahan',50)->nullable();
-         $table->char('kecamatan',50)->nullable();
-         $table->char('kabupaten',50)->nullable();
-         $table->char('provinsi',50)->nullable();
+         $table->string('pendidikan_terakhir',20)->nullable();
+         $table->string('tempat_kelahiran',50)->nullable();
+         $table->text('alamat')->nullable();
+         $table->string('kelurahan',50)->nullable();
+         $table->string('kecamatan',50)->nullable();
+         $table->string('kabupaten',50)->nullable();
+         $table->string('provinsi',50)->nullable();
          $table->text('foto_ktp')->nullable();
          $table->text('foto_dengan_ktp')->nullable();
-         $table->char('no_hp',14)->nullable();
-         $table->char('status',30)->nullable();
-         $table->char('kewarganegaraan',20)->nullable();
-         $table->char('agama',10)->nullable();
+         $table->string('no_hp',14)->nullable();
+         $table->string('status',30)->nullable();
+         $table->string('kewarganegaraan',20)->nullable();
+         $table->string('agama',10)->nullable();
          $table->text('pengalaman_kerja')->nullable();
        });
      }
+
 
      /**
       * Reverse the migrations.

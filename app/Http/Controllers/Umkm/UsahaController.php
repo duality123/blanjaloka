@@ -14,7 +14,7 @@ class UsahaController extends Controller
     public function form_wizard(Request $request)
     {
        if(!$request->user()->profil->isProfileComplete()){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Profil Usaha Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Profil Usaha Belum Dapat Diisi','desc'=>'Harap penuhi profil diri terlebih dahulu','section'=>'profil_usaha']);
         }
         return Inertia::render('Profil/UMKM/usaha/form_wizard');
     }
@@ -22,14 +22,14 @@ class UsahaController extends Controller
     public function process_form_wizard(Request $request)
     {   
         $rules = [
-            'nama_perusahaan' => 'required|max:200',
-            'alamat_perusahaan' => 'required|max:100',
+            'nama_perusahaan' => 'required|max:255',
+            'alamat_perusahaan' => 'required',
             'dokumen_amdal'=>'required',
             'dokumen_legalitas'=>'required',
             'status_perusahaan' => 'required|max:50',
             'informasi_pajak' => 'required|max:100',
             'npwp' => 'required|max:100',
-            'email_perusahaan' => 'required|max:100',
+            'email_perusahaan' => 'required|max:255',
         ];
 
         $customMessages = [

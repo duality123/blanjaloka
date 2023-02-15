@@ -23,9 +23,7 @@ class FundingController extends Controller
 {
     public function deskripsi_bisnis(Request $request,$link)
     {
-       if(!$request->user()->accepted){
-            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin']);
-        }
+       
         $data = Bisnis::with('investor')->where('id','=',$link)->first(); 
         $invest = [];
         foreach ($data->investor()->with('profil:id,nama_lengkap,user_id')->get() as $investor) {
@@ -38,7 +36,7 @@ class FundingController extends Controller
     {
 
         if(!$request->user()->accepted){
-            return Inertia::render('Profil/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Akses ditolak','desc'=>'Penuhi profil anda lalu acc admin dulu !','section'=>'funding']);
         }
         function getStatistik($bisnis_object,$user_id){
              $bisnis = $bisnis_object;
@@ -115,7 +113,7 @@ class FundingController extends Controller
       public function show_bisnis(Request $request)
     {
        if(!$request->user()->accepted){
-            return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin']);
+            return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin','section'=>'funding']);
         }
         $user = User::where('id','=',$request->user()->id)->first();
         $data = $user->bisnisumkm()->filter(request(['cari']))->paginate(10);

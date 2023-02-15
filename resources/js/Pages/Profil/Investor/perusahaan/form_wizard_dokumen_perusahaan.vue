@@ -3,7 +3,7 @@
     <section class="mt-10">
       <div class="container">
         <div class="row gap-4">
-            <div id="myModal" class="modal" v-if="this.$page.props.auth.dokumenPerusahaanComplete && !this.$page.props.auth.user.accepted" >
+            <div id="myModal" class="modal" v-if="this.$page.props.auth.dokumenPerusahaanComplete && !this.$page.props.auth.user.accepted && this.popup" >
 
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
@@ -156,7 +156,8 @@ export default{
     return{
       currentStep : window.location.pathname.split('/')[2],
       currentPage : window.location.pathname.split('/')[2],
-      process:false
+      process:false,
+      popup:true
     }
   },
   setup () {
@@ -225,12 +226,38 @@ watch: {
           return
         }
  
+    },
+     removePopup(){
+     this.popup = false
     }
 }
 }
 </script>
 
 <style scoped>
+  .modal {
+  position: fixed; /* Stay in place */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 3rem;
+  margin-left: 25rem;
+  padding: 20px;
+  border-radius: 25px;
+  width: 40%;
+  text-align: center;
+}
 section {
   margin-top: 10rem !important;
 }
@@ -308,8 +335,11 @@ section {
 
 .custom-file-input2::-webkit-file-upload-button {
   visibility: hidden;
-
 }
+.modal-content{
+overflow-y: scroll;
+}
+
 .custom-file-input2::before {
   content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0  Ambil Gambar';
   display: inline-block;

@@ -11,15 +11,15 @@ return new class extends Migration
        Schema::create('usaha', function (Blueprint $table) {
          $table->id();
          $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-         $table->char('nama_perusahaan',100)->nullable();
-         $table->char('alamat_perusahaan',100)->nullable();
-         $table->char('status_perusahaan',50)->nullable();
+         $table->string('nama_perusahaan',255)->nullable();
+         $table->text('alamat_perusahaan')->nullable();
+         $table->string('status_perusahaan',50)->nullable();
          $table->text('legalitas')->nullable();
          $table->text('dokumen_amdal',)->nullable();
-         $table->char('informasi_pajak',100)->nullable();
-         $table->char('npwp',100)->nullable();
+         $table->string('informasi_pajak',100)->nullable();
+         $table->string('npwp',100)->nullable();
          $table->text('deskripsi_usaha')->nullable();
-         $table->char('email_perusahaan',100)->nullable();
+         $table->string('email_perusahaan',255)->nullable();
        });
      }
 
