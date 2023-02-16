@@ -173,7 +173,7 @@ const removePopup = () => {
 
 </script>
 
-<style>
+<style scoped>
 .foto_profil{
     border-radius: 50%;
     width: 60px;

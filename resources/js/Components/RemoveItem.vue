@@ -1,5 +1,5 @@
 <template>
-	   <div class="col-lg-8">
+     <div class="col-lg-8">
 
               <div id="myModal" class="modal" v-if="popup">
       <div class="modal-content">
@@ -27,30 +27,28 @@
 import { Link,useForm } from '@inertiajs/inertia-vue3'
 import { Inertia } from "@inertiajs/inertia";
 export default{
-	props:{
-		pesan:null,
-		url:null,
-		popup:Boolean,
-		itemDelete:Object,
+  props:{
+    pesan:null,
+    url:null,
+    popup:Boolean,
+    itemDelete:Object,
     lazy:null,
     delete:false
-	},
-	methods:{
-		closeQuit(){
-			this.popup = false;
-		},
-		hapusAction(){
+  },
+  methods:{
+    closeQuit(){
+      this.popup = false;
+    },
+    hapusAction(){
       this.$emit('toggleClose');
-			Inertia.post(this.url,this.itemDelete,{only:this.lazy,preserveState:true,preserveScroll:true});
-
-		}
-	},
-	components:{
-		Link
-	},
-	emits: ['toggleClose','spinClose'],
+      Inertia.post(this.url,this.itemDelete,{only:this.lazy,preserveState:true,preserveScroll:true});
+    }
+  },
+  components:{
+    Link
+  },
+  emits: ['toggleClose','spinClose'],
 }
-
 </script>
 <style scoped>
   .btn_custom_outline:hover {
@@ -60,9 +58,14 @@ export default{
   border-width: 0px;
   background-color: white;
 }
-	.modal {
+
+.modal-content{
+  height: 500px;
+  overflow-y: auto;
+ }
+  .modal {
   position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 90px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;
@@ -72,7 +75,6 @@ export default{
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
 }
-
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
@@ -83,8 +85,6 @@ export default{
   width: 40%;
   text-align: center;
 }
-
-
 @media (max-width: 575.98px) {
   .modal-content{
     margin-left: 3rem;
