@@ -331,10 +331,10 @@ Route::get('/contact',function(){
 
 
 
-Route::prefix('laporan/')->middleware(['auth','shouldAdmin'])->group(function () {
+Route::prefix('laporan/')->group(function () {
         Route::post('/',[PagesController::class,'laporan_post']);
-        Route::post('/tandai',[PagesController::class,'tandai']);
-        Route::post('/hapus',[PagesController::class,'hapus']);
+        Route::post('/tandai',[PagesController::class,'tandai'])->middleware(['auth','shouldAdmin']);
+        Route::post('/hapus',[PagesController::class,'hapus'])->middleware(['auth','shouldAdmin']);
 
 });
 

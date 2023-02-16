@@ -68,7 +68,6 @@ class PagesController extends Controller
                         ,'pesan'=>$request->post('isi'),
                           'tanggal'=>now(),
                           'gambar'=>$gambar]);
-        $get = User::where('id','=',$request->user()->id)->first();
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
              foreach ($admins as $admin) {
                  $updateNotif =  DB::table('users')->select('notif_pesan')->where('id','=',$admin->user_id)->first();

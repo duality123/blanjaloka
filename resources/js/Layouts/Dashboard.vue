@@ -122,7 +122,7 @@
                 <div class="d-flex align-items-center gap-2">
                   <img src="../assets/icons/icon_pesan_dashboard.png" alt="icon pesan" class="img-fluid">Pesan
                 </div>
-                <div class="bg-primary-blue-6 text-neutral-white fw-normal py-2 px-3 rounded" v-if="$page.props.auth.user.notif_pesan">{{$page.props.user.notif_pesan}}</div>
+                <div class="bg-primary-blue-6 text-neutral-white fw-normal py-2 px-3 rounded" v-if="$page.props.auth.user.notif_pesan">{{$page.props.auth.user.notif_pesan}}</div>
               </Link>
             </li>
           </ul>

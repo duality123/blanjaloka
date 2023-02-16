@@ -25,7 +25,7 @@
                   kedepannya.</p>
                 <div class="card text-white bg-neutral-gray-1 mb-3 " >
                 <div v-if="$page.props.auth.profil['foto_ktp'] != null" class="d-flex justify-content-center pt-3 mb-4">
-                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_ktp']}`" alt="update icon" style="overflow: hidden; width: 250px;" id="foto_ktp"  >
+                   <img :src="`${$page.props.asset_url}/${$page.props.auth.profil['foto_ktp']}`" alt="update icon" style="overflow: hidden; width: 10rem;" id="foto_ktp"  >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4">
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_ktp" >

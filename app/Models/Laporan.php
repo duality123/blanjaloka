@@ -11,7 +11,7 @@ use App\Models\Funding;
 class Laporan extends Model
 {
   protected $table = 'laporan';
-  protected $fillable =['pesan','email','gambar','tandai'];
+  protected $fillable =['pesan','email','gambar','tandai','tanggal'];
   public $timestamps = false; 
 
     public function scopeFilter($query,array $filters){

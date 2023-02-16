@@ -8,9 +8,10 @@ return new class extends Migration
 {
     public function up()
      {
-       Schema::create('pesan_laporan', function (Blueprint $table) {
+       Schema::create('laporan', function (Blueprint $table) {
          $table->id();
          $table->text('isi')->nullable();
+         $table->text('email')->nullable();
          $table->text('gambar')->nullable();
          $table->timestamp('tanggal')->nullable();
        });
@@ -18,7 +19,7 @@ return new class extends Migration
 
      public function down()
      {
-         dropIfExists('pesan_laporan');
+         dropIfExists('laporan');
      }
 
 };
