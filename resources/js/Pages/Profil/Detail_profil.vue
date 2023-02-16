@@ -192,7 +192,7 @@ export default{
       this.comment = !this.comment
     },
     submitComment(){
-      this.form.post('/detail/profil/'+this.role+'/'+this.user_id+'/beri_tanggapan')
+      this.form.post('/detail/profil/'+this.role+'/'+this.user_id+'/beri_tanggapan',{onSuccess: () => this.form.reset()},{preserveState:true})
     }
   }
 }
