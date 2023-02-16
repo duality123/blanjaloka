@@ -16,13 +16,13 @@ return new class extends Migration
          $table->text('swot_faktor_internal')->nullable();
          $table->text('swot_faktor_eksternal')->nullable();
          $table->tinyInteger('payback_period')->nullable();
-         $table->char('key_partners',100)->nullable();
-         $table->string('key_activity')->nullable();
-         $table->char('value_propotions',100)->nullable();
-         $table->string('customer_relationship')->nullable();
-         $table->char('channels',100)->nullable();
-         $table->char('cost_structure',100)->nullable();
-         $table->char('revenue_streams',100)->nullable();
+         $table->string('key_partners',1000)->nullable();
+         $table->text('key_activity')->nullable();
+         $table->string('value_propotions',100)->nullable();
+         $table->string('customer_relationship',255)->nullable();
+         $table->string('channels',500)->nullable();
+         $table->string('cost_structure',100)->nullable();
+         $table->string('revenue_streams',100)->nullable();
        });
      }
 
