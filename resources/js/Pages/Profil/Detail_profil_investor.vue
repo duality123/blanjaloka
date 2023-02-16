@@ -7,9 +7,7 @@
       <div class="col-lg-8">
         <div class="card">
             <div id="myModal" v-if="comment" class="modal" >
-
     <div  id="myModal" class="modal show" >
-
       <div class="modal-content">
         <div class=" d-flex justify-content-end">
          <button @click = "toggleComment()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="max-width: 20px;">
