@@ -67,7 +67,7 @@
                         <p class="text-neutral-gray-3">Format file .pdf, maks 10MB</p>
                       </div>
                        <div class="flex-grow-1" v-else-if="fileReviewer" >
-                        <a :href="`${$page.props.asset_url}/${fileReviewer}`" class="text-neutral-gray-5">Lihat Bukti</a>
+                        <a :href="`${$page.props.asset_url}/${fileReviewer}`" class="text-neutral-gray-5">Lihat dokumen</a>
                       </div>
                        <div class="flex-grow-1" v-else>
                         <p class="text-neutral-gray-5">{{form.file.name}}</p>
@@ -116,6 +116,7 @@ export default{
   },
   mounted(){
     this.previewImage = this.jawaban.gambar
+    this.fileReviewer = this.jawaban.file
   },
 
   components:{

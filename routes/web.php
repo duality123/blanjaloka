@@ -107,12 +107,12 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
             Route::post('/edit_logbook','edit_logbook');
             Route::post('/buat_logbook','buat_logbook');
             Route::get('/{slug}', 'deskripsi');
-            Route::get('/{slug}/elearning/', 'elearning');
-            Route::get('/materi/{slug}', 'materi');
+            Route::any('/{slug}/elearning/', 'elearning');
+            Route::any('/materi/{slug}', 'materi');
             Route::any('/eventual/{$page}', 'eventual');
-            Route::get('/materi_detail/{slug}/', 'detail_materi');
+            Route::any('/materi_detail/{slug}/', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
-            Route::get('/tugas_akhir/{slug}', 'tugas_akhir');
+            Route::any('/tugas_akhir/{slug}', 'tugas_akhir');
             Route::post('/tugas_akhir', 'tugas_akhir_post');
 
      });
@@ -171,20 +171,20 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
         Route::post('{slug}/hapus_eventual', 'hapus_eventual');
         Route::post('/tambah_elearning', 'add_elearning');
         Route::any('/{slug}/elearning/','list_elearning');
-        Route::get('/{slug}/detail', 'detail_kegiatan');
-        Route::get('/{slug}/edit', 'edit_kegiatan');
-        Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
+        Route::any('/{slug}/detail', 'detail_kegiatan');
+        Route::any('/{slug}/edit', 'edit_kegiatan');
+        Route::any('/elearning/{slug}/edit', 'edit_elearning_view');
         Route::post('/elearning/edit', 'edit_elearning_post');
         Route::any('/elearning/{slug1}/bab/', 'list_bab');
-        Route::get('/bab/{slug}/edit', 'edit_bab');
+        Route::any('/bab/{slug}/edit', 'edit_bab');
         Route::post('/bab/edit', 'edit_bab_post');
-        Route::get('/{slug1}/tambah_bab', 'tambah_bab');
+        Route::any('/{slug1}/tambah_bab', 'tambah_bab');
         Route::post('/tambah_bab', 'tambah_bab_post');
         Route::any('/{slug}/logbook/', 'list_logbook');
         Route::post('/logbook/ubah_status', 'ubah_status_logbook');
         Route::any('/{slug}/detail_logbook/{id}', 'list_user_logbook');
         Route::post('/edit_post', 'edit_kegiatan_post');
-        Route::get('/tambah_kegiatan/','tambah');
+        Route::any('/tambah_kegiatan/','tambah');
         Route::post('/tambah_kegiatan','tambah_kegiatan_post');
         Route::post('/ubah_eventual_status', 'ubah_eventual_status');
         Route::post('/tambah_investor', 'tambah_investor_post');
@@ -229,7 +229,6 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
        Route::post('/tambah_umkm',[InvestasiAdminController::class,'tambah_umkm_post']);
        Route::post('/hapus_umkm/',[InvestasiAdminController::class,'hapus_umkm']);
        Route::get('/{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
-      Route::get('{slug}/edit',[InvestasiAdminController::class,'edit_investasi']);
       Route::post('investasi/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
        Route::post('/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
    });
@@ -270,7 +269,7 @@ Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
         Route::any('janjitemu/', [InvestorController::class, 'janji_temu']);
         Route::prefix('kegiatan')->group(function () {
             Route::any('/', [InvestorController::class, 'kegiatan']);
-            Route::get('/{slug}', [InvestorController::class, 'deskripsi']);
+            Route::any('/{slug}', [InvestorController::class, 'deskripsi']);
             Route::any('daftar_umkm/{slug}', [InvestorController::class, 'daftar_umkm']);
             Route::get('keluar/{slug}', [InvestorController::class, 'leave_kegiatan']);
             Route::any('{slug1}/logbook/{slug2}',[InvestorController::class,'logbook_umkm']);

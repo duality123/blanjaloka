@@ -43,7 +43,9 @@
                           </button>
                         </div>
                          <h1 class="text-neutral-black mt-2">{{item.name}}</h1>
+                         <div class="d-flex justify-content-center mt-4 mb-4">
                            <button class="btn btn-primary-blue-6 me-2 px-3 text-neutral-white cursor-pointer" @click="redirect(item.id)">Lihat Bisnis</button>
+                         </div>
                          </div>
                           <div> 
                         </div>

@@ -108,6 +108,17 @@
                   </p>
                 </div> -->
                 <h2 class="text-neutral-gray-4 my-3">Jadwal Janji Temu yang Akan Datang</h2>
+                        <div class="col-xl-14 d-flex justify-content-start mb-2">
+        <MultiSearchJanjiTemu :url="`/umkm/dashboard/`" judul="Cari Jadwal janji temu" />
+         <div class="dropdown mx-3  ">
+              <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">Sudah selesai</Link></li>
+                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Belum Selesai</Link></li>
+              </ul>
+            </div>
+          </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="table-primary-blue-4">

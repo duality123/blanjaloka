@@ -7,7 +7,9 @@
                                 <p>
                                     Setelah menyelesaikan pembelajaran daring ini, pelaku UMKM diharapkan lebih paham bagaimana mengembangkan usaha bisnis mereka.
                                 </p>
-                                
+                    <div class="col-xl-8 d-flex justify-content-start mt-4 mb-4">
+                       <Search :url="`/umkm/dashboard/kegiatanku/${kegiatan.kegiatan_id}/elearning?page=1`" judul="Cari elearning berdasarkan judul " />  
+                    </div>   
                     <div class="row row-cols-1 row-cols-md-3 g-4" >
                       <div class="col" v-for="item in items.data">
                         <div class="card">
@@ -32,6 +34,7 @@
 <script>
 import Layout from '../../../Layouts/Kegiatanku.vue'
 import Pagination from '../../../Components/Pagination.vue'
+import Search from '../../../Components/Search.vue';
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ref } from 'vue';
 export default{
@@ -45,7 +48,8 @@ export default{
   components:{
     Layout,
     Link,
-    Pagination
+    Pagination,
+    Search
   },
   mounted(){
 
