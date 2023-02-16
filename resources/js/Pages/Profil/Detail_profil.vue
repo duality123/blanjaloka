@@ -19,17 +19,14 @@
       <form @submit.prevent="submitComment()">
         <small>Contoh : ( Foto KTP kurang jelas )</small>
         <input type="text" v-model="form.pesan" class="form-control">
+          <small class="text-danger text-center" v-if="form.errors.pesan">{{form.errors.pesan}}</small>
           <div class="mt-2">
           <button type="submit" class="btn btn-primary-blue-6 text-neutral-white">Kirim</button>
         </div>
       </form>
       </div>
 </div>
-</div>
-
-
-
-  
+</div>  
           <section class="mb-5">
              <div class="d-flex flex-column">
          <div class="p-2"><h2 class="text-neutral-gray-5">Profil Diri</h2></div>

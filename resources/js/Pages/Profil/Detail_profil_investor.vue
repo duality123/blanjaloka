@@ -19,6 +19,7 @@
       <form @submit.prevent="submitComment()">
         <small>Contoh : ( Foto KTP kurang jelas )</small>
         <input type="text" v-model="form.pesan" class="form-control">
+         <small class="text-danger text-center" v-if="form.errors.pesan">{{form.errors.pesan}}</small>
           <div class="mt-2">
           <button type="submit" class="btn btn-primary-blue-6 text-neutral-white">Kirim</button>
         </div>
@@ -74,7 +75,7 @@
           <div class="p-2" v-if="data.dokumen_perusahaan.foto_npwp_perusahaan"><img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_npwp_perusahaan}`"></div>
           <div class="p-2" v-else><img  class="mt-2 mb-2" src="../../assets/images/user_profile_img.png"></div>
     
-          <div class="p-2"><strong>No NPWP Perusahaan</strong>{{data.dokumen_perusahaan.no_npwp_perusahaan}}</div>
+          <div class="p-2"><strong>No NPWP Perusahaan: </strong>{{data.dokumen_perusahaan.no_npwp_perusahaan}}</div>
           <div class="p-2"><strong>Foto KTP PIC: </strong></div>
           <div class="p-2" v-if="data.dokumen_perusahaan.foto_ktp_pic">
           <img class="mt-2 mb-2" :src="`${this.$page.props.asset_url}/${data.dokumen_perusahaan.foto_ktp_pic}`">

@@ -83,6 +83,15 @@ class UserController extends Controller
 
      public function beri_tanggapan(Request $request,$role,$id)
     {
+        $rules = [
+            'pesan' => 'required'
+        ];
+
+        $customMessages = [
+            'required' => 'Harap diisi bagian ini !.',
+
+        ];
+        $this->validate($request, $rules, $customMessages);
          $redirect = '';
         if ($role == 'investor') {
             $redirect = '/investor/profil/1';
