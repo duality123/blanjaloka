@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import BaseLayout from '../../Layouts/LayoutInvestor.vue'
-import InvestorDashboardSidebar from '../../Components/InvestorDashboardSidebar.vue'
+import BaseLayout from '../../../Layouts/LayoutInvestor.vue'
+import InvestorDashboardSidebar from '../../../Components/InvestorDashboardSidebar.vue'
 import { ref } from 'vue'
 import { useForm } from "@inertiajs/inertia-vue3";
 export default{
