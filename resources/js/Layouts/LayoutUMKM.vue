@@ -187,7 +187,20 @@ const removePopup = () => {
 }
 
 </script>
-<style scoped>
+
+<style>
+.foto_profil{
+    border-radius: 50%;
+    width: 60px;
+    height: 50px;
+}
+.nav-link,
+a.btn {
+    font-weight: 600;
+}
+.user_profile_menu {
+    cursor: pointer;
+}
     .modal {
   position: fixed; /* Stay in place */
   padding-top: 100px; /* Location of the box */
@@ -210,20 +223,6 @@ const removePopup = () => {
   border-radius: 25px;
   width: 40%;
   text-align: center;
-}
-</style>
-<style>
-.foto_profil{
-    border-radius: 50%;
-    width: 60px;
-    height: 50px;
-}
-.nav-link,
-a.btn {
-    font-weight: 600;
-}
-.user_profile_menu {
-    cursor: pointer;
 }
 .modal-content{
   height: 450px;
