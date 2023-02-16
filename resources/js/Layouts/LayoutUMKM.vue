@@ -7,7 +7,7 @@
     <header class="fixed-top">
         <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.usahaComplete  || !$page.props.auth.produkComplete ||!$page.props.auth.finansialComplete' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
-            <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
+            <Link v-if="!$page.props.auth.profileComplete" href="umkm/profil/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</Link>
              <Link v-else-if="!$page.props.auth.usahaComplete " href="/umkm/dashboard/profil_usaha/"

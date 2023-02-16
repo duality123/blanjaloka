@@ -7,13 +7,13 @@
     <header class="fixed-top">
                 <div v-if = '!$page.props.auth.profileComplete || !$page.props.auth.profilPerusahaanComplete || !$page.props.auth.dokumenPerusahaanComplete ' class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2 gap-lg-4 py-2 bg-primary-blue-6">
             <p class="text-neutral-white mb-0">Silakan lengkapi data diri Anda</p>
-            <Link v-if="!$page.props.auth.profileComplete" href="/profil/1"
+            <Link v-if="!$page.props.auth.profileComplete" href="investor/profil/1"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Profil</Link>
              <Link v-else-if="!$page.props.auth.profilPerusahaanComplete" href="/investor/dashboard/profil_perusahaan"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi Profil Perusahaan  </Link>
 
-             <Link v-else-if="!$page.props.auth.dokumenPerusahaanComplete" href="/umkm/dashboard/dokumen_perusahaan"
+             <Link v-else-if="!$page.props.auth.dokumenPerusahaanComplete" href="/investor/dashboard/dokumen_perusahaan"
                 class="btn btn-outline-primary-blue-6 py-2 text-neutral-white border border-white btn_custom_outline">Lengkapi
                 Dokumen Perusahaan</Link>
        
