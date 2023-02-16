@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-2 sidebar">
     <ul>
-      <li :class="{ 'active': section=='dashboard','lowerOpacity':!$page.props.auth.user.accepted }">
+      <li :class="{ 'active': section=='dashboard' }">
         <Link href="/umkm/dashboard?page=1" class="text-neutral-black">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

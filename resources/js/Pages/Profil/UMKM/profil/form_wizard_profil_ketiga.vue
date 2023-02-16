@@ -31,11 +31,11 @@
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_ktp" >
                 </div>
     
-                <div class="row" style="margin-left:2px" >
+                <div class="row" style="margin-left:1px" >
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp')"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
+                <div class="col d-flex justify-content-center">
                 <p class="text-primary" >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
@@ -56,11 +56,11 @@
                    <img src="../../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="foto_selfie_ktp" >
                 </div>
     
-                <div class="row" style="margin-left:2px" >
+                <div class="row" style="margin-left:1px" >
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" class="custom-file-input " @change="changePicture($event,'foto_selfie_ktp')"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-between">
+                <div class="col d-flex justify-content-center">
                 <p class="text-primary" >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
