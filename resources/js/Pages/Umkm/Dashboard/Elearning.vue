@@ -11,8 +11,10 @@
                     <div class="row row-cols-1 row-cols-md-3 g-4" >
                       <div class="col" v-for="item in items.data">
                         <div class="card">
-                          <img :src="`${this.$page.props.asset_url}/${item.foto}`" style="width:250px; height:250px" class="card-img-top" alt="...">
                           <div class="card-body">
+                            <div class=" d-flex justify-content-center">
+                             <img :src="`${this.$page.props.asset_url}/${item.foto}`" style="width:250px; height:250px" class="card-img-top" alt="...">
+                         </div>
                             <h5 class="card-title">{{item.judul}}</h5>
                             <p class="card-text">{{item.deskripsi}}</p>
                             <Link :href="`/umkm/dashboard/kegiatanku/materi/${item.id}`" class="btn btn-primary d-block">Ikuti Pembelajaran</Link>

@@ -24,7 +24,7 @@
   </a>
 
   <ul class="dropdown-menu-end dropdown-menu">
-    <li><Link :href="`/admin/kegiatan/${item.id}/edit`" class="dropdown-item" href="#">Edit</Link></li>
+    <li><Link :href="`/admin/kegiatan/elearning/${item.id}/edit`" class="dropdown-item" href="#">Edit</Link></li>
     <li><button @click="switchClose(item.id)" class="dropdown-item delete" href="#">Hapus</button></li>
   </ul>
 </div>

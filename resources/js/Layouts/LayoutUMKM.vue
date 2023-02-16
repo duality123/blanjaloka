@@ -187,21 +187,8 @@ const removePopup = () => {
 }
 
 </script>
-
-<style>
-.foto_profil{
-    border-radius: 50%;
-    width: 60px;
-    height: 50px;
-}
-.nav-link,
-a.btn {
-    font-weight: 600;
-}
-.user_profile_menu {
-    cursor: pointer;
-}
-    .modal {
+<style scoped>
+.modal {
   position: fixed; /* Stay in place */
   padding-top: 100px; /* Location of the box */
   left: 0;
@@ -228,6 +215,21 @@ a.btn {
   height: 450px;
   overflow-y: auto;
  }
+</style>
+<style>
+.foto_profil{
+    border-radius: 50%;
+    width: 60px;
+    height: 50px;
+}
+.nav-link,
+a.btn {
+    font-weight: 600;
+}
+.user_profile_menu {
+    cursor: pointer;
+}
+
 .notif_badge {
     width: 2rem;
     height: 2rem;

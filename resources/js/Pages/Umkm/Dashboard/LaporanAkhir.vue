@@ -31,7 +31,7 @@
               <label for="kontak_nomor_pic" class="form-label text-neutral-gray-5">Gambar</label>
           <div class="card text-white bg-neutral-gray-1 mb-3  " style="overflow: hidden; width: 30rem;">
             <div class="d-flex justify-content-center pt-3 mb-4" v-if="this.previewImage">
-                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 10%;" id="img" >
+                   <img :src="`${$page.props.asset_url}/${this.previewImage}`" alt="update icon" style="overflow: hidden; width: 60%;" id="img" >
                 </div>
                 <div v-else class="d-flex justify-content-center pt-3 mb-4" >
                    <img src="../../../assets/icons/photo.png" alt="update icon" style="width:10%" id="img" >
@@ -70,7 +70,7 @@
                         <a :href="`${$page.props.asset_url}/${fileReviewer}`" class="text-neutral-gray-5">Lihat Bukti</a>
                       </div>
                        <div class="flex-grow-1" v-else>
-                        <p class="text-neutral-gray-5">form.file.name</p>
+                        <p class="text-neutral-gray-5">{{form.file.name}}</p>
                       </div>
                       <div class="position-relative">
                         <p class="text-primary-blue-6">Pilih</p>
@@ -114,6 +114,9 @@ export default{
 
     return {form}
   },
+  mounted(){
+    this.previewImage = this.jawaban.gambar
+  },
 
   components:{
     Layout,
@@ -140,7 +143,7 @@ export default{
             }
         var image = document.getElementById('img');
         image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.width = '10rem';
+        image.style.width = '13rem';
         image.style.overflow = 'hidden';
         this.form.gambar = event.target.files[0];
       }

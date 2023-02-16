@@ -1,24 +1,24 @@
 <template>
-  <Layout state="elearning" :title="elearning.bab[this.currentPage-1].judul" :link="elearning.kegiatan_id">
+  <Layout state="elearning" :title="bab.judul" :link="bab.elearning.kegiatan_id">
            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">E-learning</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{elearning.judul}}</li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{elearning.bab[this.currentPage-1].judul}}</li>
+                                        <li class="breadcrumb-item"><Link :href="`/umkm/dashboard/kegiatanku/${bab.elearning.kegiatan_id}`">{{bab.elearning.kegiatan.tema}}</Link></li>
+                                        <li class="breadcrumb-item active" aria-current="page"><Link :href="`/umkm/dashboard/kegiatanku/materi/${bab.elearning.id}`">{{bab.elearning.judul}}</Link></li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{bab.judul}}</li>
                                     </ol>
                                 </nav>
                                 
-                                  <iframe width="800" height="315"
-                                    :src="`${elearning.bab[this.currentPage-1].link_video}`">
+                                  <iframe width="860" height="500"
+                                    :src="`${bab.link_video}`">
                                 </iframe>
 
                                 <h3 class="mt-4"></h3>
                                 <p>
-                                   {{elearning.bab[this.currentPage-1].deskripsi}}
+                                   {{bab.deskripsi}}
                                 </p>
                                 
                                 <div v-if="next" class="float-end">
-                                    <Link :href="`/umkm/dashboard/kegiatanku/elearning/materi/detail/${elearning.id}/${next.bab}`" class="btn btn-outline-primary">Bab Selanjutnya</Link>
+                                    <Link :href="`/umkm/dashboard/kegiatanku/materi_detail/${next.id}`" class="btn btn-outline-primary">Bab Selanjutnya</Link>
                                 </div>
                                 
   </Layout>
@@ -46,7 +46,7 @@ export default{
   methods:{
   },
   props:{
-    elearning:Object,
+    bab:Object,
     next:Object
   }
 }

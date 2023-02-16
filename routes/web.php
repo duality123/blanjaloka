@@ -75,7 +75,7 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
         Route::get('/', 'index');
         Route::get('/notifikasi', 'notifikasi');
     });
-    Route::get('/beranda', [UmkmDashboardController::class, 'beranda']);
+    Route::any('/beranda', [UmkmDashboardController::class, 'beranda']);
     Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
     Route::get('1', [ProfilController::class, 'form_wizard_profil_pertama']);
     Route::get('2', [ProfilController::class, 'form_wizard_profil_kedua']);
@@ -90,29 +90,28 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
     // umkm dashboard route
     Route::prefix('dashboard')->controller(UmkmDashboardController::class)->group(function () {
         Route::prefix('funding')->controller(FundingController::class)->group(function () {
-              Route::get('/', 'show_bisnis');
+              Route::any('/', 'show_bisnis');
                Route::get('/{slug}', 'deskripsi_bisnis');
-               Route::get('{slug}/daftar_investor/', 'list_investor_investasi');
-                Route::get('{slug}/daftar_umkm/', 'list_funding_umkm');
-              Route::get('{slug}/data_fundingku/', 'fundingku');
+               Route::any('{slug}/daftar_investor/', 'list_investor_investasi');
+                Route::any('{slug}/daftar_umkm/', 'list_funding_umkm');
+              Route::any('{slug}/data_fundingku/', 'fundingku');
               Route::get('{slug}/keluar/', 'leave_funding');
         });
-        Route::get('/', 'index');
-        Route::get('/beranda/{slug}', 'beranda');
+        Route::any('/', 'index');
+        Route::any('/beranda/{slug}', 'beranda');
         
         Route::prefix('kegiatanku')->group(function () {
-            Route::get('/', 'kegiatanku');
-            Route::get('/logbook/{slug}', 'umkmjurnal');
+            Route::any('/', 'kegiatanku');
+            Route::any('/logbook/{slug}', 'umkmjurnal');
             Route::post('/tambah_eventual', 'tambah_eventual');
             Route::post('/edit_logbook','edit_logbook');
             Route::post('/buat_logbook','buat_logbook');
             Route::get('/{slug}', 'deskripsi');
             Route::get('/{slug}/elearning/', 'elearning');
             Route::get('/materi/{slug}', 'materi');
-            Route::get('/eventual/{$page}', 'eventual');
-            Route::get('/materi/detail/{slug}/{page2}', 'detail_materi');
+            Route::any('/eventual/{$page}', 'eventual');
+            Route::get('/materi_detail/{slug}/', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
-            Route::get('/eventual/{slug}', 'eventual');
             Route::get('/tugas_akhir/{slug}', 'tugas_akhir');
             Route::post('/tugas_akhir', 'tugas_akhir_post');
 
@@ -152,38 +151,38 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
 // admin route
 Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
     // admin dashboard route
-    Route::get('dashboard/', [DashboardController::class, 'index']);
+    Route::any('dashboard/', [DashboardController::class, 'index']);
     // admin kegiatan route
     
  
     Route::prefix('kegiatan')->controller(KegiatanController::class)->group(function () {
-        Route::get('/', 'index');
+        Route::any('/', 'index');
         Route::post('/edit_deskripsi', 'edit_deskripsi');
-        Route::get('/{slug}/tambah_elearning', 'tambah_elearning'); 
-        Route::get('/{slug1}/eventual/', 'list_eventual');
-        Route::get('/{slug1}/publikasi/', 'publikasi');
+        Route::any('/{slug}/tambah_elearning', 'tambah_elearning'); 
+        Route::any('/{slug1}/eventual/', 'list_eventual');
+        Route::any('/{slug1}/publikasi/', 'publikasi');
         Route::post('/ubah_status_publikasi/', 'ubah_status_kelulusan');
         Route::any('/{slug}/investor/', 'daftar_investor');
         Route::any('/{slug}/umkm/', 'daftar_umkm');
         Route::post('/hapus_kegiatan', 'hapus_kegiatan');
-        Route::get('/{slug}/tugas_akhir', 'tugas_akhir');
+        Route::any('/{slug}/tugas_akhir', 'tugas_akhir');
         Route::post('/hapus_elearning', 'hapus_elearning');
         Route::post('/hapus_bab', 'hapus_bab');
         Route::post('{slug}/hapus_eventual', 'hapus_eventual');
         Route::post('/tambah_elearning', 'add_elearning');
-        Route::get('/{slug}/elearning/','list_elearning');
+        Route::any('/{slug}/elearning/','list_elearning');
         Route::get('/{slug}/detail', 'detail_kegiatan');
         Route::get('/{slug}/edit', 'edit_kegiatan');
         Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
         Route::post('/elearning/edit', 'edit_elearning_post');
-        Route::get('/elearning/{slug1}/bab/', 'list_bab');
+        Route::any('/elearning/{slug1}/bab/', 'list_bab');
         Route::get('/bab/{slug}/edit', 'edit_bab');
         Route::post('/bab/edit', 'edit_bab_post');
         Route::get('/{slug1}/tambah_bab', 'tambah_bab');
         Route::post('/tambah_bab', 'tambah_bab_post');
-        Route::get('/{slug}/logbook/', 'list_logbook');
+        Route::any('/{slug}/logbook/', 'list_logbook');
         Route::post('/logbook/ubah_status', 'ubah_status_logbook');
-        Route::get('/{slug}/detail_logbook/{id}', 'list_user_logbook');
+        Route::any('/{slug}/detail_logbook/{id}', 'list_user_logbook');
         Route::post('/edit_post', 'edit_kegiatan_post');
         Route::get('/tambah_kegiatan/','tambah');
         Route::post('/tambah_kegiatan','tambah_kegiatan_post');
@@ -201,11 +200,11 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
 
        Route::any('janjitemu/',[JanjitemuController::class,'index']);
        Route::post('tambah_janji_temu/',[JanjitemuController::class,'create']);
-       Route::get('tambah_janji_temu_view/',[JanjitemuController::class,'tambah_janji_temu_view']);
-       Route::get('ubah_janji_temu_view/{slug}',[JanjitemuController::class,'edit_janji_temu_view']);
+       Route::any('tambah_janji_temu_view/',[JanjitemuController::class,'tambah_janji_temu_view']);
+       Route::any('ubah_janji_temu_view/{slug}',[JanjitemuController::class,'edit_janji_temu_view']);
        Route::post('edit_janji_temu/',[JanjitemuController::class,'edit']);
        Route::post('hapus_janjitemu/',[JanjitemuController::class,'delete']);
-       Route::get('investasi/',[InvestasiAdminController::class,'index']);
+       Route::any('investasi/',[InvestasiAdminController::class,'index']);
 
 
     Route::prefix('investasi')->controller(InvestasiAdminController::class)->group(function () {
@@ -217,14 +216,14 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
        Route::post('/edit_record_investor',[InvestasiAdminController::class,'edit_investasi_investor_post']);
        Route::post('/edit_record_umkm',[InvestasiAdminController::class,'edit_umkm_funding_post']);
         Route::post('/submit_record_umkm',[InvestasiAdminController::class,'tambah_funding_umkm']);
-       Route::get('/{slug}/investor_investasi',[InvestasiAdminController::class,'list_investor_investasi']);
-        Route::get('/{slug}/umkm_funding',[InvestasiAdminController::class,'list_umkm_funding']);
+       Route::any('/{slug}/investor_investasi',[InvestasiAdminController::class,'list_investor_investasi']);
+        Route::any('/{slug}/umkm_funding',[InvestasiAdminController::class,'list_umkm_funding']);
        Route::any('/{slug}/investor',[InvestasiAdminController::class,'daftar_investor']);
        Route::any('/{slug}/umkm',[InvestasiAdminController::class,'daftar_umkm']);
        Route::post('/hapus_investasi_investor',[InvestasiAdminController::class,'hapus_investasi_investor_post']);
        Route::post('/hapus_funding_umkm/',[InvestasiAdminController::class,'hapus_funding_umkm_post']);
-       Route::get('/{slug}/detail_investasi/{slug2}',[InvestasiAdminController::class,'investor_investasi_detail']);
-        Route::get('/{slug}/detail_funding/{slug2}',[InvestasiAdminController::class,'umkm_funding_detail']);
+       Route::any('/{slug}/detail_investasi/{slug2}',[InvestasiAdminController::class,'investor_investasi_detail']);
+        Route::any('/{slug}/detail_funding/{slug2}',[InvestasiAdminController::class,'umkm_funding_detail']);
        Route::post('/hapus_investor',[InvestasiAdminController::class,'hapus_investor']);
        Route::post('/tambah_investor',[InvestasiAdminController::class,'tambah_investor_post']);
        Route::post('/tambah_umkm',[InvestasiAdminController::class,'tambah_umkm_post']);
@@ -235,19 +234,19 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
        Route::post('/edit_post',[InvestasiAdminController::class,'edit_investasi_post']);
    });
      Route::prefix('info_admin')->controller(InvestasiAdminController::class)->group(function () {
-         Route::get('/',[InformasiController::class,'daftar_informasi']);
+         Route::any('/',[InformasiController::class,'daftar_informasi']);
          Route::post('/tambah_info',[InformasiController::class,'tambah_informasi']);
          Route::post('/tandai',[InformasiController::class,'tandai_informasi']);
          Route::post('/edit_info',[InformasiController::class,'edit_informasi']);
          Route::post('/hapus_info',[InformasiController::class,'hapus_informasi']);
    });
        
-   Route::get('/pesan',[PagesController::class,'laporan_all']);
+   Route::any('/pesan',[PagesController::class,'laporan_all']);
 
     Route::prefix('pengguna')->group(function () {
         Route::post('/ubah_password', [UserController::class, 'ubah_password']);
         Route::post('/tambah_user', [UserController::class, 'tambah_user']);
-        Route::get('/{role}', [UserController::class, 'all']);
+        Route::any('/{role}', [UserController::class, 'all']);
         Route::post('hapus_user', [UserController::class, 'delete']);
     });
 });
@@ -265,25 +264,25 @@ Route::prefix('/profil/')->middleware(['auth','verified'])->group(function () {
         Route::post('wizard_ketiga', [ProfilInvestorController::class, 'process_wizard_profil_ketiga']);
     });
     });
-    Route::get('/beranda', [InvestorController::class, 'beranda']);
+    Route::any('/beranda', [InvestorController::class, 'beranda']);
     Route::prefix('dashboard/')->middleware(['auth','verified'])->group(function () {
-        Route::get('/', [InvestorController::class, 'dashboard']);
+        Route::any('/', [InvestorController::class, 'dashboard']);
         Route::any('janjitemu/', [InvestorController::class, 'janji_temu']);
         Route::prefix('kegiatan')->group(function () {
-            Route::get('/', [InvestorController::class, 'kegiatan']);
+            Route::any('/', [InvestorController::class, 'kegiatan']);
             Route::get('/{slug}', [InvestorController::class, 'deskripsi']);
-            Route::get('daftar_umkm/{slug}', [InvestorController::class, 'daftar_umkm']);
+            Route::any('daftar_umkm/{slug}', [InvestorController::class, 'daftar_umkm']);
             Route::get('keluar/{slug}', [InvestorController::class, 'leave_kegiatan']);
-            Route::get('{slug1}/logbook/{slug2}',[InvestorController::class,'logbook_umkm']);
-            Route::get('{slug1}/laporan/{slug2}',[InvestorController::class,'tugas_akhir_umkm']);
+            Route::any('{slug1}/logbook/{slug2}',[InvestorController::class,'logbook_umkm']);
+            Route::any('{slug1}/laporan/{slug2}',[InvestorController::class,'tugas_akhir_umkm']);
 
            });
         Route::prefix('bisnisku')->group(function () {
-            Route::get('daftar_umkm/{slug}',[InvestorController::class,'list_umkm']);
-            Route::get('daftar_investor/{slug}',[InvestorController::class,'list_investor']);
-            Route::get('investasi/{slug}',[InvestorController::class,'investasiku']);
+            Route::any('daftar_umkm/{slug}',[InvestorController::class,'list_umkm']);
+            Route::any('daftar_investor/{slug}',[InvestorController::class,'list_investor']);
+            Route::any('investasi/{slug}',[InvestorController::class,'investasiku']);
             Route::get('/{slug}',[InvestorController::class,'deskripsi_bisnis']);
-            Route::get('/',[InvestorController::class,'show_bisnis']);
+            Route::any('/',[InvestorController::class,'show_bisnis']);
             Route::get('keluar/{slug}',[InvestorController::class,'keluar_bisnis']);
 
         });

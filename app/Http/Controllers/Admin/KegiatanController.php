@@ -61,8 +61,8 @@ class KegiatanController extends Controller
             $message = 'Eventual anda telah selesai';
         }
         Notifikasi::create(['nama'=>$message,'pesan'=>$message.' pada kegiatan '.$event->kegiatan->tema .' dengan perihal '.$event->perihal.'di waktu '. $data['jadwal'] ,'user_id'=>$event->profil->user_id,'tanggal'=>now()]);
-        $umkmNotif = User::select('notifikasi')->where('id',$event->profil->user_id)->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$event->profil->user_id);
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         $request->session()->flash('success','Status eventual berhasil diubah');
         return back();
@@ -115,12 +115,12 @@ class KegiatanController extends Controller
     }
 
     public function tambah_bab(Request $request,$slug){
-        $elearning = Elearning::select('judul','id','elearning_id')->where('id','=',$slug)->first();
+        $elearning = Elearning::select('judul','kegiatan_id','id')->where('id','=',$slug)->first();
         return Inertia::render('Dashboard/Kegiatan/Tambah_bab',['elearning'=>$elearning]);
     }
 
     public function edit_bab(Request $request,$slug){
-        $bab = BabElearning::with('elearning:id,judul')->select('judul','deskripsi','link_video','bab','id','elearning_id','slug')->where('id','=',$slug)->first();
+        $bab = BabElearning::with('elearning:id,judul,kegiatan_id')->select('judul','deskripsi','link_video','bab','id','elearning_id')->where('id','=',$slug)->first();
         return Inertia::render('Dashboard/Kegiatan/Edit_bab',['bab'=>$bab]);
     }
 
@@ -146,14 +146,14 @@ class KegiatanController extends Controller
         $bab=  BabElearning::where('id','=',$request->post('id'))->first();
         $bab->update($data);
         $request->session()->flash('success','Bab berhasil diubah');
-        return redirect('/admin/kegiatan/elearning/'.$request->post('elearning_slug').'/bab');
+        return redirect('/admin/kegiatan/elearning/'.$request->post('elearning_id').'/bab');
     }
 
 
     public function tambah_bab_post(Request $request){
         $rules = [
             'deskripsi' => 'required',
-            'judul' => 'required|255',
+            'judul' => 'required|max:255',
             'link_video' =>'required',
             'bab' => 'required',
         ];
@@ -171,7 +171,7 @@ class KegiatanController extends Controller
         $data['link_video'] = $request->post('link_video');
         $data['bab'] = $request->post('bab');
         $request->session()->flash('success','Bab berhasil ditambah');
-        BabElearning::create($data);
+        $data = BabElearning::create($data);
         return back();
     }
 
@@ -181,7 +181,7 @@ class KegiatanController extends Controller
        
         $rules = [
             'waktu' => 'required',
-            'judul' => 'required|255',
+            'judul' => 'required|max:255',
             'gambar' =>'required',
             'deskripsi' => 'required',
         ];
@@ -201,12 +201,12 @@ class KegiatanController extends Controller
         $data['kegiatan_id'] = $request->post('kegiatan_id');
         $elearning = Elearning::create($data);
         $request->session()->flash('success','Elearning berhasil ditambah');
-        return redirect('/admin/kegiatan/elearning/'.$elearning->kegiatan->id.'/bab');
+        return redirect('/admin/kegiatan/elearning/'.$elearning->id.'/bab');
     }
 
     public function edit_elearning_view(Request $request,$slug){
        
-    $data =   Elearning::select('hari_tanggal_waktu','deskripsi','judul','foto','id')->where('id','=',$slug)->first();
+    $data =   Elearning::select('hari_tanggal_waktu','deskripsi','judul','foto','id','kegiatan_id')->where('id','=',$slug)->first();
 
     return Inertia::render('Dashboard/Kegiatan/Edit_elearning',['elearning'=>$data]);
 
@@ -217,7 +217,7 @@ class KegiatanController extends Controller
        
         $rules = [
             'waktu' => 'required',
-            'judul' => 'required|255',
+            'judul' => 'required|max:255',
             'deskripsi' => 'required',
         ];
 
@@ -267,7 +267,7 @@ class KegiatanController extends Controller
         $event = Eventual::with(['profil:id,user_id','kegiatan:id,tema'])->where('id','=',$id)->first();
         Notifikasi::create(['nama'=>'Eventual Dibatalkan','pesan'=>'Eventual yang anda minta pada kegiatan '.$event->kegiatan->tema.' tanggal '.$event->jadwal. ' sudah dihapus. Kontak admin bila terjadi kesalahan','user_id'=>$event->profil->user_id,'tanggal'=>now()]);
         $umkmNotif = User::select('notifikasi')->where('id',$event->profil->user_id)->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $updateNotif = $umkmNotif->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         $event = Eventual::where('id','=',$id);
         $event->delete();
@@ -308,8 +308,8 @@ class KegiatanController extends Controller
         else{
         Notifikasi::create(['nama'=>'Laporan anda ditolak','pesan'=>'Mohon perbaiki lagi laporannya pada kegiatan'.$kegiatan->tema.' di waktu '.$request->post('waktu'),'user_id'=>$request->post('user_id'),'tanggal'=>now()]);
         }
-        $umkmNotif = User::select('notifikasi')->where('id',$request->post('user_id'))->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$request->post('user_id'));
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         $request->session()->flash('success','Status berhasil diubah');
         return back();
@@ -399,7 +399,7 @@ class KegiatanController extends Controller
             'masa_inkubasi'=>'required',
             'kurikulum'=>'required|max:100',
             'nama_juri'=>'required|max:500',
-            'pic'=>'required|255',
+            'pic'=>'required|max:255',
             'kontak'=>'required|max:200',
             'draft'=>'required',
             'dimulai'=>'required',
@@ -458,7 +458,7 @@ class KegiatanController extends Controller
        */  
     $request->session()->flash('success','Kegiatan berhasil dibuat');
 
-      return back();
+      return redirect('/admin/kegiatan?page=1');
     }
 
     public function tambah_kegiatan_post(Request $request)
@@ -472,7 +472,7 @@ class KegiatanController extends Controller
             'masa_inkubasi'=>'required',
             'kurikulum'=>'required|max:100',
             'nama_juri'=>'required|max:500',
-            'pic'=>'required|255',
+            'pic'=>'required|max:255',
             'kontak'=>'required|max:200',
             'draft'=>'required',
             'dimulai'=>'required',
@@ -619,8 +619,9 @@ class KegiatanController extends Controller
             }
         $data->investor()->attach($investor,['investor_foreign'=>$investor,'kegiatan_foreign'=>$data->id]);
         $notif =  Notifikasi::create(['nama'=>'Anda diundang ke kegiatan','pesan'=>'Anda diundang ke kegiatan '.$data->tema,'user_id'=>$investor,'redirect'=>'/investor/dashboard/kegiatan/'.$data->id,'waktu'=>now()]);
-        $invNotif = User::select('notifikasi')->where('id',$investor)->first();
-        $invNotif->update(['notifikasi'=>$invNotif->notifikasi+=1]);
+        $invNotif = User::select('notifikasi')->where('id',$investor);
+        $upNotif = $invNotif->first()->notifikasi+1;
+        $invNotif->update(['notifikasi'=>$upNotif]);
         $request->session()->flash('success','Investor berhasil ditambah');
         return back();
 
@@ -649,8 +650,8 @@ class KegiatanController extends Controller
         $data->umkm()->attach($umkm,['umkm_foreign'=>$umkm,'kegiatan_foreign'=>$data->id]);
              Notifikasi::create(['nama'=>'Anda diundang ke kegiatan','pesan'=>'Anda diundang ke kegiatan '.$data->tema,'user_id'=>$umkm,'redirect'=>'/umkm/dashboard/kegiatanku/'.$data->id,'waktu'=>now()]);
              
-        $umkmNotif = User::select('notifikasi')->where('id',$umkm)->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$umkm);
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
 
         
@@ -667,8 +668,9 @@ class KegiatanController extends Controller
         $data->investor()->detach($request->post('id'));
         $request->session()->flash('success','Investor berhasil dihapus');
         Notifikasi::create(['nama'=>'dikeluarkan dari  kegiatan','pesan'=>'Anda dikeluarkan dari kegiatan '.$data->tema,'user_id'=>$request->post('id'),'waktu'=>now()]);
-        $invNotif = User::select('notifikasi')->where('id',$request->post('id'))->first();
-        $invNotif->update(['notifikasi'=>$invNotif->notifikasi+=1]);
+        $invNotif = User::select('notifikasi')->where('id',$request->post('id'));
+        $upNotif =$invNotif->first()->notifikasi+1;
+        $invNotif->update(['notifikasi'=>$upNotif]);
         return back();
      }
 
@@ -684,7 +686,7 @@ class KegiatanController extends Controller
                          ->where('kegiatan_umkm.kegiatan_id','=',$slug)
                          ->orderBy('profil.nama_lengkap','asc')
                          ->paginate(10);
-     $jawaban = $kegiatan->TugasAkhirJawaban()->where('user_id','=',$request->get('user_id'))->first();
+     $jawaban = $kegiatan->TugasAkhirJawaban()->where('user_id','=',$request->get('user_id'))->first()? $kegiatan->TugasAkhirJawaban()->where('user_id','=',$request->get('user_id'))->first():['kosong'=>'UMKM belum mengirimkan jawaban'];
       return Inertia::render('Dashboard/Kegiatan/Tugas_Akhir',['kegiatan'=>$kegiatan,'tugas'=>$soal,'targetJawaban'=>Inertia::lazy(fn () =>$jawaban),'users'=>$users]);
      }
 
@@ -726,8 +728,8 @@ class KegiatanController extends Controller
         $data->umkm()->detach($request->post('id'));
         $request->session()->flash('success','UMKM berhasil dihapus');
          Notifikasi::create(['nama'=>'dikeluarkan dari kegiatan','pesan'=>'Anda dikeluarkan dari kegiatan '.$data->tema,'user_id'=>$request->post('id'),'waktu'=>now()]);
-        $umkmNotif = User::select('notifikasi')->where('id',$request->post('id'))->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$request->post('id'));
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         return back();
      }
@@ -761,9 +763,15 @@ class KegiatanController extends Controller
          $status = DB::table('kegiatan_umkm')->select('lulus_funding')->where('kegiatan_id',$request->post('kegiatan_id'))->where('umkm_id',$request->post('user_id'));
          if ($status->first()->lulus_funding) {
            $status->update(['lulus_funding'=>false]);
+
          }
          else{
+             $tema_kegiatan = DB::table('kegiatan')->select('tema')->where('id',$request->post('kegiatan_id'))->first();
             $status->update(['lulus_funding'=>true]);
+            $notif =  Notifikasi::create(['nama'=>'Anda lulus inkubasi','pesan'=>'Selamat anda lulus inkubasi kegiatan '. $tema_kegiatan->tema,'user_id'=>$request->post('user_id'),'redirect'=>'/umkm/dashboard/kegiatanku/'.$request->post('kegiatan_id'),'waktu'=>now()]);
+            $umkmNotif = User::select('notifikasi','id')->where('id',$request->post('user_id'));
+            $upNotif = $umkmNotif->first()->notifikasi+1;
+            $umkmNotif->update(['notifikasi'=>$upNotif]);
          }
          return back();
   

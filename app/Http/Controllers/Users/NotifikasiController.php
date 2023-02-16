@@ -12,16 +12,16 @@ class NotifikasiController extends Controller
 {
     public function show(Request $request)
     {   
-        $get = User::where('id','=',$request->user()->id)->first();
+        $get = User::where('id','=',$request->user()->id);
         $get->update(['notifikasi' => 0]);
         $data = Notifikasi::where('user_id','=',$request->user()->id)
         ->filter(request(['cari','tanda']))
         ->orderBy('tanggal','desc')->paginate(10);
       
-        if ($get->Role->number==1) {
+        if ($get->first()->Role->number==1) {
              $view = 'Profil/admin/Notifikasi';
         }
-        elseif ($get->Role->number==2) {
+        elseif ($get->first()->Role->number==2) {
              $view = 'Profil/UMKM/Notifikasi';
         }
         else{

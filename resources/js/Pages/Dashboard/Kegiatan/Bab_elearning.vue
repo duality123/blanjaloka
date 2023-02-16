@@ -1,12 +1,12 @@
 <template>
  <RemoveBabLayout pesan="Anda yakin ingin menghapus bab ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/kegiatan/hapus_bab" @toggleClose="switchClose()" />
-  <Layout section='elearning' :title="elearning.judul" :link="elearning.kegiatan.slug">
+  <Layout section='elearning' :title="elearning.judul" :link="elearning.kegiatan.id">
      <div class="row">
          <div class="col d-flex justify-content-start">
-        <Search :url="`/admin/kegiatan/elearning/${elearning.slug}/bab?page=1`" judul="Cari Bab" />
+        <Search :url="`/admin/kegiatan/elearning/${elearning.id}/bab?page=1`" judul="Cari Bab" />
       </div>
        <div class=" col d-flex flex-column flex-lg-row justify-content-end align-items-lg-end gap-4">
-      <Link :href="`/admin/kegiatan/${elearning.slug}/tambah_bab`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Bab
+      <Link :href="`/admin/kegiatan/${elearning.id}/tambah_bab`" class="btn btn-primary-blue-6 text-neutral-white py-2">Tambah Bab
       </Link>
     </div>
     </div>
@@ -30,7 +30,7 @@
                 <td><p>{{index.link_video}}</p></td>
                 <td><p>{{index.bab}}</p></td>
                  <td class="d-flex flex-column flex-lg-row justify-content-center gap-4">
-                <Link :href="`/admin/kegiatan/bab/${index.slug}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
+                <Link :href="`/admin/kegiatan/bab/${index.id}/edit`" class="btn btn-semantic-success-4 text-neutral-white">
                   <img src="../../../assets/icons/icon_update.png" alt="update icon">
                   Edit
                 </Link>

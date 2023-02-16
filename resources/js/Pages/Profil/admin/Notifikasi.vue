@@ -31,7 +31,7 @@
                                   <button class="dropdown-toggle close" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   </button>
                                               <ul class="dropdown-menu dropdown-menu-end">
-                                                 <li><button @click = "switchClose(id_notif=notifikasi.id)" class="dropdown-item ">Hapus</button></li>
+                                                 <li><button @click = "switchClose(id_notif=notifikasi.id)" class="dropdown-item delete">Hapus</button></li>
                                                    <li><button @click="indexTandaiSingle(id_notif=notifikasi.id)" class="dropdown-item " :href="url">Tandai</button></li>
                                               </ul>
                                             </div>
@@ -117,6 +117,11 @@ methods:{
 </script>
 
 <style scoped>
+.delete{
+  border-width:0px;
+
+  border-color: transparent;
+}
 .btndrop{
   border-width: 0px;
   background-color: transparent;

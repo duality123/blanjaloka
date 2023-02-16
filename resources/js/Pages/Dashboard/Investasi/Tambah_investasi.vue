@@ -4,7 +4,7 @@
       <h1 class="text-neutral-gray-5 mb-0">Tambah Investasi</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="/admin/investasi" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
+      <Link href="/admin/investasi?page=1" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
       <p class="text-neutral-gray-4"> Tambah Investasi</p>
     </div>
     <div class="row">

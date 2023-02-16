@@ -4,7 +4,7 @@
       <h1 class="text-neutral-gray-5 mb-0">Edit Investasi</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="admin/investasi/" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
+      <Link href="/admin/investasi?page=1" class="text-decoration-none text-primary-blue-6 me-2">Investasi ></Link>
       <p class="text-neutral-gray-4">Edit Investasi</p>
     </div>
     <div class="row">
@@ -103,7 +103,7 @@
                <small class="text-danger text-center" v-if="form.errors.waktu_balik_modal_end" >{{form.errors.waktu_balik_modal_end}}</small> 
             </div>
              <div class="mb-4">
-              <label for="kurikulum" class="form-label text-neutral-gray-5">Presentasi hasil investasi</label>
+              <label for="kurikulum" class="form-label text-neutral-gray-5">Presentase hasil investasi (Boleh dikosongkan)</label>
               <input type="number"  v-model="form.persentase_hasil_investasi" class="form-control mb-3" id="kurikulum" placeholder="Masukkan persentase hasil investasi"
               >
                <small class="text-danger text-center" v-if="form.errors.persentase_hasil_investasi" >{{form.errors.persentase_hasil_investasi}}</small> 

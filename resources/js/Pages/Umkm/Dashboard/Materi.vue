@@ -19,7 +19,7 @@
                                     
                                     <a href="#" class="d-flex mb-5 card-kegiatan" v-for="(bab,no) in elearning.bab">
                                         <span class="number rounded-circle mx-4 p-3">{{++no}}</span>
-                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/materi/detail/${elearning.id}/${no}`">{{bab.judul}}</Link></span> 
+                                       <span class="p-3"> <Link :href="`/umkm/dashboard/kegiatanku/materi_detail/${bab.id}`">{{bab.judul}}</Link></span> 
                                         <span class="ms-auto p-3"> > </span>
                                     </a>
 

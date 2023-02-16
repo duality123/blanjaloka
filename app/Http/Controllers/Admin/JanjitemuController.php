@@ -103,14 +103,18 @@ class JanjitemuController extends Controller
                                     'waktu'=> $request->post('dimulai'),
                                     'berakhir'=>$request->post('berakhir'),
                                     'investor_id'=>$investor]);
-      $investor = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$investor)->first();
-      $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$umkm)->first();
-      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
-     $invNotif = $investor->notifikasi;
-     $investor->update(['notifikasi'=>$invNotif+=1]);
-     $umkmNotif = $umkm->notifikasi;
-     $umkm->update(['notifikasi'=>$invNotif+=1]);
-      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
+      $investor = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$investor);
+
+      $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$umkm);
+
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->first()->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->first()->id,'waktu'=>now()]);
+
+     $invNotif = $investor->first()->notifikasi;
+     $investor->update(['notifikasi'=>$invNotif+1]);
+     $umkmNotif = $umkm->first()->notifikasi;
+     $umkm->update(['notifikasi'=>$umkmNotif+1]);
+
+      Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->first()->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->first()->id,'waktu'=>now()]);
 
        $request->session()->flash('success','Janji temu berhasil di request');
       return back();
@@ -213,9 +217,9 @@ class JanjitemuController extends Controller
       $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$umkm)->first();
       Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
      $invNotif = $investor->notifikasi;
-     $investor->update(['notifikasi'=>$invNotif+=1]);
+     $investor->update(['notifikasi'=>$invNotif+1]);
      $umkmNotif = $umkm->notifikasi;
-     $umkm->update(['notifikasi'=>$invNotif+=1]);
+     $umkm->update(['notifikasi'=>$umkmNotif+1]);
       Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Anda diundang untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$request->post('lokasi').' dimulai pada '.$request->post('dimulai'). ' dan berakhir pada '.$request->post('berakhir'),'redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
 
       return back();
@@ -228,9 +232,9 @@ class JanjitemuController extends Controller
             $umkm = User::with('profil:id,nama_lengkap,user_id')->select('id','notifikasi')->where('id','=',$data->umkm_id)->first();
           Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Undangan anda untuk janji temu dengan investor '.$investor->profil->nama_lengkap.' dilokasi '.$data->lokasi.' dimulai pada '.$data->dimulai. ' dan berakhir pada '.$data->berakhir.' sudah selesai','redirect'=>'/umkm/dashboard/janjitemu?page=1','user_id'=>$umkm->id,'waktu'=>now()]);
          $invNotif = $investor->notifikasi;
-         $investor->update(['notifikasi'=>$invNotif+=1]);
+         $investor->update(['notifikasi'=>$invNotif+1]);
          $umkmNotif = $umkm->notifikasi;
-         $umkm->update(['notifikasi'=>$invNotif+=1]);
+         $umkm->update(['notifikasi'=>$umkmNotif+1]);
        Notifikasi::create(['nama'=>'undangan janji temu','pesan'=>'Undangan anda untuk janji temu dengan UMKM '.$umkm->profil->nama_lengkap.' dilokasi '.$data->lokasi.' dimulai pada '.$data->dimulai. ' dan berakhir pada '.$data->berakhir.' sudah selesai','redirect'=>'/investor/dashboard/janjitemu?page=1','user_id'=>$investor->id,'waktu'=>now()]);
 
         $data->delete();

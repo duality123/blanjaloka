@@ -202,6 +202,9 @@ const removePopup = () => {
   width: 40%;
   text-align: center;
 }
+.modal-content{
+  height: 450px;
+}
 </style>
 <style>
 .foto_profil{
@@ -216,9 +219,7 @@ a.btn {
 .user_profile_menu {
     cursor: pointer;
 }
-.modal-content{
-  height: 450px;
-}
+
 .notif_badge {
     width: 2rem;
     height: 2rem;

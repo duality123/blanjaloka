@@ -84,7 +84,7 @@
           </div>
       <div class="p-2"><strong>Gambar :</strong></div>
       <div class="p-2" v-if="targetJawaban.gambar !=null"> 
-        <img class="mt-2 mb-2 gambar_preview imgtd" :src="`${this.$page.props.asset_url}/${targetJawaban.gambar}`"> </div>
+        <img class="mt-2 mb-2 gambar_preview " :src="`${this.$page.props.asset_url}/${targetJawaban.gambar}`"> </div>
       <div class="p-2" v-else>
         -
       </div> 
@@ -253,8 +253,8 @@ export default{
 
 <style scoped>
 .gambar_preview{
-  width: 500px;
-  height: 600px;
+  width: 450px;
+  height: 300px;
 }
 h1 {
   font-size: 2.1rem;
@@ -279,7 +279,6 @@ td{
 }
 .modal {
   position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;
@@ -288,19 +287,19 @@ td{
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+  padding: 2px;
 }
 
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
-  margin-top: 3rem;
-  margin-left: 25rem;
-  padding: 10px;
+  margin: 3rem;
+  margin-left:4rem;
+  padding: 20px;
   border-radius: 25px;
-  border-top-right-radius:0px;
-   border-bottom-right-radius:0px;
-   overflow-y:scroll ;
-  width: 40%;
+  width: 90%;
+  height: 85%;
+  overflow-y: scroll;
   text-align: center;
 }
 .tabs {

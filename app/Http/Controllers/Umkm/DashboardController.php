@@ -148,16 +148,15 @@ class DashboardController extends Controller
     }
 
 
-    public function detail_materi($page,$page2)
+    public function detail_materi($page)
     {
 
-        $data =Elearning::with(['bab'])
-                ->where('elearning.id','=',$page)
+        $data =BabElearning::with(['elearning:id,judul,kegiatan_id','elearning.kegiatan:id,tema'])->where('id','=',$page)
                 ->first(); 
         
-        $next =DB::table('bab')->where('bab','=',intval($page2)+1)->first();
-       
-        return Inertia::render('Umkm/Dashboard/Detail_bab',['elearning'=>$data,'next'=>$next]);
+        $next =DB::table('bab')->where('bab','=',intval($data->bab)+1)->first();
+
+        return Inertia::render('Umkm/Dashboard/Detail_bab',['bab'=>$data,'next'=>$next]);
     }
     public function materi($page)
     {
@@ -168,14 +167,11 @@ class DashboardController extends Controller
 
 
     public function elearning($page){
-         $kegiatan = Kegiatan::select('kegiatan.tema','kegiatan.id as kegiatan_id')
+         $kegiatan = Kegiatan::select('kegiatan.tema','id','kegiatan.id as kegiatan_id')
                 ->where('kegiatan.id','=',$page)
                 ->first(); 
 
         $data = $kegiatan->elearning()->paginate(10);
-       
-
-      
         return Inertia::render('Umkm/Dashboard/Elearning',['kegiatan'=>$kegiatan,'items'=>$data]);
     }
 

@@ -4,8 +4,8 @@
       <h1 class="text-neutral-gray-5 mb-0">{{bab.judul}}</h1>
     </div>
     <div class="d-flex mt-4">
-      <Link href="admin/dashboard/kegiatan/1" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
-      <Link :href="`/admin/kegiatan/${bab.elearning.slug}/elearning?page=1`" class="text-decoration-none text-primary-blue-6 me-2">> Elearning</Link>
+      <Link :href="`/admin/kegiatan/${elearning.kegiatan_id}/detail`" class="text-decoration-none text-primary-blue-6 me-2">Kegiatan</Link>
+      <Link :href="`/admin/kegiatan/${bab.elearning.id}/elearning?page=1`" class="text-decoration-none text-primary-blue-6 me-2">> Elearning</Link>
       <p class="text-neutral-gray-4">> Edit Bab</p>
     </div>
     <div class="row">
@@ -62,8 +62,8 @@ const form = useForm({
   deskripsi:props.bab.deskripsi,
   link_video:props.bab.link_video,
   bab:props.bab.bab,
-  slug :props.bab.slug,
-  elearning_slug:props.bab.elearning.slug
+  id :props.bab.id,
+  elearning_id:props.bab.elearning.id
 });
 
 

@@ -221,7 +221,7 @@ onMounted(()=>{
         Inertia.get(document.location.href,{limitUMKM:umkmShowValue},{preserveScroll:true,preserveState:true })       
       }
   const tambahJanjiTemu=()=>{
-        form.post('/admin/edit_janji_temu',{onSuccess: () => form.reset()},{preserveState:false});
+        form.post('/admin/edit_janji_temu',{onSuccess: () => form.reset()},{preserveState:true});
 }
 
 

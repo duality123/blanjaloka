@@ -117,7 +117,7 @@ class InvestasiAdminController extends Controller{
             'waktu_balik_modal_start'=>'required',
             'waktu_balik_modal_end'=>'required',
             'kategori'=>'required|max:50' , 
-            'persentase_hasil_investasi'=>'required',
+            //'persentase_hasil_investasi'=>'required',
             'minimum_investasi'=>'required|numeric',
             'total_penghasilan'=>'required|numeric',
             'lokasi' =>'required',
@@ -179,7 +179,7 @@ class InvestasiAdminController extends Controller{
        	 $bisnis->update($data);
 
       $request->session()->flash('success','Bisnis berhasil diubah');
-      return back();
+      return redirect('/admin/investasi?page=1');
 
 	 }
     public function edit_investasi(Request $request,$slug){
@@ -188,8 +188,8 @@ class InvestasiAdminController extends Controller{
         return Inertia::render('Dashboard/Investasi/Edit_investasi',['bisnis'=>$bisnis]);
     }
 	 public function hapus_investasi(Request $request){
-	 	$bisnis = Bisnis::where('id','=',$request->post('id'))->first();
-        $foto = explode(',',$bisnis->foto_bisnis);
+	 	$bisnis = Bisnis::where('id','=',$request->post('id'));
+        $foto = explode(',',$bisnis->first()->foto_bisnis);
           for ($i=0; $i < sizeof($foto) ; $i++) { 
                 Storage::disk('public')->delete($foto[$i]);
           }
@@ -400,8 +400,9 @@ class InvestasiAdminController extends Controller{
         $data->investor()->attach($investor,['investor_foreign'=>$investor,'bisnis_foreign'=>$data->id]);
         $notif = Notifikasi::create(['nama'=>'Anda diundang ke bisnis','pesan'=>'Anda diundang ke bisnis '.$data->name,
                             'user_id'=>$investor,'redirect'=>'/investor/dashboard/bisnisku/'.$data->id,'waktu'=>now()]);
-        $invNotif = User::select('notifikasi')->where('id',$investor)->first();
-        $invNotif->update(['notifikasi'=>$invNotif->notifikasi+=1]);
+        $invNotif = User::select('notifikasi')->where('id',$investor);
+        $upNotif = $invNotif->first()->notifikasi+1;
+        $invNotif->update(['notifikasi'=>$upNotif]);
          return back();
 
 
@@ -416,8 +417,8 @@ class InvestasiAdminController extends Controller{
             }
         $data->umkm()->attach($umkm,['umkm_foreign'=>$umkm,'bisnis_foreign'=>$data->id]);
         Notifikasi::create(['nama'=>'diundang diundang ke funding bisnis','pesan'=>'Anda diundang ke funding bisnis '.$data->name,'user_id'=>$umkm,'redirect'=>'/umkm/dashboard/funding/'.$data->id,'waktu'=>now()]);
-        $umkmNotif = User::select('notifikasi')->where('id',$umkm)->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$umkm);
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         return back();
 
@@ -456,7 +457,7 @@ class InvestasiAdminController extends Controller{
 
       Notifikasi::create(['nama'=>'Track record investasi ditambah','pesan'=>'Data investasi di tambah bisnis '.$bisnis->name,'redirect'=>'/investor/dashboard/bisnisku/investasi/'.$bisnis->id,'user_id'=>$data['user_id'],'tanggal'=>now()]);
         $invNotif = User::select('notifikasi')->where('id',$data['user_id'])->first();
-        $invNotif->update(['notifikasi'=>$invNotif->notifikasi+=1]);
+        $invNotif->update(['notifikasi'=>$invNotif->notifikasi+1]);
         $request->session()->flash('success','Investor berhasil ditambah');
       return back();
       
@@ -493,7 +494,7 @@ class InvestasiAdminController extends Controller{
       $bisnis->update(['total_penghasilan' => $bisnis->total_penghasilan+ $data['uang_masuk'] - $data['uang_keluar'],'persentase_hasil_investasi'=>(($bisnis->jumlah_investasi + $data['uang_masuk'] - $data['uang_keluar']-$bisnis->jumlah_investasi)/$bisnis->total_penghasilan) * 100]);
       Notifikasi::create(['nama'=>'Track Record Ditambah','pesan'=>'Data funding ditambah di bisnis '.$bisnis->name,'redirect'=>'/umkm/dashboard/fundingku/'.$bisnis->id.'/data_fundingku','user_id'=>$data['user_id'],'tanggal'=>now()]);
       $umkmNotif = User::select('notifikasi')->where('id',$data['user_id'])->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $updateNotif = $umkmNotif->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
       return back();
       
@@ -596,8 +597,8 @@ class InvestasiAdminController extends Controller{
         $data->investasi()->where('user_id',$request->post('id'))->delete();
         $data->investor()->detach($request->post('id'));
         Notifikasi::create(['nama'=>'dikeluarkan dari bisnis','pesan'=>'Anda dikeluarkan dari bisnis '.$data->name,'user_id'=>$request->post('id'),'waktu'=>now()]);
-        $invNotif = User::select('notifikasi')->where('id',$request->post('id'))->first();
-        $updateNotif = $invNotif->notifikasi +=1;
+        $invNotif = User::select('notifikasi')->where('id',$request->post('id'));
+        $updateNotif = $invNotif->first()->notifikasi +1;
         $invNotif->update(['notifikasi'=>$updateNotif]);
         return back();
      }
@@ -606,8 +607,8 @@ class InvestasiAdminController extends Controller{
         $data->funding()->where('user_id',$request->post('id'))->delete();
         $data->umkm()->detach($request->post('id'));
         Notifikasi::create(['nama'=>'dikeluarkan dari funding','pesan'=>'Anda dikeluarkan dari funding '.$data->name,'user_id'=>$request->post('id'),'waktu'=>now()]);
-        $umkmNotif = User::select('notifikasi')->where('id',$request->post('id'))->first();
-        $updateNotif = $umkmNotif->notifikasi +=1;
+        $umkmNotif = User::select('notifikasi')->where('id',$request->post('id'));
+        $updateNotif = $umkmNotif->first()->notifikasi +1;
         $umkmNotif->update(['notifikasi'=>$updateNotif]);
         return back();
      }
