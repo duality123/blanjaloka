@@ -33,10 +33,10 @@
     
                 <div class="row" style="margin-left:2px" >
                 <div class="col d-flex justify-content-start"  >
-                <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp')"  style="width: 10rem;">
+                <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event,'foto_ktp')"  style="width: 9rem;">
                 </div >
                 <div class="col d-flex justify-content-between">
-                <p class="text-primary" style="padding-left:25px;">atau</p>
+                <p class="text-primary" >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">
@@ -61,7 +61,7 @@
                 <input type="file" class="custom-file-input " @change="changePicture($event,'foto_selfie_ktp')"  style="width: 9rem;">
                 </div >
                 <div class="col d-flex justify-content-between">
-                <p class="text-primary" style="padding-left: 25px;">atau</p>
+                <p class="text-primary">atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
                 <input type="file" class="custom-file-input2" style="width: 9rem;">

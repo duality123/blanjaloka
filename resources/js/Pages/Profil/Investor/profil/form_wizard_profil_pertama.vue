@@ -35,7 +35,7 @@
                 <div class="col d-flex justify-content-start"  >
                 <input type="file" ref ="foto_profil" class="custom-file-input " @change="changePicture($event)"  style="width: 9rem;">
                 </div >
-                <div class="col d-flex justify-content-start">
+                <div class="col d-flex justify-content-center">
                 <p class="text-primary" >atau</p>
                 </div>
                   <div class="col d-flex justify-content-end" >
@@ -175,7 +175,7 @@ section {
   content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0\00a0Upload Gambar';
   display: inline-block;
   background-color:white;
-  background-image:url('../../../assets/icons/upload.png');
+  background-image:url('../../../../assets/icons/upload.png');
   background-repeat: no-repeat;
   background-size: 18px 20px;
   border-radius: 3px;
@@ -202,7 +202,7 @@ section {
   content: '\00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0 \00a0  Ambil Gambar';
   display: inline-block;
   background-color:white;
-  background-image:url('../../../assets/icons/upload2.png');
+  background-image:url('../../../../assets/icons/upload2.png');
   background-repeat: no-repeat;
   background-size: 18px 20px;
   border-radius: 3px;
