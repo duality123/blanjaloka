@@ -287,7 +287,7 @@ h1 {
 
 .modal {
   position: fixed; /* Stay in place */
-  padding-top: 70px; /* Location of the box */
+  padding-top: 30px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;
@@ -301,7 +301,7 @@ h1 {
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-left: 25rem;
   padding: 20px;
   border-radius: 25px;

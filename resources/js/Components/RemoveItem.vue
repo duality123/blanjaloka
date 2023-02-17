@@ -65,7 +65,7 @@ export default{
  }
   .modal {
   position: fixed; /* Stay in place */
-  padding-top: 90px; /* Location of the box */
+  padding-top: 30px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;
