@@ -10,7 +10,7 @@ return new class extends Migration
      {
        Schema::create('bisnis', function (Blueprint $table) {
          $table->id();
-         $table->foreignId('us')->references('id')->on('users')->onDelete('cascade');
+         $table->string('name',255)->nullable();
          $table->text('foto_bisnis')->nullable();
          $table->bigInteger('jumlah_investasi')->unsigned()->default(0);
          $table->bigInteger('target_investasi')->unsigned()->default(0);
@@ -21,6 +21,7 @@ return new class extends Migration
          $table->bigInteger('minimum_investasi')->unsigned()->default(0);
          $table->bigInteger('total_penghasilan')->unsigned()->default(0);
          $table->string('kategori',50)->nullable();
+         $table->text('lokasi')->nullable();
          $table->tinyInteger('status',1)->default(0);
          $table->bigInteger('total_penghasilan')->unsigned()->default(0);
 
