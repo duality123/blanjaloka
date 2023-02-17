@@ -117,7 +117,7 @@ class InvestasiAdminController extends Controller{
             'waktu_balik_modal_start'=>'required',
             'waktu_balik_modal_end'=>'required',
             'kategori'=>'required|max:50' , 
-            //'persentase_hasil_investasi'=>'required',
+            'persentase_hasil_investasi'=>'required',
             'minimum_investasi'=>'required|numeric',
             'total_penghasilan'=>'required|numeric',
             'lokasi' =>'required',
