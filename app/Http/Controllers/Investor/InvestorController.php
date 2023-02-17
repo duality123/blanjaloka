@@ -163,8 +163,13 @@ class InvestorController extends Controller
        if(!$request->user()->accepted){
             return Inertia::render('Profil/Investor/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin','state'=>'bisnis']);
         }
+
         $user = User::where('id','=',$request->user()->id)->first();
         $data = $user->bisnisinvestor()->filter(request(['cari']))->paginate(10);
+        if($data==null){
+            return Inertia::render('Profil/Investor/Noitemscreen',['title'=>'Anda belum join bisnis apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !','state'=>'bisnis']);
+        }
+       
         return Inertia::render('Investor/bisnis/Bisnisku',['items'=>$data]);
 
 }
