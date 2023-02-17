@@ -239,6 +239,7 @@ section{
   border-radius: 25px;
   width: 40%;
   height:450px;
+  overflow-y: scroll;
   text-align: center;
 }
 
