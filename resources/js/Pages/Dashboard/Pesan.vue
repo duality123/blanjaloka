@@ -12,8 +12,8 @@
           <button class="btn btn-primary-blue-6 dropdown-toggle text-neutral-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><Link preserve-state :data="{berakhir:'t'}" class="dropdown-item" :href="url">tandai</Link></li>
-                <li><Link preserve-state :data="{berakhir:'f'}" class="dropdown-item" :href="url">Tidak Ditandai</Link></li>
+                <li><Link preserve-state :data="{tanda:'t'}" class="dropdown-item" href="/admin/pesan?page=1">tandai</Link></li>
+                <li><Link preserve-state :data="{tanda:'f'}" class="dropdown-item" href="/admin/pesan?page=1">Tidak Ditandai</Link></li>
               </ul>
             </div>
       </div>

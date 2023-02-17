@@ -13,8 +13,7 @@ class UserController extends Controller
 {
     public function all(Request $request,$role)
     {
-        $data = User::join('roles','roles.user_id','=','users.id')->join('profil','profil.user_id','=','users.id')->select('profil.nama_lengkap','users.name','profil.no_hp','users.accepted','email','roles.number','users.created_at','users.id','profil.foto_profil')->where('roles.number','=',$role)->filter_user_panel(request(['cari']))->paginate(10);
-
+        $data = User::join('roles','roles.user_id','=','users.id')->LeftJoin('profil','profil.user_id','=','users.id')->select('profil.nama_lengkap','users.name','profil.no_hp','users.accepted','email','roles.number','users.created_at','users.id','profil.foto_profil','users.no_telepon')->where('roles.number','=',$role)->filter_user_panel(request(['cari']))->paginate(10);
         return Inertia::render('Dashboard/Pengguna/Index',['items'=>$data]);
     }
 
@@ -42,33 +41,34 @@ class UserController extends Controller
     public function tambah_user(Request $request){
         $rules = [
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:users',
             'password' => 'required|max:255|min:8',
-            'no_hp' => 'required|max:15|min:9',
+            'no_hp' => 'required|max:15|min:9|unique:users,no_telepon|unique:profil,no_hp',
         ];
 
         $customMessages = [
             'required' => 'Harap diisi bagian ini !.',
             'max'=>'Karakter yang anda input melebihi batas :max .',
-            'min'=>'Karakter yang anda input kurang dari minimum :min .'
+            'min'=>'Karakter yang anda input kurang dari minimum :min .',
+            'unique'=>'Data tersebut sudah digunakan!'
 
         ];
         $this->validate($request, $rules, $customMessages);
-
         if ($request->post('role') == 1) {
-           $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>$request->post('password'),'accepted'=>true,'email_verified_at'=>now()]);
-           $user->Role()->update(['number'=>1]);
+           $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>bcrypt($request->post('password')),'accepted'=>true,'email_verified_at'=>now()]);
+           $user->Role()->update(['number'=>$request->post('role')]);
+
         }
         elseif($request->post('role') == 2){
-            $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>$request->post('password'),'accepted'=>true,'email_verified_at'=>now()]);
+            $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>bcrypt($request->post('password')),'accepted'=>true,'email_verified_at'=>now()]);
            $user->Role()->update(['number'=>2]);
-           $user->profil()->create(['nama_lengkap'=>$request->post('name')]);
+           $user->profil()->create(['nama_lengkap'=>$request->post('name'),'no_telepon'=>'+62'.$request->post('no_hp')]);
            $user->usaha()->create([]);
            $user->produk()->create([]);
            $user->finansial()->create([]);
         }
         else{
-              $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>$request->post('password'),'accepted'=>true,'email_verified_at'=>now()]);
+              $user = User::create(['name'=>$request->post('name'),'email'=> $request->post('email'),'no_telepon'=>'+62'.$request->post('no_hp'),'password'=>bcrypt($request->post('password')),'accepted'=>true,'email_verified_at'=>now()]);
               $user->Role()->update(['number'=>3]);
               $user->profil()->create(['nama_lengkap'=>$request->post('name')]);
               $user->profilPerusahaan()->create([]);

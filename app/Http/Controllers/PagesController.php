@@ -71,7 +71,7 @@ class PagesController extends Controller
         $admins = DB::table('roles')->select('user_id')->where('number','=',1)->get();
              foreach ($admins as $admin) {
                  $updateNotif =  DB::table('users')->select('notif_pesan')->where('id','=',$admin->user_id)->first();
-                 $updateNotif = $updateNotif->notif_pesan+= 1;
+                 $updateNotif = $updateNotif->notif_pesan+ 1;
                 User::where('id','=',$admin->user_id)->update(['notif_pesan'=>$updateNotif]);
 
             }
@@ -82,7 +82,7 @@ class PagesController extends Controller
     public function laporan_all(Request $request){
         $get = User::where('id','=',$request->user()->id)->first();
         $get->update(['notif_pesan' => 0]);
-        $data = Laporan::orderBy('tanggal','desc')->filter(['cari','tanda'])->paginate(10);
+        $data = Laporan::filter(request(['cari','tanda']))->orderBy('tanggal','desc')->paginate(10);
         return Inertia::render('Dashboard/Pesan',['items'=>$data]);
     }
      public function tandai(Request $request){

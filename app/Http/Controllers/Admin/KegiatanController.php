@@ -227,6 +227,7 @@ class KegiatanController extends Controller
 
         ];
 
+
         $this->validate($request, $rules, $customMessages);
         $elearning = Elearning::where('id','=',$request->post('id'))->first();
         $data = [];
@@ -240,7 +241,7 @@ class KegiatanController extends Controller
         $data['deskripsi'] = $request->post('deskripsi');
         $elearning->update($data);
         $request->session()->flash('success','Elearning berhasil diubah');
-       return redirect('/admin/kegiatan/'.$elearning->kegiatan->id.'/elearning/');
+       return redirect('/admin/kegiatan/'.$elearning->kegiatan->id.'/elearning/?page=1');
     }
     public function hapus_kegiatan(Request $request){
 
@@ -258,7 +259,7 @@ class KegiatanController extends Controller
     
         return back();
     }
-    public function hapus_bab(Request $request,$id){
+    public function hapus_bab(Request $request){
         $delete =  BabElearning::where('id','=',$request->post('id'))->delete();
         $request->session()->flash('success','Kegiatan berhasil dihapus !');
         return back();
@@ -428,13 +429,14 @@ class KegiatanController extends Controller
                 'dimulai'=>$request->post('dimulai'),
                 'berakhir' =>$request->post('berakhir')];
 
-    $kegiatan = Kegiatan::where('id','=',$request->post('id'))->first();
+    $kegiatan = Kegiatan::where('id','=',$request->post('id'));
     if ($request->file('gambar')) {
-         Storage::disk('public')->delete($kegiatan->gambar);
+         Storage::disk('public')->delete($kegiatan->first()->gambar);
          $update['gambar'] = $request->file('gambar')->store('kegiatan/gambar','public');
     }
-
+     $kegiatan->update($update);
     /*
+    
     
       $kegiatan->update($update);
       if ($daftarInvestor) {
@@ -703,6 +705,7 @@ class KegiatanController extends Controller
       $data = [];
       $data['soal'] = $request->post('soal');
       $data['kegiatan_id'] =$request->post('kegiatan_id');
+       $request->session()->flash('success','Soal berhasil ditambah');
       TugasAkhirSoal::create($data);
       return back();
 

@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+         Schema::create('info_admin', function (Blueprint $table) {
+         $table->id();
+         $table->text('isi')->nullable();
+         $table->boolean('tandai')->default(0);
+         $table->timestamp('tanggal')->nullable();
+       });
     }
 
     /**

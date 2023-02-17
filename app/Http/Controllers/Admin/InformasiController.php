@@ -12,7 +12,7 @@ class InformasiController extends Controller
 {
     public function Daftar_informasi(Request $request)
     {
-        $data = Info_admin::orderBy('tanggal','asc')->filter(request(['cari','tanda']))->paginate(10);
+        $data = Info_admin::orderBy('tanggal','desc')->filter(request(['cari','tanda']))->paginate(10);
 
         return Inertia::render('Dashboard/Info_admin/Daftar_informasi',['items'=>$data]);
     }

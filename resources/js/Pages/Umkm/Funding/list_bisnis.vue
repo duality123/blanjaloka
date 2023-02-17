@@ -25,26 +25,15 @@
                     <div class="card card_kegiatan mt-2">
                        
                       <div class="card-body">
-<div class="col d-flex justify-content-start">
-   <div v-if="item.persentase_hasil_investasi > 0" class="bg-semantic-success-1 text-semantic-success-4 status">Profit ( {{item.persentase_hasil_investasi}} % )</div>
-        <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Belum Profit ( {{item.persentase_hasil_investasi}} % )</div>
-</div>
-<div class=" d-flex justify-content-end">
-      <div class="dropdown-">
-  <a href="#" role="button"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
-     <font-awesome-icon icon="fas fa-ellipsis-h" />
-  </a>
 
-  <ul class="dropdown-menu-end dropdown-menu">
-    <li><Link :href="`/admin/investasi/${item.id}/edit`" class="dropdown-item" href="#">Edit</Link></li>
-    <li><button @click="switchClose(item.id)" class="dropdown-item delete" href="#">Hapus</button></li>
-  </ul>
-</div>
-      </div>
   <div :id="`carouselExampleControlsNoTouching${no}`" class="carousel slide" data-bs-touch="false">
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="2000" v-for="gambar in item.foto_bisnis.split(',').filter(item => item)">
       <div class="col d-flex justify-content-center">
+        <div class="col d-flex justify-content-start">
+   <div v-if="item.persentase_hasil_investasi > 0" class="bg-semantic-success-1 text-semantic-success-4 status">Profit ( {{item.persentase_hasil_investasi}} % )</div>
+        <div v-else class="bg-neutral-gray-1 text-neutral-gray-4 status">Belum Profit ( {{item.persentase_hasil_investasi}} % )</div>
+</div>
                   <img  :src="`${$page.props.asset_url}/${gambar}`" class="gambar" alt="...">
                 </div>
               </div>

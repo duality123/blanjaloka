@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 09, 2023 at 03:06 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: localhost
+-- Generation Time: Feb 17, 2023 at 02:29 AM
+-- Server version: 10.3.34-MariaDB-0ubuntu0.20.04.1
+-- PHP Version: 7.3.29-1+focal
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bab` (
-  `judul` text DEFAULT NULL,
+  `judul` varchar(255) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `link_video` text DEFAULT NULL,
   `elearning_id` bigint(20) UNSIGNED DEFAULT NULL,
   `id` bigint(20) UNSIGNED NOT NULL,
   `bab` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `bab`
@@ -43,7 +43,15 @@ CREATE TABLE `bab` (
 INSERT INTO `bab` (`judul`, `deskripsi`, `link_video`, `elearning_id`, `id`, `bab`) VALUES
 ('Cara membuat makanan', 'Cara membuat makanan', 'https://www.youtube.com/embed/6WgvzCU3TI8', NULL, 6, 1),
 ('Cara mengolah tebu bagian 1', 'elearning ini berisi tata cara membuat makanan', 'https://www.youtube.com/embed/6WgvzCU3TI8', 10, 7, 1),
-('aaa', 'aa', 'https://www.youtube.com/embed/6WgvzCU3TI8', 10, 8, 2);
+('Cara Membuat Makanan Mudah', 'Deskripsi VIDEOOOO', 'https://www.youtube.com/embed/jNQXAC9IVRw', 9, 9, 1),
+('Bisnis Kuliner', '232323', 'ttps://www.youtube.com/embed/jNQXAC9IVRw', NULL, 10, 2),
+('Bisnis Kuliner', 'Bisnis Kuliner', 'https://www.youtube.com/embed/jNQXAC9IVRw', NULL, 11, 2),
+('Bisnis Kuliner', 'Bisnis Kuliner', 'https://www.youtube.com/embed/jNQXAC9IVRw', NULL, 12, 2),
+('Bisnis Kuliner', 'Bisnis Kuliner', 'https://www.youtube.com/embed/jNQXAC9IVRw', NULL, 13, 2),
+('tes', '2013', 'https://www.youtube.com/embed/jNQXAC9IVRw', NULL, 14, 2),
+('tes', '2013', 'https://www.youtube.com/embed/jNQXAC9IVRw', NULL, 15, 2),
+('Bisnis Kuliner 123', '2013', 'https://www.youtube.com/embed/jNQXAC9IVRw', 9, 16, 2),
+('Tes bisnis', 'Tes bisnis', 'https://www.youtube.com/embed/jNQXAC9IVRw', 9, 17, 3);
 
 -- --------------------------------------------------------
 
@@ -66,7 +74,7 @@ CREATE TABLE `bisnis` (
   `lokasi` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `total_penghasilan` bigint(20) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bisnis`
@@ -77,7 +85,7 @@ INSERT INTO `bisnis` (`id`, `name`, `foto_bisnis`, `jumlah_investasi`, `target_i
 (11, 'deskripsi', ',investor/foto_bisnis/w5q0s40DaXds2OzYtFLUo5ddKO0Rj7EyT7og3Vfu.jpg', 2, 2, 2, NULL, '2022-12-12 17:00:00', '2023-01-12 17:00:00', 2, 'deskripsi', 'deskripsi', 0, NULL),
 (12, 'deskripsi', ',investor/foto_bisnis/fA05gjBcARIJilbQz0JCsOM7oaRVffk6ZHZGjLwO.jpg', 2, 2, 2, 20, '2022-12-12 17:00:00', '2023-01-12 17:00:00', 300, 'deskripsi', 'deskripsi', 1, NULL),
 (13, 'Bisnis tes1', ',investor/foto_bisnis/BYjkibbDSi0QVQ0h9AiUdvoUNogvefE0qo7xZjH5.jpg,investor/foto_bisnis/fihU7CwVoAE2kkn2gMaQrIjQq7m4YD86GybfV2iC.jpg', 178000, 20000, 350, 28.0899, '2023-02-06 15:02:00', '2022-12-27 17:00:00', 40000, 'Makanan', 'Jakarta Pusat', 1, 2000000),
-(17, 'Bisnis Tes 123', ',investasi/foto_bisnis/vRGuAPikHJTSPSj1uinH9HLWUtf4qtLw0na2AGZJ.png,investasi/foto_bisnis/4BDwSQdsGQnPlTHT0VKdlSlURqV0xz026f9ikcWF.png', 3000, 400, 20, 2000, '2023-02-13 17:00:00', '2023-02-07 17:00:00', 300000, 'Bisnis', 'Jakatrta', 1, 3000);
+(17, 'Bisnisku Terbaik', ',investasi/foto_bisnis/vRGuAPikHJTSPSj1uinH9HLWUtf4qtLw0na2AGZJ.png,investasi/foto_bisnis/4BDwSQdsGQnPlTHT0VKdlSlURqV0xz026f9ikcWF.png', 3000, 400, 20, 2000, '2023-02-17 01:04:43', '2023-02-07 17:00:00', 300000, 'Bisnis', 'Jakatrta', 1, 3000);
 
 -- --------------------------------------------------------
 
@@ -92,7 +100,7 @@ CREATE TABLE `bisnis_investor` (
   `investor_id` bigint(20) UNSIGNED NOT NULL,
   `investor_foreign` bigint(20) UNSIGNED DEFAULT NULL,
   `bisnis_foreign` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `bisnis_investor`
@@ -122,7 +130,7 @@ CREATE TABLE `bisnis_peserta` (
   `bisnis_id` bigint(20) UNSIGNED NOT NULL,
   `umkm_foreign` bigint(20) UNSIGNED DEFAULT NULL,
   `bisnis_foreign` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `bisnis_peserta`
@@ -143,7 +151,7 @@ INSERT INTO `bisnis_peserta` (`id`, `umkm_id`, `bisnis_id`, `umkm_foreign`, `bis
 CREATE TABLE `chat_room` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `update` timestamp NULL DEFAULT NULL,
-  `link` varchar(255) NOT NULL DEFAULT 'WraYuKzcJaZOlprxhuEmG2sSc2whxxmKE9J6HKTPaW2Nbh2BnV3xgKumjS7jjr19egrpe6apppSJbWYWfrgas5BXOpAIEKMn2wrU'
+  `link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'WraYuKzcJaZOlprxhuEmG2sSc2whxxmKE9J6HKTPaW2Nbh2BnV3xgKumjS7jjr19egrpe6apppSJbWYWfrgas5BXOpAIEKMn2wrU'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -161,14 +169,15 @@ CREATE TABLE `dokumen_perusahaan` (
   `foto_ktp_pic` text DEFAULT NULL,
   `no_rekening` char(100) DEFAULT NULL,
   `foto_buku_tabungan` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `dokumen_perusahaan`
 --
 
 INSERT INTO `dokumen_perusahaan` (`id`, `nomor_akta_pendirian_perusahaan`, `user_id`, `foto_npwp_perusahaan`, `no_npwp_perusahaan`, `foto_ktp_pic`, `no_rekening`, `foto_buku_tabungan`) VALUES
-(2, '244', 29, 'umkm/keterangan_halal/WSbsHb3Dl7y85gXRf1S8AGINfEo1fvCbrrxAbhla.jpg', '234234', 'umkm/keterangan_halal/lohLk3xoi72FnucE3IzeFUcHdjn5VP6pmnytnBGl.jpg', '56656', 'umkm/keterangan_halal/rwse6GfFMsithkXdaGFxIvVckAc8c4mwX6tbvFCH.jpg');
+(2, '244', 29, 'umkm/keterangan_halal/WSbsHb3Dl7y85gXRf1S8AGINfEo1fvCbrrxAbhla.jpg', '234234', 'umkm/keterangan_halal/lohLk3xoi72FnucE3IzeFUcHdjn5VP6pmnytnBGl.jpg', '56656', 'umkm/keterangan_halal/rwse6GfFMsithkXdaGFxIvVckAc8c4mwX6tbvFCH.jpg'),
+(3, '19291', 39, 'investor/foto_npwp_perusahaan/gBIrmNBhnDgv6zghmsfryCDIl9fVOCqSn4bzAW4W.jpg', '129128128', 'investor/foto_ktp_pic/O5EmDYA5Yepjk7qN2bc8y03qo5IBeepMpXor0rEj.png', '7732323', 'investor/foto_buku_tabungan/VBy65RbHb96RmpZpMHeLz5jOnbKBPZmp9PpEB4TF.jpg');
 
 -- --------------------------------------------------------
 
@@ -180,9 +189,9 @@ CREATE TABLE `elearning` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kegiatan_id` bigint(20) UNSIGNED NOT NULL,
   `hari_tanggal_waktu` timestamp NULL DEFAULT NULL,
-  `judul` char(100) DEFAULT NULL,
-  `foto` text DEFAULT NULL,
-  `deskripsi` text DEFAULT NULL
+  `judul` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -190,7 +199,7 @@ CREATE TABLE `elearning` (
 --
 
 INSERT INTO `elearning` (`id`, `kegiatan_id`, `hari_tanggal_waktu`, `judul`, `foto`, `deskripsi`) VALUES
-(9, 22, '2023-01-07 17:00:00', 'Cara membuat makanan', 'elearning/gambar/1v17L4YKuW50569n30BcTqjl0FeNw0ywZ3UfmnsB.jpg', 'tesssssssssss1'),
+(9, 22, '2023-01-07 17:00:00', 'Cara membuat makanan 123', 'elearning/gambar/1v17L4YKuW50569n30BcTqjl0FeNw0ywZ3UfmnsB.jpg', 'tesssssssssss1'),
 (10, 22, '2023-01-02 17:00:00', 'Cara mengolah tebu', 'elearning/gambar/CQz9B8sCCmCnEB7PKSzfWhkrjEnVXjupjXcs0h0W.jpg', 'elearning ini berisi tata cara membuat makanan'),
 (13, 20, '2023-01-07 17:00:00', 'Cara membuat makanan', 'elearning/gambar/diwcUMphPNfNGlhWUyla4auZkRsyeRHqb9D5OtAa.jpg', 'Cara membuat makanan');
 
@@ -211,7 +220,7 @@ CREATE TABLE `eventual` (
   `kontak` varchar(255) DEFAULT NULL,
   `kegiatan_id` bigint(20) UNSIGNED DEFAULT NULL,
   `jadwal` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `eventual`
@@ -220,7 +229,7 @@ CREATE TABLE `eventual` (
 INSERT INTO `eventual` (`id`, `perihal`, `status`, `nama_mentor`, `link_meeting`, `waktu`, `profil_id`, `kontak`, `kegiatan_id`, `jadwal`) VALUES
 (29, 'buatlah video anda sedang memasak lalu upload youtube', b'000', 'Eko', NULL, '2023-01-05 11:58:26', 4, 'whatsapp 087722342464', 22, NULL),
 (30, 'Laporan 1', b'000', 'Jakarta Timur', NULL, '2023-01-05 12:00:24', 4, 'whatsapp 087722342464', 22, NULL),
-(31, 'tes', b'000', 'Jakub', NULL, '2023-02-08 11:55:13', 4, 'wa(21212)', 34, NULL);
+(32, 'Cara buat game', b'000', 'Arip', NULL, '2023-02-13 03:22:25', 4, 'what (0812721', 22, NULL);
 
 -- --------------------------------------------------------
 
@@ -230,11 +239,11 @@ INSERT INTO `eventual` (`id`, `perihal`, `status`, `nama_mentor`, `link_meeting`
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -252,7 +261,7 @@ CREATE TABLE `funding` (
   `bukti` text DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `funding`
@@ -275,14 +284,15 @@ CREATE TABLE `info_admin` (
   `tanggal` timestamp NULL DEFAULT NULL,
   `tandai` tinyint(1) NOT NULL DEFAULT 0,
   `id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `info_admin`
 --
 
 INSERT INTO `info_admin` (`isi`, `tanggal`, `tandai`, `id`) VALUES
-('Besok sekolah', '2023-02-05 13:29:49', 1, 5);
+('Besok sekolah', '2023-02-05 13:29:49', 1, 5),
+('Minggu liburrr', '2023-02-17 00:31:26', 0, 7);
 
 -- --------------------------------------------------------
 
@@ -298,7 +308,7 @@ CREATE TABLE `investasi` (
   `bisnis_id` bigint(20) UNSIGNED DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `investasi`
@@ -317,7 +327,7 @@ CREATE TABLE `janji_temu` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `investor_id` bigint(20) UNSIGNED DEFAULT NULL,
   `waktu` timestamp NULL DEFAULT NULL,
-  `lokasi` char(100) DEFAULT NULL,
+  `lokasi` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` bit(3) DEFAULT NULL,
   `umkm_id` bigint(20) UNSIGNED DEFAULT NULL,
   `temp_target` bigint(20) DEFAULT NULL,
@@ -329,14 +339,20 @@ CREATE TABLE `janji_temu` (
 --
 
 INSERT INTO `janji_temu` (`id`, `investor_id`, `waktu`, `lokasi`, `status`, `umkm_id`, `temp_target`, `berakhir`) VALUES
-(16, 29, '2023-02-12 03:47:00', 'Bekasi Utara', NULL, 23, NULL, '2023-02-15 03:47:00'),
+(16, 29, '2023-02-12 03:47:00', 'Bekasi Utara', NULL, 5, NULL, '2023-02-15 03:47:00'),
 (18, 29, '2023-02-12 03:47:00', 'Bekasi Utara', NULL, 23, NULL, '2023-02-15 03:47:00'),
 (19, 29, '2023-02-12 03:47:00', 'Bekasi Utara', NULL, 23, NULL, '2023-02-15 03:47:00'),
 (20, 29, '2023-02-21 03:47:00', 'Bekasi Utara Selatan', NULL, 5, NULL, '2023-02-15 03:47:00'),
 (21, 29, '2023-02-12 03:47:00', 'Bekasi Utara 1234', NULL, 23, NULL, '2023-02-15 03:47:00'),
 (22, 29, '2023-02-13 15:19:00', 'www.facebook.com', NULL, 5, NULL, '2023-02-23 15:20:00'),
 (23, 29, '2023-02-13 15:19:00', 'www.facebook.com', NULL, 5, NULL, '2023-02-23 15:20:00'),
-(24, 29, '2023-02-13 15:19:00', 'www.facebook.com', NULL, 5, NULL, '2023-02-23 15:20:00');
+(24, 29, '2023-02-13 15:19:00', 'www.facebook.com', NULL, 5, NULL, '2023-02-23 15:20:00'),
+(25, 39, '2023-02-14 18:45:00', 'Jakarta Serikat', NULL, 5, NULL, '2023-02-15 18:45:00'),
+(26, 39, '2023-02-12 18:48:00', 'Jakarta Serikat', NULL, 5, NULL, '2023-02-17 18:48:00'),
+(27, 39, '2023-02-13 19:00:00', 'Banten', NULL, 5, NULL, '2023-02-15 19:00:00'),
+(28, 39, '2023-02-13 19:00:00', 'Banten', NULL, 5, NULL, '2023-02-15 19:00:00'),
+(30, 29, '2023-02-19 20:00:00', 'Jaktim', NULL, 5, NULL, '2023-02-24 20:01:00'),
+(31, 39, '2023-02-14 08:15:00', 'Jakarta Selatan', NULL, 5, NULL, '2023-02-24 08:15:00');
 
 -- --------------------------------------------------------
 
@@ -347,18 +363,18 @@ INSERT INTO `janji_temu` (`id`, `investor_id`, `waktu`, `lokasi`, `status`, `umk
 CREATE TABLE `kajian_finansial` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `capex` text DEFAULT NULL,
-  `opex` text DEFAULT NULL,
-  `swot_faktor_internal` text DEFAULT NULL,
-  `swot_faktor_eksternal` text DEFAULT NULL,
+  `capex` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `opex` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `swot_faktor_internal` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `swot_faktor_eksternal` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payback_period` smallint(4) DEFAULT NULL,
-  `key_partners` varchar(1000) DEFAULT NULL,
-  `key_activity` text DEFAULT NULL,
-  `value_propotions` varchar(300) DEFAULT NULL,
-  `customer_relationship` varchar(255) DEFAULT NULL,
-  `channels` varchar(500) DEFAULT NULL,
-  `cost_structure` char(100) DEFAULT NULL,
-  `revenue_streams` char(100) DEFAULT NULL
+  `key_partners` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `key_activity` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value_propotions` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_relationship` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `channels` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cost_structure` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revenue_streams` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -378,15 +394,15 @@ INSERT INTO `kajian_finansial` (`id`, `user_id`, `capex`, `opex`, `swot_faktor_i
 
 CREATE TABLE `kegiatan` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tema` varchar(255) NOT NULL,
-  `deskripsi` text NOT NULL,
-  `gambar` text DEFAULT NULL,
+  `tema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gambar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jumlah_orang_diundang` smallint(6) NOT NULL DEFAULT 0,
   `masa_inkubasi` tinyint(4) NOT NULL,
-  `kurikulum` varchar(100) NOT NULL,
-  `nama_juri` varchar(500) NOT NULL,
-  `pic` text NOT NULL,
-  `kontak` char(200) NOT NULL,
+  `kurikulum` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_juri` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kontak` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `draft` tinyint(1) NOT NULL DEFAULT 0,
   `dibuat` timestamp NOT NULL DEFAULT '2022-11-08 21:53:23',
   `dimulai` timestamp NOT NULL DEFAULT '2022-11-08 21:53:23',
@@ -400,7 +416,7 @@ CREATE TABLE `kegiatan` (
 INSERT INTO `kegiatan` (`id`, `tema`, `deskripsi`, `gambar`, `jumlah_orang_diundang`, `masa_inkubasi`, `kurikulum`, `nama_juri`, `pic`, `kontak`, `draft`, `dibuat`, `dimulai`, `berakhir`) VALUES
 (20, 'Latihan kegiatan 1', 'jucudhsc', 'kegiatan/gambar/nusRwWlVfiKJRUJYmb4reGdJf9kCpo8QnKBfiatU.jpg', 3, 2, '2013', 'Eko', 'Eko', '8827327', 1, '2022-11-08 21:53:23', '2022-12-31 17:00:00', '2023-02-23 17:00:00'),
 (22, 'tes 123', 'sdsfdsfsdf', 'kegiatan/gambar/TQTty9MHjcJm9ZuqruEa0HMubFknfSqEjqAS6xfZ.jpg', 20, 2, '2013', 'Eko', 'Eko', '2832323', 1, '2022-11-08 21:53:23', '2023-01-15 17:00:00', '2023-01-17 17:00:00'),
-(34, 'Latihan Vue Js', 'Ini deskripsi', 'kegiatan/gambar/ifXg1HlstqmdcEDBoK4k85ZJYtSXotqPtVa2nhic.jpg', 33, 4, '2013', 'Ahmad', 'anton', '88787', 1, '2022-11-08 21:53:23', '2023-01-07 17:00:00', '2023-01-09 17:00:00');
+(34, 'Latihan Vue Js Easyy', 'Ini deskripsi', 'kegiatan/gambar/ifXg1HlstqmdcEDBoK4k85ZJYtSXotqPtVa2nhic.jpg', 33, 4, '2013', 'Ahmad', 'anton', '88787', 1, '2022-11-08 21:53:23', '2023-01-07 17:00:00', '2023-01-09 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -441,7 +457,9 @@ INSERT INTO `kegiatan_investor` (`id`, `investor_id`, `kegiatan_id`, `investor_f
 (21, 29, 24, NULL, NULL),
 (22, 29, 25, NULL, NULL),
 (32, 29, 22, 29, 22),
-(41, 29, 20, 29, 20);
+(41, 29, 20, 29, 20),
+(43, 29, 34, 29, 34),
+(44, 39, 20, 39, 20);
 
 -- --------------------------------------------------------
 
@@ -477,12 +495,12 @@ INSERT INTO `kegiatan_umkm` (`id`, `umkm_id`, `kegiatan_id`, `lulus_funding`, `u
 (30, 5, 18, 0, NULL, NULL),
 (31, 5, 19, 0, NULL, NULL),
 (33, 5, 21, 0, NULL, NULL),
-(34, 5, 22, 0, NULL, NULL),
+(34, 5, 22, 1, NULL, NULL),
 (35, 5, 23, 0, NULL, NULL),
 (36, 5, 24, 0, NULL, NULL),
 (37, 5, 25, 0, NULL, NULL),
 (58, 5, 34, 0, 5, 34),
-(69, 23, 20, 0, 23, 20);
+(69, 23, 20, 1, 23, 20);
 
 -- --------------------------------------------------------
 
@@ -494,9 +512,9 @@ CREATE TABLE `konsultasi` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `mentor_id` bigint(20) UNSIGNED NOT NULL,
-  `perihal` char(100) DEFAULT NULL,
-  `pesan` text DEFAULT NULL,
-  `link` text DEFAULT NULL,
+  `perihal` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pesan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jadwal` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -510,8 +528,20 @@ CREATE TABLE `laporan` (
   `pesan` text DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT NULL,
   `gambar` text DEFAULT NULL,
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` bigint(11) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `tandai` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `laporan`
+--
+
+INSERT INTO `laporan` (`pesan`, `tanggal`, `gambar`, `id`, `email`, `tandai`) VALUES
+('bagaimana cara membuat game', NULL, '', 1, 'smaba@upi.edi', 0),
+('bagaimana cara membuat game', NULL, '', 2, 'smaba@upi.edi', 0),
+('cara buat game', NULL, '', 3, 'www.facebook.com', 0),
+('tes', '2023-02-16 06:48:25', '', 4, 'tes@tes.com', 1);
 
 -- --------------------------------------------------------
 
@@ -524,9 +554,9 @@ CREATE TABLE `logbook` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `kegiatan_id` bigint(20) UNSIGNED NOT NULL,
   `hari_tanggal_bulan` timestamp NULL DEFAULT NULL,
-  `deskripsi` text NOT NULL DEFAULT '-',
+  `deskripsi` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '-',
   `status` bit(3) DEFAULT NULL,
-  `bukti_kegiatan` text DEFAULT '-',
+  `bukti_kegiatan` text COLLATE utf8mb4_unicode_ci DEFAULT '-',
   `waktu` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -535,10 +565,10 @@ CREATE TABLE `logbook` (
 --
 
 INSERT INTO `logbook` (`id`, `user_id`, `kegiatan_id`, `hari_tanggal_bulan`, `deskripsi`, `status`, `bukti_kegiatan`, `waktu`) VALUES
-(146, 5, 22, NULL, 'Laporan 1234', b'001', 'umkm/logbook/PSjzYdPsxMSmslGhDnEkmE4bxvQnLnXLWZTy1VBK.jpg', '2023-01-04 12:52:43'),
+(146, 5, 22, NULL, 'Laporan 1234', b'010', 'umkm/logbook/PSjzYdPsxMSmslGhDnEkmE4bxvQnLnXLWZTy1VBK.jpg', '2023-01-04 12:52:43'),
 (147, 5, 22, NULL, 'DKI Jakarta', b'001', 'umkm/logbook/cGoUWk4BDfnBg8GpM9h5WoA0NdEcLJsbdLgbB3zE.jpg', '2023-01-05 08:59:38'),
 (148, 5, 22, NULL, 'DKI Jakarta', b'001', 'umkm/logbook/09L4aXLhcqhgQlPptG1UyoFaCTOiWRVcISETnQr5.jpg', '2023-01-05 09:00:49'),
-(149, 5, 22, NULL, 'Laporan 1', b'000', 'umkm/logbook/JqfZdVmizKTyhF2hjowbh21dcN4KBLJy5nTiLOx2.png', '2023-01-05 18:07:58'),
+(149, 5, 22, NULL, 'Laporan 1', b'001', 'umkm/logbook/JqfZdVmizKTyhF2hjowbh21dcN4KBLJy5nTiLOx2.png', '2023-01-05 18:07:58'),
 (150, 5, 22, NULL, 'DKI Jakarta', b'000', 'umkm/logbook/Mv3BUo0r13PpTexJAS0sdDuxfGt2N2FJyqla5hm1.jpg', '2023-01-05 18:10:24');
 
 -- --------------------------------------------------------
@@ -549,7 +579,7 @@ INSERT INTO `logbook` (`id`, `user_id`, `kegiatan_id`, `hari_tanggal_bulan`, `de
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -589,7 +619,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -601,7 +631,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -614,11 +644,11 @@ CREATE TABLE `model_has_roles` (
 CREATE TABLE `notifikasi` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) DEFAULT NULL,
-  `pesan` text DEFAULT NULL,
+  `nama` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pesan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT current_timestamp(),
   `status` tinyint(4) DEFAULT NULL,
-  `redirect` text DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tandai` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -808,7 +838,67 @@ INSERT INTO `notifikasi` (`id`, `user_id`, `nama`, `pesan`, `tanggal`, `status`,
 (227, 7, 'Pengajuan Janji Temu', 'investor Arman dengan nama perusahaan Perushaaan serta no telepon 1121212 meminta untuk janji temu bersama Tono dengan usaha perusahaan makanan dan dengan nomor telepon 0345355', '2023-02-07 14:52:25', NULL, '/admin/janjitemu?page=1', 0),
 (228, 7, 'Pengajuan Janji Temu', 'investor Arman dengan nama perusahaan Perushaaan serta no telepon 1121212 meminta untuk janji temu bersama Tono dengan usaha perusahaan makanan dan dengan nomor telepon 0345355 dilokasi  pada waktu 2023-02-19T06:41', '2023-02-07 16:41:48', NULL, '/admin/janjitemu?page=1', 0),
 (229, 7, 'Pengajuan Janji Temu', 'investor Arman dengan nama perusahaan Perushaaan serta no telepon 1121212 meminta untuk janji temu bersama Tono dengan usaha perusahaan makanan dan dengan nomor telepon 0345355 dilokasi  pada waktu 2023-02-19T06:41', '2023-02-07 16:41:51', NULL, '/admin/janjitemu?page=1', 0),
-(230, 7, 'Pengajuan Eventual', 'Seorang user mengajukan untuk meeting di kegiatan Latihan Vue Js', '2023-02-08 11:55:14', NULL, '/admin/dashboard/kegiatan34/eventual', 0);
+(231, 7, 'Pengajuan Janji Temu', 'Investor Arman dengan nama perusahaan Perushaaan serta no telepon 1121212 meminta untuk janji temu bersama Tono dengan usaha perusahaan makanan dan dengan nomor telepon 0345355 dilokasi Jakarta pada waktu 2023-02-06T10:19', '2023-02-13 03:19:08', NULL, '/admin/janjitemu?page=1', 0),
+(232, 7, 'Pengajuan Eventual', 'UMKMTono mengajukan untuk meeting di kegiatan tes 123', '2023-02-13 03:22:25', NULL, '/admin/kegiatan?page=122/eventual', 0),
+(233, 7, 'Pengajuan Data Investor Baru', 'Seorang investor mengajukan data barunya', '2023-02-14 11:46:59', NULL, 'detail/profil/investor/39', 0),
+(234, 7, 'Pengajuan Data Investor Baru', 'Seorang investor mengajukan data barunya', '2023-02-14 12:07:56', NULL, 'detail/profil/investor/39', 0),
+(237, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:17:07', NULL, '/profil/1', 0),
+(238, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:18:27', NULL, '/profil/1', 0),
+(239, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:24:24', NULL, '/profil/1', 0),
+(240, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:27:46', NULL, '/profil/1', 0),
+(241, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:31:07', NULL, '/profil/1', 0),
+(242, 39, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-14 18:34:08', NULL, '/profil/1', 0),
+(243, 39, 'Revisi Profil', 'ktp kurang jelas', '2023-02-15 11:23:12', NULL, '/investor/profil/1', 0),
+(244, 5, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-15 23:56:06', NULL, '/umkm/dashboard/kegiatanku?page=1', 0),
+(245, 5, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-15 23:57:48', NULL, '/umkm/dashboard/kegiatanku?page=1', 0),
+(246, 5, 'Aktivasi sukes', 'Selamat !, Akun anda berhasil diaktivasi. Selamat menggunakan Blanjaloka', '2023-02-16 00:03:32', NULL, '/umkm/dashboard/kegiatanku?page=1', 0),
+(247, 5, 'Laporan anda ditolak', 'Mohon perbaiki lagi laporannya pada kegiatantes 123 di waktu 2023-01-04 12:52:43', '2023-02-16 08:57:11', NULL, NULL, 0),
+(248, 39, 'Anda diundang ke kegiatan', 'Anda diundang ke kegiatan Latihan Vue Js Bagian 2', '2023-02-16 10:30:30', NULL, '/investor/dashboard/kegiatan/35', 0),
+(250, 29, 'Anda diundang ke kegiatan', 'Anda diundang ke kegiatan Latihan Vue Js', '2023-02-16 11:06:44', NULL, '/investor/dashboard/kegiatan/34', 0),
+(251, 39, 'Anda diundang ke kegiatan', 'Anda diundang ke kegiatan Latihan kegiatan 1', '2023-02-16 11:18:41', NULL, '/investor/dashboard/kegiatan/20', 0),
+(252, 23, 'Anda lulus inkubasi', 'Selamat anda lulus inkubasi kegiatan Latihan kegiatan 1', '2023-02-16 11:39:48', NULL, '/umkm/dashboard/kegiatanku/20', 0),
+(253, 23, 'Anda lulus inkubasi', 'Selamat anda lulus inkubasi kegiatan Latihan kegiatan 1', '2023-02-16 11:40:39', NULL, '/umkm/dashboard/kegiatanku/20', 0),
+(254, 5, 'Anda lulus inkubasi', 'Selamat anda lulus inkubasi kegiatan tes 123', '2023-02-16 11:41:26', NULL, '/umkm/dashboard/kegiatanku/22', 0),
+(255, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Samba dilokasi Jakarta Serikat dimulai pada 2023-02-14T18:45 dan berakhir pada 2023-02-15T18:45', '2023-02-16 11:45:57', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(256, 39, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Jakarta Serikat dimulai pada 2023-02-14T18:45 dan berakhir pada 2023-02-15T18:45', '2023-02-16 11:45:57', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(257, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Samba dilokasi Jakarta Serikat dimulai pada 2023-02-12T18:48 dan berakhir pada 2023-02-17T18:48', '2023-02-16 11:48:32', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(258, 39, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Jakarta Serikat dimulai pada 2023-02-12T18:48 dan berakhir pada 2023-02-17T18:48', '2023-02-16 11:48:33', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(259, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Samba dilokasi Banten dimulai pada 2023-02-13T19:00 dan berakhir pada 2023-02-15T19:00', '2023-02-16 12:01:09', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(260, 39, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Banten dimulai pada 2023-02-13T19:00 dan berakhir pada 2023-02-15T19:00', '2023-02-16 12:01:10', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(261, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Samba dilokasi Bandung dimulai pada 2023-02-12T19:07 dan berakhir pada 2023-02-15T19:07', '2023-02-16 12:07:15', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(262, 39, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bandung dimulai pada 2023-02-12T19:07 dan berakhir pada 2023-02-15T19:07', '2023-02-16 12:07:16', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(263, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:10:12', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(264, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:10:12', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(265, 23, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:10:40', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(266, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM rahmah dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:10:41', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(267, 23, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:11:38', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(268, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM rahmah dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:11:39', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(269, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:12:05', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(270, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:12:05', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(271, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:20:52', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(272, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:20:53', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(273, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:23:34', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(274, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:23:34', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(275, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:26:47', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(276, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 12:26:47', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(277, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Jaktim dimulai pada 2023-02-19T20:00 dan berakhir pada 2023-02-24T20:01', '2023-02-16 13:01:55', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(278, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Jaktim dimulai pada 2023-02-19T20:00 dan berakhir pada 2023-02-24T20:01', '2023-02-16 13:01:57', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(279, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 13:08:28', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(280, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 13:08:29', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(281, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 13:10:49', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(282, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 13:10:49', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(283, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 16:18:38', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(284, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 16:18:38', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(285, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Arman dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 16:21:25', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(286, 29, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Bekasi Utara dimulai pada 2023-02-12 03:47:00 dan berakhir pada 2023-02-15 03:47:00', '2023-02-16 16:21:25', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(287, 23, 'Anda diundang ke kegiatan', 'Anda diundang ke kegiatan ', '2023-02-17 00:20:35', NULL, '/umkm/dashboard/kegiatanku/22', 0),
+(288, 5, 'Eventual Dibatalkan', 'Eventual yang anda minta pada kegiatan Latihan Vue Js tanggal  sudah dihapus. Kontak admin bila terjadi kesalahan', '2023-02-17 00:29:11', NULL, NULL, 0),
+(289, 5, 'undangan janji temu', 'Undangan anda untuk janji temu dengan investor Samba dilokasi Bandung dimulai pada  dan berakhir pada 2023-02-15 19:07:00 sudah selesai', '2023-02-17 01:05:27', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(290, 39, 'undangan janji temu', 'Undangan anda untuk janji temu dengan UMKM Tono dilokasi Bandung dimulai pada  dan berakhir pada 2023-02-15 19:07:00 sudah selesai', '2023-02-17 01:05:29', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(291, 5, 'undangan janji temu', 'Anda diundang untuk janji temu dengan investor Samba dilokasi Jakarta Selatan dimulai pada 2023-02-14T08:15 dan berakhir pada 2023-02-24T08:15', '2023-02-17 01:15:52', NULL, '/umkm/dashboard/janjitemu?page=1', 0),
+(292, 39, 'undangan janji temu', 'Anda diundang untuk janji temu dengan UMKM Tono dilokasi Jakarta Selatan dimulai pada 2023-02-14T08:15 dan berakhir pada 2023-02-24T08:15', '2023-02-17 01:15:53', NULL, '/investor/dashboard/janjitemu?page=1', 0),
+(293, 23, 'dikeluarkan dari kegiatan', 'Anda dikeluarkan dari kegiatan tes 123', '2023-02-17 02:00:56', NULL, NULL, 0),
+(294, 5, 'Laporan anda ditrima', 'Selamat!,laporan anda pada kegiatan tes 123 di waktu 2023-01-05 18:07:58 diterima!', '2023-02-17 02:01:27', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -817,8 +907,8 @@ INSERT INTO `notifikasi` (`id`, `user_id`, `nama`, `pesan`, `tanggal`, `status`,
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -827,6 +917,10 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('muhammad.samba@citiasiainc.id', '$2y$10$evYcyZ8MRzDdFjkbU7Jofu6899BwklKylD6NF4Jbb/ui6QSLWHSEa', '2022-12-04 13:08:38'),
+('assassinscheep@gmail.com', '$2y$10$K3uxTSIUQYRqYYvQuN3/JeAAF0xJnkyxENhQS7K6Tas5Mu7Vnj5RW', '2022-12-12 22:50:54'),
+('muhammad.samba@citiasiainc.id', '$2y$10$evYcyZ8MRzDdFjkbU7Jofu6899BwklKylD6NF4Jbb/ui6QSLWHSEa', '2022-12-04 13:08:38'),
+('assassinscheep@gmail.com', '$2y$10$K3uxTSIUQYRqYYvQuN3/JeAAF0xJnkyxENhQS7K6Tas5Mu7Vnj5RW', '2022-12-12 22:50:54'),
 ('muhammad.samba@citiasiainc.id', '$2y$10$evYcyZ8MRzDdFjkbU7Jofu6899BwklKylD6NF4Jbb/ui6QSLWHSEa', '2022-12-04 13:08:38'),
 ('assassinscheep@gmail.com', '$2y$10$K3uxTSIUQYRqYYvQuN3/JeAAF0xJnkyxENhQS7K6Tas5Mu7Vnj5RW', '2022-12-12 22:50:54');
 
@@ -838,8 +932,8 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `guard_name` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -852,11 +946,11 @@ CREATE TABLE `permissions` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -879,7 +973,7 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 CREATE TABLE `pesan` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `pengirim` bigint(20) UNSIGNED NOT NULL,
-  `isi` text NOT NULL,
+  `isi` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `update` timestamp NULL DEFAULT NULL,
   `tanggal_kirim` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -895,7 +989,7 @@ CREATE TABLE `pesan_laporan` (
   `isi` text DEFAULT NULL,
   `gambar` text DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -906,14 +1000,14 @@ CREATE TABLE `pesan_laporan` (
 CREATE TABLE `produk` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `jenis_produk` char(50) DEFAULT NULL,
+  `jenis_produk` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jumlah_produk_yang_dijual` int(11) DEFAULT NULL,
-  `bahan_produk` char(100) DEFAULT NULL,
-  `kategori_produk` char(50) DEFAULT NULL,
+  `bahan_produk` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kategori_produk` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `harga_produk` bigint(20) DEFAULT NULL,
-  `keterangan_halal` text DEFAULT NULL,
-  `manfaat_fungsional` text DEFAULT NULL,
-  `manfaat_nonfungsional` text DEFAULT NULL
+  `keterangan_halal` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `manfaat_fungsional` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `manfaat_nonfungsional` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -934,23 +1028,23 @@ INSERT INTO `produk` (`id`, `user_id`, `jenis_produk`, `jumlah_produk_yang_dijua
 CREATE TABLE `profil` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `foto_profil` text DEFAULT NULL,
-  `nama_lengkap` char(200) DEFAULT NULL,
+  `foto_profil` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_lengkap` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_lahir` timestamp NULL DEFAULT NULL,
-  `pendidikan_terakhir` char(20) DEFAULT NULL,
-  `tempat_kelahiran` char(50) DEFAULT NULL,
-  `alamat` char(200) DEFAULT NULL,
-  `kelurahan` char(50) DEFAULT NULL,
-  `kecamatan` char(50) DEFAULT NULL,
-  `kabupaten` char(50) DEFAULT NULL,
-  `provinsi` char(50) DEFAULT NULL,
-  `foto_ktp` text DEFAULT NULL,
-  `foto_dengan_ktp` text DEFAULT NULL,
-  `no_hp` char(14) DEFAULT NULL,
-  `status` char(30) DEFAULT NULL,
-  `kewarganegaraan` char(20) DEFAULT NULL,
-  `agama` char(10) DEFAULT NULL,
-  `pengalaman_kerja` text DEFAULT NULL
+  `pendidikan_terakhir` char(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tempat_kelahiran` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kelurahan` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kecamatan` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kabupaten` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provinsi` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto_ktp` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto_dengan_ktp` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_hp` char(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kewarganegaraan` char(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agama` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pengalaman_kerja` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -958,11 +1052,11 @@ CREATE TABLE `profil` (
 --
 
 INSERT INTO `profil` (`id`, `user_id`, `foto_profil`, `nama_lengkap`, `tanggal_lahir`, `pendidikan_terakhir`, `tempat_kelahiran`, `alamat`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `foto_ktp`, `foto_dengan_ktp`, `no_hp`, `status`, `kewarganegaraan`, `agama`, `pengalaman_kerja`) VALUES
-(4, 5, 'umkm/foto_profil/ypD4GVHEt7hXbo8xUpclizf4ywyAui8IFBem0uMh.jpg', 'Tono', '2022-11-12 17:00:00', 'SMA', 'Sleman', 'Rumah Sakit', 'Kalisari', 'PasarRebo', 'sadsadasd', 'Jawa Tengah', 'umkm/foto_ktp/2YY1gJmBK4PjN7icPb47qvHGYZUtIrnHyKQl3Yav.jpg', 'umkm/foto_selfie_ktp/qHIIzUcKbOR4RRzCh0QIygkDGzUS0Rf0ElyKnu8d.jpg', '0345355', 'Aktif', 'Indonesia', 'Islam', 'Mengikuti ISNA'),
-(5, 6, NULL, 'Ahmad Rahman', '2022-11-15 06:44:16', 'SMA', 'Sleman', 'Jalan Sleman 1', 'Kalisari', 'Pasar Rebo', 'Jakartajakarta', NULL, NULL, NULL, '234324', 'aktif', 'indonesia', 'islam', 'gaada\r\n'),
+(4, 5, 'umkm/foto_profil/GIbgDtdzh8WdbDg28Mf2rLnewNu5wTIDpIUPTS4F.png', 'Tono', '2022-11-12 17:00:00', 'SMA', 'Sleman', 'Rumah Sakit', 'Kalisari', 'PasarRebo', 'sadsadasd', 'Jawa Tengah', 'umkm/foto_ktp/54YXlCk4PvePVNgIwP1iyegrQ97UyFF10WuPC4e1.png', 'umkm/foto_selfie_ktp/hAaAY7pbEKHnkexLgbssZfzjMfPVLUcHIQGCqtGc.png', '0345355', 'Aktif', 'Indonesia', 'Islam', 'Mengikuti ISNA'),
 (6, 7, 'umkm/foto_profil/u1LgaWon1X5BTJsrovo8oLWi2tkvohQXuCFhR7Rs.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (15, 23, 'umkm/foto_profil/nlw24tR5SPjjmKTfaNvnVo18NhX6MvAEDhnjrhi6.png', 'rahmah', '2022-11-16 17:00:00', 'sma', 'manado', 'rumah', 'kel', 'kec', 'kab', 'banten', 'umkm/foto_ktp/lpFgXNeUseUUHGWBTPEdv3lpx1qs1QsLRKfCZeUM.png', 'umkm/foto_selfie_ktp/mjYxzdhBywmzAf2H3F7GU4Hex9PNf63OJa4zMvTU.png', '263623', 'stat', 'indo', 'islam', 'tidak'),
-(20, 29, 'investor/foto_profil/AOnFmcbgwhZhpR42AMAbVsfRTuW3KBF9INgLqW2M.png', 'Arman', '2022-12-11 17:00:00', 'SMA', 'Sleman', 'JL Tempat TInggal', 'Kalisari', 'PAsar Rebo', 'gatau', 'Serang', 'umkm/foto_ktp/a95FvNbYnbDi4fSVgxDx1JPVf6JLlWggjbDFK6IB.jpg', 'umkm/foto_selfie_ktp/sQxA8pxkTVMgWIPrIkzst1p0C5fTSF0e9JKdNgD5.jpg', '1121212', 'gTu', 'Indonesia', 'Islam', 'Pernah ikut mbkm');
+(20, 29, 'investor/foto_profil/1YjPaINvRx1zxwMA7NhfGtQke8ZByukBJLNmbilr.png', 'Arman', '2022-12-11 00:00:00', 'SMA', 'Sleman', 'JL Tempat TInggal', 'Kalisari', 'PAsar Rebo', 'gatau', 'Serang', 'investor/foto_ktp/WvlXPqRZM0SVjXNEKsLdhOHmorF7fyT3u6YIvOeP.png', 'investor/foto_selfie_ktp/tJTZJCNndhgi0tHa1OhIP1KwJ0428st1HgmBqsgj.png', '1121212', 'gTu', 'Indonesia', 'Islam', 'Pernah ikut mbkm'),
+(30, 39, 'investor/foto_profil/nVXCfoel3rRxEaMoMcHxp1fitBXkqx63FtRAGPGb.png', 'Samba', '2023-02-12 00:00:00', 'Sma', 'Sleman', 'PEsona', 'Ps rebo', 'tes', 'Jakarta', 'Jakarta', 'investor/foto_ktp/RimdsBYKx3a4L0htzazOq9MJCpehSYO46YWicMRg.jpg', 'investor/foto_selfie_ktp/NLQwqAeIP1iS3CusYS6fblthTZRruUuUYtwE9kYT.jpg', '018212', 'Aktif', 'Indoonesia', 'Islam', 'Pernah ikut mbkm');
 
 -- --------------------------------------------------------
 
@@ -981,14 +1075,15 @@ CREATE TABLE `profil_perusahaan` (
   `email_pic` varchar(255) DEFAULT NULL,
   `kategori_perusahaan` varchar(255) DEFAULT NULL,
   `deskripsi_perusahaan` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `profil_perusahaan`
 --
 
 INSERT INTO `profil_perusahaan` (`id`, `user_id`, `nama_perusahaan`, `alamat_perusahaan`, `nama_pic`, `tanggal_berdiri`, `nomor_telepon`, `email_pic`, `kategori_perusahaan`, `deskripsi_perusahaan`) VALUES
-(3, 29, 'Perushaaan', 'Perushaaan', 'Perushaaan', '2022-12-19 17:00:00', '2334', 'Perushaaan', 'Kuliner', 'abcdefuck');
+(3, 29, 'Perushaaan', 'Perushaaan', 'Perushaaan', '2022-12-19 17:00:00', '2334', 'Perushaaan', 'Kuliner', 'abcdefuck'),
+(4, 39, 'Samba Al Faraby', 'Jln kuliner 1 no 59', 'Ahmad', '2023-02-13 00:00:00', '12344', 'ahmad@ahmad.com', 'Makanan', 'Perusahaan kuliner');
 
 -- --------------------------------------------------------
 
@@ -998,8 +1093,8 @@ INSERT INTO `profil_perusahaan` (`id`, `user_id`, `nama_perusahaan`, `alamat_per
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `guard_name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
@@ -1012,10 +1107,19 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`, `user_id`, `number`) VALUES
 (2, NULL, NULL, NULL, NULL, 5, 2),
-(3, 'tes', 'oudhausd', '2022-11-30 06:42:26', '2022-11-30 06:42:26', 6, 3),
 (4, NULL, NULL, NULL, NULL, 7, 1),
 (13, NULL, NULL, NULL, NULL, 23, 2),
-(29, NULL, NULL, NULL, NULL, 29, 3);
+(29, NULL, NULL, NULL, NULL, 29, 3),
+(31, NULL, NULL, NULL, NULL, 39, 3),
+(32, NULL, NULL, NULL, NULL, 40, 1),
+(33, NULL, NULL, NULL, NULL, 41, 1),
+(34, NULL, NULL, NULL, NULL, 42, 1),
+(35, NULL, NULL, NULL, NULL, 44, 1),
+(36, NULL, NULL, NULL, NULL, 46, 1),
+(40, NULL, NULL, NULL, NULL, 53, 2),
+(41, NULL, NULL, NULL, NULL, 53, 1),
+(43, NULL, NULL, NULL, NULL, 55, 2),
+(44, NULL, NULL, NULL, NULL, 56, 1);
 
 -- --------------------------------------------------------
 
@@ -1041,7 +1145,7 @@ CREATE TABLE `tugas_akhir_jawaban` (
   `gambar` text DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `kegiatan_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tugas_akhir_jawaban`
@@ -1052,7 +1156,7 @@ INSERT INTO `tugas_akhir_jawaban` (`id`, `jawaban`, `file`, `gambar`, `user_id`,
 (6, 'blablabla', 'umkm/tugas_akhir/dokumen/xKxasfZNGkGbtLCMrYjfe5yxKnNUeKuiULw6cTBP.pdf', NULL, NULL, 22),
 (7, 'www.facebook.com', NULL, NULL, NULL, 22),
 (8, '// In Chrome: // arguments is an own property with descriptor {value: Arguments(0), writable: false, enumerable: false, configurable: false}  // In Firefox: // f doesn\'t have an own property named arguments. Trying to get f.[[Prototype]].arguments // Arguments { … }', NULL, NULL, NULL, 22),
-(9, '// In Chrome: // arguments is an own property with descriptor {value: Arguments(0), writable: false, enumerable: false, configurable: false}  // In Firefox: // f doesn\'t have an own property named arguments. Trying to get f.[[Prototype]].arguments // Arguments { … }', NULL, 'umkm/tugas_akhir/gambar/86PqGyUh96YNNotmuikEC6KSkIr5ACwOlGdMIQWC.png', 5, 22);
+(9, '// In Chrome: // arguments is an own property with descriptor {value: Arguments(0), writable: false, enumerable: false, configurable: false}  // In Firefox: // f doesn\'t have an own property named arguments. Trying to get f.[[Prototype]].arguments // Arguments { … }', 'umkm/tugas_akhir/dokumen/q6OL8R9RaZuvDCXcAAYyF3xEEAetKAgYDZo1iAKW.pdf', 'umkm/tugas_akhir/gambar/cnbb5Wg8bVp1SqcO0pCRRPrXtwwRhx0li7clqYoy.png', 5, 22);
 
 -- --------------------------------------------------------
 
@@ -1070,7 +1174,7 @@ CREATE TABLE `tugas_akhir_kegiatan` (
   `kegiatan_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1082,7 +1186,7 @@ CREATE TABLE `tugas_akhir_soal` (
   `kegiatan_id` bigint(20) UNSIGNED DEFAULT NULL,
   `id` bigint(20) UNSIGNED NOT NULL,
   `soal` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tugas_akhir_soal`
@@ -1091,7 +1195,8 @@ CREATE TABLE `tugas_akhir_soal` (
 INSERT INTO `tugas_akhir_soal` (`kegiatan_id`, `id`, `soal`) VALUES
 (22, 1, 'tes soal'),
 (22, 5, 'buatlah video anda sedang memasak lalu upload youtube'),
-(34, 6, 'Buatlah CRUD dari Vue JS dan Laravel , videokan !');
+(34, 6, 'Buatlah CRUD dari Vue JS dan Laravel , videokan !'),
+(22, 7, 'Buat Crud di laravel');
 
 -- --------------------------------------------------------
 
@@ -1102,15 +1207,15 @@ INSERT INTO `tugas_akhir_soal` (`kegiatan_id`, `id`, `soal`) VALUES
 CREATE TABLE `usaha` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_perusahaan` char(100) DEFAULT NULL,
-  `alamat_perusahaan` char(100) DEFAULT NULL,
-  `status_perusahaan` char(50) DEFAULT NULL,
-  `legalitas` text DEFAULT NULL,
-  `dokumen_amdal` text DEFAULT NULL,
-  `informasi_pajak` char(100) DEFAULT NULL,
-  `npwp` char(100) DEFAULT NULL,
-  `deskripsi_usaha` text DEFAULT NULL,
-  `email_perusahaan` char(100) DEFAULT NULL
+  `nama_perusahaan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat_perusahaan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_perusahaan` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `legalitas` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dokumen_amdal` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `informasi_pajak` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `npwp` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deskripsi_usaha` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_perusahaan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1130,35 +1235,44 @@ INSERT INTO `usaha` (`id`, `user_id`, `nama_perusahaan`, `alamat_perusahaan`, `s
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` char(50) DEFAULT NULL,
-  `email` char(100) NOT NULL,
-  `no_telepon` char(15) DEFAULT NULL,
+  `name` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_telepon` char(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
-  `password` char(100) DEFAULT NULL,
-  `two_factor_secret` text DEFAULT NULL,
-  `two_factor_recovery_codes` text DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
-  `provider_id` varchar(255) DEFAULT NULL,
-  `provider_token` varchar(255) DEFAULT NULL,
+  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` tinyint(4) DEFAULT NULL,
   `accepted` tinyint(1) DEFAULT NULL,
   `notifikasi` smallint(6) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `video_tertonton` smallint(6) DEFAULT NULL
+  `video_tertonton` smallint(6) DEFAULT NULL,
+  `notif_pesan` smallint(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `no_telepon`, `email_verified_at`, `remember_token`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `provider_id`, `provider_token`, `role`, `accepted`, `notifikasi`, `created_at`, `updated_at`, `video_tertonton`) VALUES
-(5, 'MUHAMMAD SAMBA', 'samba@upi.edu', NULL, '2022-11-08 23:10:45', 'aL0RVPySk7YhUsgnDkWRo4efNQFaun8RtO8fqrNxbJ8NKBpQFskqyVlAlkMR', '$2y$10$poDrUbeJQN/IanvKiEnaTekRZQoylmeld/JJipHRmrqq.KJShWh1a', NULL, NULL, NULL, '111968172218430437214', 'ya29.a0AeTM1id7YmPNzj46CHmoFFmZ7zBMq1GNCJdjZ3Sb-9aKxAz1J-XaJlINsZOT1gDl1WQi_I-Wnfhx_3CoxoJpBbdRtI_fhCFLWBT-GZyzmYS_yWpH09sEHDvaXhgRuqZ9P3NSVVMnoV-QI0sNY18h-h5ESNj0kwaCgYKAeASARESFQHWtWOmN3rblHCboaiWG2iXp0VxUg0165', NULL, 1, 3, '2022-11-08 23:10:45', '2023-02-07 08:24:15', NULL),
-(6, 'rahman', 'rahman@rahman.com', '945454864', '2022-11-30 06:32:19', NULL, '12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL),
-(7, 'Kelompok 3 _ Muhammad Samba Al Faraby', 'assassinscheep@gmail.com', NULL, '2022-11-09 00:23:01', 'xKJQdLL0i3t9Bxwh6JW9tBCV9wKzFg28fsCBtJ1Je30PcVwedXprp4iwjSoQ', '$2y$10$F7zPkSwqQNMjZgaKAkOs7ekWU1hWP7ZGBHJwMSwt7Og0ELYNGhLMO', NULL, NULL, NULL, '108953706873143162955', 'ya29.a0AeTM1ifSXZnfuPBnfuVLO-0H-ctovQm18A0rPMnA54Bs2jli-de2sBqHf4EPzO-Yz4283cnstPE8j8gaAPguR_xlc8gW2YK_OSvbc4kFVF9D8QPOxEMIlWERO-9kV9LXUlEDVGDblfoF-HeBltL0xzxZSlaLaCgYKAVMSARASFQHWtWOmHYTwEwki2pMB_ZWqVZ7_2w0163', NULL, NULL, 7, '2022-11-09 00:23:01', '2023-02-08 11:55:14', NULL),
-(23, NULL, 'nrahmahtsania@gmail.com', '+6285778147853', '2022-11-28 22:58:15', NULL, '$2y$10$H1y2JFIxvUlJRzay6am6vOH7.njyvXiFkft3/p/YdnOGPMxkrGLnm', NULL, NULL, NULL, NULL, NULL, 3, 1, 0, '2022-11-28 22:57:39', '2022-11-29 00:07:02', NULL),
-(29, NULL, 'muhammad.samba@citiasiainc.id', '+6223234343', '2022-12-07 15:38:44', '7lZIEPn4iMyjejcQk9W6dvcWft2rHyEKDd5IBo8pWGocjCvovMNiBRO2DNSF', '$2y$10$337pfy.cfagLsRsR3NQgketdkh7TXWZA5wzyKWbvB4L6qOZPsa1oy', NULL, NULL, NULL, NULL, NULL, 3, 1, 0, '2022-12-07 14:38:31', '2023-02-07 09:24:11', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `no_telepon`, `email_verified_at`, `remember_token`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `provider_id`, `provider_token`, `role`, `accepted`, `notifikasi`, `created_at`, `updated_at`, `video_tertonton`, `notif_pesan`) VALUES
+(5, 'MUHAMMAD SAMBA', 'samba@upi.edu', NULL, '2022-11-08 23:10:45', '8b20bL0CAmrvuIANmg8KnzRkIRoVQeQAOKFi9R9dMc5jnGYXyxJV6bOWigqa', '$2y$10$j7D5QSsiT13hn6GQeVAGXe1yP0.LtXU0od5tki67EV6S8a9V0Fxz2', NULL, NULL, NULL, '111968172218430437214', 'ya29.a0AeTM1id7YmPNzj46CHmoFFmZ7zBMq1GNCJdjZ3Sb-9aKxAz1J-XaJlINsZOT1gDl1WQi_I-Wnfhx_3CoxoJpBbdRtI_fhCFLWBT-GZyzmYS_yWpH09sEHDvaXhgRuqZ9P3NSVVMnoV-QI0sNY18h-h5ESNj0kwaCgYKAeASARESFQHWtWOmN3rblHCboaiWG2iXp0VxUg0165', NULL, 1, 4, '2022-11-08 23:10:45', '2023-02-17 02:04:39', NULL, 0),
+(7, 'Kelompok 3 _ Muhammad Samba Al Faraby', 'assassinscheep@gmail.com', NULL, '2022-11-09 00:23:01', 'mUfjSH9nlUPIlTlfZ2MBV5Ypg959zo3T1C54XO5dlXNcQ6TjCONqwZNZvVCN', '$2y$10$F7zPkSwqQNMjZgaKAkOs7ekWU1hWP7ZGBHJwMSwt7Og0ELYNGhLMO', NULL, NULL, NULL, '108953706873143162955', 'ya29.a0AeTM1ifSXZnfuPBnfuVLO-0H-ctovQm18A0rPMnA54Bs2jli-de2sBqHf4EPzO-Yz4283cnstPE8j8gaAPguR_xlc8gW2YK_OSvbc4kFVF9D8QPOxEMIlWERO-9kV9LXUlEDVGDblfoF-HeBltL0xzxZSlaLaCgYKAVMSARASFQHWtWOmHYTwEwki2pMB_ZWqVZ7_2w0163', NULL, NULL, 0, '2022-11-09 00:23:01', '2023-02-17 01:16:59', NULL, 0),
+(23, NULL, 'nrahmahtsania@gmail.com', '+6285778147853', '2022-11-28 22:58:15', NULL, '$2y$10$H1y2JFIxvUlJRzay6am6vOH7.njyvXiFkft3/p/YdnOGPMxkrGLnm', NULL, NULL, NULL, NULL, NULL, 3, 1, 6, '2022-11-28 22:57:39', '2023-02-17 02:00:55', NULL, 0),
+(29, NULL, 'muhammad.samba@citiasiainc.id', '+6223234343', '2022-12-07 15:38:44', '7Lr7X8hBikeS7cd7n41GKzChXTuDmuINf6c6AdEy3Id3NE35uSqmxh0t73Xj', '$2y$10$337pfy.cfagLsRsR3NQgketdkh7TXWZA5wzyKWbvB4L6qOZPsa1oy', NULL, NULL, NULL, NULL, NULL, 3, 1, 0, '2022-12-07 14:38:31', '2023-02-16 23:14:49', NULL, 0),
+(39, NULL, 'sambaalfarabi@yahoo.com', '+62343434', '2023-02-14 10:09:14', 'dRVx3py6uPBCCWNkdKoBrgraql8zRWbRwFHWBOSoQveodFzL5fOLnVqE5SLb', '$2y$10$CfbMZCgUf5aAI30YYM72buITWjJo0aCOOFEPyLVpIigfE1XY4UAyW', NULL, NULL, NULL, NULL, NULL, 3, 1, 6, '2023-02-14 09:51:06', '2023-02-17 01:15:51', NULL, 0),
+(40, 'TestUser123', 'admin@admin.com', '+62928327388', '2023-02-17 00:32:14', NULL, '$2y$10$oT9wxifDyziaaX5TzOsu0.BaJS13epfpe7W0MbyUVKDYUIPlGz28y', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 00:32:14', '2023-02-17 02:25:38', NULL, 0),
+(41, 'TestUser123', 'TestUser123@user.com', '+62234567891', '2023-02-17 00:34:00', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 00:34:00', '2023-02-17 00:34:00', NULL, 0),
+(42, 'AdminBaru', '12345678', '+621234567889', '2023-02-17 00:35:38', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 00:35:38', '2023-02-17 00:35:38', NULL, 0),
+(44, 'AdminBaru', '12345678912', '+6212345678896', '2023-02-17 00:37:41', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 00:37:41', '2023-02-17 00:37:41', NULL, 0),
+(46, 'AdminBaru', '12345678912123', '+62987654321', '2023-02-17 00:38:36', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 00:38:36', '2023-02-17 00:38:36', NULL, 0),
+(53, 'AdminBaru', 'admin123@admin.com', '+62123456789', '2023-02-17 02:11:03', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 02:11:03', '2023-02-17 02:11:03', NULL, 0),
+(55, 'testestes', 'testetses', '+621234151423', '2023-02-17 02:15:31', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 02:15:31', '2023-02-17 02:15:31', NULL, 0),
+(56, 'AdminBaru', 'TestUser123@test.com', '+62123456754', '2023-02-17 02:18:52', NULL, '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-02-17 02:18:52', '2023-02-17 02:18:52', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1305,6 +1419,12 @@ ALTER TABLE `konsultasi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `konsultasi_user_id_foreign` (`user_id`),
   ADD KEY `konsultasi_mentor_id_foreign` (`mentor_id`);
+
+--
+-- Indexes for table `laporan`
+--
+ALTER TABLE `laporan`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `logbook`
@@ -1457,13 +1577,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bab`
 --
 ALTER TABLE `bab`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `bisnis`
 --
 ALTER TABLE `bisnis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `bisnis_investor`
@@ -1487,19 +1607,19 @@ ALTER TABLE `chat_room`
 -- AUTO_INCREMENT for table `dokumen_perusahaan`
 --
 ALTER TABLE `dokumen_perusahaan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `elearning`
 --
 ALTER TABLE `elearning`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `eventual`
 --
 ALTER TABLE `eventual`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1517,7 +1637,7 @@ ALTER TABLE `funding`
 -- AUTO_INCREMENT for table `info_admin`
 --
 ALTER TABLE `info_admin`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `investasi`
@@ -1529,37 +1649,43 @@ ALTER TABLE `investasi`
 -- AUTO_INCREMENT for table `janji_temu`
 --
 ALTER TABLE `janji_temu`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `kajian_finansial`
 --
 ALTER TABLE `kajian_finansial`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_investor`
 --
 ALTER TABLE `kegiatan_investor`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `kegiatan_umkm`
 --
 ALTER TABLE `kegiatan_umkm`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `konsultasi`
 --
 ALTER TABLE `konsultasi`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `laporan`
+--
+ALTER TABLE `laporan`
+  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `logbook`
@@ -1577,7 +1703,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1607,25 +1733,25 @@ ALTER TABLE `pesan_laporan`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `profil_perusahaan`
 --
 ALTER TABLE `profil_perusahaan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `tugas_akhir_jawaban`
@@ -1643,19 +1769,19 @@ ALTER TABLE `tugas_akhir_kegiatan`
 -- AUTO_INCREMENT for table `tugas_akhir_soal`
 --
 ALTER TABLE `tugas_akhir_soal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `usaha`
 --
 ALTER TABLE `usaha`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables

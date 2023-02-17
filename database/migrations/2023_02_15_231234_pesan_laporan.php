@@ -12,6 +12,7 @@ return new class extends Migration
          $table->id();
          $table->text('isi')->nullable();
          $table->text('email')->nullable();
+         $table->boolean('tandai')->default(0);
          $table->text('gambar')->nullable();
          $table->timestamp('tanggal')->nullable();
        });

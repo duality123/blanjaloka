@@ -1,5 +1,5 @@
 <template>
-  <RemoveUserLayout pesan="Anda yakin ingin menghapus user ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/dashboard/pengguna/hapus_user" @toggleClose="switchClose()" />
+  <RemoveUserLayout pesan="Anda yakin ingin menghapus user ini" :popup="deletePopup" :itemDelete="itemDelete" url="/admin/pengguna/user/hapus_user" @toggleClose="switchClose()" />
    <div class="col-lg-8">
 
               <div id="myModal" class="modal" v-if="ubahPassword" >
@@ -134,7 +134,10 @@
                <td v-else>
                 {{item.name}}
                </td>
-                <td>
+                <td v-if="currentTabItem==1">
+                {{item.no_handphone}}
+              </td>
+               <td v-else>
                 {{item.no_hp}}
               </td>
              <td>
@@ -284,7 +287,7 @@ h1 {
 
 .modal {
   position: fixed; /* Stay in place */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 70px; /* Location of the box */
   left: 0;
   display: block;
   top: 0;

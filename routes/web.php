@@ -172,8 +172,8 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
         Route::post('/tambah_elearning', 'add_elearning');
         Route::any('/{slug}/elearning/','list_elearning');
         Route::any('/{slug}/detail', 'detail_kegiatan');
-        Route::any('/{slug}/edit', 'edit_kegiatan');
-        Route::any('/elearning/{slug}/edit', 'edit_elearning_view');
+        Route::get('/{slug}/edit', 'edit_kegiatan');
+        Route::get('/elearning/{slug}/edit', 'edit_elearning_view');
         Route::post('/elearning/edit', 'edit_elearning_post');
         Route::any('/elearning/{slug1}/bab/', 'list_bab');
         Route::any('/bab/{slug}/edit', 'edit_bab');
@@ -246,7 +246,7 @@ Route::prefix('admin/')->middleware(['auth','shouldAdmin'])->group(function () {
         Route::post('/ubah_password', [UserController::class, 'ubah_password']);
         Route::post('/tambah_user', [UserController::class, 'tambah_user']);
         Route::any('/{role}', [UserController::class, 'all']);
-        Route::post('hapus_user', [UserController::class, 'delete']);
+        Route::post('/user/hapus_user', [UserController::class, 'delete']);
     });
 });
 

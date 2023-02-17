@@ -125,7 +125,7 @@
     </ul>
       <div class="row">
          <div class="col d-flex justify-content-start">
-        <Search :url="`/admin/kegiatan/${kegiatan.id}/tugas_akhir?page=1`" judul="Cari Jawaban UMKM" />
+        <MultiSearchUMKM :url="`/admin/kegiatan/${kegiatan.id}/tugas_akhir?page=1`" judul="Cari Jawaban UMKM" />
         
       </div>
     </div>
@@ -178,7 +178,7 @@
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import Layout from '../../../Layouts/Kegiatan.vue';
 import RemoveKegiatanLayout from '../../../Components/RemoveItem.vue';
-import Search from '../../../Components/Search.vue';
+import MultiSearchUMKM from '../../../Components/MultiSearchUMKM.vue';
 import Pagination from '../../../Components/Pagination.vue';
 import { Inertia } from "@inertiajs/inertia";
 export default{
@@ -217,7 +217,7 @@ export default{
       Link,
       RemoveKegiatanLayout,
       Pagination,
-      Search
+      MultiSearchUMKM
     },
     methods:{
        switchClose(delete_id=null,url_delete=null){

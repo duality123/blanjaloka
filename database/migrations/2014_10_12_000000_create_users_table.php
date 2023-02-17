@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('password',100)->nullable();
             $table->string('provider_id')->nullable();
             $table->string('provider_token')->nullable();
-            $table->tinyInteger('role')->nullable();
+            $table->tinyInteger('role',4)->nullable();
             $table->boolean('accepted')->nullable();
             $table->smallInteger('notifikasi')->default(0);
             $table->smallInteger('notif_pesan')->default(0);
