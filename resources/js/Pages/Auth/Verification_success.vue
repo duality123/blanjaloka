@@ -21,7 +21,7 @@
                         class="btn btn-primary-blue-6 text-neutral-white "
                         style="padding: 5px 60px"
                     >
-                        Lanjutkan{{$page.props.auth.user}}
+                        Lanjutkan
                     </Link>
                 </div>
             </div>
