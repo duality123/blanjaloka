@@ -95,7 +95,7 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
                Route::any('{slug}/daftar_investor/', 'list_investor_investasi');
                 Route::any('{slug}/daftar_umkm/', 'list_funding_umkm');
               Route::any('{slug}/data_fundingku/', 'fundingku');
-              Route::get('{slug}/keluar/', 'leave_funding');
+              Route::get('keluar/{slug}', 'leave_funding');
         });
         Route::any('/', 'index');
         Route::any('/beranda/{slug}', 'beranda');
@@ -109,7 +109,7 @@ Route::prefix('umkm')->middleware(['auth','verified','shouldUmkm'])->group(funct
             Route::get('/{slug}', 'deskripsi');
             Route::any('/{slug}/elearning/', 'elearning');
             Route::any('/materi/{slug}', 'materi');
-            Route::any('/eventual/{$page}', 'eventual');
+            Route::get('/eventual/{page}', 'eventual');
             Route::any('/materi_detail/{slug}/', 'detail_materi');
             Route::get('/keluar/{slug}', 'leave_kegiatan');
             Route::any('/tugas_akhir/{slug}', 'tugas_akhir');

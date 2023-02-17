@@ -134,6 +134,9 @@ section {
   color: #3E4041;
   font-weight: 600;
 }
+.modal-content{
+  height: 450px;
+ }
 
 .pagination li.active {
   background-color: #398AB9;

@@ -116,12 +116,12 @@ class InvestorController extends Controller
         $request->session()->flash('success','Anda berhasil leave kegiatan!');
         $admins= Role::with('user')->where('number','=',1)->get();
         foreach ($admins as $admin) {
-        Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil()->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan()->nama_perusahaan.' serta no telepon '.$request->user()->profil()->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'tanggal'=>now()]);
-                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
+        Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'user_id'=>$admin->user->id,'tanggal'=>now()]);
+                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+1]);
                 
         }
 
-        return redirect('Investor/dashboard/kegiatan/');
+        return redirect('investor/dashboard/kegiatan?page=1');
     }
 
 
@@ -173,8 +173,11 @@ class InvestorController extends Controller
         $data = Bisnis::where('id','=',$link)->first();
         $data->investor()->detach($request->user()->id);
         $request->session()->flash('success','Anda berhasil keluar bisnis');
-          Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari bisnis '.$data->name,'tanggal'=>now()]);
-                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
+                $admins= Role::with('user')->where('number','=',1)->get();
+         foreach ($admins as $admin) {
+                   Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'investor '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->profilPerusahaan->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari bisnis '.$data->name,'user_id'=>$admin->user->id,'tanggal'=>now()]);
+                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+1]);
+         }
         return back();
      }
 

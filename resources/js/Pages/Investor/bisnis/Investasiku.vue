@@ -216,7 +216,9 @@ export default{
   font-size: 3rem;
 }
 
-
+.modal-content{
+  height: 450px;
+ }
 td{
   width:200px;
 }

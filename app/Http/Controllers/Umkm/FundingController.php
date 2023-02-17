@@ -109,6 +109,18 @@ class FundingController extends Controller
         $umkm = User::with('profil','produk','finansial','usaha')->where('id',$request->get('id'))->first();  
         return Inertia::render('Umkm/Funding/Daftar_umkm',['items'=>$items,'bisnis'=>$data,'umkm'=>$umkm]);
      }
+      public function leave_funding(Request $request,$slug){
+        $bisnis= Bisnis::where('id','=',$slug)->first();
+        $bisnis->umkm()->detach([$request->user()->id]);
+        $request->session()->flash('success','Anda berhasil leave funding!');
+         $admins= Role::with('user')->where('number','=',1)->get();
+         foreach ($admins as $admin) {
+                 Notifikasi::create(['nama'=>'Pengunduran diri dari funding','pesan'=>'umkm '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->usaha->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari bisnis '.$bisnis->name,'user_id'=>$admin->user->id,'tanggal'=>now()]);
+                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
+         }
+      
+        return redirect('umkm/dashboard/funding?page=1');
+    }
 
       public function show_bisnis(Request $request)
     {

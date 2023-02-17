@@ -217,20 +217,20 @@ class DashboardController extends Controller
         $request->session()->flash('success','Anda berhasil leave kegiatan!');
          $admins= Role::with('user')->where('number','=',1)->get();
          foreach ($admins as $admin) {
-                 Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'umkm '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->usaha->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'tanggal'=>now()]);
-                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
+                 Notifikasi::create(['nama'=>'Pengunduran diri','pesan'=>'umkm '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->usaha->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari kegiatan '.$kegiatan->tema,'user_id'=>$admin->user->id,'tanggal'=>now()]);
+                $admin->user->update(['notifikasi'=>$admin->user->notifikasi+1]);
          }
       
         return redirect('umkm/dashboard/kegiatanku/');
     }
 
     public function leave_funding(Request $request,$slug){
-        $kegiatan = Bisnis::where('id','=',$slug)->first();
-        $kegiatan->umkm()->detach([$request->user()->id]);
+        $bisnis = Bisnis::where('id','=',$slug)->first();
+        $bisnis->umkm()->detach([$request->user()->id]);
         $request->session()->flash('success','Anda berhasil leave funding!');
          $admins= Role::with('user')->where('number','=',1)->get();
          foreach ($admins as $admin) {
-                 Notifikasi::create(['nama'=>'Pengunduran diri dari funding','pesan'=>'umkm '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->usaha->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari bisnis '.$bisnis->judul,'tanggal'=>now()]);
+                 Notifikasi::create(['nama'=>'Pengunduran diri dari funding','pesan'=>'umkm '.$request->user()->profil->nama_lengkap.' dengan nama perusahaan '.$request->user()->usaha->nama_perusahaan.' serta no telepon '.$request->user()->profil->no_hp.' mengundurkan diri dari bisnis '.$bisnis->name,'user_id'=>$admin->user->id,'tanggal'=>now()]);
                 $admin->user->update(['notifikasi'=>$admin->user->notifikasi+=1]);
          }
       

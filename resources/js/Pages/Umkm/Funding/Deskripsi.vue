@@ -16,7 +16,7 @@
          </div>
           <div class="d-flex flex-column flex-lg-row justify-content-center gap-3 gap-lg-4 mt-5">
                     <button @click="popupControl()" class="btn btn-primary-blue-6 text-primary-blue-6 text-white py-2 border-5">Batal</button>
-                    <Link :href="`/umkm/dashboard/bisnis/keluar/${item.id}`" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
+                    <Link :href="`/umkm/dashboard/funding/keluar/${item.id}`" class="btn btn-outline-primary-blue-6 py-2 btn_custom_outline">
                         Ya</Link>
                 </div>
       </div>
