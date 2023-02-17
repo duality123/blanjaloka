@@ -238,6 +238,7 @@ section{
   padding: 20px;
   border-radius: 25px;
   width: 40%;
+  height:450px;
   text-align: center;
 }
 
