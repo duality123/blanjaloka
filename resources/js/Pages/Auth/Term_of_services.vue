@@ -12,7 +12,7 @@
               bulan</strong></li>
           <li>Melengkapi data pribadi dan usaha yang diperlukan <strong>(akun anda akan dihapus bila 30 hari kedepan data diri anda masih belum lengkap).</strong></li>
         </ul>
-        <form @submit.prevent="$inertia.visit('umkm/profil/1')">
+        <form @submit.prevent="$inertia.visit('/umkm/profil/1')">
           <div class="form-check">
             <input v-model="isCheckSyaratDanKetentuan" class="form-check-input" type="checkbox" id="kebijakan_privasi">
             <label class="form-check-label" for="kebijakan_privasi">
