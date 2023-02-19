@@ -8,7 +8,7 @@
                  <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <h1>Profil Saya</h1>
-                  <p class="text-neutral-gray-3 mb-0">Langkah <span class="text-neutral-gray-4">{{ currentStep }}</span>
+                  <p class="text-neutral-gray-3 mb-0">Langkah <span class="text-neutral-gray-4">1</span>
                     dari 3</p>
                 </div>
                  <div class="d-flex flex-column flex-lg-row gap-2 bg-primary-blue-1 rounded px-3 py-2 mt-4">
