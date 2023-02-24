@@ -29,7 +29,7 @@ class Bisnis extends Model
                 else{
                     $kondisi = '<';
                 }
-                $query->where('persentase_hasil_investasi', $kondisi,now());
+                $query->where('persentase_hasil_investasi', $kondisi,0);
         }
          
 

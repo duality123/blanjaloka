@@ -36,7 +36,7 @@ class InvestasiAdminController extends Controller{
             ->paginate(10);   
     */
             $data = Bisnis::select('name','total_penghasilan','target_investasi','waktu_balik_modal_end','foto_bisnis','persentase_hasil_investasi','id')->orderBy('bisnis.waktu_balik_modal_end','desc')
-            ->filter(request(['cari']))
+            ->filter(request(['cari','profit']))
             ->paginate(10);
         //dd($data['items']);
         return Inertia::render('Dashboard/Investasi/Daftar_investasi',['items'=>$data]);

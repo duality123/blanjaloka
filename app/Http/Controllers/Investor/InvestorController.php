@@ -165,7 +165,7 @@ class InvestorController extends Controller
         }
 
         $user = User::where('id','=',$request->user()->id)->first();
-        $data = $user->bisnisinvestor()->filter(request(['cari']))->paginate(10);
+        $data = $user->bisnisinvestor()->filter(request(['cari','profit']))->paginate(10);
         if($data==null){
             return Inertia::render('Profil/Investor/Noitemscreen',['title'=>'Anda belum join bisnis apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !','state'=>'bisnis']);
         }

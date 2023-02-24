@@ -128,7 +128,7 @@ class FundingController extends Controller
             return Inertia::render('Profil/UMKM/Lockedscreen',['title'=>'Fitur Bisnis Masih Terkunci','desc'=>'Akun anda belum dikonfirmasi admin','section'=>'funding']);
         }
         $user = User::where('id','=',$request->user()->id)->first();
-        $data = $user->bisnisumkm()->filter(request(['cari']))->paginate(10);
+        $data = $user->bisnisumkm()->filter(request(['cari','profit']))->paginate(10);
         if($data==null){
             return Inertia::render('Profil/UMKM/Noitemscreen',['title'=>'Anda belum mendapatkan funding apapun','desc'=>'Silahkan tunggu admin sampai menginvit anda !','section'=>'funding']);
         }
