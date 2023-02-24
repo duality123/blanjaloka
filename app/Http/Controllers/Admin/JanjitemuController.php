@@ -27,6 +27,7 @@ class JanjitemuController extends Controller
             ->filter(request(['nama_investor','lokasi','nama_umkm','event_dimulai','event_berakhir','berakhir']))
             ->orderBy('waktu','asc')
             ->paginate(10);
+            /*
             $limitUMKM = $request->get('limitUMKM') ? $request->get('limitUMKM') : 10;
             $umkm_all = User::join('usaha','usaha.user_id','=','users.id')
                         ->join('produk','produk.user_id','=','users.id')
@@ -51,7 +52,7 @@ class JanjitemuController extends Controller
               )
             ->paginate(10);
 
-    */
+    
           $limitInv = $request->get('limitInv') ? $request->get('limitInv') : 10;
           $investor_all = User::join('profil','profil.user_id','=','users.id')
              ->join('profil_perusahaan','profil_perusahaan.user_id','=','users.id')
@@ -65,14 +66,8 @@ class JanjitemuController extends Controller
             ->get();
         $countUMKM = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',2)->get()->count();
         $countInvestor = DB::table('users')->join('roles','roles.user_id','=','users.id')->where('roles.number','=',3)->get()->count();
-
-        return Inertia::render('Dashboard/Temu_janji',['items'=>$data,
-                                                       'umkm_all'=>Inertia::lazy(fn()=>$umkm_all),
-                                                       'investor_all'=>Inertia::lazy(fn()=>$investor_all),
-                                                       'countUMKM'=>Inertia::lazy(fn()=>$countUMKM),
-                                                       'countInvestor'=>Inertia::lazy(fn()=>$countInvestor)
-
-                                                   ]);
+        */
+        return Inertia::render('Dashboard/Temu_janji',['items'=>$data]);
     }
 
 
