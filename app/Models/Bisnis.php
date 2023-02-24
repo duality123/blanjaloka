@@ -27,7 +27,7 @@ class Bisnis extends Model
                         $kondisi = '>';
                 }
                 else{
-                    $kondisi = '<';
+                    $kondisi = '<=';
                 }
                 $query->where('persentase_hasil_investasi', $kondisi,0);
         }
