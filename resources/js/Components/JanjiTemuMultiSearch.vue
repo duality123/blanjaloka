@@ -51,15 +51,15 @@
     methods:{
     search(){
       let uri = {}
-
+      /*
       sessionStorage.clear()
       sessionStorage.setItem('lokasi', this.searchList.lokasi) 
       sessionStorage.setItem('event_berakhir',this.searchList.berakhir) 
       sessionStorage.setItem('event_dimulai',this.searchList.dimulai) 
       sessionStorage.setItem('nama_umkm',this.searchList.nama_umkm)
       sessionStorage.setItem('nama_investor',this.searchList.nama_investor)
-
-        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
+  */
+        Inertia.get(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 
       }
     },

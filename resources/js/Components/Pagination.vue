@@ -6,12 +6,9 @@
                 <template v-for="link in links">
                 <li  v-if="link.url !== null"  :class="{'active':link.active }">
                 
-                     <Link v-if="this.lazy" :data="postData" method="post" :only="this.lazy" preserve-state  :href="link.url">
+                     <button @click="visitWithLazy(link.url)" >
                           {{decode(link.label)}}
-                    </Link>
-                    <Link v-else :data="postData" method="post" :href="link.url"  preserve-state  >
-                          {{decode(link.label)}}
-                    </Link>
+                    </button>
                 </li>
                 </template>
             </ul>
@@ -19,6 +16,7 @@
 </div>
 </template>
 <script>
+import { Inertia } from "@inertiajs/inertia";
 import { Link,useForm } from '@inertiajs/inertia-vue3';
     export default {
         components:{
@@ -33,10 +31,12 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
                 parameters : document.location.search.substring(8),
                 currentPage :document.location.href,
                 cari:false ,
-                postData:{}
+                postData:{},
+                getParams:''
             }
         },
     mounted(){
+        /*
         let search = Object.keys(sessionStorage)
         let values = Object.values(sessionStorage)
         for (var i = 0;i < search.length; i++) {
@@ -46,6 +46,9 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
         }
     }
         console.log(sessionStorage)
+        */
+        
+
     },
     methods:{
         decode(strings){
@@ -58,6 +61,12 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
            else{
             return strings;
            }
+        },
+        visitWithLazy(url){
+            let params = new URLSearchParams(window.location.search);
+            params.delete('page');
+            let searchList =Object.fromEntries(params.entries());
+            Inertia.get(url,searchList,{only:this.lazy,preserveScroll: false,preserveState:true })
         }
     }
 }
@@ -77,12 +86,18 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
   background-color: #398AB9;
 }
 
-.pagination li:hover a,
-.pagination li:hover a svg {
+button{
+    background-color: transparent;
+    border: 0px;
+    border-color: transparent;
+}
+
+.pagination li:hover button,
+.pagination li:hover button svg {
   color: #FFFFFF !important;
 }
 
-.pagination li a {
+.pagination li button {
   text-decoration: none;
   color: #3E4041;
   font-weight: 600;
@@ -92,7 +107,7 @@ import { Link,useForm } from '@inertiajs/inertia-vue3';
   background-color: #398AB9;
 }
 
-.pagination li.active a {
+.pagination li.active button {
   color: #FFFFFF;
 }
 

@@ -96,6 +96,7 @@ export default{
       }
     },
   mounted(){
+    /*
      let uri = window.location.search.substring(1)
         let params = new URLSearchParams(uri)
         if (params.get('limitInv')) {
@@ -104,6 +105,7 @@ export default{
         if(params.get('limitUMKM')) {
            this.umkmShowValue = params.get('limitUMKM');
         }
+        */
    
   },
   setup(props){

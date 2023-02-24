@@ -47,13 +47,14 @@
 	  },
 	  methods:{
 	  search(){
+        /*
 	  	let uri = {}
 	  	sessionStorage.setItem('nama_investor', this.searchList.nama_investor) 
           sessionStorage.setItem('perusahaan_investor',this.searchList.perusahaan_umkm) 
           sessionStorage.setItem('kategori_investor',this.searchList.produk_umkm) 
           sessionStorage.setItem('nama_umkm',this.searchList.lokasi_umkm)
-
-        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
+    */
+        Inertia.get(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 
 	  	}
 	  },

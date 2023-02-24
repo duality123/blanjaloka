@@ -19,9 +19,11 @@
 	  },
 	  methods:{
 	  search(){
+	  	/*
 	  	sessionStorage.clear()
       	sessionStorage.setItem('cari', this.searchList.cari) 
-        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
+      	*/
+        Inertia.get(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 	  },
 	},
      

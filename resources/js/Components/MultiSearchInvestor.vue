@@ -49,13 +49,14 @@
 	  },
 	  methods:{
 	  search(){
-
+      /*
       sessionStorage.clear()
       sessionStorage.setItem('nama_investor', this.searchList.nama_investor) 
       sessionStorage.setItem('perusahaan_investor',this.searchList.perusahaan_investor) 
       sessionStorage.setItem('kategori_investor',this.searchList.kategori_investor) 
       sessionStorage.setItem('lokasi_investor',this.searchList.lokasi_investor)
-        Inertia.post(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
+      */
+        Inertia.get(this.url,this.searchList,{only:this.lazy,preserveScroll: true,preserveState:true })
 
 	  	}
 	  },
