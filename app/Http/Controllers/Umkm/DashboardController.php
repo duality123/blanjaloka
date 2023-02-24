@@ -154,7 +154,7 @@ class DashboardController extends Controller
         $data =BabElearning::with(['elearning:id,judul,kegiatan_id','elearning.kegiatan:id,tema'])->where('id','=',$page)
                 ->first(); 
         
-        $next =DB::table('bab')->where('bab','=',intval($data->bab)+1)->first();
+        $next =DB::table('bab')->where('bab','=',intval($data->bab)+1)->where('elearning_id','=',$data->elearning_id)->first();
 
         return Inertia::render('Umkm/Dashboard/Detail_bab',['bab'=>$data,'next'=>$next]);
     }
